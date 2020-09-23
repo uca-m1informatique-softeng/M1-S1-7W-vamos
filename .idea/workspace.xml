@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="e00d059e-98c5-44fb-b043-71cd21fff147" name="Default Changelist" comment="">
+    <list default="true" id="e00d059e-98c5-44fb-b043-71cd21fff147" name="Default Changelist" comment="updated pom.xml">
+      <change afterPath="$PROJECT_DIR$/.idea/M1-S1-7W-vamos.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,12 +49,16 @@
     </option>
   </component>
   <component name="ProjectId" id="1huqRFKzBL7DJWcj6KfkTotj3M0" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -41,11 +66,11 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JAR Application.Vamos-1.0-SNAPSHOT.jar">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="13" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -55,7 +80,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Vamos []" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Vamos-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/Vamos-1.0-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="[package]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
       <MavenSettings>
         <option name="myGeneralSettings" />
         <option name="myRunnerSettings" />
@@ -65,7 +105,9 @@
               <set />
             </option>
             <option name="goals">
-              <list />
+              <list>
+                <option value="package" />
+              </list>
             </option>
             <option name="pomFileName" />
             <option name="profilesMap">
@@ -80,10 +122,12 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Maven.Vamos []" />
+      <item itemvalue="Maven.[package]" />
+      <item itemvalue="JAR Application.Vamos-1.0-SNAPSHOT.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.Vamos-1.0-SNAPSHOT.jar" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -104,25 +148,51 @@
       <workItem from="1600872793614" duration="23000" />
       <workItem from="1600872838001" duration="398000" />
       <workItem from="1600866578967" duration="40000" />
-      <workItem from="1600866627140" duration="28000" />
+      <workItem from="1600866627140" duration="297000" />
     </task>
+    <task id="LOCAL-00001" summary="updated pom.xml">
+      <created>1600866709280</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600866709280</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="updated pom.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated pom.xml" />
   </component>
   <component name="WindowStateProjectService">
     <state x="625" y="167" width="726" height="771" key="#Main" timestamp="1600872137279">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="625" y="167" width="726" height="771" key="#Main/67.27.1853.1053@67.27.1853.1053" timestamp="1600872137279" />
-    <state x="476" y="130" width="1024" height="845" key="#Project_Structure" timestamp="1600871343671">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="424" y="136" width="1024" height="845" key="#Project_Structure" timestamp="1600866839988">
+      <screen x="0" y="34" width="1920" height="1046" />
     </state>
+    <state x="424" y="136" key="#Project_Structure/0.34.1920.1046@0.34.1920.1046" timestamp="1600866839988" />
     <state x="476" y="130" width="1024" height="845" key="#Project_Structure/67.27.1853.1053@67.27.1853.1053" timestamp="1600871343671" />
-    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600872447942">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="398" y="216" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600866894510">
+      <screen x="0" y="34" width="1920" height="1046" />
     </state>
+    <state x="398" y="216" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.34.1920.1046@0.34.1920.1046" timestamp="1600866894510" />
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1600872447942" />
     <state x="743" y="315" width="424" height="490" key="FileChooserDialogImpl" timestamp="1600866614377">
       <screen x="0" y="34" width="1920" height="1046" />
@@ -144,5 +214,9 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1600872874180" />
+    <state x="555" y="292" width="800" height="535" key="Vcs.Push.Dialog.v2" timestamp="1600866768274">
+      <screen x="0" y="34" width="1920" height="1046" />
+    </state>
+    <state x="555" y="292" width="800" height="535" key="Vcs.Push.Dialog.v2/0.34.1920.1046@0.34.1920.1046" timestamp="1600866768274" />
   </component>
 </project>
