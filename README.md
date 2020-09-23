@@ -3,6 +3,6 @@
 ## Notre équipe
 - Ossama ASHRAF
 - Sofyan Moumen
-- Sonja DessenBock
+- Sonja Deissenboeck
 - Kevin Levy
 - Nicolas Zimmer
