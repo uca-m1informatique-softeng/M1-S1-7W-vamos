@@ -32,8 +32,6 @@ public class Game {
 
     }
 
-
-
     private void initPlayers()
     {
         for(int i = 0; i < players; i++)
@@ -88,6 +86,76 @@ public class Game {
             player.chooseCard();
         for(Player player : this.playersArray)
             player.chooseAction();
+
+        this.tradeCards(this.currentAge);
+    }
+    private void tradeCards(int currentAge) {
+
+        for(int i = 0; i < playersArray.size(); i++)
+        {
+
+            ArrayList<Card> tmpMain = playersArray.get(i).getHand();
+
+            if(currentAge % 2 == 1 )
+            {
+             //Clockwise trade
+
+             if( i == playersArray.size() - 1)
+             {
+                 playersArray.get(i).setHand(playersArray.get(0).getHand());
+                 playersArray.get(0).setHand(tmpMain);
+             }
+             else
+             {
+                 playersArray.get(i).setHand(playersArray.get(i + 1).getHand());
+                 playersArray.get(i + 1).setHand(tmpMain);
+             }
+
+            }
+            else
+            {
+
+                //Counter clockwise
+                if( i == 0)
+                {
+                    playersArray.get(0).setHand(playersArray.get(playersArray.size() -1).getHand());
+                    playersArray.get(playersArray.size() - 1).setHand(tmpMain);
+                }
+                else
+                {
+                    playersArray.get(i).setHand(playersArray.get(i-1).getHand());
+                    playersArray.get(i - 1).setHand(tmpMain);
+
+                }
+
+
+            }
+            /*
+            if(i == playersArray.size() - 1) {
+                if(currentAge % 2 == 1) {
+                    playersArray.get(i).setHand(playersArray.get(0).getHand());
+                    playersArray.get(0).setHand(tmpMain);
+                }
+                else{
+                    playersArray.get(i).setHand(playersArray.get(0).getHand());
+                    playersArray.get(0).setHand(tmpMain);
+
+                }
+            }
+
+            else {
+                if(currentAge % 2 == 1) {
+                    playersArray.get(i).setHand(playersArray.get(i + 1).getHand());
+                    playersArray.get(i + 1).setHand(tmpMain);
+                }
+               else{
+
+                }
+            }*/
+        }
+        1 2 3
+        12 23 31
+        13  21 32
     }
 
     private void processNewAge()
