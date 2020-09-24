@@ -8,48 +8,6 @@ import static Utility.Constante.MAX_HAND;
 
 public class Player {
 
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
-
-    private ArrayList<Card> hand = new ArrayList<>(7);
-
-    public String getName() {
-        return name;
-    }
-
-    public Card getChosenCard() {
-        return chosenCard;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setHand(ArrayList<Card> hand) {
-        this.hand = hand;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setChosenCard(Card chosenCard) {
-        this.chosenCard = chosenCard;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
     private String name;
 
     private Card chosenCard;
@@ -57,18 +15,58 @@ public class Player {
     private int coins;
 
     private int points;
-    public Player(String name)
-    {
+
+    private ArrayList<Card> hand = new ArrayList<>(7);
+
+    public Player(String name) {
         this.name = name;
         System.out.println("Core.Player " + name +  " joined the game!");
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public Card getChosenCard() {
+        return chosenCard;
+    }
+
+    public void setChosenCard(Card chosenCard) {
+        this.chosenCard = chosenCard;
+    }
 
     public void initPlayerHand(){
         for(int i = 0; i < MAX_HAND ; i++)
             hand.add(null);
     }
-
 
     public void chooseCard(){
         Collections.shuffle(hand);
@@ -76,7 +74,6 @@ public class Player {
     }
 
     public void chooseAction(){
-
         Random rand = new Random();
         int rand_int1 = rand.nextInt(1000);
         if(rand_int1 % 2 == 0) {
