@@ -6,15 +6,16 @@ import static Utility.Constante.*;
 
 public class Game {
 
-    private int round = 1;
 
-    private int players;
+    private static int round = 1;
 
-    private int currentAge = 1;
+    private static int players;
 
-    private ArrayList<Player> playersArray;
+    private static int currentAge = 1;
 
-    private GameState state;
+    private static ArrayList<Player> playersArray;
+
+    private static GameState state;
 
 
 
@@ -37,7 +38,7 @@ public class Game {
     private void initPlayers()
     {
         for(int i = 0; i < players; i++)
-            this.playersArray.add(new Player("test" + i));
+            this.playersArray.add(new Player("Bot" + i));
 
 
         System.out.println(players + " players have been initialized");
@@ -151,6 +152,14 @@ public class Game {
 
     }
 
+    //Getter pour les tests
+    public static int getRound() {
+        return round;
+    }
+
+    public static int getPlayers() {
+        return players;
+    }
 
     private void displayPlayersRanking() {
 
@@ -168,4 +177,15 @@ public class Game {
     }
 
 
+    public static int getCurrentAge() {
+        return currentAge;
+    }
+
+    public static ArrayList<Player> getPlayersArray() {
+        return playersArray;
+    }
+
+    public static GameState getState() {
+        return state;
+    }
 }
