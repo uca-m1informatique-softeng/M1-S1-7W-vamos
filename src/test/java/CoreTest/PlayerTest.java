@@ -84,14 +84,6 @@ public class PlayerTest {
         assertEquals(hand2,player.getHand());
     }
 
-    @Test
-    public void initPlayerHand(){
-        for(int i = 0; i < 7 ; i++) {
-            hand.add(null);
-        }
-        player.initPlayerHand();
-        assertEquals(hand,player.getHand());
-    }
 
 
 }

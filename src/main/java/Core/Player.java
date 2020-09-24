@@ -63,11 +63,6 @@ public class Player {
         this.chosenCard = chosenCard;
     }
 
-    public void initPlayerHand(){
-        for(int i = 0; i < MAX_HAND ; i++)
-            hand.add(null);
-    }
-
     public void chooseCard(){
         Collections.shuffle(hand);
         chosenCard = hand.get(0);

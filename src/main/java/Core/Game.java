@@ -127,9 +127,7 @@ public class Game {
 
     private void processNewAge()
     {
-      for(Player player : this.playersArray)
-           player.initPlayerHand();
-
+        initPlayersHand();
         System.out.println("Current age" + this.currentAge);
         System.out.println("Each player drew " + MAX_HAND + "cards");
     }
@@ -165,6 +163,13 @@ public class Game {
 
 
 
+    }
+
+    private void initPlayersHand()
+    {
+        for(Player player : playersArray)
+            for(int i =0; i < MAX_HAND;i++)
+               player.getHand().add(null);
     }
 
 
