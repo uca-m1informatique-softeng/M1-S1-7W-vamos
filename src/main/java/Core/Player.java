@@ -1,24 +1,22 @@
 package Core;
 
-import Core.Carte;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
 public class Player {
 
-    public ArrayList<Carte> getHand() {
+    public ArrayList<Card> getHand() {
         return hand;
     }
 
-    private ArrayList<Carte> hand = new ArrayList<>(7);
+    private ArrayList<Card> hand = new ArrayList<>(7);
 
     public String getName() {
         return name;
     }
 
-    public Carte getChosenCard() {
+    public Card getChosenCard() {
         return chosenCard;
     }
 
@@ -26,7 +24,7 @@ public class Player {
         return coins;
     }
 
-    public void setHand(ArrayList<Carte> hand) {
+    public void setHand(ArrayList<Card> hand) {
         this.hand = hand;
     }
 
@@ -34,7 +32,7 @@ public class Player {
         this.name = name;
     }
 
-    public void setChosenCard(Carte chosenCard) {
+    public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
     }
 
@@ -52,7 +50,7 @@ public class Player {
 
     private String name;
 
-    private Carte chosenCard;
+    private Card chosenCard;
 
     private int coins;
 
