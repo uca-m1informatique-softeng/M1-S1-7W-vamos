@@ -33,12 +33,23 @@ public class Player {
 
     private EnumMap<CardPoints, Integer> points;
 
-    private ArrayList<Card> hand = new ArrayList<>(7);
+    private ArrayList<Card> hand;
 
-    private ArrayList<Card> builtCards = new ArrayList<>();
+    private ArrayList<Card> builtCards;
 
     public Player(String name) {
         this.name = name;
+
+        this.points = new EnumMap<>(CardPoints.class);
+        this.points.put(CardPoints.VICTORY, 0);
+        this.points.put(CardPoints.MILITARY, 0);
+        this.points.put(CardPoints.SCIENCE_COMPASS, 0);
+        this.points.put(CardPoints.SCIENCE_TABLET, 0);
+        this.points.put(CardPoints.SCIENCE_WHEEL, 0);
+
+        this.builtCards = new ArrayList<>();
+        this.hand = new ArrayList<>();
+
         System.out.println("Core.Player " + name +  " joined the game!");
     }
 

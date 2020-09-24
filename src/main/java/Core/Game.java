@@ -157,11 +157,11 @@ public class Game {
         Player tmpWinner = this.playersArray.get(0);
         for(Player player : this.playersArray) {
             System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
-            if(player.getCoins() > tmpWinner.getCoins())
+            if(player.getPoints().get(CardPoints.VICTORY) > tmpWinner.getPoints().get(CardPoints.VICTORY))
                 tmpWinner = player;
         }
 
-        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getCoins());
+        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getPoints().get(CardPoints.VICTORY));
 
 
 
