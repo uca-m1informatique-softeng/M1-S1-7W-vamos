@@ -47,7 +47,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>Game</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -65,7 +65,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>Main</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
+                    <mainClass>Game</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
                     <!-- argument de la commande java (en plus du nom de la classe et du classpath -->
 
                     <!-- arguments récupérés dans le main -->

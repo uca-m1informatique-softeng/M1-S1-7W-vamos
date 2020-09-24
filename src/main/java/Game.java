@@ -19,9 +19,9 @@ public class Game {
     public Game (int players)
     {
         this.players = players;
-        playersArray = new ArrayList<>(players);
-        initPlayers();
-        state = GameState.START;
+        this.playersArray = new ArrayList<>(players);
+        this.initPlayers();
+        this.state = GameState.START;
 
     }
     public static void main(String[] args) {
@@ -37,7 +37,7 @@ public class Game {
     private void initPlayers()
     {
         for(int i = 0; i < players; i++)
-            playersArray.add(new Player("test" + i));
+            this.playersArray.add(new Player("test" + i));
 
 
         System.out.println(players + " players have been initialized");
@@ -45,13 +45,13 @@ public class Game {
 
     private void process()
     {
-        switch (state)
+        switch (this.state)
         {
             case START:
             {
-                System.out.println("The game started with " + players + "players on the board");
-                processNewAge();
-                state = GameState.PLAY;
+                System.out.println("The game started with " + this.players + "players on the board");
+                this.processNewAge();
+                this.state = GameState.PLAY;
             }
             break;
 
@@ -59,18 +59,18 @@ public class Game {
             {
 
                 System.out.println("Round Start");
-                processTurn();
-                round++;
+                this.processTurn();
+                this.round++;
                 System.out.println("Round has ended, current round : " +  round);
-                processEndAge();
+                this.processEndAge();
             }
             break;
 
             case END:
             {
-                displayPlayersRanking();
+                this.displayPlayersRanking();
                 System.out.println("Game has ended .. exiting");
-                state = GameState.EXIT;
+                this.state = GameState.EXIT;
                 break;
 
             }
@@ -84,34 +84,34 @@ public class Game {
     }
 
     private void processTurn() {
-        for(Player player : playersArray)
+        for(Player player : this.playersArray)
             player.chooseCard();
-        for(Player player : playersArray)
+        for(Player player : this.playersArray)
             player.chooseAction();
     }
 
     private void processNewAge()
     {
-      for(Player player : playersArray)
+      for(Player player : this.playersArray)
            player.initPlayerHand();
 
-        System.out.println("Current age" + currentAge);
+        System.out.println("Current age" + this.currentAge);
         System.out.println("Each player drew 7 cards");
     }
 
 
     private void processEndAge()
     {
-        if(round == 6 && currentAge  == 3 )
-            state = GameState.END;
-        if(round == 6 && currentAge < 3)
+        if(this.round == 6 && this.currentAge  == 3 )
+            this.state = GameState.END;
+        if(this.round == 6 && this.currentAge < 3)
         {
-            for(Player player : playersArray)
+            for(Player player : this.playersArray)
                 player.getHand().clear();
             System.out.println("Age has ended! ");
-            currentAge++;
-            processNewAge();
-            round = 1;
+            this.currentAge++;
+            this.processNewAge();
+            this.round = 1;
         }
 
     }
@@ -119,8 +119,8 @@ public class Game {
 
     private void displayPlayersRanking() {
 
-        Player tmpWinner = playersArray.get(0);
-        for(Player player : playersArray) {
+        Player tmpWinner = this.playersArray.get(0);
+        for(Player player : this.playersArray) {
             System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
             if(player.getCoins() > tmpWinner.getCoins())
                 tmpWinner = player;
