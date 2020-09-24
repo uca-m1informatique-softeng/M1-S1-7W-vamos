@@ -6,7 +6,7 @@ import java.util.Random;
 
 import static Utility.Constante.MAX_HAND;
 
-public class Player {
+public class  Player {
 
     private String name;
 
@@ -61,11 +61,6 @@ public class Player {
 
     public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
-    }
-
-    public void initPlayerHand(){
-        for(int i = 0; i < MAX_HAND ; i++)
-            hand.add(null);
     }
 
     public void chooseCard(){
