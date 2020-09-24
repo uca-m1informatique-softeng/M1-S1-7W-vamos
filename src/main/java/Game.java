@@ -57,6 +57,7 @@ public class Game {
             {
 
                 System.out.println("Round Start");
+                processTurn();
                 round++;
                 System.out.println("Round has ended, current round : " +  round);
                 processEndAge();
@@ -79,6 +80,13 @@ public class Game {
 
     }
 
+    private void processTurn() {
+        for(Player player : playersArray)
+            player.chooseCard();
+        for(Player player : playersArray)
+            player.chooseAction();
+    }
+
     private void processNewAge()
     {
       for(Player player : playersArray)
@@ -91,10 +99,12 @@ public class Game {
 
     private void processEndAge()
     {
-        if(round == 8 && currentAge  == 3 )
+        if(round == 6 && currentAge  == 3 )
             state = GameState.END;
-        if(round == 8 && currentAge < 3)
+        if(round == 6 && currentAge < 3)
         {
+            for(Player player : playersArray)
+                player.getHand().clear();
             System.out.println("Age has ended! ");
             currentAge++;
             processNewAge();
