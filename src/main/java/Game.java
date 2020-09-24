@@ -6,6 +6,8 @@ public class Game {
 
     private int players;
 
+    private int currentAge = 1;
+
     private ArrayList<Player> playersArray;
 
     private GameState state;
@@ -23,7 +25,7 @@ public class Game {
     public static void main(String[] args) {
 
         Game game = new Game(2);
-        while(game.round != 8)
+        while(game.state != GameState.END)
             game.process();
 
     }
@@ -33,7 +35,7 @@ public class Game {
     private void initPlayers()
     {
         for(int i = 0; i < players; i++)
-            playersArray.add(new Player());
+            playersArray.add(new Player("test" + i));
 
 
         System.out.println(players + " players have been initialized");
@@ -46,18 +48,18 @@ public class Game {
             case START:
             {
                 System.out.println("The game started with " + players + "players on the board");
+                processNewAge();
                 state = GameState.PLAY;
             }
             break;
 
             case PLAY:
             {
+
                 System.out.println("Round Start");
-
-
-
                 round++;
                 System.out.println("Round has ended, current round : " +  round);
+                processEndAge();
             }
             break;
 
@@ -75,10 +77,32 @@ public class Game {
 
     }
 
+    }
+
+    private void processNewAge()
+    {
+      for(Player player : playersArray)
+           player.initPlayerHand();
+
+        System.out.println("Current age" + currentAge);
+        System.out.println("Each player drew 7 cards");
+    }
 
 
+    private void processEndAge()
+    {
+        if(round == 8 && currentAge  == 3 )
+            state = GameState.END;
+        if(round == 8 && currentAge < 3)
+        {
+            System.out.println("Age has ended! ");
+            currentAge++;
+            processNewAge();
+            round = 1;
+        }
 
-}
+    }
+
 
     private void displayPlayersRanking() {
     }
