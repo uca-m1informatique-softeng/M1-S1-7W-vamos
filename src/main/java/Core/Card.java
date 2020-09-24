@@ -12,4 +12,31 @@ public class Card {
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
 
+    public String getName() {
+        return name;
+    }
+
+    public CardColor getColor() {
+        return color;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getPlayers() {
+        return players;
+    }
+
+    public EnumMap<CardPoints, Integer> getCardPoints() {
+        return cardPoints;
+    }
+
+    public EnumMap<Resource, Integer> getResource() {
+        return resource;
+    }
+
+    public EnumMap<Resource, Integer> getCost() {
+        return cost;
+    }
 }

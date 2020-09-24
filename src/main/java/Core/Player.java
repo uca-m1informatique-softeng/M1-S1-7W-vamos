@@ -2,6 +2,7 @@ package Core;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Random;
 
 import static Utility.Constante.MAX_HAND;
@@ -14,9 +15,27 @@ public class Player {
 
     private int coins;
 
-    private int points;
+    public EnumMap<CardPoints, Integer> getPoints() {
+        return points;
+    }
+
+    public void setPoints(EnumMap<CardPoints, Integer> points) {
+        this.points = points;
+    }
+
+    public ArrayList<Card> getBuiltCards() {
+        return builtCards;
+    }
+
+    public void setBuiltCards(ArrayList<Card> builtCards) {
+        this.builtCards = builtCards;
+    }
+
+    private EnumMap<CardPoints, Integer> points;
 
     private ArrayList<Card> hand = new ArrayList<>(7);
+
+    private ArrayList<Card> builtCards = new ArrayList<>();
 
     public Player(String name) {
         this.name = name;
@@ -47,14 +66,6 @@ public class Player {
         this.hand = hand;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public Card getChosenCard() {
         return chosenCard;
     }
@@ -77,17 +88,27 @@ public class Player {
         Random rand = new Random();
         int rand_int1 = rand.nextInt(1000);
         if(rand_int1 % 2 == 0) {
-            hand.remove(chosenCard);
-            System.out.println(name + "has now " + hand.size() + " cards in hand");
-            System.out.println(name + " has obtained 3 coins for tossing");
-            coins += 3;
+            this.dumpCard();
         }
         else
-            playCard();
+            this.buildCard();
     }
 
-    private void playCard() {
-        hand.remove(chosenCard);
-        System.out.println(name + " played the card");
+    private void dumpCard() {
+        this.hand.remove(this.chosenCard);
+        System.out.println(this.name + "has now " + this.hand.size() + " cards in hand");
+        System.out.println(this.name + " has obtained 3 coins for tossing");
+        this.coins += 3;
+    }
+
+    private void buildCard() {
+        this.hand.remove(this.chosenCard);
+        this.builtCards.add(this.chosenCard);
+
+        int currentVP = this.points.get(CardPoints.VICTORY);
+        int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
+
+        this.points.put(CardPoints.VICTORY, currentVP + cardVP);
+        System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
     }
 }
