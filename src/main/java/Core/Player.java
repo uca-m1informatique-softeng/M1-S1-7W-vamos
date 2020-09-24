@@ -1,3 +1,7 @@
+package Core;
+
+import Core.Carte;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -56,7 +60,7 @@ public class Player {
     public Player(String name)
     {
         this.name = name;
-        System.out.println("Player " + name +  " joined the game!");
+        System.out.println("Core.Player " + name +  " joined the game!");
     }
 
 

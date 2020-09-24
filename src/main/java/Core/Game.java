@@ -1,6 +1,6 @@
+package Core;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Game {
 
@@ -69,7 +69,7 @@ public class Game {
             case END:
             {
                 this.displayPlayersRanking();
-                System.out.println("Game has ended .. exiting");
+                System.out.println("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
 
