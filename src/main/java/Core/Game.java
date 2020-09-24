@@ -40,7 +40,7 @@ public class Game {
 
     private void initDeck() {
         for (int i = 0; i < MAX_HAND*Game.players; i++) {
-            
+            this.deck.add(null);
         }
     }
 
