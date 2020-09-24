@@ -2,6 +2,8 @@ package Core;
 
 import java.util.ArrayList;
 
+import static Utility.Constante.*;
+
 public class Game {
 
     private int round = 1;
@@ -129,15 +131,15 @@ public class Game {
            player.initPlayerHand();
 
         System.out.println("Current age" + this.currentAge);
-        System.out.println("Each player drew 7 cards");
+        System.out.println("Each player drew " + MAX_HAND + "cards");
     }
 
 
     private void processEndAge()
     {
-        if(this.round == 6 && this.currentAge  == 3 )
+        if(this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
             this.state = GameState.END;
-        if(this.round == 6 && this.currentAge < 3)
+        if(this.round == 6 && this.currentAge < MAX_AGE)
         {
             for(Player player : this.playersArray)
                 player.getHand().clear();

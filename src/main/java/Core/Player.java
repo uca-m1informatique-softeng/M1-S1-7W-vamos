@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+import static Utility.Constante.MAX_HAND;
+
 public class Player {
 
     public ArrayList<Card> getHand() {
@@ -63,7 +65,7 @@ public class Player {
 
 
     public void initPlayerHand(){
-        for(int i = 0; i < 7 ; i++)
+        for(int i = 0; i < MAX_HAND ; i++)
             hand.add(null);
     }
 
