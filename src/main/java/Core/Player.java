@@ -6,7 +6,7 @@ import java.util.Random;
 
 import static Utility.Constante.MAX_HAND;
 
-public class Player {
+public class  Player {
 
     private String name;
 
