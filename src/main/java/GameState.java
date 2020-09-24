@@ -1,4 +1,3 @@
-package PACKAGE_NAME;
-
 public enum GameState {
+    START,PLAY,END
 }
