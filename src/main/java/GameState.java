@@ -1,3 +1,3 @@
 public enum GameState {
-    START,PLAY,END
+    START,PLAY,END,EXIT
 }

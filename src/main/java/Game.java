@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Game {
 
@@ -25,7 +27,7 @@ public class Game {
     public static void main(String[] args) {
 
         Game game = new Game(2);
-        while(game.state != GameState.END)
+        while(game.state != GameState.EXIT)
             game.process();
 
     }
@@ -68,6 +70,7 @@ public class Game {
             {
                 displayPlayersRanking();
                 System.out.println("Game has ended .. exiting");
+                state = GameState.EXIT;
                 break;
 
             }
@@ -115,6 +118,18 @@ public class Game {
 
 
     private void displayPlayersRanking() {
+
+        Player tmpWinner = playersArray.get(0);
+        for(Player player : playersArray) {
+            System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
+            if(player.getCoins() > tmpWinner.getCoins())
+                tmpWinner = player;
+        }
+
+        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getCoins());
+
+
+
     }
 
 
