@@ -118,8 +118,24 @@ public class Player {
 
         int currentVP = this.points.get(CardPoints.VICTORY);
         int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
-
         this.points.put(CardPoints.VICTORY, currentVP + cardVP);
+
+        int currentMP = this.points.get(CardPoints.MILITARY);
+        int cardMP = this.chosenCard.getCardPoints().get(CardPoints.MILITARY);
+        this.points.put(CardPoints.MILITARY, currentMP + cardMP);
+
+        int currentSWP = this.points.get(CardPoints.SCIENCE_WHEEL);
+        int cardSWP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_WHEEL);
+        this.points.put(CardPoints.SCIENCE_WHEEL, currentSWP + cardSWP);
+
+        int currentSTP = this.points.get(CardPoints.SCIENCE_TABLET);
+        int cardSTP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_TABLET);
+        this.points.put(CardPoints.SCIENCE_TABLET, currentSTP + cardSTP);
+
+        int currentSCP = this.points.get(CardPoints.SCIENCE_COMPASS);
+        int cardSCP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_COMPASS);
+        this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
+
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
     }
 }
