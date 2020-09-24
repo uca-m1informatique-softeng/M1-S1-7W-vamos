@@ -2,6 +2,8 @@ package Core;
 
 import java.util.ArrayList;
 
+import static Utility.Constante.*;
+
 public class Game {
 
     private int round = 1;
@@ -31,8 +33,6 @@ public class Game {
             game.process();
 
     }
-
-
 
     private void initPlayers()
     {
@@ -88,6 +88,41 @@ public class Game {
             player.chooseCard();
         for(Player player : this.playersArray)
             player.chooseAction();
+
+        this.tradeCards(this.currentAge);
+    }
+    private void tradeCards(int currentAge) {
+
+        for(int i = 0; i < playersArray.size(); i++) {
+
+            ArrayList<Card> tmpMain = playersArray.get(i).getHand();
+
+            if (currentAge % 2 == 1) {
+                //Clockwise trade
+
+                if (i == playersArray.size() - 1) {
+                    playersArray.get(i).setHand(playersArray.get(0).getHand());
+                    playersArray.get(0).setHand(tmpMain);
+                } else {
+                    playersArray.get(i).setHand(playersArray.get(i + 1).getHand());
+                    playersArray.get(i + 1).setHand(tmpMain);
+                }
+
+            } else {
+
+                //Counter clockwise
+                if (i == 0) {
+                    playersArray.get(0).setHand(playersArray.get(playersArray.size() - 1).getHand());
+                    playersArray.get(playersArray.size() - 1).setHand(tmpMain);
+                } else {
+                    playersArray.get(i).setHand(playersArray.get(i - 1).getHand());
+                    playersArray.get(i - 1).setHand(tmpMain);
+
+                }
+
+
+            }
+        }
     }
 
     private void processNewAge()
@@ -96,15 +131,15 @@ public class Game {
            player.initPlayerHand();
 
         System.out.println("Current age" + this.currentAge);
-        System.out.println("Each player drew 7 cards");
+        System.out.println("Each player drew " + MAX_HAND + "cards");
     }
 
 
     private void processEndAge()
     {
-        if(this.round == 6 && this.currentAge  == 3 )
+        if(this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
             this.state = GameState.END;
-        if(this.round == 6 && this.currentAge < 3)
+        if(this.round == 6 && this.currentAge < MAX_AGE)
         {
             for(Player player : this.playersArray)
                 player.getHand().clear();
