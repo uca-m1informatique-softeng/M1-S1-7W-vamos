@@ -90,7 +90,8 @@ public class Card {
 
                     // value of card = output that the player receives when playing the card
                     CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
-                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());                    this.cardPoints.put(cardPointKey, cardPointValue);
+                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
+                    this.cardPoints.put(cardPointKey, cardPointValue);
 
                     // cost for a card (if any)
                     if(card.getJSONObject(i).has("cost")) {
@@ -125,6 +126,42 @@ public class Card {
                             }
 
                             this.cost.put(key, value);
+                        }
+                    }
+
+                    // resource given by a card (if any)
+                    if(card.getJSONObject(i).has("resource")) {
+                        for (int k = 0; k < card.getJSONObject(i).getJSONArray("resource").length(); k++) {
+
+                            String keyStr = card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).keys().next();
+                            Resource key = Resource.STONE; // Default case
+                            int value = card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).keys().next());
+
+                            switch (keyStr) {
+                                case "WOOD" :
+                                    key = Resource.WOOD;
+                                    break;
+                                case "STONE" :
+                                    key = Resource.STONE;
+                                    break;
+                                case "ORE" :
+                                    key = Resource.ORE;
+                                    break;
+                                case "CLAY" :
+                                    key = Resource.CLAY;
+                                    break;
+                                case "GLASS" :
+                                    key = Resource.GLASS;
+                                    break;
+                                case "LOOM" :
+                                    key = Resource.LOOM;
+                                    break;
+                                case "PAPYRUS" :
+                                    key = Resource.PAPYRUS;
+                                    break;
+                            }
+
+                            this.resource.put(key, value);
                         }
                     }
 
