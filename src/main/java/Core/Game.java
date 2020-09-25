@@ -26,13 +26,13 @@ public class Game {
         Game.playersArray = new ArrayList<>(players);
         this.initPlayers();
         Game.state = GameState.START;
-        this.deck = new ArrayList<Card>();
+        this.deck = new ArrayList<>();
 
     }
 
     public static void main(String[] args) {
 
-        Game game = new Game(2);
+        Game game = new Game(3);
         while(Game.state != GameState.EXIT)
             game.process();
 
@@ -41,6 +41,7 @@ public class Game {
     private void initDeck() {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(Game.currentAge);
+        System.out.println("stack size : " + stack.size());
 
         for (int i = 0; i < MAX_HAND*Game.players; i++) {
             Card c = stack.remove(0);
@@ -141,6 +142,7 @@ public class Game {
 
     private void processNewAge()
     {
+        initDeck();
         initPlayersHand();
         System.out.println("Current age" + Game.currentAge);
         System.out.println("Each player drew " + MAX_HAND + "cards");
