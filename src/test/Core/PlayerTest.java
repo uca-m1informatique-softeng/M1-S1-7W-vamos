@@ -1,18 +1,16 @@
 package Core;
 
 import java.util.ArrayList;
-
+import java.util.Random;
 import Core.Card;
 import Core.Player;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+import org.mockito.Mock;
 
 public class PlayerTest {
-    private String name;
     private Card chosenCard;
     private int coins;
     private int points;
@@ -85,5 +83,23 @@ public class PlayerTest {
     }
 
 
+    @Test
+    public void chooseCard(){
+        assertEquals(player.getChosenCard(),chosenCard);
+    }
+
+
+    @Test
+    public void playCard(){
+        chosenCard=new Card();
+        player.setChosenCard(chosenCard);
+        player.playCard();
+
+        ArrayList<Card> hand = new ArrayList<>(6);
+        hand.add(chosenCard);
+        hand.remove(chosenCard);
+
+        assertEquals(hand,player.getHand());
+    }
 
 }

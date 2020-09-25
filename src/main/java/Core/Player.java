@@ -18,6 +18,8 @@ public class  Player {
 
     private ArrayList<Card> hand = new ArrayList<>(7);
 
+    Random rand = new Random();
+
     public Player(String name) {
         this.name = name;
         System.out.println("Core.Player " + name +  " joined the game!");
@@ -69,7 +71,6 @@ public class  Player {
     }
 
     public void chooseAction(){
-        Random rand = new Random();
         int rand_int1 = rand.nextInt(1000);
         if(rand_int1 % 2 == 0) {
             hand.remove(chosenCard);
@@ -81,8 +82,9 @@ public class  Player {
             playCard();
     }
 
-    private void playCard() {
+    public void playCard() {
         hand.remove(chosenCard);
         System.out.println(name + " played the card");
     }
+
 }
