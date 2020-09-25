@@ -7,7 +7,8 @@ public class CardManager {
 
     public static void main(String[] args) {
 
-        ArrayList<Card> cards = CardManager.parseCardFiles(3);
+        ArrayList<Card> cards = CardManager.getAgeNDeck(1);
+        System.out.println(cards.size());
 
     }
 
@@ -26,7 +27,7 @@ public class CardManager {
             } else if (listOfFiles[i].isDirectory()) {
                 fileName = listOfFiles[i].getName();
             }
-            if(fileName.equals("")) {
+            if(!fileName.equals("")) {
                 // number of players is just a test
                 try {
                     Card card = new Card(fileName.replace(".json",""), players);
@@ -42,7 +43,7 @@ public class CardManager {
     }
 
     public static ArrayList<Card> getAgeNDeck(int age) {
-        ArrayList<Card> cards = CardManager.parseCardFiles(Game.getPlayers());
+        ArrayList<Card> cards = CardManager.parseCardFiles(3);
         ArrayList<Card> res = new ArrayList<>();
 
         for (Card c : cards) {
