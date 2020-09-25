@@ -49,13 +49,13 @@ public class PlayerTest {
 
     @Test
     public void getPoints(){
-        assertEquals(0,player.getPoints());
+        assertEquals(0,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
     public void setPoints(){
-        player.setPoints(7);
-        assertEquals(7,player.getPoints());
+        player.getPoints().put(CardPoints.VICTORY, 7);
+        assertEquals(7,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class PlayerTest {
     public void playCard(){
         chosenCard=new Card();
         player.setChosenCard(chosenCard);
-        player.playCard();
+        player.buildCard();
 
         ArrayList<Card> hand = new ArrayList<>(6);
         hand.add(chosenCard);

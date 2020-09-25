@@ -105,14 +105,14 @@ public class Player {
             this.buildCard();
     }
 
-    private void dumpCard() {
+    public void dumpCard() {
         this.hand.remove(this.chosenCard);
         System.out.println(this.name + "has now " + this.hand.size() + " cards in hand");
         System.out.println(this.name + " has obtained 3 coins for tossing");
         this.coins += 3;
     }
 
-    private void buildCard() {
+    public void buildCard() {
         this.hand.remove(this.chosenCard);
         this.builtCards.add(this.chosenCard);
 
