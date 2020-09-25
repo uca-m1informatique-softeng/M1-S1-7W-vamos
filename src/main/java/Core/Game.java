@@ -6,7 +6,6 @@ import static Utility.Constante.*;
 
 public class Game {
 
-
     private static int round = 1;
 
     private static int players;
@@ -20,8 +19,16 @@ public class Game {
     private ArrayList<Card> deck;
 
 
-    public Game (int players)
-    {
+    public static void main(String[] args) {
+
+        Game game = new Game(3);
+        while(Game.state != GameState.EXIT)
+            game.process();
+
+    }
+
+
+    public Game (int players) {
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
         this.initPlayers();
@@ -30,13 +37,19 @@ public class Game {
 
     }
 
-    public static void main(String[] args) {
 
-        Game game = new Game(3);
-        while(Game.state != GameState.EXIT)
-            game.process();
-
+    public static int getCurrentAge() {
+        return currentAge;
     }
+
+    public static ArrayList<Player> getPlayersArray() {
+        return playersArray;
+    }
+
+    public static GameState getState() {
+        return state;
+    }
+
 
     private void initDeck() {
 
@@ -49,8 +62,7 @@ public class Game {
         }
     }
 
-    private void initPlayers()
-    {
+    private void initPlayers() {
         for(int i = 0; i < players; i++)
             Game.playersArray.add(new Player("Bot" + i));
 
@@ -58,8 +70,7 @@ public class Game {
         System.out.println(players + " players have been initialized");
     }
 
-    private void process()
-    {
+    private void process() {
         switch (Game.state)
         {
             case START:
@@ -106,6 +117,7 @@ public class Game {
 
         this.tradeCards(Game.currentAge);
     }
+
     private void tradeCards(int currentAge) {
 
         for(int i = 0; i < playersArray.size(); i++) {
@@ -140,17 +152,14 @@ public class Game {
         }
     }
 
-    private void processNewAge()
-    {
+    private void processNewAge() {
         initDeck();
         initPlayersHand();
         System.out.println("Current age" + Game.currentAge);
         System.out.println("Each player drew " + MAX_HAND + "cards");
     }
 
-
-    private void processEndAge()
-    {
+    private void processEndAge() {
         if(Game.round == MAX_ROUNDS && Game.currentAge  == MAX_AGE )
             Game.state = GameState.END;
         if(Game.round == 6 && Game.currentAge < MAX_AGE)
@@ -195,16 +204,4 @@ public class Game {
                 player.getHand().add(this.deck.remove(0));
     }
 
-
-    public static int getCurrentAge() {
-        return currentAge;
-    }
-
-    public static ArrayList<Player> getPlayersArray() {
-        return playersArray;
-    }
-
-    public static GameState getState() {
-        return state;
-    }
 }
