@@ -40,8 +40,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source> <!-- éventuellement à changer : version de java -->
-                    <target>1.8</target> <!-- éventuellement à changer : version de java -->
+                    <source>11</source> <!-- éventuellement à changer : version de java -->
+                    <target>11</target> <!-- éventuellement à changer : version de java -->
                 </configuration>
             </plugin>
 
