@@ -20,7 +20,7 @@ public class  Player {
 
     public Player(String name) {
         this.name = name;
-        System.out.println("Core.Player " + name +  " joined the game!");
+        System.out.println("Player " + name +  " joined the game!");
     }
 
     public String getName() {

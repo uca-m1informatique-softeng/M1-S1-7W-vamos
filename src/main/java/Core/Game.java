@@ -39,8 +39,27 @@ public class Game {
     }
 
     private void initDeck() {
+
+        ArrayList<Card> stack;
+
+        switch (Game.currentAge) {
+            case 1 :
+                stack = CardManager.getAgeIDeck();
+                break;
+            case 2 :
+                stack = CardManager.getAgeIIDeck();
+                break;
+            case 3 :
+                stack = CardManager.getAgeIIIDeck();
+                break;
+            default :
+                throw new IllegalStateException("Age is not legal !");
+                break;
+        }
+
         for (int i = 0; i < MAX_HAND*Game.players; i++) {
-            this.deck.add(null);
+            Card c = stack.remove(0);
+            this.deck.add(c);
         }
     }
 
