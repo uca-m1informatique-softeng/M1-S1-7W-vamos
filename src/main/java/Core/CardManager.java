@@ -16,10 +16,10 @@ public class CardManager {
                 fileName = listOfFiles[i].getName();
             }
             if(fileName != "") {
-                Card card = new Card(fileName.replace(".json",""), 3, CardColor.BLUE);
+                // number of players is just a test
+                Card card = new Card(fileName.replace(".json",""), 3);
             }
         }
-
     }
 
 }

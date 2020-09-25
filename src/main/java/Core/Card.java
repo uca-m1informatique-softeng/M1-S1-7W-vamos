@@ -20,20 +20,31 @@ public class Card {
     public Card() {
     }
 
-    public Card(String name, int players, CardColor color) throws IOException {
+    public Card(String name, int players) throws IOException {
         String content = Files.readString(Paths.get("src", "assets", "cards", "blue", "altar.json"));
         JSONArray card = new JSONArray(content);
         this.name = name;
         this.players = players;
-        this.color = color;
         if (card.length() > 0) {
             for (int i = 0; i < card.length(); i++) {
-                if (card.getJSONObject(i).getInt("players") == players) {
+                if (card.getJSONObject(i).getInt("players") <= players ) {
+                    // age
                     this.age = card.getJSONObject(i).getInt("age");
-                    this.cardPoints.put(CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next()), card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next()));
-                    for (int k = 0; i < card.getJSONObject(i).getJSONArray("cost").length(); i++) {
-                        this.cost.put(Resource.valueOf(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next()), card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next()));
+                    // value of card = output that the player receives when playing the card
+                    CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
+                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
+                    if(cardPointKey != null && cardPointValue != null) {
+                        this.cardPoints = new EnumMap<CardPoints, Integer>(CardPoints.class);
+                        this.cardPoints.put(cardPointKey, cardPointValue);
                     }
+                    // cost for a card (if any)
+                    if(card.getJSONObject(i).has("cost")) {
+                        for (int k = 0; i < card.getJSONObject(i).getJSONArray("cost").length(); i++) {
+                            this.cost.put(Resource.valueOf(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next()), card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next()));
+                        }
+                    }
+                    // card color
+                    this.color = CardColor.valueOf(card.getJSONObject(i).getString("CardColor"));
                 }
             }
         }
