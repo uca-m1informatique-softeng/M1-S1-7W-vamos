@@ -55,9 +55,31 @@ public class Card {
 
         this.name = name;
         this.players = players;
+
         this.cardPoints = new EnumMap<>(CardPoints.class);
+        this.cardPoints.put(CardPoints.VICTORY, 0);
+        this.cardPoints.put(CardPoints.MILITARY, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_WHEEL, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_TABLET, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_COMPASS, 0);
+
         this.resource = new EnumMap<>(Resource.class);
+        this.resource.put(Resource.WOOD, 0);
+        this.resource.put(Resource.STONE, 0);
+        this.resource.put(Resource.ORE, 0);
+        this.resource.put(Resource.CLAY, 0);
+        this.resource.put(Resource.GLASS, 0);
+        this.resource.put(Resource.LOOM, 0);
+        this.resource.put(Resource.PAPYRUS, 0);
+
         this.cost = new EnumMap<>(Resource.class);
+        this.cost.put(Resource.WOOD, 0);
+        this.cost.put(Resource.STONE, 0);
+        this.cost.put(Resource.ORE, 0);
+        this.cost.put(Resource.CLAY, 0);
+        this.cost.put(Resource.GLASS, 0);
+        this.cost.put(Resource.LOOM, 0);
+        this.cost.put(Resource.PAPYRUS, 0);
 
         if (card.length() > 0) {
             for (int i = 0; i < card.length(); i++) {
@@ -104,6 +126,42 @@ public class Card {
                             }
 
                             this.cost.put(key, value);
+                        }
+                    }
+
+                    // resource given by a card (if any)
+                    if(card.getJSONObject(i).has("resource")) {
+                        for (int k = 0; k < card.getJSONObject(i).getJSONArray("resource").length(); k++) {
+
+                            String keyStr = card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).keys().next();
+                            Resource key = Resource.STONE; // Default case
+                            int value = card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).keys().next());
+
+                            switch (keyStr) {
+                                case "WOOD" :
+                                    key = Resource.WOOD;
+                                    break;
+                                case "STONE" :
+                                    key = Resource.STONE;
+                                    break;
+                                case "ORE" :
+                                    key = Resource.ORE;
+                                    break;
+                                case "CLAY" :
+                                    key = Resource.CLAY;
+                                    break;
+                                case "GLASS" :
+                                    key = Resource.GLASS;
+                                    break;
+                                case "LOOM" :
+                                    key = Resource.LOOM;
+                                    break;
+                                case "PAPYRUS" :
+                                    key = Resource.PAPYRUS;
+                                    break;
+                            }
+
+                            this.resource.put(key, value);
                         }
                     }
 
