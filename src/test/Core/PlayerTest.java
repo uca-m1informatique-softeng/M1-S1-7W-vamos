@@ -1,5 +1,6 @@
 package Core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import Core.Card;
@@ -82,16 +83,18 @@ public class PlayerTest {
         assertEquals(hand2,player.getHand());
     }
 
-
     @Test
     public void chooseCard(){
         assertEquals(player.getChosenCard(),chosenCard);
     }
 
-
     @Test
     public void playCard(){
-        chosenCard=new Card();
+        try {
+            chosenCard = new Card("altar", 3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         player.setChosenCard(chosenCard);
         player.buildCard();
 
