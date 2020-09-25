@@ -190,8 +190,7 @@ public class Game {
     private void initPlayersHand() {
         for(Player player : playersArray)
             for(int i = 0; i < MAX_HAND; i++)
-                player.getHand().add(this.deck.get(0));
-                this.deck.remove(0);
+                player.getHand().add(this.deck.remove(0));
     }
 
 
