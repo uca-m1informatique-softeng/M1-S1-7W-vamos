@@ -2,6 +2,7 @@ package Core;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CardManager {
 
@@ -43,7 +44,9 @@ public class CardManager {
     }
 
     public static ArrayList<Card> getAgeNDeck(int age) {
-        ArrayList<Card> cards = CardManager.parseCardFiles(3);
+
+        // Maximum amount of players since number of players isn't implemented yet
+        ArrayList<Card> cards = CardManager.parseCardFiles(7);
         ArrayList<Card> res = new ArrayList<>();
 
         for (Card c : cards) {
@@ -52,6 +55,7 @@ public class CardManager {
             }
         }
 
+        Collections.shuffle(res);
         return res;
     }
 
