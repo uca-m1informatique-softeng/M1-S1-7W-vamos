@@ -55,9 +55,31 @@ public class Card {
 
         this.name = name;
         this.players = players;
+
         this.cardPoints = new EnumMap<>(CardPoints.class);
+        this.cardPoints.put(CardPoints.VICTORY, 0);
+        this.cardPoints.put(CardPoints.MILITARY, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_WHEEL, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_TABLET, 0);
+        this.cardPoints.put(CardPoints.SCIENCE_COMPASS, 0);
+
         this.resource = new EnumMap<>(Resource.class);
+        this.resource.put(Resource.WOOD, 0);
+        this.resource.put(Resource.STONE, 0);
+        this.resource.put(Resource.ORE, 0);
+        this.resource.put(Resource.CLAY, 0);
+        this.resource.put(Resource.GLASS, 0);
+        this.resource.put(Resource.LOOM, 0);
+        this.resource.put(Resource.PAPYRUS, 0);
+
         this.cost = new EnumMap<>(Resource.class);
+        this.cost.put(Resource.WOOD, 0);
+        this.cost.put(Resource.STONE, 0);
+        this.cost.put(Resource.ORE, 0);
+        this.cost.put(Resource.CLAY, 0);
+        this.cost.put(Resource.GLASS, 0);
+        this.cost.put(Resource.LOOM, 0);
+        this.cost.put(Resource.PAPYRUS, 0);
 
         if (card.length() > 0) {
             for (int i = 0; i < card.length(); i++) {
@@ -68,8 +90,7 @@ public class Card {
 
                     // value of card = output that the player receives when playing the card
                     CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
-                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
-                    this.cardPoints.put(cardPointKey, cardPointValue);
+                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());                    this.cardPoints.put(cardPointKey, cardPointValue);
 
                     // cost for a card (if any)
                     if(card.getJSONObject(i).has("cost")) {
