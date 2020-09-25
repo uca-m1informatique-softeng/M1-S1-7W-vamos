@@ -41,4 +41,17 @@ public class CardManager {
 
     }
 
+    public static ArrayList<Card> getAgeNDeck(int age) {
+        ArrayList<Card> cards = CardManager.parseCardFiles(Game.getPlayers());
+        ArrayList<Card> res = new ArrayList<>();
+
+        for (Card c : cards) {
+            if (c.getAge() == age) {
+                res.add(c);
+            }
+        }
+
+        return res;
+    }
+
 }
