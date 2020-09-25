@@ -1,25 +1,44 @@
 package Core;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CardManager {
-    public static void main(String[] args) throws IOException {
-        File folder = new File("src/assets/cards/blue");
+
+    public static void main(String[] args) {
+
+        ArrayList<Card> cards = CardManager.parseCardFiles(3);
+
+    }
+
+    private static ArrayList<Card> parseCardFiles(int players) {
+
+        ArrayList<Card> cards = new ArrayList<>();
+
+        File folder = new File("src/assets/cards");
+
         File[] listOfFiles = folder.listFiles();
         String fileName = "";
+
         for (int i = 0; i < listOfFiles.length; i++) {
             if (listOfFiles[i].isFile() && !listOfFiles[i].getName().contains(".DS_Store")) {
-                System.out.println("File " + listOfFiles[i].getName());
                 fileName = listOfFiles[i].getName();
             } else if (listOfFiles[i].isDirectory()) {
-                System.out.println("Directory " + listOfFiles[i].getName());
                 fileName = listOfFiles[i].getName();
             }
-            if(fileName != "") {
+            if(fileName.equals("")) {
                 // number of players is just a test
-                Card card = new Card(fileName.replace(".json",""), 3);
+                try {
+                    Card card = new Card(fileName.replace(".json",""), players);
+                    cards.add(card);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
+
+        return cards;
+
     }
 
 }
