@@ -15,22 +15,6 @@ public class Player {
 
     private int coins;
 
-    public EnumMap<CardPoints, Integer> getPoints() {
-        return points;
-    }
-
-    public void setPoints(EnumMap<CardPoints, Integer> points) {
-        this.points = points;
-    }
-
-    public ArrayList<Card> getBuiltCards() {
-        return builtCards;
-    }
-
-    public void setBuiltCards(ArrayList<Card> builtCards) {
-        this.builtCards = builtCards;
-    }
-
     private EnumMap<CardPoints, Integer> points;
 
     private ArrayList<Card> hand;
@@ -85,9 +69,12 @@ public class Player {
         this.chosenCard = chosenCard;
     }
 
-    public void initPlayerHand(){
-        for(int i = 0; i < MAX_HAND ; i++)
-            hand.add(null);
+    public EnumMap<CardPoints, Integer> getPoints() {
+        return points;
+    }
+
+    public ArrayList<Card> getBuiltCards() {
+        return builtCards;
     }
 
     public void chooseCard(){
@@ -113,7 +100,6 @@ public class Player {
     }
 
     public void buildCard() {
-        this.hand.remove(this.chosenCard);
         this.builtCards.add(this.chosenCard);
 
         int currentVP = this.points.get(CardPoints.VICTORY);
@@ -135,6 +121,8 @@ public class Player {
         int currentSCP = this.points.get(CardPoints.SCIENCE_COMPASS);
         int cardSCP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_COMPASS);
         this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
+
+        this.hand.remove(this.chosenCard);
 
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
     }

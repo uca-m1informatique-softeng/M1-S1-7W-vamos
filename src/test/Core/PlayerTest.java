@@ -23,7 +23,7 @@ public class PlayerTest {
         coins=0;
         points=0;
         hand = new ArrayList<>(7);
-        player=new Player("Robot");
+        player = new Player("Robot");
     }
 
     @Test
@@ -89,20 +89,24 @@ public class PlayerTest {
     }
 
     @Test
-    public void playCard(){
+    public void buildCard() {
         try {
             chosenCard = new Card("altar", 3);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        int oldVP = player.getPoints().get(CardPoints.VICTORY);
+
+        ArrayList<Card> hand = new ArrayList<>();
+        hand.add(chosenCard);
+        player.setHand(hand);
         player.setChosenCard(chosenCard);
         player.buildCard();
 
-        ArrayList<Card> hand = new ArrayList<>(6);
-        hand.add(chosenCard);
-        hand.remove(chosenCard);
+        int newVP = player.getPoints().get(CardPoints.VICTORY);
 
-        assertEquals(hand,player.getHand());
+        assertTrue(player.getBuiltCards().contains(chosenCard) && newVP > oldVP);
     }
 
 }
