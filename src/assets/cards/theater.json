@@ -1,0 +1,20 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BLUE",
+    "cardPoints": {
+      "VICTORY": 2
+    },
+    "name": "theater",
+    "players": 3
+  },
+  {
+    "age": 1,
+    "CardColor": "BLUE",
+    "cardPoints": {
+      "VICTORY": 2
+    },
+    "name": "theater",
+    "players": 6
+  }
+]

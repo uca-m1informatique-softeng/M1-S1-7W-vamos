@@ -1,5 +1,6 @@
 package Core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import Core.Card;
@@ -22,7 +23,7 @@ public class PlayerTest {
         coins=0;
         points=0;
         hand = new ArrayList<>(7);
-        player=new Player("Robot");
+        player = new Player("Robot");
     }
 
     @Test
@@ -49,13 +50,13 @@ public class PlayerTest {
 
     @Test
     public void getPoints(){
-        assertEquals(0,player.getPoints());
+        assertEquals(0,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
     public void setPoints(){
-        player.setPoints(7);
-        assertEquals(7,player.getPoints());
+        player.getPoints().put(CardPoints.VICTORY, 7);
+        assertEquals(7,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
@@ -82,24 +83,30 @@ public class PlayerTest {
         assertEquals(hand2,player.getHand());
     }
 
-
     @Test
     public void chooseCard(){
         assertEquals(player.getChosenCard(),chosenCard);
     }
 
-
     @Test
-    public void playCard(){
-        chosenCard=new Card();
-        player.setChosenCard(chosenCard);
-        player.playCard();
+    public void buildCard() {
+        try {
+            chosenCard = new Card("altar", 3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ArrayList<Card> hand = new ArrayList<>(6);
+        int oldVP = player.getPoints().get(CardPoints.VICTORY);
+
+        ArrayList<Card> hand = new ArrayList<>();
         hand.add(chosenCard);
-        hand.remove(chosenCard);
+        player.setHand(hand);
+        player.setChosenCard(chosenCard);
+        player.buildCard();
 
-        assertEquals(hand,player.getHand());
+        int newVP = player.getPoints().get(CardPoints.VICTORY);
+
+        assertTrue(player.getBuiltCards().contains(chosenCard) && newVP > oldVP);
     }
 
 }
