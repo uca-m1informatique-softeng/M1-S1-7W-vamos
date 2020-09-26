@@ -45,9 +45,6 @@ public class Card {
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
 
-    public Card() {
-    }
-
     public Card(String name, int players) throws IOException {
 
         String content = Files.readString(Paths.get("src", "assets", "cards", name + ".json"));
