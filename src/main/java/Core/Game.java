@@ -1,6 +1,7 @@
 package Core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static Utility.Constante.*;
 
@@ -54,12 +55,22 @@ public class Game {
     private void initDeck() {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(Game.currentAge);
+        for(int i = stack.size(); i < MAX_HAND * players;i++ )
+             stack.add(stack.get(0));
         System.out.println("stack size : " + stack.size());
+        this.deck = stack;
 
-        for (int i = 0; i < MAX_HAND*Game.players; i++) {
-            Card c = stack.remove(0);
-            this.deck.add(c);
-        }
+       // stack.clear();
+       // System.out.println(deck.size());
+        /*   for (int i = 0; i < stack.size(); i++) {
+            if(!stack.isEmpty()) {
+                Card c = stack.remove(0);
+                System.out.println(stack.size());
+                this.deck.add(c);
+                System.out.println(stack);
+                System.out.println("card added");
+            }
+        }*/
     }
 
     private void initPlayers() {
