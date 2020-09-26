@@ -17,6 +17,8 @@ public class Player {
 
     private EnumMap<CardPoints, Integer> points;
 
+    private EnumMap<Resource,Integer> resources;
+
     private ArrayList<Card> hand;
 
     private ArrayList<Card> builtCards;
@@ -30,6 +32,15 @@ public class Player {
         this.points.put(CardPoints.SCIENCE_COMPASS, 0);
         this.points.put(CardPoints.SCIENCE_TABLET, 0);
         this.points.put(CardPoints.SCIENCE_WHEEL, 0);
+
+        this.resources=new EnumMap<Resource, Integer>(Resource.class);
+        this.resources.put(Resource.WOOD,0);
+        this.resources.put(Resource.STONE,0);
+        this.resources.put(Resource.ORE,0);
+        this.resources.put(Resource.CLAY,0);
+        this.resources.put(Resource.GLASS,0);
+        this.resources.put(Resource.LOOM,0);
+        this.resources.put(Resource.PAPYRUS,0);
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
@@ -100,30 +111,72 @@ public class Player {
     }
 
     public void buildCard() {
-        this.builtCards.add(this.chosenCard);
+        Boolean enoughResources=true ;
+        for(Resource resource : this.chosenCard.getCost().keySet()){
+            if(this.chosenCard.getCost().get(resource) > this.resources.get(resource)){
+                enoughResources=false ;
+            }
+        }
 
-        int currentVP = this.points.get(CardPoints.VICTORY);
-        int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
-        this.points.put(CardPoints.VICTORY, currentVP + cardVP);
+        if (enoughResources){
+            this.builtCards.add(this.chosenCard);
 
-        int currentMP = this.points.get(CardPoints.MILITARY);
-        int cardMP = this.chosenCard.getCardPoints().get(CardPoints.MILITARY);
-        this.points.put(CardPoints.MILITARY, currentMP + cardMP);
+            //points given by a card
+            int currentVP = this.points.get(CardPoints.VICTORY);
+            int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
+            this.points.put(CardPoints.VICTORY, currentVP + cardVP);
 
-        int currentSWP = this.points.get(CardPoints.SCIENCE_WHEEL);
-        int cardSWP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_WHEEL);
-        this.points.put(CardPoints.SCIENCE_WHEEL, currentSWP + cardSWP);
+            int currentMP = this.points.get(CardPoints.MILITARY);
+            int cardMP = this.chosenCard.getCardPoints().get(CardPoints.MILITARY);
+            this.points.put(CardPoints.MILITARY, currentMP + cardMP);
 
-        int currentSTP = this.points.get(CardPoints.SCIENCE_TABLET);
-        int cardSTP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_TABLET);
-        this.points.put(CardPoints.SCIENCE_TABLET, currentSTP + cardSTP);
+            int currentSWP = this.points.get(CardPoints.SCIENCE_WHEEL);
+            int cardSWP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_WHEEL);
+            this.points.put(CardPoints.SCIENCE_WHEEL, currentSWP + cardSWP);
 
-        int currentSCP = this.points.get(CardPoints.SCIENCE_COMPASS);
-        int cardSCP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_COMPASS);
-        this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
+            int currentSTP = this.points.get(CardPoints.SCIENCE_TABLET);
+            int cardSTP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_TABLET);
+            this.points.put(CardPoints.SCIENCE_TABLET, currentSTP + cardSTP);
 
-        this.hand.remove(this.chosenCard);
+            int currentSCP = this.points.get(CardPoints.SCIENCE_COMPASS);
+            int cardSCP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_COMPASS);
+            this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
 
-        System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+            //adding resource(s) if the card gives a ressource(s)
+            int currentWOOD=this.resources.get(Resource.WOOD);
+            int cardWOOD=this.chosenCard.getResource().get(Resource.WOOD);
+            this.resources.put(Resource.WOOD, currentWOOD + cardWOOD);
+
+            int currentSTONE=this.resources.get(Resource.STONE);
+            int cardSTONE=this.chosenCard.getResource().get(Resource.STONE);
+            this.resources.put(Resource.STONE, currentSTONE + cardSTONE);
+
+            int currentORE=this.resources.get(Resource.ORE);
+            int cardORE=this.chosenCard.getResource().get(Resource.ORE);
+            this.resources.put(Resource.ORE, currentORE + cardORE);
+
+            int currentCLAY=this.resources.get(Resource.CLAY);
+            int cardCLAY=this.chosenCard.getResource().get(Resource.CLAY);
+            this.resources.put(Resource.CLAY, currentCLAY + cardCLAY);
+
+            int currentGLASS=this.resources.get(Resource.GLASS);
+            int cardGLASS=this.chosenCard.getResource().get(Resource.GLASS);
+            this.resources.put(Resource.GLASS, currentGLASS + cardGLASS);
+
+            int currentLOOM=this.resources.get(Resource.LOOM);
+            int cardLOOM=this.chosenCard.getResource().get(Resource.LOOM);
+            this.resources.put(Resource.LOOM, currentLOOM + cardLOOM);
+
+            int currentPAPYRUS=this.resources.get(Resource.PAPYRUS);
+            int cardPAPYRUS=this.chosenCard.getResource().get(Resource.PAPYRUS);
+            this.resources.put(Resource.PAPYRUS, currentPAPYRUS + cardPAPYRUS);
+
+            this.hand.remove(this.chosenCard);
+
+            System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+        }
+
+
+
     }
 }
