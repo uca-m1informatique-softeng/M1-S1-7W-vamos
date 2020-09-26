@@ -9,34 +9,6 @@ import java.util.EnumMap;
 
 public class Card {
 
-    public String getName() {
-        return name;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public int getPlayers() {
-        return players;
-    }
-
-    public EnumMap<CardPoints, Integer> getCardPoints() {
-        return cardPoints;
-    }
-
-    public EnumMap<Resource, Integer> getResource() {
-        return resource;
-    }
-
-    public EnumMap<Resource, Integer> getCost() {
-        return cost;
-    }
-
     private String name;
     private CardColor color;
     private int age;
@@ -44,6 +16,7 @@ public class Card {
     private EnumMap<CardPoints, Integer> cardPoints;
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
+
 
     public Card(String name, int players) throws IOException {
 
@@ -167,5 +140,33 @@ public class Card {
                 }
             }
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CardColor getColor() {
+        return color;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getPlayers() {
+        return players;
+    }
+
+    public EnumMap<CardPoints, Integer> getCardPoints() {
+        return cardPoints;
+    }
+
+    public EnumMap<Resource, Integer> getResource() {
+        return resource;
+    }
+
+    public EnumMap<Resource, Integer> getCost() {
+        return cost;
     }
 }
