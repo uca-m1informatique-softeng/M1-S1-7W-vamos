@@ -95,7 +95,9 @@ public class Player {
 
     public int getMilitaryPoints() { return this.militaryPoints; }
 
-    public void addMilitaryPoints(int mp) { this.militaryPoints += mp; }
+    public void addMilitaryPoints(int mp) {
+        this.militaryPoints += mp;
+    }
 
 
     public void chooseCard(){
