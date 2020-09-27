@@ -25,6 +25,7 @@ public class Player {
 
     protected Tray tray;
 
+
     public Player(String name) {
         this.name = name;
 
@@ -90,6 +91,7 @@ public class Player {
     public ArrayList<Card> getBuiltCards() {
         return builtCards;
     }
+
 
     public void chooseCard(){
         Collections.shuffle(hand);
@@ -183,27 +185,21 @@ public class Player {
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
     }
 
-    protected int countScience(){
-        int size = tray.getBuiltCards().size();
-        int SCIENCE_WHEEL = 0;
-        int SCIENCE_TABLET = 0;
-        int SCIENCE_COMPASS = 0;
+    public int computeScore() {
         int res = 0;
-        int set = 0;
-        for(int i = 0; i < size; i++) {
-            if (tray.getBuiltCards().get(i).getColor() == CardColor.GREEN) {
-                SCIENCE_WHEEL += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_WHEEL);
-                SCIENCE_TABLET += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_TABLET);
-                SCIENCE_COMPASS += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_COMPASS);
-            }
-        }
-        set = Math.min(SCIENCE_WHEEL, Math.min(SCIENCE_TABLET, SCIENCE_COMPASS)) * 7;
-        res = SCIENCE_WHEEL * SCIENCE_WHEEL + SCIENCE_TABLET * SCIENCE_TABLET + SCIENCE_COMPASS * SCIENCE_COMPASS;
-        return res + set;
-    }
 
-    public int getSciencePoint() {
-        return countScience();
-    }
+        // Military placeholder
+        // Treasury Contents
+        res += this.coins/3;
+        // Civilian Structures and Wonders
+        res += this.getPoints().get(CardPoints.VICTORY);
+        // Science score
+        res += this.getPoints().get(CardPoints.SCIENCE_WHEEL)* this.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        res += this.getPoints().get(CardPoints.SCIENCE_COMPASS)*this.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        res += this.getPoints().get(CardPoints.SCIENCE_TABLET)*this.getPoints().get(CardPoints.SCIENCE_TABLET);
+        // Sets of different symbols
+        res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
 
+        return res;
+    }
 }
