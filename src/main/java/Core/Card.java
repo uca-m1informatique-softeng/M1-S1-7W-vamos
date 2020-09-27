@@ -20,7 +20,6 @@ public class Card {
 
 
     public Card(String name, int players) throws IOException {
-
         String content = Files.readString(Paths.get("src", "assets", "cards", name + ".json"));
         JSONArray card = new JSONArray(content);
 
@@ -42,6 +41,7 @@ public class Card {
         this.resource.put(Resource.GLASS, 0);
         this.resource.put(Resource.LOOM, 0);
         this.resource.put(Resource.PAPYRUS, 0);
+        this.resource.put(Resource.COIN, 0);
 
         this.cost = new EnumMap<>(Resource.class);
         this.cost.put(Resource.WOOD, 0);
@@ -51,6 +51,7 @@ public class Card {
         this.cost.put(Resource.GLASS, 0);
         this.cost.put(Resource.LOOM, 0);
         this.cost.put(Resource.PAPYRUS, 0);
+        this.cost.put(Resource.COIN, 0);
 
         if (card.length() > 0) {
             for (int i = 0; i < card.length(); i++) {
@@ -60,9 +61,11 @@ public class Card {
                     this.age = card.getJSONObject(i).getInt("age");
 
                     // value of card = output that the player receives when playing the card
-                    CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
-                    Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
-                    this.cardPoints.put(cardPointKey, cardPointValue);
+                    if(card.getJSONObject(i).has("cardPoints")) {
+                        CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
+                        Integer cardPointValue = card.getJSONObject(i).getJSONObject("cardPoints").getInt(card.getJSONObject(i).getJSONObject("cardPoints").keys().next());
+                        this.cardPoints.put(cardPointKey, cardPointValue);
+                    }
 
                     // cost for a card (if any)
                     if(card.getJSONObject(i).has("cost")) {
@@ -93,6 +96,9 @@ public class Card {
                                     break;
                                 case "PAPYRUS" :
                                     key = Resource.PAPYRUS;
+                                    break;
+                                case "COIN" :
+                                    key = Resource.COIN;
                                     break;
                             }
 
@@ -129,6 +135,9 @@ public class Card {
                                     break;
                                 case "PAPYRUS" :
                                     key = Resource.PAPYRUS;
+                                    break;
+                                case "COIN" :
+                                    key = Resource.COIN;
                                     break;
                             }
 

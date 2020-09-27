@@ -1,0 +1,20 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "resource": {
+      "STONE": 1
+    },
+    "name": "stone pit",
+    "players": 3
+  },
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "resource": {
+      "STONE": 1
+    },
+    "name": "stone pit",
+    "players": 5
+  }
+]

@@ -46,6 +46,7 @@ public class Player {
         this.resources.put(Resource.GLASS,0);
         this.resources.put(Resource.LOOM,0);
         this.resources.put(Resource.PAPYRUS,0);
+        this.resources.put(Resource.COIN, 0);
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();

@@ -1,0 +1,42 @@
+[
+  {
+    "age": 3,
+    "CardColor": "BLUE",
+    "cardPoints": {
+      "VICTORY": 6
+    },
+    "cost": [
+      {
+        "STONE": 1
+      },
+      {
+        "WOOD": 2
+      },
+      {
+        "ORE": 1
+      }
+    ],
+    "name": "senate",
+    "players": 3
+  },
+  {
+    "age": 3,
+    "CardColor": "BLUE",
+    "cardPoints": {
+      "VICTORY": 6
+    },
+    "cost": [
+      {
+        "STONE": 1
+      },
+      {
+        "WOOD": 2
+      },
+      {
+        "ORE": 1
+      }
+    ],
+    "name": "senate",
+    "players": 5
+  }
+]
