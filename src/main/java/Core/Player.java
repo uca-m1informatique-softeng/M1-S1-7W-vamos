@@ -193,7 +193,8 @@ public class Player {
     public int computeScore() {
         int res = 0;
 
-        // Military placeholder
+        // Military points
+        res += this.militaryPoints;
         // Treasury Contents
         res += this.coins/3;
         // Civilian Structures and Wonders
