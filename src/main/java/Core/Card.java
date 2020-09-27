@@ -1,41 +1,14 @@
 package Core;
 
-import java.io.IOException;
-import java.nio.file.*;
-
 import org.json.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.EnumMap;
 
 public class Card {
-
-    public String getName() {
-        return name;
-    }
-
-    public CardColor getColor() {
-        return color;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public int getPlayers() {
-        return players;
-    }
-
-    public EnumMap<CardPoints, Integer> getCardPoints() {
-        return cardPoints;
-    }
-
-    public EnumMap<Resource, Integer> getResource() {
-        return resource;
-    }
-
-    public EnumMap<Resource, Integer> getCost() {
-        return cost;
-    }
 
     private String name;
     private CardColor color;
@@ -45,8 +18,6 @@ public class Card {
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
 
-    public Card() {
-    }
 
     public Card(String name, int players) throws IOException {
 
@@ -170,5 +141,40 @@ public class Card {
                 }
             }
         }
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CardColor getColor() {
+        return color;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getPlayers() {
+        return players;
+    }
+
+    public EnumMap<CardPoints, Integer> getCardPoints() {
+        return cardPoints;
+    }
+
+    public EnumMap<Resource, Integer> getResource() {
+        return resource;
+    }
+
+    public EnumMap<Resource, Integer> getCost() {
+        return cost;
+    }
+
+    public Boolean isFree(){
+      for(Integer cost : resource.values())
+          if(cost > 0) return false;
+      return true;
     }
 }

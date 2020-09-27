@@ -66,9 +66,13 @@ public class PlayerTest {
 
     @Test
     public void setChosenCard(){
-        Card card=new Card();
-        player.setChosenCard(card);
-        assertEquals(card,player.getChosenCard());
+        try {
+            Card card = new Card("altar", 3);;
+            player.setChosenCard(card);
+            assertEquals(card,player.getChosenCard());
+        } catch (IOException e) {
+            assertTrue(false);
+        }
     }
 
     @Test

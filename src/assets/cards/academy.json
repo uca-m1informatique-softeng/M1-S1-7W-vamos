@@ -1,0 +1,20 @@
+[
+  {
+    "age": 3,
+    "CardColor": "GREEN",
+    "cardPoints": {
+      "SCIENCE_COMPASS": 1
+    },
+    "name": "lodge",
+    "players": 3
+  },
+  {
+    "age": 3,
+    "CardColor": "GREEN",
+    "cardPoints": {
+      "SCIENCE_COMPASS": 1
+    },
+    "name": "lodge",
+    "players": 7
+  }
+]
