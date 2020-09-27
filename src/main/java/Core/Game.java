@@ -170,6 +170,8 @@ public class Game {
     }
 
     private void processEndAge() {
+        this.battle();
+
         if (Game.round == MAX_ROUNDS && Game.currentAge  == MAX_AGE )
             Game.state = GameState.END;
 
