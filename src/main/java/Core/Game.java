@@ -189,14 +189,13 @@ public class Game {
         Player tmpWinner = players.remove(0);
 
         for(Player p : players) {
-            if (p.getPoints().get(CardPoints.VICTORY) > tmpWinner.getPoints().get(CardPoints.VICTORY)) {
+            if  (p.computeScore() > tmpWinner.computeScore() ||
+                (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
-            } else if (p.getPoints().get(CardPoints.VICTORY) == tmpWinner.getPoints().get(CardPoints.VICTORY)) {
-
             }
         }
 
-        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getCoins());
+        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
 
     }
 
