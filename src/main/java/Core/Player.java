@@ -15,6 +15,8 @@ public class Player {
 
     private int coins;
 
+    private int militaryPoints;
+
     private EnumMap<CardPoints, Integer> points;
 
     private EnumMap<Resource,Integer> resources;
@@ -23,11 +25,11 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
-    protected Tray tray;
-
 
     public Player(String name) {
         this.name = name;
+        this.coins = 0;
+        this.militaryPoints = 0;
 
         this.points = new EnumMap<>(CardPoints.class);
         this.points.put(CardPoints.VICTORY, 0);
@@ -36,7 +38,6 @@ public class Player {
         this.points.put(CardPoints.SCIENCE_TABLET, 0);
         this.points.put(CardPoints.SCIENCE_WHEEL, 0);
 
-        this.tray = new Tray();
         this.resources=new EnumMap<Resource, Integer>(Resource.class);
         this.resources.put(Resource.WOOD,0);
         this.resources.put(Resource.STONE,0);
@@ -49,7 +50,7 @@ public class Player {
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
 
-        System.out.println("Core.Player " + name +  " joined the game!");
+        System.out.println("Player " + name +  " joined the game!");
     }
 
     public String getName() {
@@ -91,6 +92,10 @@ public class Player {
     public ArrayList<Card> getBuiltCards() {
         return builtCards;
     }
+
+    public int getMilitaryPoints() { return this.militaryPoints; }
+
+    public void addMilitaryPoints(int mp) { this.militaryPoints += mp; }
 
 
     public void chooseCard(){
@@ -174,10 +179,10 @@ public class Player {
 
         //adding resource(s) if the card gives a ressource(s)
         for(Resource resource : this.chosenCard.getResource().keySet()){
-            int currentResource=this.resources.get(resource);
-            int cardResource=this.chosenCard.getResource().get(resource);
+            int currentResource = this.resources.get(resource);
+            int cardResource = this.chosenCard.getResource().get(resource);
             this.resources.put(resource, currentResource + cardResource);
-            if (cardResource!=0){
+            if (cardResource != 0){
                 System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource +" " + resource );
             }
         }
