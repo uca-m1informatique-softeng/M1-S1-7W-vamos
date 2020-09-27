@@ -141,6 +141,7 @@ public class Card {
                 }
             }
         }
+
     }
 
     public String getName() {
@@ -169,5 +170,11 @@ public class Card {
 
     public EnumMap<Resource, Integer> getCost() {
         return cost;
+    }
+
+    public Boolean isFree(){
+      for(Integer cost : resource.values())
+          if(cost > 0) return false;
+      return true;
     }
 }

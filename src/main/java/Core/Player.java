@@ -121,13 +121,9 @@ public class Player {
             }
         }
 
-        Boolean freeCard=false ;
-        if(this.chosenCard.getCost().get(Resource.WOOD) ==0 & this.chosenCard.getCost().get(Resource.STONE) ==0 & this.chosenCard.getCost().get(Resource.ORE) ==0
-            &this.chosenCard.getCost().get(Resource.CLAY) ==0 & this.chosenCard.getCost().get(Resource.GLASS) ==0 & this.chosenCard.getCost().get(Resource.LOOM) ==0
-            & this.chosenCard.getCost().get(Resource.PAPYRUS) ==0){
-                freeCard=true ;
-            }
-        if(freeCard){ //free card
+
+        if(chosenCard.isFree())
+        {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
             this.hand.remove(this.chosenCard);
