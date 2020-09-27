@@ -185,16 +185,18 @@ public class Game {
 
     private void displayPlayersRanking() {
 
-        Player tmpWinner = Game.playersArray.get(0);
-        for(Player player : Game.playersArray) {
-            System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
-            if(player.getCoins() > tmpWinner.getCoins())
-                tmpWinner = player;
+        ArrayList<Player> players = Game.getPlayersArray();
+        Player tmpWinner = players.remove(0);
+
+        for(Player p : players) {
+            if (p.getPoints().get(CardPoints.VICTORY) > tmpWinner.getPoints().get(CardPoints.VICTORY)) {
+                tmpWinner = p;
+            } else if (p.getPoints().get(CardPoints.VICTORY) == tmpWinner.getPoints().get(CardPoints.VICTORY)) {
+
+            }
         }
 
         System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getCoins());
-
-
 
     }
 

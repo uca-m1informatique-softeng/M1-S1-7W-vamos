@@ -21,6 +21,7 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
+
     public Player(String name) {
         this.name = name;
 
@@ -77,6 +78,7 @@ public class Player {
         return builtCards;
     }
 
+
     public void chooseCard(){
         Collections.shuffle(hand);
         chosenCard = hand.get(0);
@@ -125,5 +127,23 @@ public class Player {
         this.hand.remove(this.chosenCard);
 
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+    }
+
+    public int computeScore() {
+        int res = 0;
+
+        // Military placeholder
+        // Treasury Contents
+        res += this.coins/3;
+        // Civilian Structures and Wonders
+        res += this.getPoints().get(CardPoints.VICTORY);
+        // Science score
+        res += this.getPoints().get(CardPoints.SCIENCE_WHEEL)* this.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        res += this.getPoints().get(CardPoints.SCIENCE_COMPASS)*this.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        res += this.getPoints().get(CardPoints.SCIENCE_TABLET)*this.getPoints().get(CardPoints.SCIENCE_TABLET);
+        // Sets of different symbols
+        res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
+
+        return res;
     }
 }
