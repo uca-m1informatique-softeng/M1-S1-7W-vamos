@@ -23,6 +23,8 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
+    protected Tray tray;
+
     public Player(String name) {
         this.name = name;
 
@@ -33,6 +35,7 @@ public class Player {
         this.points.put(CardPoints.SCIENCE_TABLET, 0);
         this.points.put(CardPoints.SCIENCE_WHEEL, 0);
 
+        this.tray = new Tray();
         this.resources=new EnumMap<Resource, Integer>(Resource.class);
         this.resources.put(Resource.WOOD,0);
         this.resources.put(Resource.STONE,0);
@@ -182,6 +185,29 @@ public class Player {
         }
 
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+    }
+
+    protected int countScience(){
+        int size = tray.getBuiltCards().size();
+        int SCIENCE_WHEEL = 0;
+        int SCIENCE_TABLET = 0;
+        int SCIENCE_COMPASS = 0;
+        int res = 0;
+        int set = 0;
+        for(int i = 0; i < size; i++) {
+            if (tray.getBuiltCards().get(i).getColor() == CardColor.GREEN) {
+                SCIENCE_WHEEL += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_WHEEL);
+                SCIENCE_TABLET += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_TABLET);
+                SCIENCE_COMPASS += tray.getBuiltCards().get(i).getCardPoints().get(CardPoints.SCIENCE_COMPASS);
+            }
+        }
+        set = Math.min(SCIENCE_WHEEL, Math.min(SCIENCE_TABLET, SCIENCE_COMPASS)) * 7;
+        res = SCIENCE_WHEEL * SCIENCE_WHEEL + SCIENCE_TABLET * SCIENCE_TABLET + SCIENCE_COMPASS * SCIENCE_COMPASS;
+        return res + set;
+    }
+
+    public int getSciencePoint() {
+        return countScience();
     }
 
 }

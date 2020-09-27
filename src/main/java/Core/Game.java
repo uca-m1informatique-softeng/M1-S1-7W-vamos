@@ -199,6 +199,7 @@ public class Game {
         Player tmpWinner = Game.playersArray.get(0);
         for(Player player : Game.playersArray) {
             System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
+            System.out.println(player.getName() + " :  " + player.getSciencePoint() + " science points");
             if(player.getCoins() > tmpWinner.getCoins())
                 tmpWinner = player;
         }
