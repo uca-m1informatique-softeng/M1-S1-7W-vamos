@@ -170,18 +170,85 @@ public class Game {
     }
 
     private void processEndAge() {
-        if(Game.round == MAX_ROUNDS && Game.currentAge  == MAX_AGE )
+        this.battle();
+
+        if (Game.round == MAX_ROUNDS && Game.currentAge  == MAX_AGE )
             Game.state = GameState.END;
-        if(Game.round == 6 && Game.currentAge < MAX_AGE)
-        {
+
+        if (Game.round == 6 && Game.currentAge < MAX_AGE) {
             for(Player player : Game.playersArray)
                 player.getHand().clear();
+
             System.out.println("Age has ended! ");
             Game.currentAge++;
             this.processNewAge();
             Game.round = 1;
         }
 
+    }
+
+    private void battle() {
+
+        ArrayList<Player> players = Game.playersArray;
+
+        Player p1, p2, p3;
+
+        p1 = players.get(players.size() - 1);
+        p2 = players.get(0);
+        p3 = players.get(1);
+
+        Game.fight(p1, p2);
+        Game.fight(p2, p3);
+
+        for (int i = 1; i < players.size() - 1; i++) {
+            p1 = players.get(i-1);
+            p2 = players.get(i);
+            p3 = players.get(i+1);
+
+            Game.fight(p1, p2);
+            Game.fight(p2, p3);
+        }
+
+        p1 = players.get(players.size() - 2);
+        p2 = players.get(players.size() - 1);
+        p3 = players.get(0);
+
+        Game.fight(p1, p2);
+        Game.fight(p2, p3);
+    }
+
+    private static void fight(Player p1, Player p2) {
+        if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
+            switch (Game.currentAge) {
+                case 1 :
+                    p1.addMilitaryPoints(1);
+                    p2.addMilitaryPoints(-1);
+                    break;
+                case 2 :
+                    p1.addMilitaryPoints(3);
+                    p2.addMilitaryPoints(-3);
+                    break;
+                case 3 :
+                    p1.addMilitaryPoints(5);
+                    p2.addMilitaryPoints(-5);
+                    break;
+            }
+        } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
+            switch (Game.currentAge) {
+                case 1:
+                    p1.addMilitaryPoints(-1);
+                    p2.addMilitaryPoints(1);
+                    break;
+                case 2:
+                    p1.addMilitaryPoints(-3);
+                    p2.addMilitaryPoints(3);
+                    break;
+                case 3:
+                    p1.addMilitaryPoints(-5);
+                    p2.addMilitaryPoints(5);
+                    break;
+            }
+        }
     }
 
     //Getter pour les tests
