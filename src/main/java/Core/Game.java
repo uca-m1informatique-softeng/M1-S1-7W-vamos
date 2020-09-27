@@ -54,12 +54,22 @@ public class Game {
     private void initDeck() {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(Game.currentAge);
+        for(int i = stack.size(); i < MAX_HAND * players;i++ )
+            stack.add(stack.get(0));
         System.out.println("stack size : " + stack.size());
+        this.deck = stack;
 
-        for (int i = 0; i < MAX_HAND*Game.players; i++) {
-            Card c = stack.remove(0);
-            this.deck.add(c);
-        }
+        // stack.clear();
+        // System.out.println(deck.size());
+        /*   for (int i = 0; i < stack.size(); i++) {
+            if(!stack.isEmpty()) {
+                Card c = stack.remove(0);
+                System.out.println(stack.size());
+                this.deck.add(c);
+                System.out.println(stack);
+                System.out.println("card added");
+            }
+        }*/
     }
 
     private void initPlayers() {
@@ -185,16 +195,17 @@ public class Game {
 
     private void displayPlayersRanking() {
 
-        Player tmpWinner = Game.playersArray.get(0);
-        for(Player player : Game.playersArray) {
-            System.out.println(player.getName() + " :  " + player.getCoins() + "coins");
-            if(player.getCoins() > tmpWinner.getCoins())
-                tmpWinner = player;
+        ArrayList<Player> players = Game.getPlayersArray();
+        Player tmpWinner = players.remove(0);
+
+        for(Player p : players) {
+            if  (p.computeScore() > tmpWinner.computeScore() ||
+                (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
+                tmpWinner = p;
+            }
         }
 
-        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.getCoins());
-
-
+        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
 
     }
 

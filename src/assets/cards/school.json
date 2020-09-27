@@ -1,0 +1,20 @@
+[
+  {
+    "age": 2,
+    "CardColor": "GREEN",
+    "cardPoints": {
+      "SCIENCE_TABLET": 1
+    },
+    "name": "school",
+    "players": 3
+  },
+  {
+    "age": 2,
+    "CardColor": "GREEN",
+    "cardPoints": {
+      "SCIENCE_TABLET": 1
+    },
+    "name": "school",
+    "players": 7
+  }
+]

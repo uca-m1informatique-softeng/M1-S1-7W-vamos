@@ -17,9 +17,14 @@ public class Player {
 
     private EnumMap<CardPoints, Integer> points;
 
+    private EnumMap<Resource,Integer> resources;
+
     private ArrayList<Card> hand;
 
     private ArrayList<Card> builtCards;
+
+    protected Tray tray;
+
 
     public Player(String name) {
         this.name = name;
@@ -30,6 +35,16 @@ public class Player {
         this.points.put(CardPoints.SCIENCE_COMPASS, 0);
         this.points.put(CardPoints.SCIENCE_TABLET, 0);
         this.points.put(CardPoints.SCIENCE_WHEEL, 0);
+
+        this.tray = new Tray();
+        this.resources=new EnumMap<Resource, Integer>(Resource.class);
+        this.resources.put(Resource.WOOD,0);
+        this.resources.put(Resource.STONE,0);
+        this.resources.put(Resource.ORE,0);
+        this.resources.put(Resource.CLAY,0);
+        this.resources.put(Resource.GLASS,0);
+        this.resources.put(Resource.LOOM,0);
+        this.resources.put(Resource.PAPYRUS,0);
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
@@ -77,6 +92,7 @@ public class Player {
         return builtCards;
     }
 
+
     public void chooseCard(){
         Collections.shuffle(hand);
         chosenCard = hand.get(0);
@@ -100,8 +116,42 @@ public class Player {
     }
 
     public void buildCard() {
-        this.builtCards.add(this.chosenCard);
+        Boolean enoughResources=true ;
+        for(Resource resource : this.chosenCard.getCost().keySet()){
+            if(this.chosenCard.getCost().get(resource) > this.resources.get(resource)){
+                enoughResources=false ;
+            }
+        }
 
+
+        if(chosenCard.isFree())
+        {
+            this.builtCards.add(this.chosenCard);
+            addPointsAndResources();
+            this.hand.remove(this.chosenCard);
+        }
+        else{ //not a free card sowe check if the player have enough resources to build the card
+            if (enoughResources){
+                this.builtCards.add(this.chosenCard);
+                addPointsAndResources();
+
+                //removing the cost of a card if it's not a free card
+                for(Resource resource : this.chosenCard.getCost().keySet()){
+                    this.resources.put(resource, this.resources.get(resource) - this.chosenCard.getCost().get(resource)  );
+                }
+
+                this.hand.remove(this.chosenCard);
+            }
+            else{ //if the player don't have enough resources to buy the card he toss it
+                System.out.println("Not enough ressources");
+                this.dumpCard();
+            }
+        }
+
+    }
+
+    public void addPointsAndResources(){
+        //adding points if the card gives a points
         int currentVP = this.points.get(CardPoints.VICTORY);
         int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
         this.points.put(CardPoints.VICTORY, currentVP + cardVP);
@@ -122,8 +172,34 @@ public class Player {
         int cardSCP = this.chosenCard.getCardPoints().get(CardPoints.SCIENCE_COMPASS);
         this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
 
-        this.hand.remove(this.chosenCard);
+        //adding resource(s) if the card gives a ressource(s)
+        for(Resource resource : this.chosenCard.getResource().keySet()){
+            int currentResource=this.resources.get(resource);
+            int cardResource=this.chosenCard.getResource().get(resource);
+            this.resources.put(resource, currentResource + cardResource);
+            if (cardResource!=0){
+                System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource +" " + resource );
+            }
+        }
 
         System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+    }
+
+    public int computeScore() {
+        int res = 0;
+
+        // Military placeholder
+        // Treasury Contents
+        res += this.coins/3;
+        // Civilian Structures and Wonders
+        res += this.getPoints().get(CardPoints.VICTORY);
+        // Science score
+        res += this.getPoints().get(CardPoints.SCIENCE_WHEEL)* this.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        res += this.getPoints().get(CardPoints.SCIENCE_COMPASS)*this.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        res += this.getPoints().get(CardPoints.SCIENCE_TABLET)*this.getPoints().get(CardPoints.SCIENCE_TABLET);
+        // Sets of different symbols
+        res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
+
+        return res;
     }
 }
