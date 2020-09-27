@@ -1,5 +1,6 @@
 package Core;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,14 @@ public class CardManager {
 
         File folder = new File("src/assets/cards");
 
-        File[] listOfFiles = folder.listFiles();
+        File[] listOfFiles = folder.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                String name = pathname.getName().toLowerCase();
+                return name.endsWith(".json") && pathname.isFile();
+            }
+            });
+
         String fileName = "";
 
         for (int i = 0; i < listOfFiles.length; i++) {
