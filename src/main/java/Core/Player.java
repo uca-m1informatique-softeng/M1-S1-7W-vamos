@@ -199,13 +199,19 @@ public class Player {
         res += this.coins/3;
         // Civilian Structures and Wonders
         res += this.getPoints().get(CardPoints.VICTORY);
+        res += getSciencePoint();
+
+        return res;
+    }
+
+    public int getSciencePoint() {
+        int res = 0;
         // Science score
         res += this.getPoints().get(CardPoints.SCIENCE_WHEEL)* this.getPoints().get(CardPoints.SCIENCE_WHEEL);
         res += this.getPoints().get(CardPoints.SCIENCE_COMPASS)*this.getPoints().get(CardPoints.SCIENCE_COMPASS);
         res += this.getPoints().get(CardPoints.SCIENCE_TABLET)*this.getPoints().get(CardPoints.SCIENCE_TABLET);
         // Sets of different symbols
         res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
-
         return res;
     }
 }
