@@ -5,11 +5,8 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": {
-      "STONE": 1
-    },
-    "name": "baths",
-    "players": 3
+    "name": "pawnshop",
+    "players": 4
   },
   {
     "age": 1,
@@ -17,10 +14,7 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": {
-      "STONE": 1
-    },
-    "name": "baths",
+    "name": "pawnshop",
     "players": 7
   }
 ]

@@ -9,15 +9,15 @@ import static Utility.Constante.*;
 
 public class Game {
 
-    private static int round = 1;
+    private int round = 1;
 
-    private static int players;
+    private int players;
 
-    private static int currentAge = 1;
+    private int currentAge = 1;
 
-    private static ArrayList<Player> playersArray;
+    private ArrayList<Player> playersArray;
 
-    private static GameState state;
+    private GameState state;
 
     private ArrayList<Card> deck;
 
@@ -26,7 +26,7 @@ public class Game {
 
         Writer.init(true);
         Game game = new Game(3);
-        while(Game.state != GameState.EXIT)
+        while(game.state != GameState.EXIT)
             game.process();
         Writer.close();
         Utilities.displayGameOutput();
@@ -35,33 +35,18 @@ public class Game {
 
     }
 
-
     public Game (int players) {
-        Game.players = players;
-        Game.playersArray = new ArrayList<>(players);
+        this.players = players;
+        this.playersArray = new ArrayList<>(players);
         this.initPlayers();
-        Game.state = GameState.START;
+        this.state = GameState.START;
         this.deck = new ArrayList<>();
 
     }
 
-
-    public static int getCurrentAge() {
-        return currentAge;
-    }
-
-    public static ArrayList<Player> getPlayersArray() {
-        return playersArray;
-    }
-
-    public static GameState getState() {
-        return state;
-    }
-
-
     private void initDeck() {
 
-        ArrayList<Card> stack = CardManager.getAgeNDeck(Game.currentAge);
+        ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
         Writer.write("stack size : " + stack.size());
@@ -82,20 +67,20 @@ public class Game {
 
     private void initPlayers() {
         for(int i = 0; i < players; i++)
-            Game.playersArray.add(new Player("Bot" + i));
+            this.playersArray.add(new Player("Bot" + i));
 
 
         Writer.write(players + " players have been initialized");
     }
 
     private void process() throws ParseException {
-        switch (Game.state)
+        switch (this.state)
         {
             case START:
             {
-                Writer.write("The game started with " + Game.players + "players on the board");
+                Writer.write("The game started with " + this.players + "players on the board");
                 this.processNewAge();
-                Game.state = GameState.PLAY;
+                this.state = GameState.PLAY;
             }
             break;
 
@@ -103,7 +88,7 @@ public class Game {
             {
                 Writer.write("Round Start");
                 this.processTurn();
-                Game.round++;
+                this.round++;
                 Writer.write(" round : " + round);
                 this.processEndAge();
             }
@@ -113,7 +98,7 @@ public class Game {
             {
                 this.displayPlayersRanking();
                 Writer.write("Core.Game has ended .. exiting");
-                Game.state = GameState.EXIT;
+                this.state = GameState.EXIT;
 
             }
             break;
@@ -126,12 +111,12 @@ public class Game {
     }
 
     private void processTurn() {
-        for(Player player : Game.playersArray)
+        for(Player player : this.playersArray)
             player.chooseCard();
-        for(Player player : Game.playersArray)
+        for(Player player : this.playersArray)
             player.chooseAction();
 
-        this.tradeCards(Game.currentAge);
+        this.tradeCards(this.currentAge);
     }
 
     private void tradeCards(int currentAge) {
@@ -171,31 +156,31 @@ public class Game {
     private void processNewAge() {
         initDeck();
         initPlayersHand();
-        Writer.write("Current age" + Game.currentAge);
+        Writer.write("Current age" + this.currentAge);
         Writer.write("Each player drew " + MAX_HAND + "cards");
     }
 
     private void processEndAge() {
         this.battle();
 
-        if (Game.round == MAX_ROUNDS && Game.currentAge  == MAX_AGE )
-            Game.state = GameState.END;
+        if (this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
+            this.state = GameState.END;
 
-        if (Game.round == 6 && Game.currentAge < MAX_AGE) {
-            for(Player player : Game.playersArray)
+        if (this.round == 6 && this.currentAge < MAX_AGE) {
+            for(Player player : this.playersArray)
                 player.getHand().clear();
 
             Writer.write("Age has ended! ");
-            Game.currentAge++;
+            this.currentAge++;
             this.processNewAge();
-            Game.round = 1;
+            this.round = 1;
         }
 
     }
 
     private void battle() {
 
-        ArrayList<Player> players = Game.playersArray;
+        ArrayList<Player> players = this.playersArray;
 
         Player p1, p2, p3;
 
@@ -203,29 +188,29 @@ public class Game {
         p2 = players.get(0);
         p3 = players.get(1);
 
-        Game.fight(p1, p2);
-        Game.fight(p2, p3);
+        this.fight(p1, p2);
+        this.fight(p2, p3);
 
         for (int i = 1; i < players.size() - 1; i++) {
             p1 = players.get(i-1);
             p2 = players.get(i);
             p3 = players.get(i+1);
 
-            Game.fight(p1, p2);
-            Game.fight(p2, p3);
+            this.fight(p1, p2);
+            this.fight(p2, p3);
         }
 
         p1 = players.get(players.size() - 2);
         p2 = players.get(players.size() - 1);
         p3 = players.get(0);
 
-        Game.fight(p1, p2);
-        Game.fight(p2, p3);
+        this.fight(p1, p2);
+        this.fight(p2, p3);
     }
 
-    private static void fight(Player p1, Player p2) {
+    private void fight(Player p1, Player p2) {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
-            switch (Game.currentAge) {
+            switch (this.currentAge) {
                 case 1 :
                     p1.addMilitaryPoints(1);
                     p2.addMilitaryPoints(-1);
@@ -240,7 +225,7 @@ public class Game {
                     break;
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
-            switch (Game.currentAge) {
+            switch (this.currentAge) {
                 case 1:
                     p1.addMilitaryPoints(-1);
                     p2.addMilitaryPoints(1);
@@ -257,18 +242,9 @@ public class Game {
         }
     }
 
-    //Getter pour les tests
-    public static int getRound() {
-        return round;
-    }
-
-    public static int getPlayers() {
-        return players;
-    }
-
     private void displayPlayersRanking() {
 
-        ArrayList<Player> players = Game.getPlayersArray();
+        ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.remove(0);
 
         for(Player p : players) {
@@ -291,4 +267,24 @@ public class Game {
                 player.getHand().add(this.deck.remove(0));
     }
 
+    //Getter pour les tests
+    public int getRound() {
+        return round;
+    }
+
+    public int getPlayers() {
+        return players;
+    }
+
+    public int getCurrentAge() {
+        return currentAge;
+    }
+
+    public ArrayList<Player> getPlayersArray() {
+        return playersArray;
+    }
+
+    public GameState getState() {
+        return state;
+    }
 }

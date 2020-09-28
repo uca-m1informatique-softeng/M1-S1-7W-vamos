@@ -1,26 +1,26 @@
 [
   {
     "age": 2,
-    "CardColor": "BLUE",
+    "CardColor": "RED",
     "cardPoints": {
-      "VICTORY": 5
+      "MILITARY": 2
     },
     "cost": {
       "STONE": 3
     },
-    "name": "aqueduct",
+    "name": "walls",
     "players": 3
   },
   {
     "age": 2,
-    "CardColor": "BLUE",
+    "CardColor": "RED",
     "cardPoints": {
-      "VICTORY": 5
+      "MILITARY": 2
     },
     "cost": {
       "STONE": 3
     },
-    "name": "aqueduct",
-    "players": 7
+    "name": "walls",
+    "players": 4
   }
 ]

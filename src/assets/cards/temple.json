@@ -5,17 +5,11 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "CLAY": 1
-      },
-      {
-        "GLASS": 1
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "CLAY": 1,
+      "GLASS": 1
+    },
     "name": "temple",
     "players": 3
   },
@@ -25,17 +19,11 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "CLAY": 1
-      },
-      {
-        "GLASS": 1
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "CLAY": 1,
+      "GLASS": 1
+    },
     "name": "temple",
     "players": 6
   }

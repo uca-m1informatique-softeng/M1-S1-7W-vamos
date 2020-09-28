@@ -1,0 +1,15 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "cost": {
+      "COIN": 1
+    },
+    "name": "tree farm",
+    "players": 6,
+    "resource": {
+      "WOOD": 1,
+      "CLAY": 1
+    }
+  }
+]

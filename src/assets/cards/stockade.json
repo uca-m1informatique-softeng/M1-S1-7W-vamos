@@ -1,26 +1,26 @@
 [
   {
     "age": 1,
-    "CardColor": "BLUE",
+    "CardColor": "RED",
     "cardPoints": {
-      "VICTORY": 3
+      "MILITARY": 1
     },
     "cost": {
-      "STONE": 1
+      "WOOD": 1
     },
-    "name": "baths",
+    "name": "stockade",
     "players": 3
   },
   {
     "age": 1,
-    "CardColor": "BLUE",
+    "CardColor": "RED",
     "cardPoints": {
-      "VICTORY": 3
+      "MILITARY": 1
     },
     "cost": {
-      "STONE": 1
+      "WOOD": 1
     },
-    "name": "baths",
+    "name": "stockade",
     "players": 7
   }
 ]

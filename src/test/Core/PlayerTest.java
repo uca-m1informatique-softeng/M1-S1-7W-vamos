@@ -10,8 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-import org.mockito.Mock;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
 public class PlayerTest {
     private Card chosenCard;
     private Card chosenCard2;
@@ -24,12 +28,16 @@ public class PlayerTest {
     private EnumMap<CardPoints, Integer> points;
     Player player;
 
+    @Mock
+    Random rand;
+
     @BeforeEach
     void setUp(){
         coins=0;
         militaryPoints=0 ;
         hand = new ArrayList<>(7);
         player = new Player("Robot");
+        player.rand=rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
 
         points = new EnumMap<>(CardPoints.class);
@@ -118,6 +126,27 @@ public class PlayerTest {
         //after addition
         player.addMilitaryPoints(3);
         assertEquals(3,player.getMilitaryPoints());
+    }
+
+    @Test
+    public void chooseAction(){
+        when(rand.nextInt(1000)).thenReturn(2,1);
+
+        //if we get inside the if statement
+        player.chooseAction();
+
+        //if we get inside the else
+        try {
+            Card card=new Card("altar",3);
+            player.setChosenCard(card);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        player.chooseAction();
+
+
     }
 
     @Test

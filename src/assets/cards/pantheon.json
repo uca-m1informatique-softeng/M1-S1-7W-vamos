@@ -5,23 +5,13 @@
     "cardPoints": {
       "VICTORY": 7
     },
-    "cost": [
-      {
-        "GLASS": 1
-      },
-      {
-        "ORE": 1
-      },
-      {
-        "CLAY": 2
-      },
-      {
-        "PAPYRUS": 1
-      },
-      {
-        "LOOM": 1
-      }
-    ],
+    "cost": {
+      "GLASS": 1,
+      "ORE": 1,
+      "CLAY": 2,
+      "PAPYRUS": 1,
+      "LOOM": 1
+    },
     "name": "pantheon",
     "players": 3
   },
@@ -31,23 +21,13 @@
     "cardPoints": {
       "VICTORY": 7
     },
-    "cost": [
-      {
-        "GLASS": 1
-      },
-      {
-        "ORE": 1
-      },
-      {
-        "CLAY": 2
-      },
-      {
-        "PAPYRUS": 1
-      },
-      {
-        "LOOM": 1
-      }
-    ],
+    "cost": {
+      "GLASS": 1,
+      "ORE": 1,
+      "CLAY": 2,
+      "PAPYRUS": 1,
+      "LOOM": 1
+    },
     "name": "pantheon",
     "players": 6
   }

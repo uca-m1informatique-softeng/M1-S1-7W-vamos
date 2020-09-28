@@ -1,0 +1,15 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "cost": {
+      "COIN": 1
+    },
+    "name": "timber yard",
+    "players": 3,
+    "resource": {
+      "STONE": 1,
+      "WOOD": 1
+    }
+  }
+]

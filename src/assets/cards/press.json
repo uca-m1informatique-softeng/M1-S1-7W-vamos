@@ -1,0 +1,38 @@
+[
+  {
+    "age": 1,
+    "CardColor": "GREY",
+    "resource": {
+      "PAPYRUS": 1
+    },
+    "name": "press",
+    "players": 3
+  },
+  {
+    "age": 1,
+    "CardColor": "GREY",
+    "resource": {
+      "PAPYRUS": 1
+    },
+    "name": "press",
+    "players": 6
+  },
+  {
+    "age": 2,
+    "CardColor": "GREY",
+    "resource": {
+      "PAPYRUS": 1
+    },
+    "name": "press",
+    "players": 3
+  },
+  {
+    "age": 2,
+    "CardColor": "GREY",
+    "resource": {
+      "PAPYRUS": 1
+    },
+    "name": "press",
+    "players": 5
+  }
+]

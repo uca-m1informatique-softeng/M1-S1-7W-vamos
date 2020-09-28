@@ -1,0 +1,28 @@
+[
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "STONE": 1,
+      "ORE": 3
+    },
+    "name": "fortifications",
+    "players": 3
+  },
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "STONE": 1,
+      "ORE": 3
+    },
+    "name": "fortifications",
+    "players": 7
+  }
+]

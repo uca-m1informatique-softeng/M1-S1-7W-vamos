@@ -3,24 +3,26 @@
     "age": 2,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 5
+      "VICTORY": 4
     },
     "cost": {
-      "STONE": 3
+      "CLAY": 2,
+      "LOOM": 1
     },
-    "name": "aqueduct",
+    "name": "courthouse",
     "players": 3
   },
   {
     "age": 2,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 5
+      "VICTORY": 4
     },
     "cost": {
-      "STONE": 3
+      "CLAY": 2,
+      "LOOM": 1
     },
-    "name": "aqueduct",
-    "players": 7
+    "name": "courthouse",
+    "players": 5
   }
 ]

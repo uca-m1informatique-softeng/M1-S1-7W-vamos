@@ -1,0 +1,15 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "cost": {
+      "COIN": 1
+    },
+    "name": "excavation",
+    "players": 4,
+    "resource": {
+      "STONE": 1,
+      "CLAY": 1
+    }
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "age": 1,
+    "CardColor": "BROWN",
+    "cost": {
+      "COIN": 1
+    },
+    "name": "clay pit",
+    "players": 5,
+    "resource": {
+      "ORE": 1,
+      "WOOD": 1
+    }
+  }
+]

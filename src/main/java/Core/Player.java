@@ -25,6 +25,8 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
+    Random rand = new Random();
+
 
     public Player(String name) {
         this.name = name;
@@ -46,6 +48,7 @@ public class Player {
         this.resources.put(Resource.GLASS,0);
         this.resources.put(Resource.LOOM,0);
         this.resources.put(Resource.PAPYRUS,0);
+        this.resources.put(Resource.COIN, 0);
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
@@ -106,7 +109,6 @@ public class Player {
     }
 
     public void chooseAction(){
-        Random rand = new Random();
         int rand_int1 = rand.nextInt(1000);
         if(rand_int1 % 2 == 0) {
             this.dumpCard();
