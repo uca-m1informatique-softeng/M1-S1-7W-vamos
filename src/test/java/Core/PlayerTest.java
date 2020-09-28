@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class PlayerTest {
+    private Card chosenCard0;
     private Card chosenCard;
     private Card chosenCard2;
     private Card chosenCard3;
@@ -190,8 +191,9 @@ public class PlayerTest {
     @Test
     public void addPointsAndResources() {
         try {
+            chosenCard0 = new Card("sawmill", 3);
             chosenCard = new Card("altar", 3);
-            chosenCard2 = new Card("laboratory", 3);//SCIENCE_tablet
+            chosenCard2 = new Card("laboratory", 3);//SCIENCE_WHEEL
             chosenCard3 = new Card("observatory", 3);//SCIENCE_TABLET
             chosenCard4 = new Card("academy", 3);
         } catch (IOException e) {
@@ -202,6 +204,17 @@ public class PlayerTest {
         int oldVP = player.getPoints().get(CardPoints.VICTORY);
 
         ArrayList<Card> hand = new ArrayList<>();
+        //Buy a card with 1 coin cost, and return 2 WOOD
+        hand.add(chosenCard0);
+        player.setHand(hand);
+        player.setChosenCard(chosenCard0);
+        player.setCoins(1);
+        player.buildCard();
+        System.out.println(this.chosenCard0.getCost().get(Resource.COIN));
+        System.out.println(player.getCoins());
+        assertEquals(0, player.getCoins());
+        assertEquals(2, player.getResources().get(Resource.WOOD));
+
         hand.add(chosenCard);
         player.setHand(hand);
         player.setChosenCard(chosenCard);
