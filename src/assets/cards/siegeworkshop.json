@@ -1,0 +1,28 @@
+[
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "CLAY": 3,
+      "WOOD": 1
+    },
+    "name": "siege workshop",
+    "players": 3
+  },
+  {
+    "age": 2,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "CLAY": 3,
+      "WOOD": 1
+    },
+    "name": "siege workshop",
+    "players": 5
+  }
+]

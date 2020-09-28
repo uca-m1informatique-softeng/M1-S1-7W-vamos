@@ -1,0 +1,41 @@
+[
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "STONE": 3,
+      "ORE": 1
+    },
+    "name": "circus",
+    "players": 4
+  },
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "STONE": 3,
+      "ORE": 1
+    },
+    "name": "circus",
+    "players": 5
+  },
+  {
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+      "MILITARY": 3
+    },
+    "cost": {
+      "STONE": 3,
+      "ORE": 1
+    },
+    "name": "circus",
+    "players": 6
+  }
+]
