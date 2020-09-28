@@ -266,11 +266,14 @@ public class Game {
         Player tmpWinner = players.remove(0);
 
         for(Player p : players) {
+            System.out.println(p.getName() + " :  " + p.getCoins() + "coins");
+            System.out.println(p.getName() + " :  " + p.getSciencePoint() + "science points");
             if  (p.computeScore() > tmpWinner.computeScore() ||
                 (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
             }
         }
+
 
         System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
 
