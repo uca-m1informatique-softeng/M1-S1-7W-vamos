@@ -181,8 +181,8 @@ public class Card {
     }
 
     public Boolean isFree(){
-      for(Integer cost : cost.values())
-          if(cost > 0) return false;
-      return true;
+        for(Integer cost : resource.values())
+            if(cost > 0) return false;
+        return true;
     }
 }
