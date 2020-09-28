@@ -1,11 +1,13 @@
-package Core;
+package Card;
 
+import Card.CardColor;
+import Card.CardPoints;
+import Core.Resource;
 import org.json.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.EnumMap;
 
 public class Card {

@@ -1,5 +1,7 @@
 package Core;
 
+import Card.Card;
+
 import java.util.ArrayList;
 
 public class Tray { //Tray = Plateau

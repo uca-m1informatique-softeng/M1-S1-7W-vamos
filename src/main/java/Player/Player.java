@@ -1,5 +1,8 @@
-package Core;
+package Player;
 
+import Card.Card;
+import Card.CardPoints;
+import Core.Resource;
 import Utility.Writer;
 
 import java.util.ArrayList;
@@ -25,7 +28,7 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
-    Random rand = new Random();
+    public Random rand = new Random();
 
 
     public Player(String name) {
