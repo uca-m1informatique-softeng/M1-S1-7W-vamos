@@ -1,0 +1,20 @@
+[
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+
+    },
+    "name": "bazar",
+    "players": 4
+  },
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+
+    },
+    "name": "bazar",
+    "players": 7
+  }
+]

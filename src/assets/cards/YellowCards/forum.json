@@ -1,0 +1,44 @@
+[
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "GLASS": 1,
+      "LOOM": 1,
+      "PAPYRUS" : 1
+    },
+    "cost": {
+      "CLAY": 2
+    },
+    "name": "forum",
+    "players": 3
+  },
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "GLASS": 1,
+      "LOOM": 1,
+      "PAPYRUS" : 1
+    },
+    "cost": {
+      "CLAY": 2
+    },
+    "name": "forum",
+    "players": 6
+  },
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "GLASS": 1,
+      "LOOM": 1,
+      "PAPYRUS" : 1
+    },
+    "cost": {
+      "CLAY": 2
+    },
+    "name": "forum",
+    "players": 7
+  }
+]

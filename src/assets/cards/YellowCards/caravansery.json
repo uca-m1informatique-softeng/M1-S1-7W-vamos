@@ -1,0 +1,47 @@
+[
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "CLAY" : 1,
+      "STONE" : 1,
+      "ORE" : 1,
+      "WOOD" : 1
+    },
+    "cost": {
+      "WOOD": 2
+    },
+    "name": "caravansery",
+    "players": 3
+  },
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "CLAY" : 1,
+      "STONE" : 1,
+      "ORE" : 1,
+      "WOOD" : 1
+    },
+    "cost": {
+      "WOOD": 2
+    },
+    "name": "caravansery",
+    "players": 5
+  },
+  {
+    "age" : 2,
+    "CardColor" : "YELLOW",
+    "resource": {
+      "CLAY" : 1,
+      "STONE" : 1,
+      "ORE" : 1,
+      "WOOD" : 1
+    },
+    "cost": {
+      "WOOD": 2
+    },
+    "name": "caravansery",
+    "players": 6
+  }
+]

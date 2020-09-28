@@ -9,7 +9,7 @@
       "STONE": 3,
       "GLASS": 1
     },
-    "name": "lodge",
+    "name": "academy",
     "players": 3
   },
   {
@@ -22,7 +22,7 @@
       "STONE": 3,
       "GLASS": 1
     },
-    "name": "lodge",
+    "name": "academy",
     "players": 7
   }
 ]

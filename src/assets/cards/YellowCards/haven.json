@@ -1,0 +1,30 @@
+[
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "resource": {
+
+    },
+    "cost": {
+      "LOOM": 1,
+      "ORE" : 1,
+      "WOOD": 1
+    },
+    "name": "haven",
+    "players": 3
+  },
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "resource": {
+
+    },
+    "cost": {
+      "LOOM": 1,
+      "ORE" : 1,
+      "WOOD": 1
+    },
+    "name": "haven",
+    "players": 4
+  }
+]

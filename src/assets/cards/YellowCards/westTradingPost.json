@@ -1,0 +1,16 @@
+[
+  {
+    "age" : 1,
+    "CardColor" : "YELLOW",
+    //right arrow
+    "name": "west trading post",
+    "players": 3
+  },
+  {
+    "age" : 1,
+    "CardColor" : "YELLOW",
+    //right arrow
+    "name": "west trading post",
+    "players": 7
+  }
+]
