@@ -17,6 +17,7 @@ public class Wonder {
     private int maxstate;
 
     private ArrayList<HashMap<HashMap<Resource,Integer>, HashMap<Resource,Integer>>> prop;
+    //[0] cost [1] gain
 
     private Resource productedResource;
 
