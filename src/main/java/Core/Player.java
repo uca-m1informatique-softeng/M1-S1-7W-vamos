@@ -25,6 +25,8 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
+    Random rand = new Random();
+
 
     public Player(String name) {
         this.name = name;
@@ -106,7 +108,6 @@ public class Player {
     }
 
     public void chooseAction(){
-        Random rand = new Random();
         int rand_int1 = rand.nextInt(1000);
         if(rand_int1 % 2 == 0) {
             this.dumpCard();
