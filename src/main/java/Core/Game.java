@@ -116,10 +116,10 @@ public class Game {
         for(Player player : this.playersArray)
             player.chooseAction();
 
-        this.tradeCards(this.currentAge);
+        this.swapHands(this.currentAge);
     }
 
-    private void tradeCards(int currentAge) {
+    private void swapHands(int currentAge) {
 
         ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
         for(Player player : playersArray)
