@@ -161,7 +161,7 @@ public class Game {
     }
 
     private void processEndAge() {
-        this.battle();
+
 
         if (this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
             this.state = GameState.END;
@@ -170,6 +170,7 @@ public class Game {
             for(Player player : this.playersArray)
                 player.getHand().clear();
 
+            this.battle();
             Writer.write("Age has ended! ");
             this.currentAge++;
             this.processNewAge();
@@ -217,11 +218,11 @@ public class Game {
                     break;
                 case 2 :
                     p1.addMilitaryPoints(3);
-                    p2.addMilitaryPoints(-3);
+                    p2.addMilitaryPoints(-1);
                     break;
                 case 3 :
                     p1.addMilitaryPoints(5);
-                    p2.addMilitaryPoints(-5);
+                    p2.addMilitaryPoints(-1);
                     break;
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
@@ -231,11 +232,11 @@ public class Game {
                     p2.addMilitaryPoints(1);
                     break;
                 case 2:
-                    p1.addMilitaryPoints(-3);
+                    p1.addMilitaryPoints(-1);
                     p2.addMilitaryPoints(3);
                     break;
                 case 3:
-                    p1.addMilitaryPoints(-5);
+                    p1.addMilitaryPoints(-1);
                     p2.addMilitaryPoints(5);
                     break;
             }
@@ -250,6 +251,7 @@ public class Game {
         for(Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + "science points");
+            Writer.write(p.getName() + " :  " + p.getMilitaryPoints() + "military points");
             if  (p.computeScore() > tmpWinner.computeScore() ||
                 (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
