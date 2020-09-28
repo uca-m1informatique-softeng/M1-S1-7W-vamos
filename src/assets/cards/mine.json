@@ -5,11 +5,11 @@
     "cost": {
       "COIN": 1
     },
-    "name": "tree farm",
+    "name": "mine",
     "players": 6,
     "resource": {
-      "WOOD": 1,
-      "CLAY": 1
+      "ORE": 1,
+      "STONE": 1
     }
   }
 ]

@@ -5,10 +5,10 @@
     "cost": {
       "COIN": 1
     },
-    "name": "tree farm",
-    "players": 6,
+    "name": "excavation",
+    "players": 4,
     "resource": {
-      "WOOD": 1,
+      "STONE": 1,
       "CLAY": 1
     }
   }
