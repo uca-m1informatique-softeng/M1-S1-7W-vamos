@@ -1,11 +1,11 @@
 package Core;
 
+import Utility.Writer;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Random;
-
-import static Utility.Constante.MAX_HAND;
 
 public class Player {
 
@@ -50,7 +50,7 @@ public class Player {
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
 
-        System.out.println("Player " + name +  " joined the game!");
+        Writer.write("Player " + name +  " joined the game!");
     }
 
     public String getName() {
@@ -117,8 +117,8 @@ public class Player {
 
     public void dumpCard() {
         this.hand.remove(this.chosenCard);
-        System.out.println(this.name + "has now " + this.hand.size() + " cards in hand");
-        System.out.println(this.name + " has obtained 3 coins for tossing");
+        Writer.write(this.name + "has now " + this.hand.size() + " cards in hand");
+        Writer.write(this.name + " has obtained 3 coins for tossing");
         this.coins += 3;
     }
 
@@ -150,7 +150,7 @@ public class Player {
                 this.hand.remove(this.chosenCard);
             }
             else{ //if the player don't have enough resources to buy the card he toss it
-                System.out.println("Not enough ressources");
+                Writer.write("Not enough ressources");
                 this.dumpCard();
             }
         }
@@ -185,11 +185,11 @@ public class Player {
             int cardResource = this.chosenCard.getResource().get(resource);
             this.resources.put(resource, currentResource + cardResource);
             if (cardResource != 0){
-                System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource +" " + resource );
+                Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource +" " + resource );
             }
         }
 
-        System.out.println(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+        Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
     }
 
     public int computeScore() {
