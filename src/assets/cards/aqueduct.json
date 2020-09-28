@@ -5,11 +5,9 @@
     "cardPoints": {
       "VICTORY": 5
     },
-    "cost": [
-      {
-        "STONE": 3
-      }
-    ],
+    "cost": {
+      "STONE": 3
+    },
     "name": "aqueduct",
     "players": 3
   },
@@ -19,11 +17,9 @@
     "cardPoints": {
       "VICTORY": 5
     },
-    "cost": [
-      {
-        "STONE": 3
-      }
-    ],
+    "cost": {
+      "STONE": 3
+    },
     "name": "aqueduct",
     "players": 7
   }

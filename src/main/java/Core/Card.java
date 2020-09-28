@@ -69,11 +69,10 @@ public class Card {
 
                     // cost for a card (if any)
                     if(card.getJSONObject(i).has("cost")) {
-                        for (int k = 0; k < card.getJSONObject(i).getJSONArray("cost").length(); k++) {
-
-                            String keyStr = card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next();
+                        for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
+                            String keyStr = card.getJSONObject(i).getJSONObject("cost").names().getString(k);
                             Resource key = Resource.STONE; // Default case
-                            int value = card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next());
+                            int value = card.getJSONObject(i).getJSONObject("cost").getInt(keyStr);
 
                             switch (keyStr) {
                                 case "WOOD" :

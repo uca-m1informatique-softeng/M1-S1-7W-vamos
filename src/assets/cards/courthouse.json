@@ -5,14 +5,10 @@
     "cardPoints": {
       "VICTORY": 4
     },
-    "cost": [
-      {
-        "CLAY": 2
-      },
-      {
-        "LOOM": 1
-      }
-    ],
+    "cost": {
+      "CLAY": 2,
+      "LOOM": 1
+    },
     "name": "courthouse",
     "players": 3
   },
@@ -22,14 +18,10 @@
     "cardPoints": {
       "VICTORY": 4
     },
-    "cost": [
-      {
-        "CLAY": 2
-      },
-      {
-        "LOOM": 1
-      }
-    ],
+    "cost": {
+      "CLAY": 2,
+      "LOOM": 1
+    },
     "name": "courthouse",
     "players": 5
   }

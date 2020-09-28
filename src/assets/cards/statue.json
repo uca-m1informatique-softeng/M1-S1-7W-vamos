@@ -5,14 +5,10 @@
     "cardPoints": {
       "VICTORY": 4
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "ORE": 2
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "ORE": 2
+    },
     "name": "statue",
     "players": 3
   },
@@ -22,14 +18,10 @@
     "cardPoints": {
       "VICTORY": 4
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "ORE": 2
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "ORE": 2
+    },
     "name": "statue",
     "players": 7
   }

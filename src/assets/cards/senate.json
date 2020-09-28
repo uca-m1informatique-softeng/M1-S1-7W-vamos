@@ -5,17 +5,11 @@
     "cardPoints": {
       "VICTORY": 6
     },
-    "cost": [
-      {
-        "STONE": 1
-      },
-      {
-        "WOOD": 2
-      },
-      {
-        "ORE": 1
-      }
-    ],
+    "cost": {
+      "STONE": 1,
+      "WOOD": 2,
+      "ORE": 1
+    },
     "name": "senate",
     "players": 3
   },
@@ -25,17 +19,11 @@
     "cardPoints": {
       "VICTORY": 6
     },
-    "cost": [
-      {
-        "STONE": 1
-      },
-      {
-        "WOOD": 2
-      },
-      {
-        "ORE": 1
-      }
-    ],
+    "cost": {
+      "STONE": 1,
+      "WOOD": 2,
+      "ORE": 1
+    },
     "name": "senate",
     "players": 5
   }

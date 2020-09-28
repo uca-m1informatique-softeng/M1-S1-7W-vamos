@@ -5,14 +5,10 @@
     "cardPoints": {
       "VICTORY": 5
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "CLAY": 2
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "CLAY": 2
+    },
     "name": "gardens",
     "players": 3
   },
@@ -22,14 +18,10 @@
     "cardPoints": {
       "VICTORY": 5
     },
-    "cost": [
-      {
-        "WOOD": 1
-      },
-      {
-        "CLAY": 2
-      }
-    ],
+    "cost": {
+      "WOOD": 1,
+      "CLAY": 2
+    },
     "name": "gardens",
     "players": 4
   }

@@ -5,11 +5,9 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": [
-      {
-        "STONE": 1
-      }
-    ],
+    "cost": {
+      "STONE": 1
+    },
     "name": "baths",
     "players": 3
   },
@@ -19,11 +17,9 @@
     "cardPoints": {
       "VICTORY": 3
     },
-    "cost": [
-      {
-        "STONE": 1
-      }
-    ],
+    "cost": {
+      "STONE": 1
+    },
     "name": "baths",
     "players": 7
   }
