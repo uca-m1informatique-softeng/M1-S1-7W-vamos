@@ -121,36 +121,42 @@ public class Game {
 
     private void tradeCards(int currentAge) {
 
+        ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
+        for(Player player : playersArray)
+            tmpList.add(new ArrayList<>(player.getHand()));
+
+        for(Player player : playersArray)
+            Writer.write("Hand before swapping  : " + player.getHand().toString());
         for(int i = 0; i < playersArray.size(); i++) {
 
-            ArrayList<Card> tmpMain = playersArray.get(i).getHand();
+            ArrayList<Card> tmpMain = new ArrayList<>(playersArray.get(i).getHand());
 
             if (currentAge % 2 == 1) {
                 //Clockwise trade
 
-                if (i == playersArray.size() - 1) {
-                    playersArray.get(i).setHand(playersArray.get(0).getHand());
-                    playersArray.get(0).setHand(tmpMain);
+                if (i != 0 ) {
+
+                    playersArray.get(i).setHand(tmpList.get(i - 1));
                 } else {
-                    playersArray.get(i).setHand(playersArray.get(i + 1).getHand());
-                    playersArray.get(i + 1).setHand(tmpMain);
+                    playersArray.get(i).setHand(tmpList.get(playersArray.size() - 1));
+
                 }
 
             } else {
 
                 //Counter clockwise
                 if (i == 0) {
-                    playersArray.get(0).setHand(playersArray.get(playersArray.size() - 1).getHand());
-                    playersArray.get(playersArray.size() - 1).setHand(tmpMain);
+                    playersArray.get(playersArray.size() - 1).setHand(tmpList.get(i));
                 } else {
-                    playersArray.get(i).setHand(playersArray.get(i - 1).getHand());
-                    playersArray.get(i - 1).setHand(tmpMain);
-
+                    playersArray.get(i - 1).setHand(tmpList.get(i));
                 }
 
 
             }
         }
+        for(Player player : playersArray)
+            Writer.write("Hand after swapping  : " + player.getHand().toString());
+
     }
 
     private void processNewAge() {

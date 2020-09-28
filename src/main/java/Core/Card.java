@@ -185,4 +185,9 @@ public class Card {
             if(cost > 0) return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
