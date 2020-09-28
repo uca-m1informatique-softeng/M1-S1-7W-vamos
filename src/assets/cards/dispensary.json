@@ -5,6 +5,10 @@
     "cardPoints": {
       "SCIENCE_COMPASS": 1
     },
+    "cost": {
+      "ORE": 2,
+      "GLASS": 1
+    },
     "name": "dispensary",
     "players": 3
   },
@@ -13,6 +17,10 @@
     "CardColor": "GREEN",
     "cardPoints": {
       "SCIENCE_COMPASS": 1
+    },
+    "cost": {
+      "ORE": 2,
+      "GLASS": 1
     },
     "name": "dispensary",
     "players": 4

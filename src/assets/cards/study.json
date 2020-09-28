@@ -5,6 +5,11 @@
     "cardPoints": {
       "SCIENCE_TABLET": 1
     },
+    "cost": {
+      "WOOD": 1,
+      "PAPYRUS": 1,
+      "LOOM": 1
+    },
     "name": "study",
     "players": 3
   },
@@ -13,6 +18,11 @@
     "CardColor": "GREEN",
     "cardPoints": {
       "SCIENCE_TABLET": 1
+    },
+    "cost": {
+      "WOOD": 1,
+      "PAPYRUS": 1,
+      "LOOM": 1
     },
     "name": "study",
     "players": 5
