@@ -21,6 +21,8 @@ public class Game {
 
     private ArrayList<Card> deck;
 
+    private Boolean debug = false;
+
 
     public static void main(String[] args) throws ParseException {
 
@@ -31,7 +33,6 @@ public class Game {
         Writer.close();
         Utilities.displayGameOutput();
         Writer.deleteFile();
-       // Writer.fermerWriter();
 
     }
 
@@ -49,28 +50,12 @@ public class Game {
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
-        Writer.write("stack size : " + stack.size());
         this.deck = stack;
-
-        // stack.clear();
-        // Writer.ecrire(deck.size());
-        /*   for (int i = 0; i < stack.size(); i++) {
-            if(!stack.isEmpty()) {
-                Card c = stack.remove(0);
-                Writer.ecrire(stack.size());
-                this.deck.add(c);
-                Writer.ecrire(stack);
-                Writer.ecrire("card added");
-            }
-        }*/
     }
 
     private void initPlayers() {
         for(int i = 0; i < players; i++)
             this.playersArray.add(new Player("Bot" + i));
-
-
-        Writer.write(players + " players have been initialized");
     }
 
     private void process() throws ParseException {
@@ -86,10 +71,9 @@ public class Game {
 
             case PLAY:
             {
-                Writer.write("Round Start");
+                Writer.write(YELLOW_UNDERLINED + "\n----ROUND " + getRound() + "----" + "\n" + RESET);
                 this.processTurn();
                 this.round++;
-                Writer.write(" round : " + round);
                 this.processEndAge();
             }
             break;
@@ -125,8 +109,10 @@ public class Game {
         for(Player player : playersArray)
             tmpList.add(new ArrayList<>(player.getHand()));
 
-        for(Player player : playersArray)
-            Writer.write("Hand before swapping  : " + player.getHand().toString());
+        if(debug) {
+            for (Player player : playersArray)
+                Writer.write("Hand before swapping  : " + player.getHand().toString());
+        }
         for(int i = 0; i < playersArray.size(); i++) {
 
             ArrayList<Card> tmpMain = new ArrayList<>(playersArray.get(i).getHand());
@@ -134,35 +120,34 @@ public class Game {
             if (currentAge % 2 == 1) {
                 //Clockwise trade
 
-                if (i != 0 ) {
-
+                if (i != 0 )
                     playersArray.get(i).setHand(tmpList.get(i - 1));
-                } else {
+                else
                     playersArray.get(i).setHand(tmpList.get(playersArray.size() - 1));
-
-                }
 
             } else {
 
                 //Counter clockwise
-                if (i == 0) {
+                if (i == 0)
                     playersArray.get(playersArray.size() - 1).setHand(tmpList.get(i));
-                } else {
+                else
                     playersArray.get(i - 1).setHand(tmpList.get(i));
-                }
+
 
 
             }
         }
-        for(Player player : playersArray)
-            Writer.write("Hand after swapping  : " + player.getHand().toString());
+        if(debug) {
+            for (Player player : playersArray)
+                Writer.write("Hand after swapping  : " + player.getHand().toString());
+        }
 
     }
 
     private void processNewAge() {
         initDeck();
         initPlayersHand();
-        Writer.write("Current age" + this.currentAge);
+        Writer.write("\n" +BLUE_UNDERLINED + "---- CURRENT AGE : " + currentAge  + " ----" + RESET + "\n");
         Writer.write("Each player drew " + MAX_HAND + "cards");
     }
 

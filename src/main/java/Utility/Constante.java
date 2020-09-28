@@ -12,12 +12,6 @@ public final class Constante {
     public static int MAX_ROUNDS =6;
     public static int MAX_HAND = 7;
 
-
-
-
-
-
-
     /**
      *
      * Constantes pour les couleurs, le système est assez concis, il suffit d'appeler la constante avant l'écriture d'un string.
