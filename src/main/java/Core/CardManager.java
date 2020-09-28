@@ -1,4 +1,6 @@
 package Core;
+import Utility.Writer;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -10,7 +12,6 @@ public class CardManager {
     public static void main(String[] args) {
 
         ArrayList<Card> cards = CardManager.getAgeNDeck(1);
-        System.out.println(cards.size());
 
     }
 

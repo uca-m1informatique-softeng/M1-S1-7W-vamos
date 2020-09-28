@@ -1,5 +1,8 @@
 package Core;
 
+import Utility.Utilities;
+import Utility.Writer;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import static Utility.Constante.*;
@@ -19,11 +22,16 @@ public class Game {
     private ArrayList<Card> deck;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
+        Writer.init(true);
         Game game = new Game(3);
         while(Game.state != GameState.EXIT)
             game.process();
+        Writer.close();
+        Utilities.displayGameOutput();
+        Writer.deleteFile();
+       // Writer.fermerWriter();
 
     }
 
@@ -56,18 +64,18 @@ public class Game {
         ArrayList<Card> stack = CardManager.getAgeNDeck(Game.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
-        System.out.println("stack size : " + stack.size());
+        Writer.write("stack size : " + stack.size());
         this.deck = stack;
 
         // stack.clear();
-        // System.out.println(deck.size());
+        // Writer.ecrire(deck.size());
         /*   for (int i = 0; i < stack.size(); i++) {
             if(!stack.isEmpty()) {
                 Card c = stack.remove(0);
-                System.out.println(stack.size());
+                Writer.ecrire(stack.size());
                 this.deck.add(c);
-                System.out.println(stack);
-                System.out.println("card added");
+                Writer.ecrire(stack);
+                Writer.ecrire("card added");
             }
         }*/
     }
@@ -77,15 +85,15 @@ public class Game {
             Game.playersArray.add(new Player("Bot" + i));
 
 
-        System.out.println(players + " players have been initialized");
+        Writer.write(players + " players have been initialized");
     }
 
-    private void process() {
+    private void process() throws ParseException {
         switch (Game.state)
         {
             case START:
             {
-                System.out.println("The game started with " + Game.players + "players on the board");
+                Writer.write("The game started with " + Game.players + "players on the board");
                 this.processNewAge();
                 Game.state = GameState.PLAY;
             }
@@ -93,11 +101,10 @@ public class Game {
 
             case PLAY:
             {
-
-                System.out.println("Round Start");
+                Writer.write("Round Start");
                 this.processTurn();
                 Game.round++;
-                System.out.println("Round has ended, current round : " +  round);
+                Writer.write(" round : " + round);
                 this.processEndAge();
             }
             break;
@@ -105,12 +112,11 @@ public class Game {
             case END:
             {
                 this.displayPlayersRanking();
-                System.out.println("Core.Game has ended .. exiting");
+                Writer.write("Core.Game has ended .. exiting");
                 Game.state = GameState.EXIT;
-                break;
 
             }
-
+            break;
 
 
 
@@ -165,8 +171,8 @@ public class Game {
     private void processNewAge() {
         initDeck();
         initPlayersHand();
-        System.out.println("Current age" + Game.currentAge);
-        System.out.println("Each player drew " + MAX_HAND + "cards");
+        Writer.write("Current age" + Game.currentAge);
+        Writer.write("Each player drew " + MAX_HAND + "cards");
     }
 
     private void processEndAge() {
@@ -179,7 +185,7 @@ public class Game {
             for(Player player : Game.playersArray)
                 player.getHand().clear();
 
-            System.out.println("Age has ended! ");
+            Writer.write("Age has ended! ");
             Game.currentAge++;
             this.processNewAge();
             Game.round = 1;
@@ -266,8 +272,8 @@ public class Game {
         Player tmpWinner = players.remove(0);
 
         for(Player p : players) {
-            System.out.println(p.getName() + " :  " + p.getCoins() + "coins");
-            System.out.println(p.getName() + " :  " + p.getSciencePoint() + "science points");
+            Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
+            Writer.write(p.getName() + " :  " + p.getSciencePoint() + "science points");
             if  (p.computeScore() > tmpWinner.computeScore() ||
                 (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
@@ -275,7 +281,7 @@ public class Game {
         }
 
 
-        System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+        Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
 
     }
 
