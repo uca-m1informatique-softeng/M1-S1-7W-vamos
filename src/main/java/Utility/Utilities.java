@@ -1,7 +1,7 @@
 package Utility;
 
 import Card.CardPoints;
-import Core.Resource;
+import Card.Resource;
 import Exceptions.ParserException;
 
 import java.io.File;

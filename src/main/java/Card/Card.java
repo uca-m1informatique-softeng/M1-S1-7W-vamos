@@ -1,8 +1,5 @@
 package Card;
 
-import Card.CardColor;
-import Card.CardPoints;
-import Core.Resource;
 import org.json.*;
 
 import java.io.IOException;
@@ -125,6 +122,8 @@ public class Card {
     public int getPlayers() {
         return players;
     }
+
+    public Effect getEffect() { return this.effect; }
 
     public EnumMap<CardPoints, Integer> getCardPoints() {
         return cardPoints;

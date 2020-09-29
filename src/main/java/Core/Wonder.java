@@ -1,6 +1,7 @@
 package Core;
 
 import Card.CardPoints;
+import Card.Resource;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
@@ -38,7 +39,7 @@ public class Wonder {
             prop = new ArrayList<>(card.length());
             for (int i = 0; i < card.length(); i++) {
                 EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
-                EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<CardPoints, Integer>(CardPoints.class);
+                EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<>(CardPoints.class);
                 if (card.getJSONObject(i).has("cost")) {
                     for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
 
