@@ -20,14 +20,16 @@ public class Wonder {
     private int maxstate;
 
     private ArrayList<HashMap<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>>> prop;
-    //[0] cost [1] gain
 
     private Resource productedResource;
+
 
     public Wonder(String name) throws IOException {
         String content = Files.readString(Paths.get("src", "assets", "wonders", name + ".json"));
         JSONArray card = new JSONArray(content);
+
         this.name = name;
+        this.productedResource = Utilities.getResourceByString(card.getJSONObject(0).getString("productedRes"));
 
         if (card.length() > 0) {
             maxstate = card.length();
@@ -39,7 +41,6 @@ public class Wonder {
                     for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
 
                         String keyStr = card.getJSONObject(i).getJSONObject("cost").names().getString(k);
-                        Resource key = Resource.STONE; // Default case
                         int value = card.getJSONObject(i).getJSONObject("cost").getInt(keyStr);
 
                         tmpMap.put(Utilities.getResourceByString(keyStr), value);
@@ -49,22 +50,55 @@ public class Wonder {
                     for (int k = 0; k < card.getJSONObject(i).getJSONObject("reward").names().length(); k++) {
 
                         String keyStr = card.getJSONObject(i).getJSONObject("reward").names().getString(k);
-                        CardPoints key = CardPoints.SCIENCE_WHEEL; // Default case
                         int value = card.getJSONObject(i).getJSONObject("reward").getInt(keyStr);
-
-
                         tmpMap2.put(Utilities.getCardPointByString(keyStr),value);
                     }
                 }
-
-                // card color
                 HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
                 tmpPropMap.put(tmpMap, tmpMap2);
 
                 prop.add(tmpPropMap);
             }
         }
-       // Writer.write(name +prop.toString() + maxstate);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getMaxstate() {
+        return maxstate;
+    }
+
+    public void setMaxstate(int maxstate) {
+        this.maxstate = maxstate;
+    }
+
+    public ArrayList<HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>>> getProp() {
+        return prop;
+    }
+
+    public void setProp(ArrayList<HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>>> prop) {
+        this.prop = prop;
+    }
+
+    public Resource getProductedResource() {
+        return productedResource;
+    }
+
+    public void setProductedResource(Resource productedResource) {
+        this.productedResource = productedResource;
+    }
 }
