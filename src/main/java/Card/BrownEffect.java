@@ -1,12 +1,10 @@
 package Card;
 
-import Core.Resource;
-
 
 public class BrownEffect extends Effect {
 
-    Resource res1;
-    Resource res2;
+    private Resource res1;
+    private Resource res2;
 
     protected BrownEffect(Resource res1, Resource res2) {
         this.res1 = res1;
