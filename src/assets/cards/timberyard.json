@@ -5,11 +5,11 @@
     "cost": {
       "COIN": 1
     },
-    "name": "timber yard",
+    "name": "Timber Yard",
     "players": 3,
-    "resource": {
-      "STONE": 1,
-      "WOOD": 1
-    }
+    "resourceChoiceEffect": [
+      "STONE",
+      "WOOD"
+    ]
   }
 ]

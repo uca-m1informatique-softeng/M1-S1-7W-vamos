@@ -5,11 +5,11 @@
     "cost": {
       "COIN": 1
     },
-    "name": "clay pit",
+    "name": "Clay Pit",
     "players": 3,
-    "resource": {
-      "ORE": 1,
-      "CLAY": 1
-    }
+    "resourceChoiceEffect": [
+      "CLAY",
+      "ORE"
+    ]
   }
 ]

@@ -2,9 +2,9 @@ package Player;
 
 import Card.Card;
 import Card.CardPoints;
-import Core.Resource;
+import Card.Resource;
+import Card.ResourceChoiceEffect;
 import Utility.Writer;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -40,7 +40,7 @@ public class Player {
         this.points.put(CardPoints.SCIENCE_TABLET, 0);
         this.points.put(CardPoints.SCIENCE_WHEEL, 0);
 
-        this.resources=new EnumMap<Resource, Integer>(Resource.class);
+        this.resources=new EnumMap<>(Resource.class);
         this.resources.put(Resource.WOOD,0);
         this.resources.put(Resource.STONE,0);
         this.resources.put(Resource.ORE,0);
@@ -136,10 +136,19 @@ public class Player {
      * Seul le cout en or est supprimmer.
      */
     public void buildCard() {
-        Boolean enoughResources=true ;
-        for(Resource resource : this.chosenCard.getCost().keySet()){
-            if(this.chosenCard.getCost().get(resource) > this.resources.get(resource)){
-                enoughResources=false ;
+        boolean enoughResources = true ;
+
+        EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
+
+        for (Card card : this.builtCards) {
+            if (card.getEffect() != null) {
+                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+            }
+        }
+
+        for (Resource resource : costAfterEffects.keySet()){
+            if (costAfterEffects.get(resource) > this.resources.get(resource)){
+                enoughResources = false ;
             }
         }
 
