@@ -4,6 +4,8 @@ import Card.*;
 import Player.Player;
 import Utility.Utilities;
 import Utility.Writer;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -23,10 +25,10 @@ public class Game {
 
     private ArrayList<Card> deck;
 
-    private Boolean debug = false;
+    public static Boolean debug = false;
 
 
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) throws ParseException{
 
         Writer.init(true);
         Game game = new Game(3);
