@@ -3,8 +3,8 @@ package Player;
 import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
+import Card.ResourceChoiceEffect;
 import Utility.Writer;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
@@ -136,10 +136,19 @@ public class Player {
      * Seul le cout en or est supprimmer.
      */
     public void buildCard() {
-        boolean enoughResources=true ;
-        for(Resource resource : this.chosenCard.getCost().keySet()){
-            if(this.chosenCard.getCost().get(resource) > this.resources.get(resource)){
-                enoughResources=false ;
+        boolean enoughResources = true ;
+
+        EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
+
+        for (Card card : this.builtCards) {
+            if (card.getEffect() != null) {
+                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+            }
+        }
+
+        for (Resource resource : costAfterEffects.keySet()){
+            if (costAfterEffects.get(resource) > this.resources.get(resource)){
+                enoughResources = false ;
             }
         }
 

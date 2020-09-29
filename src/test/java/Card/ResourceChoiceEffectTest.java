@@ -2,6 +2,8 @@ package Card;
 
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,14 +12,14 @@ class ResourceChoiceEffectTest {
 
     @Test
     void resourceChoiceEffect1() {
-        Card card;
 
         try {
-            card = new Card("treefarm", 6);
-            assertTrue(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0).equals(Resource.WOOD) && ((ResourceChoiceEffect) (card.getEffect())).getRes().get(1).equals(Resource.CLAY));
+            Card card = new Card("treefarm", 6);
+            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.WOOD);
+            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.CLAY);
         } catch (IOException e) {
             e.printStackTrace();
-            assertTrue(false);
+            fail();
         }
 
 
@@ -25,14 +27,42 @@ class ResourceChoiceEffectTest {
 
     @Test
     void resourceChoiceEffect2() {
-        Card card;
 
         try {
-            card = new Card("mine", 6);
-            assertTrue(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0).equals(Resource.ORE) && ((ResourceChoiceEffect) (card.getEffect())).getRes().get(1).equals(Resource.STONE));
+            Card card = new Card("mine", 6);
+            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.ORE);
+            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.STONE);
         } catch (IOException e) {
             e.printStackTrace();
-            assertTrue(false);
+            fail();
+        }
+
+    }
+
+    @Test
+    void applyEffect() {
+
+        try {
+            Card card1 = new Card("mine", 6);
+            Card card2 = new Card("statue", 6);
+            EnumMap<Resource, Integer> oracle = new EnumMap<>(Resource.class);
+
+            oracle.put(Resource.WOOD, 1);
+            oracle.put(Resource.STONE, 0);
+            oracle.put(Resource.ORE, 1);
+            oracle.put(Resource.CLAY, 0);
+            oracle.put(Resource.GLASS, 0);
+            oracle.put(Resource.LOOM, 0);
+            oracle.put(Resource.PAPYRUS, 0);
+            oracle.put(Resource.COIN, 0);
+
+            EnumMap<Resource, Integer> costAfterEffect = card2.getCost();
+            ((ResourceChoiceEffect) (card1.getEffect())).applyEffect(costAfterEffect);
+
+            assertEquals(costAfterEffect, oracle);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
         }
 
 
