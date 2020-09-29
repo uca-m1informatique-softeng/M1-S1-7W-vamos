@@ -6,7 +6,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class BrownEffectTest {
+class ResourceChoiceEffectTest {
 
     @Test
     void BrownEffect() {
@@ -14,7 +14,7 @@ class BrownEffectTest {
 
         try {
             card = new Card("treefarm", 6);
-            assertTrue(((BrownEffect) (card.getEffect())).getRes1().equals(Resource.WOOD) && ((BrownEffect) (card.getEffect())).getRes2().equals(Resource.CLAY));
+            assertTrue(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0).equals(Resource.WOOD) && ((ResourceChoiceEffect) (card.getEffect())).getRes().get(1).equals(Resource.CLAY));
         } catch (IOException e) {
             e.printStackTrace();
             assertTrue(false);

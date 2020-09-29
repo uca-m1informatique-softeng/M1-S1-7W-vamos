@@ -5,6 +5,7 @@ import org.json.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class Card {
@@ -94,12 +95,13 @@ public class Card {
                     // card color
                     this.color = CardColor.valueOf(json.getString("CardColor"));
 
-                    if (json.has("effect")) {
-                        switch (this.color) {
-                            case BROWN:
-                                this.effect = new BrownEffect(Resource.valueOf(json.getJSONArray("effect").getString(0)), Resource.valueOf(json.getJSONArray("effect").getString(1)));
-                                break;
+                    if (json.has("resourceChoiceEffect")) {
+                        JSONArray resourceChoiceEffect = json.getJSONArray("resourceChoiceEffect");
+                        ArrayList<Resource> resList = new ArrayList<>();
+                        for (int k = 0; k < resourceChoiceEffect.length(); k++) {
+                            resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
                         }
+                        this.effect = new ResourceChoiceEffect(resList);
                     }
                 }
             }

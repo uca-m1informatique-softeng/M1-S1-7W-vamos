@@ -7,9 +7,9 @@
     },
     "name": "mine",
     "players": 6,
-    "resource": {
-      "ORE": 1,
-      "STONE": 1
-    }
+    "resourceChoiceEffect": [
+      "ORE",
+      "STONE"
+    ]
   }
 ]

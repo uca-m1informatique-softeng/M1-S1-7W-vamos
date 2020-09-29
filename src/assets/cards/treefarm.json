@@ -5,9 +5,9 @@
     "cost": {
       "COIN": 1
     },
-    "name": "tree farm",
+    "name": "Tree Farm",
     "players": 6,
-    "effect": [
+    "resourceChoiceEffect": [
       "WOOD",
       "CLAY"
     ]
