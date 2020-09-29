@@ -1,5 +1,8 @@
 package Core;
 
+import Card.CardPoints;
+import Utility.Utilities;
+import Utility.Writer;
 import org.json.JSONArray;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -12,11 +15,11 @@ public class Wonder {
 
     private String name;
 
-    private int state;
+    private int state = 1;
 
     private int maxstate;
 
-    private ArrayList<HashMap<HashMap<Resource,Integer>, HashMap<Resource,Integer>>> prop;
+    private ArrayList<HashMap<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>>> prop;
     //[0] cost [1] gain
 
     private Resource productedResource;
@@ -31,85 +34,37 @@ public class Wonder {
             prop = new ArrayList<>(card.length());
             for (int i = 0; i < card.length(); i++) {
                 HashMap<Resource, Integer> tmpMap = new HashMap<>();
-
-                HashMap<Resource, Integer> tmpMap2 = new HashMap<>();
-                System.out.println(card.length());
+                HashMap<CardPoints, Integer> tmpMap2 = new HashMap<>();
                 if (card.getJSONObject(i).has("cost")) {
-                    for (int k = 0; k < card.getJSONObject(i).getJSONArray("cost").length(); k++) {
+                    for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
 
-                        String keyStr = card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next();
+                        String keyStr = card.getJSONObject(i).getJSONObject("cost").names().getString(k);
                         Resource key = Resource.STONE; // Default case
-                        int value = card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("cost").getJSONObject(k).keys().next());
+                        int value = card.getJSONObject(i).getJSONObject("cost").getInt(keyStr);
 
-                        switch (keyStr) {
-                            case "WOOD":
-                                key = Resource.WOOD;
-                                break;
-                            case "STONE":
-                                key = Resource.STONE;
-                                break;
-                            case "ORE":
-                                key = Resource.ORE;
-                                break;
-                            case "CLAY":
-                                key = Resource.CLAY;
-                                break;
-                            case "GLASS":
-                                key = Resource.GLASS;
-                                break;
-                            case "LOOM":
-                                key = Resource.LOOM;
-                                break;
-                            case "PAPYRUS":
-                                key = Resource.PAPYRUS;
-                                break;
-                        }
-
-                        tmpMap.put(key, value);
+                        tmpMap.put(Utilities.getResourceByString(keyStr), value);
                     }
                 }
+                if (card.getJSONObject(i).has("reward")) {
+                    for (int k = 0; k < card.getJSONObject(i).getJSONObject("reward").names().length(); k++) {
 
-                for (int k = 0; k < card.getJSONObject(i).getJSONArray("reward").length(); k++) {
+                        String keyStr = card.getJSONObject(i).getJSONObject("reward").names().getString(k);
+                        CardPoints key = CardPoints.SCIENCE_WHEEL; // Default case
+                        int value = card.getJSONObject(i).getJSONObject("reward").getInt(keyStr);
 
-                    String keyStr = card.getJSONObject(i).getJSONArray("reward").getJSONObject(k).keys().next();
-                    Resource key = Resource.STONE; // Default case
-                    int value = card.getJSONObject(i).getJSONArray("reward").getJSONObject(k).getInt(card.getJSONObject(i).getJSONArray("resource").getJSONObject(k).keys().next());
 
-                    switch (keyStr) {
-                        case "WOOD":
-                            key = Resource.WOOD;
-                            break;
-                        case "STONE":
-                            key = Resource.STONE;
-                            break;
-                        case "ORE":
-                            key = Resource.ORE;
-                            break;
-                        case "CLAY":
-                            key = Resource.CLAY;
-                            break;
-                        case "GLASS":
-                            key = Resource.GLASS;
-                            break;
-                        case "LOOM":
-                            key = Resource.LOOM;
-                            break;
-                        case "PAPYRUS":
-                            key = Resource.PAPYRUS;
-                            break;
+                        tmpMap2.put(Utilities.getCardPointByString(keyStr),value);
                     }
-
-                    tmpMap2.put(key, value);
                 }
-
 
                 // card color
-                HashMap<HashMap<Resource, Integer>, HashMap<Resource, Integer>> tmpPropMap = null;
+                HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
                 tmpPropMap.put(tmpMap, tmpMap2);
+
                 prop.add(tmpPropMap);
             }
         }
-
+       // Writer.write(name +prop.toString() + maxstate);
     }
 
 }
