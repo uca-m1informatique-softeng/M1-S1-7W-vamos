@@ -96,11 +96,14 @@ public class Card {
                     this.color = CardColor.valueOf(json.getString("CardColor"));
 
                     if (json.has("resourceChoiceEffect")) {
+
                         JSONArray resourceChoiceEffect = json.getJSONArray("resourceChoiceEffect");
                         ArrayList<Resource> resList = new ArrayList<>();
+
                         for (int k = 0; k < resourceChoiceEffect.length(); k++) {
                             resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
                         }
+
                         this.effect = new ResourceChoiceEffect(resList);
                     }
                 }
