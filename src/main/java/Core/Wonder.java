@@ -127,4 +127,27 @@ public class Wonder {
         return null;
 
     }
+
+    public boolean isWonderFinished()
+    {
+        return state == maxstate;
+    }
+
+    public boolean canUpgrade(EnumMap<Resource, Integer> playerResources)
+    {
+        if(playerResources.isEmpty()) return false;
+
+        if(playerResources.size() < getCurrentUpgradeCost().size()) return false;
+
+        for(Map.Entry<Resource,Integer> entry1 : getCurrentUpgradeCost().entrySet())
+        {
+            Resource res1 = entry1.getKey();
+            int nbRes1 = entry1.getValue();
+            if(playerResources.get(res1) == null) return false;
+
+            else if(playerResources.get(res1) < nbRes1) return false;
+        }
+
+        return true;
+    }
 }
