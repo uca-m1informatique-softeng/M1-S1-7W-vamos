@@ -16,8 +16,6 @@ public class Player {
 
     private Card chosenCard;
 
-    private int coins;
-
     private int militaryPoints;
 
     private EnumMap<CardPoints, Integer> points;
@@ -33,7 +31,6 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
-        this.coins = 0;
         this.militaryPoints = 0;
 
         this.points = new EnumMap<>(CardPoints.class);
@@ -68,11 +65,11 @@ public class Player {
     }
 
     public int getCoins() {
-        return coins;
+        return getResources().get(Resource.COIN);
     }
 
     public void setCoins(int coins) {
-        this.coins = coins;
+        this.resources.put(Resource.COIN, coins);
     }
 
     public ArrayList<Card> getHand() {
@@ -105,6 +102,9 @@ public class Player {
         this.militaryPoints += mp;
     }
 
+    public EnumMap<Resource, Integer> getResources() {
+        return resources;
+    }
 
     public void chooseCard(){
         Collections.shuffle(hand);
@@ -120,13 +120,21 @@ public class Player {
             this.buildCard();
     }
 
+    /**
+     * Remove the chosen card of this hand and give 3 coins to the player.
+     */
     public void dumpCard() {
         this.hand.remove(this.chosenCard);
         Writer.write(this.name + "has now " + this.hand.size() + " cards in hand");
         Writer.write(this.name + " has obtained 3 coins for tossing");
-        this.coins += 3;
+        this.setCoins(this.getCoins() + 3);
     }
 
+    /**
+     * buildCard() ajoute la carte à l'inventaire builtCards, ainsi que les points et ressources SEULEMENT
+     * si il à assez de ressource, sinon elle est revendu 3 d'or avec la fonction dumpCard.
+     * Seul le cout en or est supprimmer.
+     */
     public void buildCard() {
         Boolean enoughResources=true ;
         for(Resource resource : this.chosenCard.getCost().keySet()){
@@ -148,9 +156,7 @@ public class Player {
                 addPointsAndResources();
 
                 //removing the cost of a card if it's not a free card
-                for(Resource resource : this.chosenCard.getCost().keySet()){
-                    this.resources.put(resource, this.resources.get(resource) - this.chosenCard.getCost().get(resource)  );
-                }
+                this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
 
                 this.hand.remove(this.chosenCard);
             }
@@ -203,7 +209,7 @@ public class Player {
         // Military points
         res += this.militaryPoints;
         // Treasury Contents
-        res += this.coins/3;
+        res += this.getCoins()/3;
         // Civilian Structures and Wonders
         res += this.getPoints().get(CardPoints.VICTORY);
         res += getSciencePoint();
@@ -221,4 +227,10 @@ public class Player {
         res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
         return res;
     }
+
+    @Override
+    public String toString() {
+        return this.name ;
+    }
+
 }

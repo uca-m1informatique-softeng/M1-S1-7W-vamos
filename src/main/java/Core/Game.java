@@ -47,7 +47,7 @@ public class Game {
 
     }
 
-    private void initDeck() {
+    public void initDeck() {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
@@ -55,7 +55,7 @@ public class Game {
         this.deck = stack;
     }
 
-    private void initPlayers() {
+    public void initPlayers() {
         for(int i = 0; i < players; i++)
             this.playersArray.add(new Player("Bot" + i));
     }
@@ -281,5 +281,9 @@ public class Game {
 
     public GameState getState() {
         return state;
+    }
+
+    public ArrayList<Card> getDeck() {
+        return deck;
     }
 }
