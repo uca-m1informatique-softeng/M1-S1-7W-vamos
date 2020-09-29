@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class Wonder {
 
     private int maxstate;
 
-    private ArrayList<HashMap<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>>> prop;
+    private ArrayList<HashMap<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>>> prop;
 
     private Resource productedResource;
 
@@ -36,8 +37,8 @@ public class Wonder {
             maxstate = card.length();
             prop = new ArrayList<>(card.length());
             for (int i = 0; i < card.length(); i++) {
-                HashMap<Resource, Integer> tmpMap = new HashMap<>();
-                HashMap<CardPoints, Integer> tmpMap2 = new HashMap<>();
+                EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
+                EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<CardPoints, Integer>(CardPoints.class);
                 if (card.getJSONObject(i).has("cost")) {
                     for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
 
@@ -55,7 +56,7 @@ public class Wonder {
                         tmpMap2.put(Utilities.getCardPointByString(keyStr),value);
                     }
                 }
-                HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
+                HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
                 tmpPropMap.put(tmpMap, tmpMap2);
 
                 prop.add(tmpPropMap);
@@ -94,11 +95,11 @@ public class Wonder {
         this.maxstate = maxstate;
     }
 
-    public ArrayList<HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>>> getProp() {
+    public ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> getProp() {
         return prop;
     }
 
-    public void setProp(ArrayList<HashMap<HashMap<Resource, Integer>, HashMap<CardPoints, Integer>>> prop) {
+    public void setProp(ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> prop) {
         this.prop = prop;
     }
 
@@ -110,17 +111,17 @@ public class Wonder {
         this.productedResource = productedResource;
     }
 
-    public HashMap<Resource, Integer> getCurrentUpgradeCost()
+    public EnumMap<Resource, Integer> getCurrentUpgradeCost()
     {
-        for(Map.Entry<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+        for(Map.Entry<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>> test: prop.get(state).entrySet())
             return test.getKey();
 
         return null;
     }
 
-    public HashMap<CardPoints,Integer> getCurrentRewardsFromUpgrade()
+    public EnumMap<CardPoints,Integer> getCurrentRewardsFromUpgrade()
     {
-        for(Map.Entry<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+        for(Map.Entry<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>> test: prop.get(state).entrySet())
             return test.getValue();
 
         return null;
