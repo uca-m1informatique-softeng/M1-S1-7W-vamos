@@ -9,13 +9,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Wonder {
 
 
     private String name;
 
-    private int state = 1;
+    private int state = 0;
 
     private int maxstate;
 
@@ -60,6 +61,13 @@ public class Wonder {
                 prop.add(tmpPropMap);
             }
         }
+        if(Game.debug) {
+
+            Writer.write(prop.toString());
+            Writer.write(getCurrentUpgradeCost().toString());
+            Writer.write(getCurrentRewardsFromUpgrade().toString());
+        }
+
     }
 
     public String getName() {
@@ -100,5 +108,22 @@ public class Wonder {
 
     public void setProductedResource(Resource productedResource) {
         this.productedResource = productedResource;
+    }
+
+    public HashMap<Resource, Integer> getCurrentUpgradeCost()
+    {
+        for(Map.Entry<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+            return test.getKey();
+
+        return null;
+    }
+
+    public HashMap<CardPoints,Integer> getCurrentRewardsFromUpgrade()
+    {
+        for(Map.Entry<HashMap<Resource,Integer>, HashMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+            return test.getValue();
+
+        return null;
+
     }
 }
