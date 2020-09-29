@@ -7,9 +7,9 @@
     },
     "name": "tree farm",
     "players": 6,
-    "resource": {
-      "WOOD": 1,
-      "CLAY": 1
-    }
+    "effect": [
+      "WOOD",
+      "CLAY"
+    ]
   }
 ]
