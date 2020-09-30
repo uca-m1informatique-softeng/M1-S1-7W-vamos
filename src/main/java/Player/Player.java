@@ -20,7 +20,9 @@ public class Player {
 
     private EnumMap<CardPoints, Integer> points;
 
-    private EnumMap<Resource,Integer> resources;
+    private EnumMap<Resource, Integer> resources;
+
+    private EnumMap<Resource, Integer> boughtResources;
 
     private ArrayList<Card> hand;
 
@@ -34,21 +36,19 @@ public class Player {
         this.militaryPoints = 0;
 
         this.points = new EnumMap<>(CardPoints.class);
-        this.points.put(CardPoints.VICTORY, 0);
-        this.points.put(CardPoints.MILITARY, 0);
-        this.points.put(CardPoints.SCIENCE_COMPASS, 0);
-        this.points.put(CardPoints.SCIENCE_TABLET, 0);
-        this.points.put(CardPoints.SCIENCE_WHEEL, 0);
+        for (CardPoints p : CardPoints.values()) {
+            this.points.put(p, 0);
+        }
 
-        this.resources=new EnumMap<>(Resource.class);
-        this.resources.put(Resource.WOOD,0);
-        this.resources.put(Resource.STONE,0);
-        this.resources.put(Resource.ORE,0);
-        this.resources.put(Resource.CLAY,0);
-        this.resources.put(Resource.GLASS,0);
-        this.resources.put(Resource.LOOM,0);
-        this.resources.put(Resource.PAPYRUS,0);
-        this.resources.put(Resource.COIN, 0);
+        this.resources = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            this.resources.put(r, 0);
+        }
+
+        this.boughtResources = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            this.boughtResources.put(r, 0);
+        }
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
@@ -104,6 +104,10 @@ public class Player {
 
     public EnumMap<Resource, Integer> getResources() {
         return resources;
+    }
+
+    public EnumMap<Resource, Integer> getBoughtResources() {
+        return boughtResources;
     }
 
     public void chooseCard(){
@@ -175,6 +179,35 @@ public class Player {
             }
         }
 
+    }
+
+    /**
+     * Buys a resource from a neighbor in case the player doesn't have enough resources to build a card.
+     * @param resourceToBuy Resource the player wishes to buy
+     * @param neighbor Neighbor to buy the resource from
+     * @return true if resource could be bought, false if not
+     */
+    public boolean buyResource(Resource resourceToBuy, Player neighbor) {
+        if (this.getCoins() >= 2) {
+            for (Resource r : neighbor.getResources().keySet()) {
+                if (resourceToBuy.equals(r) && neighbor.getResources().get(r) > 0) {
+                    this.boughtResources.put(r, this.boughtResources.get(r) + 1);
+                    this.setCoins(this.getCoins() - 2);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Clears all the bought resources from the player.
+     * Should be called at the end of every turn.
+     */
+    public void clearBoughtResources() {
+        for (Resource r : Resource.values()) {
+            this.boughtResources.put(r, 0);
+        }
     }
 
     public void addPointsAndResources(){
