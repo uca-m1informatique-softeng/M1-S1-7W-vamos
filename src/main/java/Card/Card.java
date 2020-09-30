@@ -28,31 +28,17 @@ public class Card {
         this.players = players;
 
         this.cardPoints = new EnumMap<>(CardPoints.class);
-        this.cardPoints.put(CardPoints.VICTORY, 0);
-        this.cardPoints.put(CardPoints.MILITARY, 0);
-        this.cardPoints.put(CardPoints.SCIENCE_WHEEL, 0);
-        this.cardPoints.put(CardPoints.SCIENCE_TABLET, 0);
-        this.cardPoints.put(CardPoints.SCIENCE_COMPASS, 0);
-
+        for (CardPoints p : CardPoints.values()) {
+            this.cardPoints.put(p , 0);
+        }
         this.resource = new EnumMap<>(Resource.class);
-        this.resource.put(Resource.WOOD, 0);
-        this.resource.put(Resource.STONE, 0);
-        this.resource.put(Resource.ORE, 0);
-        this.resource.put(Resource.CLAY, 0);
-        this.resource.put(Resource.GLASS, 0);
-        this.resource.put(Resource.LOOM, 0);
-        this.resource.put(Resource.PAPYRUS, 0);
-        this.resource.put(Resource.COIN, 0);
-
+        for (Resource r : Resource.values()) {
+            this.resource.put(r , 0);
+        }
         this.cost = new EnumMap<>(Resource.class);
-        this.cost.put(Resource.WOOD, 0);
-        this.cost.put(Resource.STONE, 0);
-        this.cost.put(Resource.ORE, 0);
-        this.cost.put(Resource.CLAY, 0);
-        this.cost.put(Resource.GLASS, 0);
-        this.cost.put(Resource.LOOM, 0);
-        this.cost.put(Resource.PAPYRUS, 0);
-        this.cost.put(Resource.COIN, 0);
+        for (Resource r : Resource.values()) {
+            this.cost.put(r , 0);
+        }
 
         if (card.length() > 0) {
             for (int i = 0; i < card.length(); i++) {
@@ -105,6 +91,21 @@ public class Card {
                         }
 
                         this.effect = new ResourceChoiceEffect(resList);
+                    }
+
+                    if (json.has("tradeResourceEffect")) {
+
+                        JSONObject tradeResourceEffect = json.getJSONObject("tradeResourceEffect");
+                        ArrayList<Resource> resList = new ArrayList<>();
+
+                        for (int k = 0; k < tradeResourceEffect.length(); k++) {
+                            resList.add(Resource.valueOf(tradeResourceEffect.getJSONArray("resourcesModified").getString(k)));
+                        }
+
+                        this.effect = new TradeResourceEffect(
+                                tradeResourceEffect.getBoolean("prevPlayerAllowed"),
+                                tradeResourceEffect.getBoolean("nextPlayerAllowed"),
+                                resList);
                     }
                 }
             }
