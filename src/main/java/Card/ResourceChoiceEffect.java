@@ -56,4 +56,10 @@ public class ResourceChoiceEffect extends Effect {
         }
     }
 
+    @Override
+    public String toString() {
+        return "ResourceChoiceEffect{" +
+                "res=" + res +
+                '}';
+    }
 }

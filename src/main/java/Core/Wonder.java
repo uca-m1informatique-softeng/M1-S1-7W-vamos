@@ -172,4 +172,17 @@ public class Wonder {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Wonder{" +
+                "name='" + name + '\'' +
+                ", state=" + state +
+                ", maxstate=" + maxstate +
+                ", prop=" + prop +
+                ", productedResource=" + productedResource +
+                ", effects=" + effects +
+                ", appliedEffects=" + appliedEffects +
+                '}';
+    }
 }
