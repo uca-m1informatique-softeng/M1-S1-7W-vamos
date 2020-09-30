@@ -329,7 +329,7 @@ public class PlayerTest {
         player.setCoins(oldCoins + 2);
         neighbor.getResources().put(resourceToBuy, 2);
 
-        //assertTrue(player.buyResource(resourceToBuy, 1, neighbor));
+        assertTrue(player.buyResource(resourceToBuy, 1, neighbor));
         assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
         assertEquals(player.getCoins(), oldCoins);
     }

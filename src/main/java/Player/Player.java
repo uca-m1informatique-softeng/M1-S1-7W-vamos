@@ -266,7 +266,7 @@ public class Player {
 
                     Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + 2*quantity + " coin(s).");
 
-
+                    return true;
                 }
             }
         }
