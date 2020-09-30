@@ -1,6 +1,7 @@
 package Core;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
@@ -41,6 +42,8 @@ public class PlayerTest {
         player = new Player("Robot");
         player.rand=rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
+        player.setPrevNeighbor(new Player("PreviousRobot"));
+        player.setNextNeighbor(new Player("NextRobot"));
 
         points = new EnumMap<>(CardPoints.class);
         points.put(CardPoints.VICTORY, 0);
@@ -91,11 +94,11 @@ public class PlayerTest {
     @Test
     public void setChosenCard(){
         try {
-            Card card = new Card("altar", 3);;
+            Card card = new Card("altar", 3);
             player.setChosenCard(card);
             assertEquals(card,player.getChosenCard());
         } catch (IOException e) {
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -315,6 +318,60 @@ public class PlayerTest {
         res2 += 7*Math.min(Math.min(points.get(CardPoints.SCIENCE_TABLET), points.get(CardPoints.SCIENCE_WHEEL)), Math.min(points.get(CardPoints.SCIENCE_WHEEL), points.get(CardPoints.SCIENCE_COMPASS)));
         int resPlayer2= player.computeScore();
         assertEquals(res2,resPlayer2);
+    }
+
+    @Test
+    public void buyResource1() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        int oldCoins = player.getCoins();
+        player.setCoins(oldCoins + 2);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        assertTrue(player.buyResource(resourceToBuy, neighbor));
+        assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
+        assertEquals(player.getCoins(), oldCoins);
+    }
+
+    @Test
+    public void buyResource2() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        player.setCoins(0);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        assertFalse(player.buyResource(resourceToBuy, neighbor));
+    }
+
+    @Test
+    public void buyResource3() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        player.setCoins(2);
+
+        assertFalse(player.buyResource(resourceToBuy, neighbor));
+    }
+
+    @Test
+    public void clearBoughtResources() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        int oldCoins = player.getCoins();
+        player.setCoins(oldCoins + 2);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        player.buyResource(resourceToBuy, neighbor);
+        player.clearBoughtResources();
+
+        EnumMap<Resource, Integer> emptyMap = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            emptyMap.put(r, 0);
+        }
+        assertEquals(emptyMap, player.getBoughtResources());
     }
 
 }
