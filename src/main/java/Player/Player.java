@@ -4,6 +4,7 @@ import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
+import Core.Wonder;
 import Utility.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,8 @@ public class Player {
     private ArrayList<Card> hand;
 
     private ArrayList<Card> builtCards;
+
+    private Wonder wonder;
 
     public Random rand = new Random();
 
@@ -235,6 +238,13 @@ public class Player {
         // Sets of different symbols
         res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
         return res;
+    }
+    public Wonder getWonder() {
+        return wonder;
+    }
+
+    public void setWonder(Wonder wonder) {
+        this.wonder = wonder;
     }
 
     @Override

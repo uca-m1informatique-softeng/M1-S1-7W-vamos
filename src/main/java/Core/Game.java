@@ -9,6 +9,9 @@ import Utility.Writer;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.spi.AbstractResourceBundleProvider;
 
 import static Utility.Constante.*;
 
@@ -26,6 +29,7 @@ public class Game {
 
     private ArrayList<Card> deck;
 
+    private ArrayList<Wonder> wonderArrayList;
     public static Boolean debug = false;
 
 
@@ -47,7 +51,8 @@ public class Game {
         this.initPlayers();
         this.state = GameState.START;
         this.deck = new ArrayList<>();
-        WonderManager.parseWonders();
+        this.wonderArrayList = WonderManager.parseWonders();
+        initPlayersWonders();
 
     }
 
@@ -257,6 +262,22 @@ public class Game {
 
 
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+
+    }
+
+    private void initPlayersWonders()
+    {
+        if(debug)
+            Writer.write("wonderList size before init : " + wonderArrayList.size());
+        for(Player player : playersArray)
+        {
+            Collections.shuffle(wonderArrayList);
+            player.setWonder(wonderArrayList.remove(0));
+            Writer.write(player.getName() + " chose " + player.getWonder().getName() + " wonder for this game");
+
+        }
+        if(debug)
+            Writer.write("wonderList size after init : " + wonderArrayList.size());
 
     }
 
