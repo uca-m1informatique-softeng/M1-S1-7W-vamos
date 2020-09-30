@@ -5,6 +5,6 @@ package Card;
  * Those effects range from choosing between two resources on a card, to having to pay only one coin for trading
  * resources with your neighbors.
  */
-abstract class Effect {
+public abstract class Effect {
 
 }

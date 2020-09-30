@@ -21,7 +21,7 @@ public class ResourceChoiceEffect extends Effect {
      * Should only be instantiated from the class Card (its owner).
      * @param res The resources the player is able to choose from
      */
-    protected ResourceChoiceEffect(ArrayList<Resource> res) {
+    public ResourceChoiceEffect(ArrayList<Resource> res) {
         this.res = res;
     }
 

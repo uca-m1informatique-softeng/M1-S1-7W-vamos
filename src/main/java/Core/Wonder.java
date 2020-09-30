@@ -1,10 +1,14 @@
 package Core;
 
 import Card.CardPoints;
+import Card.Effect;
 import Card.Resource;
+import Card.ResourceChoiceEffect;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -26,6 +30,9 @@ public class Wonder {
 
     private Resource productedResource;
 
+    private ArrayList<Effect> effects;
+
+    private ArrayList<Effect> appliedEffects;
 
     public Wonder(String name) throws IOException {
         String content = Files.readString(Paths.get("src", "assets", "wonders", name + ".json"));
@@ -33,13 +40,27 @@ public class Wonder {
 
         this.name = name;
         this.productedResource = Utilities.getResourceByString(card.getJSONObject(0).getString("productedRes"));
-
+        this.effects = new ArrayList<>();
         if (card.length() > 0) {
             maxstate = card.length();
             prop = new ArrayList<>(card.length());
             for (int i = 0; i < card.length(); i++) {
+                JSONObject json = card.getJSONObject(i);
+
                 EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
                 EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<>(CardPoints.class);
+                if (card.getJSONObject(i).has("resourceChoiceEffect")) {
+
+                    JSONArray resourceChoiceEffect = json.getJSONArray("resourceChoiceEffect");
+                    ArrayList<Resource> resList = new ArrayList<>();
+
+                    for (int k = 0; k < resourceChoiceEffect.length(); k++) {
+                        resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
+                    }
+                    this.effects.add(new ResourceChoiceEffect(resList));
+
+                }
+
                 if (card.getJSONObject(i).has("cost")) {
                     for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
 
