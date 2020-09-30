@@ -36,7 +36,7 @@ public class CommerceDefinitions {
 
     @When("the player requests the resource \\{Resource}")
     public void request_resource() {
-        player.buyResource(resource, neighbor);
+        player.buyResource(resource, 1,neighbor);
     }
 
     @Then("the player should hand out 2 of his coins")
