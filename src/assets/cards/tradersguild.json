@@ -1,0 +1,12 @@
+[
+  {
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+      "LOOM": 1,
+      "PAPYRUS": 1,
+      "GLASS": 1
+    },
+    "name": "traders guild"
+  }
+]
