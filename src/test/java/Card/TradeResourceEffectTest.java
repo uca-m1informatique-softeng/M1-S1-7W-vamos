@@ -1,7 +1,9 @@
 package Card;
 
+import Player.Player;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,18 +11,44 @@ import static org.junit.jupiter.api.Assertions.*;
 class TradeResourceEffectTest {
 
     @Test
-    void tradeResourceEffect1() {
+    void tradeResourceEffect() {
 
         try {
-            Card card = new Card("treefarm", 6);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.WOOD);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.CLAY);
+            Card card = new Card("marketplace", 6);
+            TradeResourceEffect effect = (TradeResourceEffect) card.getEffect();
+            ArrayList<Resource> resList = new ArrayList<>();
+            resList.add(Resource.GLASS);
+            resList.add(Resource.LOOM);
+            resList.add(Resource.PAPYRUS);
+
+            assertTrue(effect.isPrevPlayerAllowed());
+            assertTrue(effect.isNextPlayerAllowed());
+            assertEquals(resList, effect.resourcesModified);
+
         } catch (IOException e) {
             e.printStackTrace();
             fail();
         }
 
+    }
 
+    @Test
+    void buyCheaperResource() {
+        Player player = new Player("George");
+        Player neighbor = new Player("Bob");
+        player.setPrevNeighbor(new Player("BOBZZ"));
+        player.setNextNeighbor(neighbor);
+        player.setCoins(2);
+        neighbor.getResources().put(Resource.CLAY, 2);
+        try {
+            player.getBuiltCards().add(new Card("eastTradingPost", 6));
+            player.buyResource(Resource.CLAY, player.getNextNeighbor());
+            assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
+            assertEquals(player.getCoins(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
 
