@@ -9,6 +9,9 @@ import Utility.Writer;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.spi.AbstractResourceBundleProvider;
 
 import static Utility.Constante.*;
 
@@ -26,6 +29,7 @@ public class Game {
 
     private ArrayList<Card> deck;
 
+    private ArrayList<Wonder> wonderArrayList;
     public static Boolean debug = false;
 
 
@@ -42,12 +46,13 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
-        this.players = players;
+        Game.players = players;
         this.playersArray = new ArrayList<>(players);
         this.initPlayers();
         this.state = GameState.START;
         this.deck = new ArrayList<>();
-        WonderManager.parseWonders();
+        this.wonderArrayList = WonderManager.parseWonders();
+        initPlayersWonders();
 
     }
 
@@ -85,7 +90,7 @@ public class Game {
         {
             case START:
             {
-                Writer.write("The game started with " + this.players + "players on the board");
+                Writer.write("The game started with " + Game.players + "players on the board");
                 this.processNewAge();
                 this.state = GameState.PLAY;
             }
@@ -193,33 +198,10 @@ public class Game {
     }
 
     private void battle() {
-
-        ArrayList<Player> players = this.playersArray;
-
-        Player p1, p2, p3;
-
-        p1 = players.get(players.size() - 1);
-        p2 = players.get(0);
-        p3 = players.get(1);
-
-        this.fight(p1, p2);
-        this.fight(p2, p3);
-
-        for (int i = 1; i < players.size() - 1; i++) {
-            p1 = players.get(i-1);
-            p2 = players.get(i);
-            p3 = players.get(i+1);
-
-            this.fight(p1, p2);
-            this.fight(p2, p3);
+        for (Player p : this.playersArray) {
+            this.fight(p, p.getPrevNeighbor());
+            this.fight(p, p.getNextNeighbor());
         }
-
-        p1 = players.get(players.size() - 2);
-        p2 = players.get(players.size() - 1);
-        p3 = players.get(0);
-
-        this.fight(p1, p2);
-        this.fight(p2, p3);
     }
 
     private void fight(Player p1, Player p2) {
@@ -227,32 +209,20 @@ public class Game {
             switch (this.currentAge) {
                 case 1 :
                     p1.addMilitaryPoints(1);
-                    p2.addMilitaryPoints(-1);
+                    Writer.write(p1 + " fought " + p2 + " and won 1 Military Point.");
                     break;
                 case 2 :
                     p1.addMilitaryPoints(3);
-                    p2.addMilitaryPoints(-1);
+                    Writer.write(p1 + " fought " + p2 + " and won 3 Military Point.");
                     break;
                 case 3 :
                     p1.addMilitaryPoints(5);
-                    p2.addMilitaryPoints(-1);
+                    Writer.write(p1 + " fought " + p2 + " and won 5 Military Point.");
                     break;
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
-            switch (this.currentAge) {
-                case 1:
-                    p1.addMilitaryPoints(-1);
-                    p2.addMilitaryPoints(1);
-                    break;
-                case 2:
-                    p1.addMilitaryPoints(-1);
-                    p2.addMilitaryPoints(3);
-                    break;
-                case 3:
-                    p1.addMilitaryPoints(-1);
-                    p2.addMilitaryPoints(5);
-                    break;
-            }
+            p1.addMilitaryPoints(-1);
+            Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         }
     }
 
@@ -273,6 +243,22 @@ public class Game {
 
 
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+
+    }
+
+    private void initPlayersWonders()
+    {
+        if(debug)
+            Writer.write("wonderList size before init : " + wonderArrayList.size());
+        for(Player player : playersArray)
+        {
+            Collections.shuffle(wonderArrayList);
+            player.setWonder(wonderArrayList.remove(0));
+            Writer.write(player.getName() + " chose " + player.getWonder().getName() + " wonder for this game");
+
+        }
+        if(debug)
+            Writer.write("wonderList size after init : " + wonderArrayList.size());
 
     }
 
