@@ -2,9 +2,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "GLASS": 1,
       "STONE" : 1
@@ -15,9 +12,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "GLASS": 1,
       "STONE" : 1

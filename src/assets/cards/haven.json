@@ -2,9 +2,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "LOOM": 1,
       "ORE" : 1,
@@ -16,9 +13,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "LOOM": 1,
       "ORE" : 1,

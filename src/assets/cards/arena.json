@@ -2,9 +2,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "ORE": 1,
       "STONE" : 2
@@ -15,9 +12,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "ORE": 1,
       "STONE" : 2
@@ -28,9 +22,6 @@
   {
     "age" : 3,
     "CardColor" : "YELLOW",
-    "resource": {
-
-    },
     "cost": {
       "ORE": 1,
       "STONE" : 2

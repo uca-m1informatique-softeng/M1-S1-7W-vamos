@@ -2,12 +2,12 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "CLAY" : 1,
-      "STONE" : 1,
-      "ORE" : 1,
-      "WOOD" : 1
-    },
+    "resourceChoiceEffect": [
+      "CLAY",
+      "STONE",
+      "ORE" ,
+      "WOOD"
+    ],
     "cost": {
       "WOOD": 2
     },
@@ -17,12 +17,12 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "CLAY" : 1,
-      "STONE" : 1,
-      "ORE" : 1,
-      "WOOD" : 1
-    },
+    "resourceChoiceEffect": [
+      "CLAY",
+      "STONE",
+      "ORE" ,
+      "WOOD"
+    ],
     "cost": {
       "WOOD": 2
     },
@@ -32,12 +32,12 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "CLAY" : 1,
-      "STONE" : 1,
-      "ORE" : 1,
-      "WOOD" : 1
-    },
+    "resourceChoiceEffect": [
+      "CLAY",
+      "STONE",
+      "ORE" ,
+      "WOOD"
+    ],
     "cost": {
       "WOOD": 2
     },

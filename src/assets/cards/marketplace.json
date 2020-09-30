@@ -2,14 +2,12 @@
   {
     "age" : 1,
     "CardColor" : "YELLOW",
-    //right and left arrows
     "name": "marketplace",
     "players": 3
   },
   {
     "age" : 1,
     "CardColor" : "YELLOW",
-    //right and left arrows
     "name": "marketplace",
     "players": 6
   }

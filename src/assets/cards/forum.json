@@ -2,11 +2,11 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "GLASS": 1,
-      "LOOM": 1,
-      "PAPYRUS" : 1
-    },
+    "resourceChoiceEffect": [
+      "GLASS",
+      "LOOM",
+      "PAPYRUS"
+    ],
     "cost": {
       "CLAY": 2
     },
@@ -16,11 +16,11 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "GLASS": 1,
-      "LOOM": 1,
-      "PAPYRUS" : 1
-    },
+    "resourceChoiceEffect": [
+      "GLASS",
+      "LOOM",
+      "PAPYRUS"
+    ],
     "cost": {
       "CLAY": 2
     },
@@ -30,11 +30,11 @@
   {
     "age" : 2,
     "CardColor" : "YELLOW",
-    "resource": {
-      "GLASS": 1,
-      "LOOM": 1,
-      "PAPYRUS" : 1
-    },
+    "resourceChoiceEffect": [
+      "GLASS",
+      "LOOM",
+      "PAPYRUS"
+    ],
     "cost": {
       "CLAY": 2
     },
