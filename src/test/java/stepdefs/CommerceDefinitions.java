@@ -43,6 +43,6 @@ public class CommerceDefinitions {
     public void handout_coins() {
         player.setCoins(player.getCoins() - 2);
         neighbor.setCoins(neighbor.getCoins() + 2);
-    }
+    } 
 
 }
