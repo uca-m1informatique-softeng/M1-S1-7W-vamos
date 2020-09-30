@@ -10,4 +10,4 @@ Feature: Commerce Feature
   Scenario: Executing a trade action with neighbors
     When the player requests the resource {Resource}
     Then  the player should hand out 2 of his coins
-    #And his neighbor should trade it for the resource {Resource}
+    #And his neighbor should trade it for the resource {Resource} 
