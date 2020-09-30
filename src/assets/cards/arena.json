@@ -1,0 +1,32 @@
+[
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "ORE": 1,
+      "STONE" : 2
+    },
+    "name": "arena",
+    "players": 3
+  },
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "ORE": 1,
+      "STONE" : 2
+    },
+    "name": "arena",
+    "players": 5
+  },
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "ORE": 1,
+      "STONE" : 2
+    },
+    "name": "arena",
+    "players": 7
+  }
+]

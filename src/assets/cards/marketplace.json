@@ -1,0 +1,14 @@
+[
+  {
+    "age" : 1,
+    "CardColor" : "YELLOW",
+    "name": "marketplace",
+    "players": 3
+  },
+  {
+    "age" : 1,
+    "CardColor" : "YELLOW",
+    "name": "marketplace",
+    "players": 6
+  }
+]
