@@ -139,9 +139,9 @@ public class Player {
 
     public void chooseAction() {
         int rand_int1 = rand.nextInt(1000);
-        if (rand_int1 % 2 == 0) {
+        if (rand_int1 < 600) {
             this.buildCard();
-        } else if (rand_int1 % 3 == 0){
+        } else if (rand_int1 >= 600 && rand_int1 < 700){
             this.buildStageWonder();
         }
         else {
@@ -178,14 +178,14 @@ public class Player {
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
         for (Resource resource : costAfterEffects.keySet()){
-            if (costAfterEffects.get(resource) > this.resources.get(resource)){
+            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)){
 
                 int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
                 this.buyResource(resource, missingResources, this.prevNeighbor);
 
                 missingResources -= this.boughtResources.get(resource);
                 if (missingResources > 0) {
-                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
+                    this.buyResource(resource, missingResources, this.nextNeighbor);
                 }
             }
         }
@@ -206,6 +206,7 @@ public class Player {
             if (enoughResources){
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
+                this.clearBoughtResources();
 
                 //removing the cost of a card if it's not a free card
                 this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
@@ -238,7 +239,8 @@ public class Player {
                     for (Resource r : effect.getResourcesModified()) {
                         tradeResourceModifier.get("prev").add(r);
                     }
-                } else if (effect.isNextPlayerAllowed()) {
+                }
+                if (effect.isNextPlayerAllowed()) {
                     for (Resource r : effect.getResourcesModified()) {
                         tradeResourceModifier.get("next").add(r);
                     }
@@ -353,9 +355,7 @@ public class Player {
             }
         }
 
-        Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
-
-        this.clearBoughtResources();
+        Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points, " + cardMP + " military points, and " + (cardSCP+cardSTP+cardSWP) + " science points.");
     }
 
     /**

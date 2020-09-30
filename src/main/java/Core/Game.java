@@ -33,7 +33,7 @@ public class Game {
     public static Boolean debug = false;
 
 
-    public static void main(String[] args) throws ParseException, IOException, WondersException {
+    public static void main(String[] args) throws WondersException {
 
         Writer.init(true);
         Game game = new Game(3);
@@ -60,7 +60,7 @@ public class Game {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
-            stack.add(stack.get(0));
+            stack.add(stack.remove(0));
         this.deck = stack;
     }
 
@@ -70,7 +70,7 @@ public class Game {
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
-                prevPlayer = this.playersArray.get(i);
+                prevPlayer = this.playersArray.get(i-1);
             } else {
                 prevPlayer = this.playersArray.get(this.playersArray.size()-1);
             }
@@ -85,7 +85,7 @@ public class Game {
         }
     }
 
-    private void process() throws ParseException {
+    private void process() {
         switch (this.state)
         {
             case START:
@@ -188,7 +188,7 @@ public class Game {
             for(Player player : this.playersArray)
                 player.getHand().clear();
 
-            this.battle();
+            battle();
             Writer.write("Age has ended! ");
             this.currentAge++;
             this.processNewAge();
@@ -199,8 +199,8 @@ public class Game {
 
     private void battle() {
         for (Player p : this.playersArray) {
-            this.fight(p, p.getPrevNeighbor());
-            this.fight(p, p.getNextNeighbor());
+            fight(p, p.getPrevNeighbor());
+            fight(p, p.getNextNeighbor());
         }
     }
 
@@ -223,6 +223,8 @@ public class Game {
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
+        } else {
+            Writer.write(p1 + " and " + p2 + " both had " + p1.getPoints().get(CardPoints.MILITARY) + " Military Power. It's a draw !");
         }
     }
 
