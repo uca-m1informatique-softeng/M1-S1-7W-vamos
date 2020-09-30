@@ -3,12 +3,30 @@
     "age" : 1,
     "CardColor" : "YELLOW",
     "name": "marketplace",
-    "players": 3
+    "players": 3,
+    "tradeResourceEffect" : {
+      "nextPlayerAllowed" : true,
+      "prevPlayerAllowed" : true,
+      "resourcesModified" : [
+        "GLASS",
+        "LOOM",
+        "PAPYRUS"
+      ]
+    }
   },
   {
     "age" : 1,
     "CardColor" : "YELLOW",
     "name": "marketplace",
-    "players": 6
+    "players": 6,
+    "tradeResourceEffect" : {
+      "nextPlayerAllowed" : true,
+      "prevPlayerAllowed" : true,
+      "resourcesModified" : [
+        "GLASS",
+        "LOOM",
+        "PAPYRUS"
+      ]
+    }
   }
 ]

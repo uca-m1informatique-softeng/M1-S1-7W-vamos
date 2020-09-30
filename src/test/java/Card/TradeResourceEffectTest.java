@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TradeResourceEffectTest {
 
     @Test
-    void resourceChoiceEffect1() {
+    void tradeResourceEffect1() {
 
         try {
             Card card = new Card("treefarm", 6);
