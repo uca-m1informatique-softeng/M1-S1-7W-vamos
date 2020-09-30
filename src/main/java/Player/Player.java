@@ -167,7 +167,7 @@ public class Player {
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
         for (Card card : this.builtCards) {
-            if (card.getEffect() != null) {
+            if (card.getEffect() != null && card.getEffect() instanceof ResourceChoiceEffect) {
                 ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
             }
         }
@@ -175,11 +175,13 @@ public class Player {
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
         for (Resource resource : costAfterEffects.keySet()){
             if (costAfterEffects.get(resource) > this.resources.get(resource)){
+
                 int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
-                while (missingResources > 0) {
-                    this.buyResource(resource, this.prevNeighbor);
-                    if (!this.buyResource(resource, this.nextNeighbor)) break;
-                    missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
+                this.buyResource(resource, missingResources, this.prevNeighbor);
+
+                missingResources -= this.boughtResources.get(resource);
+                if (missingResources > 0) {
+                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
                 }
             }
         }
@@ -220,14 +222,13 @@ public class Player {
      * @param neighbor Neighbor to buy the resource from
      * @return true if resource could be bought, false if not
      */
-    public boolean buyResource(Resource resourceToBuy, Player neighbor) {
-        if (this.getCoins() >= 2) {
+    public boolean buyResource(Resource resourceToBuy, int quantity, Player neighbor) {
+        HashMap<String, ArrayList<Resource>> tradeResourceModifier = new HashMap<>();
+        tradeResourceModifier.put("prev", new ArrayList<>());
+        tradeResourceModifier.put("next", new ArrayList<>());
 
-            HashMap<String, ArrayList<Resource>> tradeResourceModifier = new HashMap<>();
-            tradeResourceModifier.put("prev", new ArrayList<>());
-            tradeResourceModifier.put("next", new ArrayList<>());
-
-            for (Card card : this.builtCards) {
+        for (Card card : this.builtCards) {
+            if (card.getEffect() instanceof TradeResourceEffect) {
                 TradeResourceEffect effect = ((TradeResourceEffect) card.getEffect());
                 if (effect.isPrevPlayerAllowed()) {
                     for (Resource r : effect.getResourcesModified()) {
@@ -239,24 +240,29 @@ public class Player {
                     }
                 }
             }
+        }
 
-            for (Resource r : neighbor.getResources().keySet()) {
-                if (resourceToBuy.equals(r) && neighbor.getResources().get(r) > 0) {
+        for (Resource r : neighbor.getResources().keySet()) {
+            if (resourceToBuy.equals(r) && neighbor.getResources().get(r) >= quantity) {
 
-                    this.boughtResources.put(r, this.boughtResources.get(r) + 1);
+                this.boughtResources.put(r, this.boughtResources.get(r) + quantity);
 
-                    if (    (this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
-                            (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) {
-                        neighbor.setCoins(neighbor.getCoins() + 1);
-                        this.setCoins(this.getCoins() - 1);
-                        Writer.write(this + " buys one " + r + " from " + neighbor + " for 1 coin.");
-                    } else {
-                        neighbor.setCoins(neighbor.getCoins() + 2);
-                        this.setCoins(this.getCoins() - 2);
-                        Writer.write(this + " buys one " + r + " from " + neighbor + " for 2 coins.");
-                    }
+                if (   ((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
+                        (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) &&
+                         this.getCoins() >= 1) {
+                    neighbor.setCoins(neighbor.getCoins() + quantity);
+                    this.setCoins(this.getCoins() - quantity);
+
+                    Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + quantity + " coin(s).");
 
                     return true;
+                } else if (this.getCoins() >= 2){
+                    neighbor.setCoins(neighbor.getCoins() + 2*quantity);
+                    this.setCoins(this.getCoins() - 2*quantity);
+
+                    Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + 2*quantity + " coin(s).");
+
+
                 }
             }
         }

@@ -329,7 +329,7 @@ public class PlayerTest {
         player.setCoins(oldCoins + 2);
         neighbor.getResources().put(resourceToBuy, 2);
 
-        assertTrue(player.buyResource(resourceToBuy, neighbor));
+        assertTrue(player.buyResource(resourceToBuy, 1, neighbor));
         assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
         assertEquals(player.getCoins(), oldCoins);
     }
@@ -342,7 +342,7 @@ public class PlayerTest {
         player.setCoins(0);
         neighbor.getResources().put(resourceToBuy, 2);
 
-        assertFalse(player.buyResource(resourceToBuy, neighbor));
+        assertFalse(player.buyResource(resourceToBuy, 1, neighbor));
     }
 
     @Test
@@ -352,19 +352,19 @@ public class PlayerTest {
 
         player.setCoins(2);
 
-        assertFalse(player.buyResource(resourceToBuy, neighbor));
+        assertFalse(player.buyResource(resourceToBuy, 1, neighbor));
     }
 
     @Test
     public void clearBoughtResources() {
         Resource resourceToBuy = Resource.CLAY;
-        Player neighbor = new Player("Neighbor");
+        Player neighbor = player.getNextNeighbor();
 
         int oldCoins = player.getCoins();
         player.setCoins(oldCoins + 2);
         neighbor.getResources().put(resourceToBuy, 2);
 
-        player.buyResource(resourceToBuy, neighbor);
+        player.buyResource(resourceToBuy, 1, neighbor);
         player.clearBoughtResources();
 
         EnumMap<Resource, Integer> emptyMap = new EnumMap<>(Resource.class);
@@ -372,6 +372,23 @@ public class PlayerTest {
             emptyMap.put(r, 0);
         }
         assertEquals(emptyMap, player.getBoughtResources());
+    }
+
+    @Test
+    public void buildCardWithTradedResource() {
+        try {
+            Card baths = new Card("baths", 6);
+            player.setCoins(1);
+            player.getBuiltCards().add(new Card("eastTradingPost", 6));
+            player.getNextNeighbor().getResources().put(Resource.STONE, 3);
+            player.setChosenCard(baths);
+            player.buildCard();
+            assertTrue(player.getBoughtResources().containsKey(Resource.STONE));
+            assertTrue(player.getBuiltCards().contains(baths));
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail();
+        }
     }
 
 }
