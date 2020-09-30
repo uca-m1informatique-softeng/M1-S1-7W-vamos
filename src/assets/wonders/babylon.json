@@ -1,46 +1,44 @@
 [
   {
     "productedRes": "WOOD",
-    "name" : "BABYLON",
-    "prop":[
-      "cost"[
-        {
-          "WOOD":2
+    "name": "BABYLON",
+    "cost":
+      {
+        "WOOD": 2
+      },
 
-        },
-        "reward"[
-          {
+    "reward":
+      {
+        "VICTORY": 5
+      }
 
-            "VICTORY":5
-          }
-        ]
-      ],
-      "cost"[
+  },
+  {
+  "cost" :
         {
           "ORE":2,
           "PAPYRUS":1
 
         },
-        "reward"[
+        "reward":
           {
 
             "VICTORY":5
           }
-        ]
-      ],
-      "cost"[
+
+      },
+  {
+      "cost":
         {
           "WOOD":4
 
         },
-        "reward"[
+        "reward":
           {
 
             "VICTORY":7
           }
-        ]
-      ]
-    ]
+
 
   }
 ]

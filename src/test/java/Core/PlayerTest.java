@@ -1,11 +1,13 @@
 package Core;
 
 import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
-import Core.Card;
-import Core.Player;
+
+import Card.*;
+import Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class PlayerTest {
+    private Card chosenCard0;
     private Card chosenCard;
     private Card chosenCard2;
     private Card chosenCard3;
@@ -39,6 +42,8 @@ public class PlayerTest {
         player = new Player("Robot");
         player.rand=rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
+        player.setPrevNeighbor(new Player("PreviousRobot"));
+        player.setNextNeighbor(new Player("NextRobot"));
 
         points = new EnumMap<>(CardPoints.class);
         points.put(CardPoints.VICTORY, 0);
@@ -89,11 +94,11 @@ public class PlayerTest {
     @Test
     public void setChosenCard(){
         try {
-            Card card = new Card("altar", 3);;
+            Card card = new Card("altar", 3);
             player.setChosenCard(card);
             assertEquals(card,player.getChosenCard());
         } catch (IOException e) {
-            assertTrue(false);
+            fail();
         }
     }
 
@@ -189,8 +194,9 @@ public class PlayerTest {
     @Test
     public void addPointsAndResources() {
         try {
+            chosenCard0 = new Card("sawmill", 3);
             chosenCard = new Card("altar", 3);
-            chosenCard2 = new Card("laboratory", 3);//SCIENCE_tablet
+            chosenCard2 = new Card("laboratory", 3);//SCIENCE_WHEEL
             chosenCard3 = new Card("observatory", 3);//SCIENCE_TABLET
             chosenCard4 = new Card("academy", 3);
         } catch (IOException e) {
@@ -201,6 +207,17 @@ public class PlayerTest {
         int oldVP = player.getPoints().get(CardPoints.VICTORY);
 
         ArrayList<Card> hand = new ArrayList<>();
+        //Buy a card with 1 coin cost, and return 2 WOOD
+        hand.add(chosenCard0);
+        player.setHand(hand);
+        player.setChosenCard(chosenCard0);
+        player.setCoins(1);
+        player.buildCard();
+        System.out.println(this.chosenCard0.getCost().get(Resource.COIN));
+        System.out.println(player.getCoins());
+        assertEquals(0, player.getCoins());
+        assertEquals(2, player.getResources().get(Resource.WOOD));
+
         hand.add(chosenCard);
         player.setHand(hand);
         player.setChosenCard(chosenCard);
@@ -301,6 +318,60 @@ public class PlayerTest {
         res2 += 7*Math.min(Math.min(points.get(CardPoints.SCIENCE_TABLET), points.get(CardPoints.SCIENCE_WHEEL)), Math.min(points.get(CardPoints.SCIENCE_WHEEL), points.get(CardPoints.SCIENCE_COMPASS)));
         int resPlayer2= player.computeScore();
         assertEquals(res2,resPlayer2);
+    }
+
+    @Test
+    public void buyResource1() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        int oldCoins = player.getCoins();
+        player.setCoins(oldCoins + 2);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        assertTrue(player.buyResource(resourceToBuy, neighbor));
+        assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
+        assertEquals(player.getCoins(), oldCoins);
+    }
+
+    @Test
+    public void buyResource2() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        player.setCoins(0);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        assertFalse(player.buyResource(resourceToBuy, neighbor));
+    }
+
+    @Test
+    public void buyResource3() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        player.setCoins(2);
+
+        assertFalse(player.buyResource(resourceToBuy, neighbor));
+    }
+
+    @Test
+    public void clearBoughtResources() {
+        Resource resourceToBuy = Resource.CLAY;
+        Player neighbor = new Player("Neighbor");
+
+        int oldCoins = player.getCoins();
+        player.setCoins(oldCoins + 2);
+        neighbor.getResources().put(resourceToBuy, 2);
+
+        player.buyResource(resourceToBuy, neighbor);
+        player.clearBoughtResources();
+
+        EnumMap<Resource, Integer> emptyMap = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            emptyMap.put(r, 0);
+        }
+        assertEquals(emptyMap, player.getBoughtResources());
     }
 
 }

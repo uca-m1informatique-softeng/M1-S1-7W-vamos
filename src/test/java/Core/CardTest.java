@@ -1,10 +1,10 @@
 package Core;
 
+import Card.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.time.format.ResolverStyle;
 import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,11 +83,11 @@ class CardTest {
         oracle.put(Resource.LOOM, 0);
         oracle.put(Resource.PAPYRUS, 0);
         oracle.put(Resource.COIN, 0);
-       // assertEquals(oracle, card.getCost()); // Not implemented
+        assertEquals(oracle, card.getCost());
     }
 
     @Test
     void isFree() {
-        //assertEquals(false, card.isFree()); //Not implemented
+        assertEquals(false, card.isFree());
     }
 }
