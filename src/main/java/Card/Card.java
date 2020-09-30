@@ -59,8 +59,7 @@ public class Card {
 
                 JSONObject json = card.getJSONObject(i);
 
-                if (json.getInt("players") <= players ) {
-
+                if ((json.has("players") && json.getInt("players") <= players) || !json.has("players")) {
                     // age
                     this.age = json.getInt("age");
 
