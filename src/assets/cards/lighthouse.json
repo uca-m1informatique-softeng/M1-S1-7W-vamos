@@ -1,0 +1,22 @@
+[
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "GLASS": 1,
+      "STONE" : 1
+    },
+    "name": "lighthouse",
+    "players": 3
+  },
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "GLASS": 1,
+      "STONE" : 1
+    },
+    "name": "lighthouse",
+    "players": 6
+  }
+]

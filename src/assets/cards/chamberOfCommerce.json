@@ -1,0 +1,22 @@
+[
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "CLAY": 2,
+      "PAPYRUS" : 1
+    },
+    "name": "chamber of commerce",
+    "players": 4
+  },
+  {
+    "age" : 3,
+    "CardColor" : "YELLOW",
+    "cost": {
+      "CLAY": 2,
+      "PAPYRUS" : 1
+    },
+    "name": "chamber of commerce",
+    "players": 6
+  }
+]
