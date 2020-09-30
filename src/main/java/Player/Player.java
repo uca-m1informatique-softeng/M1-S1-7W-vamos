@@ -137,13 +137,17 @@ public class Player {
         chosenCard = hand.get(0);
     }
 
-    public void chooseAction(){
+    public void chooseAction() {
         int rand_int1 = rand.nextInt(1000);
-        if(rand_int1 % 2 == 0) {
-            this.dumpCard();
-        }
-        else
+        if (rand_int1 % 2 == 0) {
             this.buildCard();
+        } else if (rand_int1 % 3 == 0){
+            this.buildStageWonder();
+        }
+        else {
+            this.dumpCard();
+
+        }
     }
 
     /**
@@ -249,7 +253,7 @@ public class Player {
 
                 if (   ((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
                         (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) &&
-                         this.getCoins() >= 1) {
+                        this.getCoins() >= 1) {
                     neighbor.setCoins(neighbor.getCoins() + quantity);
                     this.setCoins(this.getCoins() - quantity);
 
@@ -278,6 +282,44 @@ public class Player {
             this.boughtResources.put(r, 0);
         }
     }
+
+    /**
+     * Buy a stage of a wonder, give reward, and remove one card.
+     */
+    public void buildStageWonder() {
+        boolean enoughResources = true ;
+
+        EnumMap<Resource, Integer> costAfterEffects = this.wonder.getCurrentUpgradeCost();
+
+        for (Card card : this.builtCards) {
+            if (card.getEffect() instanceof ResourceChoiceEffect) {
+                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+            }
+            if (card.getEffect() instanceof TradeResourceEffect) {
+                //TODO after TradeREsourceEffect is finished
+            }
+        }
+
+        for (Resource resource : costAfterEffects.keySet()){
+            if (costAfterEffects.get(resource) > this.resources.get(resource)){
+                enoughResources = false ;
+            }
+        }
+
+            if (enoughResources){
+                this.addWonderReward();
+                this.wonder.setState(wonder.getState() + 1);
+
+                //removing the cost in coin of the wonder
+                this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
+                System.out.println("Player " + this.name + "build a stage of wonder.");
+                this.hand.remove(this.chosenCard);
+            }
+            else{ //if the player don't have enough resources to buy a stage rechoose action
+                Writer.write("Not enough ressources build stage of wonder, so replay.");
+                this.chooseAction();
+            }
+        }
 
     public void addPointsAndResources(){
         //adding points if the card gives a points
@@ -314,6 +356,32 @@ public class Player {
         Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
 
         this.clearBoughtResources();
+    }
+
+    /**
+     * adds military points, and victory points to the player equal to the construction of the current stage of the wonder
+     */
+    public void addWonderReward() {
+
+        EnumMap<CardPoints, Integer> reward = this.wonder.getCurrentRewardsFromUpgrade();
+        int currentVP = 0;
+        int wonderVP = 0;
+        int currentMP = 0;
+        int wonderMP = 0;
+        if (reward.containsKey(CardPoints.VICTORY)){
+            currentVP = this.points.get(CardPoints.VICTORY);
+            wonderVP = reward.get(CardPoints.VICTORY);
+        }
+        this.points.put(CardPoints.VICTORY, currentVP + wonderVP);
+        if (reward.containsKey(CardPoints.MILITARY)){
+            currentMP = this.points.get(CardPoints.MILITARY);
+            wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
+        }
+        this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
+
+        //TODO add stage wonder effect
+
+        Writer.write(this.name + " build stage wonder " + this.wonder.getName() + " and got " + wonderVP + " victory points.");
     }
 
     public int computeScore() {
