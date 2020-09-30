@@ -275,6 +275,8 @@ public class Player {
         }
 
         Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points.");
+
+        this.clearBoughtResources();
     }
 
     public int computeScore() {
