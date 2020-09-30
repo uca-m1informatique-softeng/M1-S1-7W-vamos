@@ -4,12 +4,11 @@ import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
+import Card.TradeResourceEffect;
 import Core.Wonder;
 import Utility.Writer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.Random;
+
+import java.util.*;
 
 public class Player {
 
@@ -223,11 +222,39 @@ public class Player {
      */
     public boolean buyResource(Resource resourceToBuy, Player neighbor) {
         if (this.getCoins() >= 2) {
+
+            HashMap<String, ArrayList<Resource>> tradeResourceModifier = new HashMap<>();
+            tradeResourceModifier.put("prev", new ArrayList<>());
+            tradeResourceModifier.put("next", new ArrayList<>());
+
+            for (Card card : this.builtCards) {
+                TradeResourceEffect effect = ((TradeResourceEffect) card.getEffect());
+                if (effect.isPrevPlayerAllowed()) {
+                    for (Resource r : effect.getResourcesModified()) {
+                        tradeResourceModifier.get("prev").add(r);
+                    }
+                } else if (effect.isNextPlayerAllowed()) {
+                    for (Resource r : effect.getResourcesModified()) {
+                        tradeResourceModifier.get("next").add(r);
+                    }
+                }
+            }
+
             for (Resource r : neighbor.getResources().keySet()) {
                 if (resourceToBuy.equals(r) && neighbor.getResources().get(r) > 0) {
                     this.boughtResources.put(r, this.boughtResources.get(r) + 1);
-                    this.setCoins(this.getCoins() - 2);
-                    Writer.write(this + " buys one " + r + " from " + neighbor + ".");
+                    if (    (this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
+                            (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) {
+                        neighbor.setCoins(neighbor.getCoins() + 1);
+                        this.setCoins(this.getCoins() - 1);
+                        Writer.write(this + " buys one " + r + " from " + neighbor + " for 1 coin.");
+                    } else {
+                        neighbor.setCoins(neighbor.getCoins() + 2);
+                        this.setCoins(this.getCoins() - 2);
+                        Writer.write(this + " buys one " + r + " from " + neighbor + " for 2 coins.");
+                    }
+
+
                     return true;
                 }
             }
