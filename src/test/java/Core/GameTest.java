@@ -2,6 +2,7 @@ package Core;
 
 import Card.Card;
 import Card.CardManager;
+import Exceptions.WondersException;
 import Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +24,7 @@ class GameTest {
 
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws WondersException {
         game = new Game(2);
 
         players=2;

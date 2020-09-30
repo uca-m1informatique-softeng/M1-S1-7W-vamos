@@ -1,6 +1,7 @@
 package Core;
 
 import Card.*;
+import Exceptions.WondersException;
 import Player.Player;
 import Utility.Utilities;
 import Utility.Writer;
@@ -15,7 +16,7 @@ public class Game {
 
     private int round = 1;
 
-    private int players;
+    private static int players;
 
     private int currentAge = 1;
 
@@ -28,7 +29,7 @@ public class Game {
     public static Boolean debug = false;
 
 
-    public static void main(String[] args) throws ParseException{
+    public static void main(String[] args) throws ParseException, IOException, WondersException {
 
         Writer.init(true);
         Game game = new Game(3);
@@ -40,12 +41,13 @@ public class Game {
 
     }
 
-    public Game (int players) {
+    public Game (int players) throws WondersException {
         this.players = players;
         this.playersArray = new ArrayList<>(players);
         this.initPlayers();
         this.state = GameState.START;
         this.deck = new ArrayList<>();
+        WonderManager.parseWonders();
 
     }
 
@@ -241,7 +243,7 @@ public class Game {
     private void displayPlayersRanking() {
 
         ArrayList<Player> players = this.getPlayersArray();
-        Player tmpWinner = players.remove(0);
+        Player tmpWinner = players.get(0);
 
         for(Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
@@ -269,7 +271,7 @@ public class Game {
         return round;
     }
 
-    public int getPlayers() {
+    public static int getPlayers() {
         return players;
     }
 
