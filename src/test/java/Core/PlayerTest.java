@@ -1,7 +1,6 @@
 package Core;
 
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
@@ -147,7 +146,7 @@ public class PlayerTest {
         catch (IOException e){
             e.printStackTrace();
         }
-        
+
         //if we get inside the elseif
         try {
             Wonder wonder = new Wonder("gizah");
