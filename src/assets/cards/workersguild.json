@@ -1,0 +1,13 @@
+[
+  {
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+      "STONE": 1,
+      "WOOD": 1,
+      "ORE": 2,
+      "CLAY": 1
+    },
+    "name": "workers guild"
+  }
+]

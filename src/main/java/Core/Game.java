@@ -65,8 +65,24 @@ public class Game {
     }
 
     public void initPlayers() {
-        for(int i = 0; i < players; i++)
+        for (int i = 0; i < players; i++)
             this.playersArray.add(new Player("Bot" + i));
+        for (int i = 0; i < players; i++) {
+            Player prevPlayer, nextPlayer;
+            if (i > 0) {
+                prevPlayer = this.playersArray.get(i);
+            } else {
+                prevPlayer = this.playersArray.get(this.playersArray.size()-1);
+            }
+            if (i < this.playersArray.size()-1) {
+                nextPlayer = this.playersArray.get(i+1);
+            } else {
+                nextPlayer = this.playersArray.get(0);
+            }
+
+            this.playersArray.get(i).setPrevNeighbor(prevPlayer);
+            this.playersArray.get(i).setNextNeighbor(nextPlayer);
+        }
     }
 
     private void process() throws ParseException {

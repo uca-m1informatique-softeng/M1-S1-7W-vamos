@@ -1,0 +1,11 @@
+[
+  {
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+      "STONE": 2,
+      "ORE": 2
+    },
+    "name": "craftmens guild"
+  }
+]

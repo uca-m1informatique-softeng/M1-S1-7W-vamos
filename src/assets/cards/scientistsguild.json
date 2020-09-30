@@ -1,0 +1,12 @@
+[
+  {
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+      "WOOD": 2,
+      "PAPYRUS": 1,
+      "ORE": 2
+    },
+    "name": "scientists guild"
+  }
+]

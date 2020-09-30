@@ -1,0 +1,11 @@
+[
+  {
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+      "GLASS": 1,
+      "CLAY": 3
+    },
+    "name": "spies guild"
+  }
+]
