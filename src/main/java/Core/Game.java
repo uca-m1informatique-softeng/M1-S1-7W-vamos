@@ -42,7 +42,7 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
-        this.players = players;
+        Game.players = players;
         this.playersArray = new ArrayList<>(players);
         this.initPlayers();
         this.state = GameState.START;
@@ -85,7 +85,7 @@ public class Game {
         {
             case START:
             {
-                Writer.write("The game started with " + this.players + "players on the board");
+                Writer.write("The game started with " + Game.players + "players on the board");
                 this.processNewAge();
                 this.state = GameState.PLAY;
             }
@@ -204,16 +204,20 @@ public class Game {
             switch (this.currentAge) {
                 case 1 :
                     p1.addMilitaryPoints(1);
+                    Writer.write(p1 + " fought " + p2 + " and won 1 Military Point.");
                     break;
                 case 2 :
                     p1.addMilitaryPoints(3);
+                    Writer.write(p1 + " fought " + p2 + " and won 3 Military Point.");
                     break;
                 case 3 :
                     p1.addMilitaryPoints(5);
+                    Writer.write(p1 + " fought " + p2 + " and won 5 Military Point.");
                     break;
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
+            Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         }
     }
 
