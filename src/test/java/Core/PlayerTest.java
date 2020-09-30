@@ -42,6 +42,8 @@ public class PlayerTest {
         player = new Player("Robot");
         player.rand=rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
+        player.setPrevNeighbor(new Player("PreviousRobot"));
+        player.setNextNeighbor(new Player("NextRobot"));
 
         points = new EnumMap<>(CardPoints.class);
         points.put(CardPoints.VICTORY, 0);

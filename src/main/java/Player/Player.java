@@ -28,6 +28,10 @@ public class Player {
 
     private ArrayList<Card> builtCards;
 
+    private Player prevNeighbor;
+
+    private Player nextNeighbor;
+
     public Random rand = new Random();
 
 
@@ -110,6 +114,22 @@ public class Player {
         return boughtResources;
     }
 
+    public Player getPrevNeighbor() {
+        return prevNeighbor;
+    }
+
+    public Player getNextNeighbor() {
+        return nextNeighbor;
+    }
+
+    public void setPrevNeighbor(Player prevNeighbor) {
+        this.prevNeighbor = prevNeighbor;
+    }
+
+    public void setNextNeighbor(Player nextNeighbor) {
+        this.nextNeighbor = nextNeighbor;
+    }
+
     public void chooseCard(){
         Collections.shuffle(hand);
         chosenCard = hand.get(0);
@@ -142,22 +162,33 @@ public class Player {
     public void buildCard() {
         boolean enoughResources = true ;
 
+        // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
-
         for (Card card : this.builtCards) {
             if (card.getEffect() != null) {
                 ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
             }
         }
 
+        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
         for (Resource resource : costAfterEffects.keySet()){
             if (costAfterEffects.get(resource) > this.resources.get(resource)){
-                enoughResources = false ;
+                int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
+                while (missingResources > 0) {
+                    this.buyResource(resource, this.prevNeighbor);
+                    if (!this.buyResource(resource, this.nextNeighbor)) break;
+                    missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
+                }
             }
         }
 
+        for (Resource resource : costAfterEffects.keySet()) {
+            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)) {
+                enoughResources = false;
+            }
+        }
 
-        if(chosenCard.isFree())
+        if (chosenCard.isFree())
         {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
@@ -193,6 +224,7 @@ public class Player {
                 if (resourceToBuy.equals(r) && neighbor.getResources().get(r) > 0) {
                     this.boughtResources.put(r, this.boughtResources.get(r) + 1);
                     this.setCoins(this.getCoins() - 2);
+                    Writer.write(this + " buys one " + r + " from " + neighbor + ".");
                     return true;
                 }
             }
