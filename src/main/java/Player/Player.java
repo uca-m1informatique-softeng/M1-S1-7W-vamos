@@ -242,7 +242,9 @@ public class Player {
 
             for (Resource r : neighbor.getResources().keySet()) {
                 if (resourceToBuy.equals(r) && neighbor.getResources().get(r) > 0) {
+
                     this.boughtResources.put(r, this.boughtResources.get(r) + 1);
+
                     if (    (this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
                             (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) {
                         neighbor.setCoins(neighbor.getCoins() + 1);
@@ -253,7 +255,6 @@ public class Player {
                         this.setCoins(this.getCoins() - 2);
                         Writer.write(this + " buys one " + r + " from " + neighbor + " for 2 coins.");
                     }
-
 
                     return true;
                 }
