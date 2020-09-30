@@ -7,6 +7,7 @@
       "PAPYRUS": 1,
       "GLASS": 1
     },
-    "name": "traders guild"
+    "name": "traders guild",
+    "coloredCardResourceEffect" : "YELLOW"
   }
 ]

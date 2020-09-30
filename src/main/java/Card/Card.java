@@ -12,6 +12,7 @@ public class Card {
 
     private String name;
     private CardColor color;
+    private CardColor coloredCardResourceEffect ;
     private int age;
     private int players;
     private Effect effect;
@@ -106,6 +107,15 @@ public class Card {
                                 tradeResourceEffect.getBoolean("nextPlayerAllowed"),
                                 resList);
                     }
+
+                    if(json.has("coloredCardResourceEffect")){
+                        this.coloredCardResourceEffect=CardColor.valueOf(json.getString("coloredCardResourceEffect")) ;
+
+                        CardColor coloredCardResourceEffect = CardColor.valueOf(json.getString("coloredCardResourceEffect"));
+
+                        this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect) ;
+                    }
+
                 }
             }
         }
@@ -118,6 +128,10 @@ public class Card {
 
     public CardColor getColor() {
         return color;
+    }
+
+    public CardColor getColoredCardResourceEffect() {
+        return coloredCardResourceEffect;
     }
 
     public int getAge() {

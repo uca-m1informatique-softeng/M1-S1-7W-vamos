@@ -6,6 +6,7 @@
       "GLASS": 1,
       "CLAY": 3
     },
-    "name": "spies guild"
+    "name": "spies guild",
+    "coloredCardResourceEffect" : "RED"
   }
 ]

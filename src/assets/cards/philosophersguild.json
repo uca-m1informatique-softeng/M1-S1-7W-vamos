@@ -7,6 +7,7 @@
       "PAPYRUS": 1,
       "CLAY": 3
     },
-    "name": "philosophers guild"
+    "name": "philosophers guild",
+    "coloredCardResourceEffect" : "GREEN"
   }
 ]

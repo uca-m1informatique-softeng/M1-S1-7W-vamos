@@ -8,6 +8,7 @@
       "ORE": 2,
       "CLAY": 1
     },
-    "name": "workers guild"
+    "name": "workers guild",
+    "coloredCardResourceEffect" : "BROWN"
   }
 ]

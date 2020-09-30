@@ -6,6 +6,7 @@
       "STONE": 2,
       "ORE": 2
     },
-    "name": "craftmens guild"
+    "name": "craftmens guild",
+    "coloredCardResourceEffect" : "GREY"
   }
 ]

@@ -1,5 +1,6 @@
 package Player;
 
+import Card.ColoredCardResourceEffect ;
 import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
@@ -146,7 +147,6 @@ public class Player {
         }
         else {
             this.dumpCard();
-
         }
     }
 
@@ -173,6 +173,9 @@ public class Player {
         for (Card card : this.builtCards) {
             if (card.getEffect() != null && card.getEffect() instanceof ResourceChoiceEffect) {
                 ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+            }
+            if (card.getEffect() != null && card.getEffect() instanceof ColoredCardResourceEffect){
+                ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
             }
         }
 
