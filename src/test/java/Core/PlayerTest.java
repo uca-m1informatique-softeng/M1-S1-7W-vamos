@@ -135,23 +135,31 @@ public class PlayerTest {
 
     @Test
     public void chooseAction(){
-        when(rand.nextInt(1000)).thenReturn(1,2);
+        when(rand.nextInt(1000)).thenReturn(599,600,700);
 
         //if we get inside the if statement
-        player.chooseAction();
-
-        //if we get inside the else
         try {
-            Card card=new Card("altar",3);
-            player.setChosenCard(card);
+            Card chosenCard = new Card("altar",3) ;
+            player.setChosenCard(chosenCard);
+            player.getBuiltCards().add(chosenCard) ;
+            player.chooseAction(); //calls player.buildCard()
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        
+        //if we get inside the elseif
+        try {
+            Wonder wonder = new Wonder("gizah");
+            player.setWonder(wonder);
+            player.chooseAction(); //calls player.buildStageWonder()
         }
         catch (IOException e){
             e.printStackTrace();
         }
 
-        player.chooseAction();
-
-
+        //if we get inside the else
+        player.chooseAction(); //calls player.dumpCard()
     }
 
     @Test
