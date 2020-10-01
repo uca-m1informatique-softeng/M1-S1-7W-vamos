@@ -2,16 +2,11 @@ package Core;
 
 import Card.*;
 import Exceptions.WondersException;
-import Player.Player;
+import Player.*;
 import Utility.Utilities;
 import Utility.Writer;
-
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.spi.AbstractResourceBundleProvider;
 
 import static Utility.Constante.*;
 
@@ -66,7 +61,7 @@ public class Game {
 
     public void initPlayers() {
         for (int i = 0; i < players; i++)
-            this.playersArray.add(new Player("Bot" + i));
+            this.playersArray.add(new DumbPlayer("Bot" + i));
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
