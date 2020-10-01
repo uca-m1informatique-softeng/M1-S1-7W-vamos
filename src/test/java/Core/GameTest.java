@@ -3,7 +3,6 @@ package Core;
 import Card.Card;
 import Card.CardManager;
 import Exceptions.WondersException;
-import Player.Player;
 import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ class GameTest {
     private static int round ;
     private static int players;
     private static int currentAge ;
-    private static ArrayList<Player> playersArray;
+    private static ArrayList<DumbPlayer> playersArray;
     private static GameState state;
     private ArrayList<Card> deck;
 
@@ -93,16 +92,8 @@ class GameTest {
          assertEquals(playersArray.size(),game.getPlayersArray().size());
 
          for (int i = 0; i < game.getPlayersArray().size(); i++) {
-             assertTrue(game.getPlayersArray().get(i) instanceof Player);
+             assertTrue(game.getPlayersArray().get(i) instanceof DumbPlayer);
          }
      }
-
-    @Test
-    void initPlayersTest() {
-        ArrayList<Player> tmp = game.getPlayersArray();
-        for (int i = 1; i < game.getPlayers(); i++) {
-            assertNotEquals(tmp.get(0), tmp.get(i));
-        }
-    }
 
 }
