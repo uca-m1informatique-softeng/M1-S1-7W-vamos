@@ -142,7 +142,6 @@ public abstract class Player {
         this.wonder = wonder;
     }
 
-
     public abstract void chooseCard();
 
     public abstract void chooseAction();
@@ -178,14 +177,14 @@ public abstract class Player {
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
         for (Resource resource : costAfterEffects.keySet()){
-            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)){
+            if (costAfterEffects.get(resource) > this.resources.get(resource)){
 
                 int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
                 this.buyResource(resource, missingResources, this.prevNeighbor);
 
                 missingResources -= this.boughtResources.get(resource);
                 if (missingResources > 0) {
-                    this.buyResource(resource, missingResources, this.nextNeighbor);
+                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
                 }
             }
         }
@@ -255,14 +254,14 @@ public abstract class Player {
 
                 if (   ((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
                         (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) &&
-                        this.getCoins() >= 1) {
+                         this.getCoins() >= 1) {
                     neighbor.setCoins(neighbor.getCoins() + quantity);
                     this.setCoins(this.getCoins() - quantity);
 
                     Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + quantity + " coin(s).");
 
                     return true;
-                } else if (this.getCoins() >= 2){
+                } else if (this.getCoins() >= 2*quantity){
                     neighbor.setCoins(neighbor.getCoins() + 2*quantity);
                     this.setCoins(this.getCoins() - 2*quantity);
 
@@ -378,8 +377,6 @@ public abstract class Player {
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
         this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
-
-        //TODO add stage wonder effect
 
         Writer.write(this.name + " build stage wonder " + this.wonder.getName() + " and got " + wonderVP + " victory points.");
     }
