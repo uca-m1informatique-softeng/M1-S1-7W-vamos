@@ -318,7 +318,7 @@ public class Player extends AbstractPlayer {
 
                 //removing the cost in coin of the wonder
                 this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
-                System.out.println("Player " + this.name + "build a stage of wonder.");
+                Writer.write("Player " + this.name + "build a stage of wonder.");
                 this.hand.remove(this.chosenCard);
             }
             else{ //if the player don't have enough resources to buy a stage rechoose action

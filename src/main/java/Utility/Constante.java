@@ -73,5 +73,9 @@ public final class Constante {
     public static final String CYAN_BOLD_BRIGHT = "\033[1;96m";  // CYAN
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
 
+    //Mode de partie
+    public final static String MODE_PARTIE="partie";
+    public final static String MODE_STATS="stat";
+    public final static int NOMBRE_PARTIES_STATS = 2000;
 }
 

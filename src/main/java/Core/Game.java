@@ -3,15 +3,14 @@ package Core;
 import Card.*;
 import Exceptions.WondersException;
 import Player.Player;
+import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.spi.AbstractResourceBundleProvider;
 
 import static Utility.Constante.*;
 
@@ -23,7 +22,7 @@ public class Game {
 
     private int currentAge = 1;
 
-    private ArrayList<Player> playersArray;
+    private static ArrayList<Player> playersArray;
 
     private GameState state;
 
@@ -33,15 +32,55 @@ public class Game {
     public static Boolean debug = false;
 
 
+
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
-        Writer.init(true);
-        Game game = new Game(3);
-        while(game.state != GameState.EXIT)
-            game.process();
-        Writer.close();
-        Utilities.displayGameOutput();
-        Writer.deleteFile();
+        String typePartie = MODE_STATS;
+        if(typePartie.equals(MODE_PARTIE))
+        {
+            Writer.init(true);
+            Game game = new Game(3);
+            while(game.state != GameState.EXIT)
+                game.process();
+            Writer.close();
+            Utilities.displayGameOutput();
+            Writer.deleteFile();
+        }
+        else if (typePartie.equals(MODE_STATS))
+        {
+            Writer.init(false);
+            RecapScore[] recapScores = new RecapScore[3];
+            for(int i=0; i<recapScores.length ; i++)
+            {
+                recapScores[i] = new RecapScore();
+            }
+            for(int i=0 ; i<NOMBRE_PARTIES_STATS ; i++)
+            {
+                Game game = new Game(3);
+                while(game.state != GameState.EXIT)
+                    game.process();
+                RecapScore[] scoresTmp = game.displayPlayersRanking();
+                for(int j=0; j<recapScores.length ; j++)
+                {
+                    recapScores[j].addRecap(scoresTmp[j]);
+                }
+             //   for(RecapScore recap : recapScores)
+              //      System.out.println(recap.toString());
+            }
+
+            System.out.println( BLUE_UNDERLINED +  "---- Number of analyzed games : " + NOMBRE_PARTIES_STATS + " ---- \n" + RESET);
+            for(int i=0; i< getPlayers() ; i++) {
+                recapScores[i].processAvgScore(NOMBRE_PARTIES_STATS);
+                double victoires = (recapScores[i].getNbVictory() / (double) NOMBRE_PARTIES_STATS) *100;
+                String joueur = playersArray.get(i).toString();
+                System.out.println(joueur + " gets an average score of  " + recapScores[i].getAvgScore());
+                System.out.println(joueur + " has a " + victoires + "% winrate ");
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Mode inexistant.");
+        }
 
     }
 
@@ -226,11 +265,12 @@ public class Game {
         }
     }
 
-    private void displayPlayersRanking() {
+    private RecapScore[] displayPlayersRanking() {
 
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
-
+        RecapScore[] playersScores = new RecapScore[getPlayers()];
+        int offset = 0;
         for(Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + "science points");
@@ -239,10 +279,16 @@ public class Game {
                 (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
             }
+
         }
+        for(int i = 0; i < getPlayers(); i++)
+            playersScores[i] = new RecapScore(players.get(i),players.get(i).equals(tmpWinner));
 
 
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+       // System.out.println(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+
+        return playersScores;
 
     }
 
