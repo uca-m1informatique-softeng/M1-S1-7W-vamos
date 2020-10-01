@@ -116,6 +116,13 @@ public class Card {
                         this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect) ;
                     }
 
+                    if (json.has("ShipownersGuildEffect")){
+                        this.effect= new ShipOwnersGuild() ;
+                    }
+
+                    if (json.has("BuildersGuildEffect")){
+                        this.effect = new BuildersGuildEffect() ;
+                    }
                 }
             }
         }

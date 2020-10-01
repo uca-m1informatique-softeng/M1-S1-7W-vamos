@@ -1,6 +1,8 @@
 package Player;
 
 import Card.ColoredCardResourceEffect ;
+import Card.ShipOwnersGuild ;
+import Card.BuildersGuildEffect ;
 import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
@@ -172,6 +174,12 @@ public abstract class Player {
             }
             if (card.getEffect() != null && card.getEffect() instanceof ColoredCardResourceEffect){
                 ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
+            }
+            if (card.getEffect() !=null && card.getEffect() instanceof ShipOwnersGuild){ //Ship Owners Guild Effect
+                ((ShipOwnersGuild) card.getEffect()).applyEffect(this);
+            }
+            if (card.getEffect() !=null && card.getEffect() instanceof BuildersGuildEffect){ //Builder sGuild Card Effect
+                ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
             }
         }
 

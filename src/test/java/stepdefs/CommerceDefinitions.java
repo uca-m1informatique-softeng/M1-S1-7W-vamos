@@ -22,7 +22,7 @@ public class CommerceDefinitions {
     }
     @And("the neighboring city produces the resource \\{Resource}")
     public void theNeighboringCityProducesTheResource() throws IOException {
-        Wonder wonder = new Wonder("GIZAH");
+        Wonder wonder = new Wonder("gizah");
         neighbor.setWonder(wonder);
         assertEquals(neighbor.getWonder().getProductedResource(), resource);
     }
