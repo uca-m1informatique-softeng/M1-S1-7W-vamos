@@ -11,7 +11,7 @@ import Utility.Writer;
 
 import java.util.*;
 
-public class Player {
+public class Player extends AbstractPlayer {
 
     private String name;
 
@@ -140,13 +140,14 @@ public class Player {
 
     public void chooseAction() {
         int rand_int1 = rand.nextInt(1000);
-        if (rand_int1 < 600) {
+        if (rand_int1 % 2 == 0) {
             this.buildCard();
-        } else if (rand_int1 >= 600 && rand_int1 < 700){
+        } else if (rand_int1 % 3 == 0){
             this.buildStageWonder();
         }
         else {
             this.dumpCard();
+
         }
     }
 
@@ -181,14 +182,14 @@ public class Player {
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
         for (Resource resource : costAfterEffects.keySet()){
-            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)){
+            if (costAfterEffects.get(resource) > this.resources.get(resource)){
 
                 int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
                 this.buyResource(resource, missingResources, this.prevNeighbor);
 
                 missingResources -= this.boughtResources.get(resource);
                 if (missingResources > 0) {
-                    this.buyResource(resource, missingResources, this.nextNeighbor);
+                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
                 }
             }
         }
@@ -258,14 +259,14 @@ public class Player {
 
                 if (   ((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
                         (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) &&
-                        this.getCoins() >= 1) {
+                         this.getCoins() >= 1) {
                     neighbor.setCoins(neighbor.getCoins() + quantity);
                     this.setCoins(this.getCoins() - quantity);
 
                     Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + quantity + " coin(s).");
 
                     return true;
-                } else if (this.getCoins() >= 2){
+                } else if (this.getCoins() >= 2*quantity){
                     neighbor.setCoins(neighbor.getCoins() + 2*quantity);
                     this.setCoins(this.getCoins() - 2*quantity);
 
@@ -381,8 +382,6 @@ public class Player {
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
         this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
-
-        //TODO add stage wonder effect
 
         Writer.write(this.name + " build stage wonder " + this.wonder.getName() + " and got " + wonderVP + " victory points.");
     }
