@@ -96,12 +96,4 @@ class GameTest {
          }
      }
 
-    @Test
-    void initPlayersTest() {
-        ArrayList<DumbPlayer> tmp = game.getPlayersArray();
-        for (int i = 1; i < game.getPlayers(); i++) {
-            assertNotEquals(tmp.get(0), tmp.get(i));
-        }
-    }
-
 }

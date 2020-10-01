@@ -7,6 +7,7 @@ import Utility.Utilities;
 import Utility.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import static Utility.Constante.*;
 
@@ -18,7 +19,7 @@ public class Game {
 
     private int currentAge = 1;
 
-    private ArrayList<DumbPlayer> playersArray;
+    private ArrayList<Player> playersArray;
 
     private GameState state;
 
@@ -60,10 +61,17 @@ public class Game {
     }
 
     public void initPlayers() {
-        for (int i = 0; i < players; i++)
-            this.playersArray.add(new DumbPlayer("Bot" + i));
         for (int i = 0; i < players; i++) {
-            DumbPlayer prevPlayer, nextPlayer;
+            Random random = new Random();
+            if (random.nextInt(100) < 90) {
+                this.playersArray.add(new DumbPlayer("Stupid" + i));
+            } else {
+                this.playersArray.add(new MilitaryPlayer("Warrior" + i));
+            }
+        }
+
+        for (int i = 0; i < players; i++) {
+            Player prevPlayer, nextPlayer;
             if (i > 0) {
                 prevPlayer = this.playersArray.get(i-1);
             } else {
@@ -225,7 +233,7 @@ public class Game {
 
     private void displayPlayersRanking() {
 
-        ArrayList<DumbPlayer> players = this.getPlayersArray();
+        ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
 
         for(Player p : players) {
@@ -278,7 +286,7 @@ public class Game {
         return currentAge;
     }
 
-    public ArrayList<DumbPlayer> getPlayersArray() {
+    public ArrayList<Player> getPlayersArray() {
         return playersArray;
     }
 
