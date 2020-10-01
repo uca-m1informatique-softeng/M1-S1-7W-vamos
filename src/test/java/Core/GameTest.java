@@ -4,6 +4,7 @@ import Card.Card;
 import Card.CardManager;
 import Exceptions.WondersException;
 import Player.Player;
+import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,8 +33,8 @@ class GameTest {
         currentAge = 1;
 
         playersArray=new ArrayList<>(players);
-        playersArray.add(new Player("Bot0"));
-        playersArray.add(new Player("Bot1"));
+        playersArray.add(new DumbPlayer("Bot0"));
+        playersArray.add(new DumbPlayer("Bot1"));
 
         state=GameState.START;
         deck = new ArrayList<>();
@@ -85,7 +86,7 @@ class GameTest {
      @Test
      public void initPlayers(){
          for(int i = 0; i < players; i++) {
-             playersArray.add(new Player("Bot" + i));
+             playersArray.add(new DumbPlayer("Bot" + i));
          }
 
          game.initPlayers();
