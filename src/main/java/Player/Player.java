@@ -215,8 +215,8 @@ public abstract class Player {
                 return enoughResources;
             }
             else{ //if the player don't have enough resources to buy the card he toss it
-                Writer.write("Not enough resources to build card, so card is dumped.");
-                this.dumpCard();
+                Writer.write("Not enough ressources");
+                return false;
             }
         }
 
@@ -320,8 +320,7 @@ public abstract class Player {
                 return enoughResources;
             }
             else{ //if the player don't have enough resources to buy a stage rechoose action
-                Writer.write("Player " + this.name + "tries to build next stage of wonder, but he doesn't have enough ressources.");
-                this.dumpCard();
+                Writer.write("Player " + this.name + "try to build stage of wonder, but he don't have enough ressources.");
                 return false;
             }
         }

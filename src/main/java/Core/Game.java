@@ -36,7 +36,7 @@ public class Game {
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
         int nbPlayers = 3;
-        String typePartie  = STATS_MODE;
+        String typePartie  = GAME_MODE;
 
         if(typePartie.equals(GAME_MODE))
         {
