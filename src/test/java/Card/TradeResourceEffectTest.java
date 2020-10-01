@@ -1,6 +1,6 @@
 package Card;
 
-import Player.Player;
+import Player.DumbPlayer;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,9 +34,9 @@ class TradeResourceEffectTest {
 
     @Test
     void buyCheaperResource() {
-        Player player = new Player("George");
-        Player neighbor = new Player("Bob");
-        player.setPrevNeighbor(new Player("BOBZZ"));
+        DumbPlayer player = new DumbPlayer("George");
+        DumbPlayer neighbor = new DumbPlayer("Bob");
+        player.setPrevNeighbor(new DumbPlayer("BOBZZ"));
         player.setNextNeighbor(neighbor);
         player.setCoins(2);
         neighbor.getResources().put(Resource.CLAY, 2);
