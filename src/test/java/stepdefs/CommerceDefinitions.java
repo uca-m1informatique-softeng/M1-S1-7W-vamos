@@ -1,21 +1,20 @@
 package stepdefs;
 
 import Card.Resource;
-import Player.Player;
+import Player.DumbPlayer;
 import Core.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
-
 import java.io.IOException;
 
 import static org.junit.Assert.*;
 
 public class CommerceDefinitions {
     Resource resource;
-    Player player = new Player("main");
-    Player neighbor  = new Player("neighbor");
+    DumbPlayer player = new DumbPlayer("main");
+    DumbPlayer neighbor  = new DumbPlayer("neighbor");
 
     @Given("a player wants to have the resource \\{Resource} from his neighbor")
     public void player_needs_resource() {

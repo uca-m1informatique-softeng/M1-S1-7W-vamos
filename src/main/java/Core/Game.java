@@ -18,7 +18,7 @@ public class Game {
 
     private int currentAge = 1;
 
-    private ArrayList<Player> playersArray;
+    private ArrayList<DumbPlayer> playersArray;
 
     private GameState state;
 
@@ -63,7 +63,7 @@ public class Game {
         for (int i = 0; i < players; i++)
             this.playersArray.add(new DumbPlayer("Bot" + i));
         for (int i = 0; i < players; i++) {
-            Player prevPlayer, nextPlayer;
+            DumbPlayer prevPlayer, nextPlayer;
             if (i > 0) {
                 prevPlayer = this.playersArray.get(i-1);
             } else {
@@ -225,7 +225,7 @@ public class Game {
 
     private void displayPlayersRanking() {
 
-        ArrayList<Player> players = this.getPlayersArray();
+        ArrayList<DumbPlayer> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
 
         for(Player p : players) {
@@ -278,7 +278,7 @@ public class Game {
         return currentAge;
     }
 
-    public ArrayList<Player> getPlayersArray() {
+    public ArrayList<DumbPlayer> getPlayersArray() {
         return playersArray;
     }
 

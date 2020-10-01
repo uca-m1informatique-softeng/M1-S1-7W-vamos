@@ -14,7 +14,7 @@ import java.util.EnumMap;
 public class MilitaryPlayer extends Player {
 
     /**
-     *
+     * Will the chosen card be built or not ?
      */
     boolean buildChosenCard;
 
