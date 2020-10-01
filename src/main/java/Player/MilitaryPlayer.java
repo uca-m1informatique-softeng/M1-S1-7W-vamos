@@ -31,6 +31,7 @@ public class MilitaryPlayer extends Player {
      * This method will choose a card from hand based on two factors :
      * - Does this card give any military might ?
      * - Is this card buildable ?
+     * If not, chooses the buildable card that gives the most resources.
      */
     @Override
     public void chooseCard() {
@@ -41,6 +42,20 @@ public class MilitaryPlayer extends Player {
             if (c.getCardPoints().get(CardPoints.MILITARY) > preferredCard.getCardPoints().get(CardPoints.MILITARY) && this.isBuildable(c)) {
                 preferredCard = c;
                 this.buildChosenCard = true;
+            }
+        }
+        if (!this.buildChosenCard) {
+            int resourcesSum = 0;
+            int tempResourcesSum = 0;
+            for (Card c : this.hand) {
+                for (Resource r : Resource.values()) {
+                    tempResourcesSum += c.getResource().get(r);
+                }
+                if (tempResourcesSum > resourcesSum && this.isBuildable(c)) {
+                    resourcesSum = tempResourcesSum;
+                    preferredCard = c;
+                    this.buildChosenCard = true;
+                }
             }
         }
 
