@@ -58,21 +58,13 @@ public class MilitaryPlayerTest {
     }
 
     @Test
-    public void chooseCard3() {
-        try {
-            player.getHand().remove(new Card("orevein", 6));
-        } catch (IOException e) {
-            fail();
-            e.printStackTrace();
-        }
-
+    public void chooseAction() {
+        player.getResources().put(Resource.ORE, 1);
+        Card oracle = player.getHand().get(1);
         player.chooseCard();
-        try {
-            assertEquals(player.chosenCard.getName(), new Card("pawnshop", 6).getName());
-            assertFalse(player.buildChosenCard);
-        } catch (IOException e) {
-            fail();
-        }
+        assertEquals(player.chosenCard.getName(), "barracks");
+        player.chooseAction();
+        assertTrue(player.builtCards.contains(oracle));
     }
 
 }

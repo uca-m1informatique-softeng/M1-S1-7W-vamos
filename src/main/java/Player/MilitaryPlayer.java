@@ -4,6 +4,8 @@ import Card.Card;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.CardPoints;
+
+import java.io.IOException;
 import java.util.Collections;
 import java.util.EnumMap;
 
@@ -36,30 +38,38 @@ public class MilitaryPlayer extends Player {
     @Override
     public void chooseCard() {
         Collections.shuffle(this.hand);
-        Card preferredCard = this.hand.get(0);
-
-        for (Card c : this.hand) {
-            if (c.getCardPoints().get(CardPoints.MILITARY) > preferredCard.getCardPoints().get(CardPoints.MILITARY) && this.isBuildable(c)) {
-                preferredCard = c;
-                this.buildChosenCard = true;
-            }
-        }
-        if (!this.buildChosenCard) {
-            int resourcesSum = 0;
-            int tempResourcesSum = 0;
+        try {
+            Card preferredCard = new Card("altar", 6);
             for (Card c : this.hand) {
-                for (Resource r : Resource.values()) {
-                    tempResourcesSum += c.getResource().get(r);
-                }
-                if (tempResourcesSum > resourcesSum && this.isBuildable(c)) {
-                    resourcesSum = tempResourcesSum;
+                if (c.getCardPoints().get(CardPoints.MILITARY) > preferredCard.getCardPoints().get(CardPoints.MILITARY) && this.isBuildable(c)) {
                     preferredCard = c;
                     this.buildChosenCard = true;
                 }
             }
+            if (!this.buildChosenCard) {
+                int resourcesSum = 0;
+                int tempResourcesSum = 0;
+                for (Card c : this.hand) {
+                    for (Resource r : Resource.values()) {
+                        tempResourcesSum += c.getResource().get(r);
+                    }
+                    if (tempResourcesSum > resourcesSum && this.isBuildable(c)) {
+                        resourcesSum = tempResourcesSum;
+                        preferredCard = c;
+                        this.buildChosenCard = true;
+                    }
+                }
+            }
+            if (!this.buildChosenCard) {
+                preferredCard = this.hand.get(0);
+            }
+
+            this.chosenCard = preferredCard;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        this.chosenCard = preferredCard;
+
     }
 
     /**
