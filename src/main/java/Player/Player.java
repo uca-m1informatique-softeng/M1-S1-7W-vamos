@@ -214,7 +214,7 @@ public abstract class Player {
                 this.hand.remove(this.chosenCard);
             }
             else{ //if the player don't have enough resources to buy the card he toss it
-                Writer.write("Not enough ressources");
+                Writer.write("Not enough resources to build card, so card is dumped.");
                 this.dumpCard();
             }
         }
@@ -318,8 +318,8 @@ public abstract class Player {
                 this.hand.remove(this.chosenCard);
             }
             else{ //if the player don't have enough resources to buy a stage rechoose action
-                Writer.write("Not enough ressources build stage of wonder, so replay.");
-                this.chooseAction();
+                Writer.write("Not enough resources to build next stage of wonder, so card is dumped.");
+                this.dumpCard();
             }
         }
 
