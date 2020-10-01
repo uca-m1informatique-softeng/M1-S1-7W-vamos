@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import static Utility.Constante.*;
 
@@ -63,8 +64,15 @@ public class Game {
     }
 
     public void initPlayers() {
-        for (int i = 0; i < players; i++)
-            this.playersArray.add(new DumbPlayer("Bot" + i));
+        for (int i = 0; i < players; i++) {
+            Random random = new Random();
+            if (random.nextInt(100) < 90) {
+                this.playersArray.add(new DumbPlayer("Stupid" + i));
+            } else {
+                this.playersArray.add(new MilitaryPlayer("Warrior" + i));
+            }
+        }
+
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {

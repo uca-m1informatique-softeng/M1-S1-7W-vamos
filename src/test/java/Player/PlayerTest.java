@@ -1,10 +1,11 @@
-package Core;
+package Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
 import Card.*;
+import Core.Wonder;
 import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
