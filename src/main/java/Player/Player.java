@@ -11,29 +11,29 @@ import Utility.Writer;
 
 import java.util.*;
 
-public class Player {
+public abstract class Player {
 
-    private String name;
+    protected String name;
 
-    private Card chosenCard;
+    protected Card chosenCard;
 
-    private int militaryPoints;
+    protected int militaryPoints;
 
-    private EnumMap<CardPoints, Integer> points;
+    protected EnumMap<CardPoints, Integer> points;
 
-    private EnumMap<Resource, Integer> resources;
+    protected EnumMap<Resource, Integer> resources;
 
-    private EnumMap<Resource, Integer> boughtResources;
+    protected EnumMap<Resource, Integer> boughtResources;
 
-    private ArrayList<Card> hand;
+    protected ArrayList<Card> hand;
 
-    private ArrayList<Card> builtCards;
+    protected ArrayList<Card> builtCards;
 
-    private Wonder wonder;
+    protected Wonder wonder;
 
-    private Player prevNeighbor;
+    protected Player prevNeighbor;
 
-    private Player nextNeighbor;
+    protected Player nextNeighbor;
 
     public Random rand = new Random();
 
@@ -62,6 +62,7 @@ public class Player {
 
         Writer.write("Player " + name +  " joined the game!");
     }
+
 
     public String getName() {
         return name;
@@ -133,22 +134,18 @@ public class Player {
         this.nextNeighbor = nextNeighbor;
     }
 
-    public void chooseCard(){
-        Collections.shuffle(hand);
-        chosenCard = hand.get(0);
+    public Wonder getWonder() {
+        return wonder;
     }
 
-    public void chooseAction() {
-        int rand_int1 = rand.nextInt(1000);
-        if (rand_int1 < 600) {
-            this.buildCard();
-        } else if (rand_int1 >= 600 && rand_int1 < 700){
-            this.buildStageWonder();
-        }
-        else {
-            this.dumpCard();
-        }
+    public void setWonder(Wonder wonder) {
+        this.wonder = wonder;
     }
+
+
+    public abstract void chooseCard();
+
+    public abstract void chooseAction();
 
     /**
      * Remove the chosen card of this hand and give 3 coins to the player.
@@ -410,14 +407,6 @@ public class Player {
         // Sets of different symbols
         res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
         return res;
-    }
-
-    public Wonder getWonder() {
-        return wonder;
-    }
-
-    public void setWonder(Wonder wonder) {
-        this.wonder = wonder;
     }
 
     @Override
