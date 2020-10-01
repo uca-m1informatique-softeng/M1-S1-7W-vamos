@@ -10,9 +10,7 @@ import Utility.Writer;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.spi.AbstractResourceBundleProvider;
 
 import static Utility.Constante.*;
 
@@ -36,12 +34,12 @@ public class Game {
 
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
-        int nbJoueur = 3;
-        String typePartie  = MODE_PARTIE;
+        int nbPlayers = 3;
+        String typePartie  = STATS_MODE;
 
-        if(typePartie.equals(MODE_PARTIE))
+        if(typePartie.equals(GAME_MODE))
         {
-            Game game = new Game(3);
+            Game game = new Game(nbPlayers);
             Writer.init(true);
             while(game.state != GameState.EXIT)
                 game.process();
@@ -49,17 +47,17 @@ public class Game {
             Utilities.displayGameOutput();
             Writer.deleteFile();
         }
-        else if (typePartie.equals(MODE_STATS))
+        else if (typePartie.equals(STATS_MODE))
         {
             Writer.init(false);
-            RecapScore[] recapScores = new RecapScore[3];
+            RecapScore[] recapScores = new RecapScore[nbPlayers];
             for(int i=0; i<recapScores.length ; i++)
             {
                 recapScores[i] = new RecapScore();
             }
-            for(int i=0 ; i<NOMBRE_PARTIES_STATS ; i++)
+            for(int i = 0; i< NB_GAMES_STATS_MODE; i++)
             {
-                Game game = new Game(3);
+                Game game = new Game(nbPlayers);
                 while(game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
@@ -69,14 +67,14 @@ public class Game {
                 }
             }
 
-
+            System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
             for(int i=0; i<playersArray.size() ; i++)
             {
-                recapScores[i].processAvgScore(NOMBRE_PARTIES_STATS);
-                double victoires = (recapScores[i].getNbVictory()/(double)NOMBRE_PARTIES_STATS)*100;
+                recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
+                double victoires = (recapScores[i].getNbVictory()/(double) NB_GAMES_STATS_MODE)*100;
                 String joueur= playersArray.get(i).toString();
-                System.out.println(joueur +" obtient un score moyen de "+recapScores[i].getAvgScore());
-                System.out.println(joueur +" gagne dans "+ victoires +"% des parties");
+                System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
+                System.out.println(joueur +" has a  "+ victoires +"% winrate");
 
             }
         }
