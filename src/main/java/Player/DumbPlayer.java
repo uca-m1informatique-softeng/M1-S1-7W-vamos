@@ -34,9 +34,13 @@ public class DumbPlayer extends Player {
     public void chooseAction() {
         int rand_int1 = rand.nextInt(1000);
         if (rand_int1 < 600) {
-            this.buildCard();
+            if(!this.buildCard()){
+                chooseAction();
+            }
         } else if (rand_int1 >= 600 && rand_int1 < 700){
-            this.buildStageWonder();
+            if(!this.buildStageWonder()){
+                chooseAction();
+            }
         }
         else {
             this.dumpCard();

@@ -9,7 +9,7 @@ public class RecapScore
     boolean victory;
     public RecapScore(){}
 
-    
+
     public RecapScore(Player player, boolean victory){
         this.victory = victory;
         dataPoints = player.computeScore();

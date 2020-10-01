@@ -3,6 +3,7 @@ package Core;
 import Card.*;
 import Exceptions.WondersException;
 import Player.*;
+import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
 
@@ -22,7 +23,7 @@ public class Game {
 
     private int currentAge = 1;
 
-    private ArrayList<Player> playersArray;
+    private static ArrayList<Player> playersArray;
 
     private GameState state;
 
@@ -34,13 +35,57 @@ public class Game {
 
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
-        Writer.init(true);
-        Game game = new Game(3);
-        while(game.state != GameState.EXIT)
-            game.process();
-        Writer.close();
-        Utilities.displayGameOutput();
-        Writer.deleteFile();
+        int nbPlayers = 3;
+        String typePartie  = STATS_MODE;
+
+        if(typePartie.equals(GAME_MODE))
+        {
+            Game game = new Game(nbPlayers);
+            Writer.init(true);
+            while(game.state != GameState.EXIT)
+                game.process();
+            Writer.close();
+            Utilities.displayGameOutput();
+            Writer.deleteFile();
+        }
+        else if (typePartie.equals(STATS_MODE))
+        {
+            Writer.init(false);
+            RecapScore[] recapScores = new RecapScore[nbPlayers];
+            for(int i=0; i<recapScores.length ; i++)
+            {
+                recapScores[i] = new RecapScore();
+            }
+            for(int i = 0; i< NB_GAMES_STATS_MODE; i++)
+            {
+                Game game = new Game(nbPlayers);
+                while(game.state != GameState.EXIT)
+                    game.process();
+                RecapScore[] scoresTmp = game.displayPlayersRanking();
+                for(int j=0; j<recapScores.length ; j++)
+                {
+                    recapScores[j].addRecap(scoresTmp[j]);
+                }
+            }
+
+            System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
+            for(int i=0; i<playersArray.size() ; i++)
+            {
+                recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
+                double victoires = (recapScores[i].getNbVictory()/(double) NB_GAMES_STATS_MODE)*100;
+                String joueur= playersArray.get(i).toString();
+                System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
+                System.out.println(joueur +" has a  "+ victoires +"% winrate");
+
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Mode inexistant.");
+        }
+
+
+
 
     }
 
@@ -232,11 +277,11 @@ public class Game {
         }
     }
 
-    private void displayPlayersRanking() {
+    private RecapScore[] displayPlayersRanking() {
 
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
-
+        RecapScore[] playerScores = new RecapScore[players.size()];
         for(Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + "science points");
@@ -247,8 +292,12 @@ public class Game {
             }
         }
 
+        for(int i = 0; i < players.size();i++)
+            playerScores[i] = new RecapScore(players.get(i),players.get(i).equals(tmpWinner));
 
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+
+        return playerScores;
 
     }
 

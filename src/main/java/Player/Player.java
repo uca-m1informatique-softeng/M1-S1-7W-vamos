@@ -158,10 +158,10 @@ public abstract class Player {
 
     /**
      * buildCard() ajoute la carte à l'inventaire builtCards, ainsi que les points et ressources SEULEMENT
-     * si il à assez de ressource, sinon elle est revendu 3 d'or avec la fonction dumpCard.
+     * si il à assez de ressource, sinon elle renvoie faux.
      * Seul le cout en or est supprimmer.
      */
-    public void buildCard() {
+    public boolean buildCard() {
         boolean enoughResources = true ;
 
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
@@ -200,6 +200,7 @@ public abstract class Player {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
             this.hand.remove(this.chosenCard);
+            return true;
         }
         else{ //not a free card sowe check if the player have enough resources to build the card
             if (enoughResources){
@@ -211,6 +212,7 @@ public abstract class Player {
                 this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
 
                 this.hand.remove(this.chosenCard);
+                return enoughResources;
             }
             else{ //if the player don't have enough resources to buy the card he toss it
                 Writer.write("Not enough resources to build card, so card is dumped.");
@@ -287,7 +289,7 @@ public abstract class Player {
     /**
      * Buy a stage of a wonder, give reward, and remove one card.
      */
-    public void buildStageWonder() {
+    public boolean buildStageWonder() {
         boolean enoughResources = true ;
 
         EnumMap<Resource, Integer> costAfterEffects = this.wonder.getCurrentUpgradeCost();
@@ -313,12 +315,14 @@ public abstract class Player {
 
                 //removing the cost in coin of the wonder
                 this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
-                System.out.println("Player " + this.name + "build a stage of wonder.");
+                Writer.write("Player " + this.name + "build a stage of wonder.");
                 this.hand.remove(this.chosenCard);
+                return enoughResources;
             }
             else{ //if the player don't have enough resources to buy a stage rechoose action
-                Writer.write("Not enough resources to build next stage of wonder, so card is dumped.");
+                Writer.write("Player " + this.name + "tries to build next stage of wonder, but he doesn't have enough ressources.");
                 this.dumpCard();
+                return false;
             }
         }
 
