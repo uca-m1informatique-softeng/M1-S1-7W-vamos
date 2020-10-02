@@ -2,16 +2,11 @@ package Card;
 
 import java.io.File;
 import java.io.FileFilter;
+import Utility.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class CardManager {
-
-    public static void main(String[] args) {
-
-        ArrayList<Card> cards = CardManager.getAgeNDeck(1);
-
-    }
 
     private static ArrayList<Card> parseCardFiles(int players) {
 
@@ -41,7 +36,7 @@ public class CardManager {
                     Card card = new Card(fileName.replace(".json",""), players);
                     cards.add(card);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Writer.write(fileName + " could not be read.");
                 }
             }
         }

@@ -48,7 +48,7 @@ public class WonderManager {
 
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Writer.write(fileName + " could not be read.");
                 }
             }
         }

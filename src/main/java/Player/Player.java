@@ -11,6 +11,7 @@ import Card.TradeResourceEffect;
 import Core.Wonder;
 import Utility.Writer;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 public abstract class Player {
@@ -37,7 +38,7 @@ public abstract class Player {
 
     protected Player nextNeighbor;
 
-    public Random rand = new Random();
+    public SecureRandom rand = new SecureRandom();
 
 
     public Player(String name) {
