@@ -117,6 +117,17 @@ public class Card {
                         this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect) ;
                     }
 
+                    if (json.has("ShipownersGuildEffect")){
+                        this.effect= new ShipOwnersGuild() ;
+                    }
+
+                    if (json.has("BuildersGuildEffect")){
+                        this.effect = new BuildersGuildEffect() ;
+                    }
+
+                    if (json.has("StrategistsGuildEffect")){
+                        this.effect = new StrategistsGuildEffect() ;
+                    }
                     if(json.has("coinCardEffect")){
                         if(json.get("coinCardEffect").equals("PYRAMID")) {
                             this.coinCardEffect = null;

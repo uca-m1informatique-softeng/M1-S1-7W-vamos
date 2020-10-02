@@ -7,6 +7,7 @@
       "STONE": 1,
       "LOOM": 1
     },
-    "name": "strategists guild"
+    "name": "strategists guild",
+    "StrategistsGuildEffect" : "strategistsGuildEffect"
   }
 ]

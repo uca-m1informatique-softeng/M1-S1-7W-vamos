@@ -1,27 +1,24 @@
 package Card;
 
-import Player.Player;
+import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 public class ColoredCardResourceEffectTest {
-    private Player player;
+    private DumbPlayer player;
 
     @BeforeEach
     void setUp(){
-        player = new Player("Maestro") ;
+        player = new DumbPlayer("Maestro") ;
     }
 
     @Test
     public void applyColor() throws IOException {
-        Player player2 = new Player("Maestro2");
-        Player player3 = new Player("Maestro3");
+        DumbPlayer player2 = new DumbPlayer("Maestro2");
+        DumbPlayer player3 = new DumbPlayer("Maestro3");
 
         Card card  = new Card("workersguild" , 7);
         Card card2 = new Card("craftmensguild" , 7);

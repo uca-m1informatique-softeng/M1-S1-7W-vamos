@@ -51,7 +51,7 @@ public class ColoredCardResourceEffect extends Effect{
         int currentVictoryPoints = player.getPoints().get(CardPoints.VICTORY);
         player.getPoints().put(CardPoints.VICTORY, currentVictoryPoints + nbOfCards   );
 
-        Writer.write(player.getName() + " got " + nbOfCards + " victory points from his neighbors");
+        Writer.write(player.getName() + " got " + nbOfCards + " victory points from his neighbors ");
 
 
     }

@@ -2,16 +2,16 @@ package Core;
 
 import Card.*;
 import Exceptions.WondersException;
-import Player.Player;
+import Player.*;
+import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.spi.AbstractResourceBundleProvider;
+import java.util.Random;
 
 import static Utility.Constante.*;
 
@@ -23,7 +23,7 @@ public class Game {
 
     private int currentAge = 1;
 
-    private ArrayList<Player> playersArray;
+    private static ArrayList<Player> playersArray;
 
     private GameState state;
 
@@ -35,13 +35,62 @@ public class Game {
 
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
-        Writer.init(true);
-        Game game = new Game(3);
-        while(game.state != GameState.EXIT)
-            game.process();
-        Writer.close();
-        Utilities.displayGameOutput();
-        Writer.deleteFile();
+        int nbPlayers = 3;
+        String typePartie  = STATS_MODE;
+
+        if(typePartie.equals(GAME_MODE))
+        {
+            Game game = new Game(nbPlayers);
+            Writer.init(true);
+            while(game.state != GameState.EXIT)
+                game.process();
+            Writer.close();
+            Utilities.displayGameOutput();
+            Writer.deleteFile();
+        }
+        else if (typePartie.equals(STATS_MODE))
+        {
+            Writer.init(false);
+            RecapScore[] recapScores = new RecapScore[nbPlayers];
+            for(int i=0; i<recapScores.length ; i++)
+            {
+                recapScores[i] = new RecapScore();
+            }
+            for(int i = 0; i< NB_GAMES_STATS_MODE; i++)
+            {
+                Game game = new Game(nbPlayers);
+                while(game.state != GameState.EXIT)
+                    game.process();
+                RecapScore[] scoresTmp = game.displayPlayersRanking();
+                for(int j=0; j<recapScores.length ; j++)
+                {
+                    recapScores[j].addRecap(scoresTmp[j]);
+                }
+            }
+
+            System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
+            for(int i=0; i<playersArray.size() ; i++)
+            {
+                recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
+                double victoires = (recapScores[i].getNbVictory()/(double) NB_GAMES_STATS_MODE)*100;
+                String joueur= playersArray.get(i).toString();
+                System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
+                System.out.println(joueur +" has a  "+ victoires +"% winrate");
+                System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
+                System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
+                System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
+
+
+
+            }
+        }
+        else
+        {
+            throw new RuntimeException("Mode inexistant.");
+        }
+
+
+
 
     }
 
@@ -65,8 +114,16 @@ public class Game {
     }
 
     public void initPlayers() {
-        for (int i = 0; i < players; i++)
-            this.playersArray.add(new Player("Bot" + i));
+        for (int i = 0; i < players; i++) {
+            Random random = new Random();
+            if (random.nextInt(100) < 30) {
+                this.playersArray.add(new DumbPlayer("Stupid" + i));
+            } else if (random.nextInt(100) < 60){
+                this.playersArray.add(new MilitaryPlayer("Warrior" + i));
+            }
+            else  { this.playersArray.add(new IA_One("IA_One" + i)); }
+        }
+
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
@@ -252,14 +309,18 @@ public class Game {
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
+
+            p1.addDefeatToken(1);
+
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         }
     }
 
-    private void displayPlayersRanking() {
+    private RecapScore[] displayPlayersRanking() {
+
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
-
+        RecapScore[] playerScores = new RecapScore[players.size()];
         for(Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + " coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + " science points");
@@ -270,7 +331,13 @@ public class Game {
                 tmpWinner = p;
             }
         }
+
+        for(int i = 0; i < players.size();i++)
+            playerScores[i] = new RecapScore(players.get(i),players.get(i).equals(tmpWinner));
+
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+
+        return playerScores;
 
     }
 

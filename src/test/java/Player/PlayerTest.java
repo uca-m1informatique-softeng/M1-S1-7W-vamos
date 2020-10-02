@@ -1,17 +1,16 @@
-package Core;
+package Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;
-
 import Card.*;
-import Player.Player;
+import Core.Wonder;
+import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,7 +27,7 @@ public class PlayerTest {
     private ArrayList<Card> hand ;
     private ArrayList<Card> builtCards;
     private EnumMap<CardPoints, Integer> points;
-    Player player;
+    DumbPlayer player;
 
     @Mock
     Random rand;
@@ -38,18 +37,16 @@ public class PlayerTest {
         coins=0;
         militaryPoints=0 ;
         hand = new ArrayList<>(7);
-        player = new Player("Robot");
-        player.rand=rand; //assigner le mock au rand de Player
+        player = new DumbPlayer("Robot");
+        player.rand = rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
-        player.setPrevNeighbor(new Player("PreviousRobot"));
-        player.setNextNeighbor(new Player("NextRobot"));
+        player.setPrevNeighbor(new DumbPlayer("PreviousRobot"));
+        player.setNextNeighbor(new DumbPlayer("NextRobot"));
 
         points = new EnumMap<>(CardPoints.class);
-        points.put(CardPoints.VICTORY, 0);
-        points.put(CardPoints.MILITARY, 0);
-        points.put(CardPoints.SCIENCE_COMPASS, 0);
-        points.put(CardPoints.SCIENCE_TABLET, 0);
-        points.put(CardPoints.SCIENCE_WHEEL, 0);
+        for (CardPoints p : CardPoints.values()) {
+            this.points.put(p, 0);
+        }
     }
 
     @Test
@@ -330,7 +327,7 @@ public class PlayerTest {
     @Test
     public void buyResource1() {
         Resource resourceToBuy = Resource.CLAY;
-        Player neighbor = new Player("Neighbor");
+        DumbPlayer neighbor = new DumbPlayer("Neighbor");
 
         int oldCoins = player.getCoins();
         player.setCoins(oldCoins + 2);
@@ -344,7 +341,7 @@ public class PlayerTest {
     @Test
     public void buyResource2() {
         Resource resourceToBuy = Resource.CLAY;
-        Player neighbor = new Player("Neighbor");
+        DumbPlayer neighbor = new DumbPlayer("Neighbor");
 
         player.setCoins(0);
         neighbor.getResources().put(resourceToBuy, 2);
@@ -355,7 +352,7 @@ public class PlayerTest {
     @Test
     public void buyResource3() {
         Resource resourceToBuy = Resource.CLAY;
-        Player neighbor = new Player("Neighbor");
+        DumbPlayer neighbor = new DumbPlayer("Neighbor");
 
         player.setCoins(2);
 
@@ -365,7 +362,7 @@ public class PlayerTest {
     @Test
     public void clearBoughtResources() {
         Resource resourceToBuy = Resource.CLAY;
-        Player neighbor = player.getNextNeighbor();
+        DumbPlayer neighbor = (DumbPlayer) player.getNextNeighbor();
 
         int oldCoins = player.getCoins();
         player.setCoins(oldCoins + 2);

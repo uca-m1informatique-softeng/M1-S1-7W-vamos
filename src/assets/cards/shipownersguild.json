@@ -7,6 +7,7 @@
       "PAPYRUS": 1,
       "GLASS": 1
     },
-    "name": "shipowners guild"
+    "name": "shipowners guild",
+    "ShipownersGuildEffect": "shipownersGuildEffect"
   }
 ]
