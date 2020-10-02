@@ -26,15 +26,17 @@ class GameTest {
 
     @BeforeEach
     void setUp() throws WondersException {
-        game = new Game(2);
+        game = new Game(3);
 
-        players=2;
+        players = 3;
         round = 1;
         currentAge = 1;
 
         playersArray=new ArrayList<>(players);
         playersArray.add(new DumbPlayer("Bot0"));
         playersArray.add(new DumbPlayer("Bot1"));
+        playersArray.add(new DumbPlayer("Bot2"));
+
 
         state=GameState.START;
         deck = new ArrayList<>();
