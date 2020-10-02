@@ -299,7 +299,7 @@ public abstract class Player {
      */
     public boolean buildStageWonder() {
         boolean enoughResources = true ;
-
+        if(wonder.isWonderFinished()) return false;
         EnumMap<Resource, Integer> costAfterEffects = this.wonder.getCurrentUpgradeCost();
 
         for (Card card : this.builtCards) {
@@ -320,7 +320,6 @@ public abstract class Player {
             if (enoughResources){
                 this.addWonderReward();
                 this.wonder.setState(wonder.getState() + 1);
-
                 //removing the cost in coin of the wonder
                 this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
                 Writer.write("Player " + this.name + "build a stage of wonder.");
