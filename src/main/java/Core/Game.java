@@ -30,7 +30,10 @@ public class Game {
     private ArrayList<Card> deck;
 
     private ArrayList<Wonder> wonderArrayList;
+
     public static Boolean debug = false;
+
+    private static Random rand = new Random();
 
 
     public static void main(String[] args) throws ParseException, IOException, WondersException {
@@ -115,13 +118,14 @@ public class Game {
 
     public void initPlayers() {
         for (int i = 0; i < players; i++) {
-            Random random = new Random();
-            if (random.nextInt(100) < 30) {
+            int randInt = Game.rand.nextInt(100);
+            if (randInt < 30) {
                 this.playersArray.add(new DumbPlayer("Stupid" + i));
-            } else if (random.nextInt(100) < 60){
+            } else if (randInt < 60){
                 this.playersArray.add(new MilitaryPlayer("Warrior" + i));
+            } else {
+                this.playersArray.add(new IA_One("IA_One" + i));
             }
-            else  { this.playersArray.add(new IA_One("IA_One" + i)); }
         }
 
         for (int i = 0; i < players; i++) {
