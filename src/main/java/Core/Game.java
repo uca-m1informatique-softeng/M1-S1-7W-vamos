@@ -36,7 +36,7 @@ public class Game {
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
         int nbPlayers = 3;
-        String typePartie  = GAME_MODE;
+        String typePartie  = STATS_MODE;
 
         if(typePartie.equals(GAME_MODE))
         {
@@ -76,6 +76,11 @@ public class Game {
                 String joueur= playersArray.get(i).toString();
                 System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
                 System.out.println(joueur +" has a  "+ victoires +"% winrate");
+                System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
+                System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
+                System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
+
+
 
             }
         }
