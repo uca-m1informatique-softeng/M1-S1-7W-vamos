@@ -94,6 +94,7 @@ class CardTest {
     @Test
     void parseTest() throws IOException {
         Card c = new Card("scientistsguild", 3);
-        System.out.println(c.getEffect());
+        assertTrue(c.getEffect() instanceof ScienceChoiceEffect);
+
     }
 }

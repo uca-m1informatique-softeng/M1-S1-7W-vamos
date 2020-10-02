@@ -23,8 +23,6 @@ public abstract class Player {
 
     protected Card chosenCard;
 
-    protected int militaryPoints;
-
     protected EnumMap<CardPoints, Integer> points;
 
     protected EnumMap<Resource, Integer> resources;
@@ -49,7 +47,6 @@ public abstract class Player {
 
     public Player(String name) {
         this.name = name;
-        this.militaryPoints = 0;
         this.defeatToken = 0 ;
 
         this.points = new EnumMap<>(CardPoints.class);
@@ -114,10 +111,11 @@ public abstract class Player {
         return builtCards;
     }
 
-    public int getMilitaryPoints() { return this.militaryPoints; }
+    public int getMilitaryPoints() { return getPoints().get(CardPoints.MILITARY); }
 
     public void addMilitaryPoints(int mp) {
-        this.militaryPoints += mp;
+        mp = mp + getMilitaryPoints();
+        this.points.put(CardPoints.MILITARY, mp);
     }
 
     public EnumMap<Resource, Integer> getResources() {
@@ -418,7 +416,7 @@ public abstract class Player {
         int res = 0;
         endApplyEffect();
         // Military points
-        res += this.militaryPoints;
+        res += this.getMilitaryPoints();
         // Treasury Contents
         res += this.getCoins()/3;
         // Civilian Structures and Wonders
