@@ -10,6 +10,7 @@ import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.TradeResourceEffect;
 import Card.CoinCardEffect;
+import Card.ScienceChoiceEffect;
 import Core.Wonder;
 import Utility.Writer;
 
@@ -202,6 +203,7 @@ public abstract class Player {
             if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
                 ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
             }
+                //The ScienceChoiceEffect is only apply at the end of the game.
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
@@ -414,7 +416,7 @@ public abstract class Player {
 
     public int computeScore() {
         int res = 0;
-
+        endApplyEffect();
         // Military points
         res += this.militaryPoints;
         // Treasury Contents
@@ -463,6 +465,16 @@ public abstract class Player {
         }
 
         return true;
+    }
+
+    /**
+     * Apply the effect to the player if he have it.
+     */
+    protected void endApplyEffect(){
+        ScienceChoiceEffect o = new ScienceChoiceEffect();
+        if(this.getBuiltCards().contains(o)){
+            o.applyEffect(this);
+        }
     }
 
 }
