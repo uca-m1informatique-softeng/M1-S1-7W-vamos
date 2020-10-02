@@ -137,6 +137,9 @@ public class Card {
                             this.effect = new CoinCardEffect(CardColor.valueOf(json.getString("coinCardEffect")), json.getInt("age"));
                         }
                     }
+                    if (json.has("scienceChoiceEffect")){
+                        this.effect = new ScienceChoiceEffect();
+                    }
                 }
             }
         }

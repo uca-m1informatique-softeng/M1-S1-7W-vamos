@@ -1,7 +1,6 @@
 package Player;
 
 import Card.CardColor;
-import Utility.Writer;
 
 public class IA_One extends Player{
 
@@ -12,9 +11,9 @@ public class IA_One extends Player{
     @Override
     public void chooseCard() {
         this.chosenCard = this.hand.get(0);
-        if(!chooseCardColor(CardColor.GREY)){
-            if(!chooseCardColor(CardColor.BROWN)){
-                chooseCardColor(CardColor.GREEN);
+        if(!chooseCard(CardColor.GREY)){
+            if(!chooseCard(CardColor.BROWN)){
+                chooseCard(CardColor.GREEN);
             }
         }
     }
@@ -28,7 +27,7 @@ public class IA_One extends Player{
         buildCard();
     }
 
-    protected boolean chooseCardColor(CardColor c) {
+    protected boolean chooseCard(CardColor c) {
         this.chosenCard = this.hand.get(0); // default choice
         for(int i = 0; i < this.getHand().size(); i++){
             if(this.getHand().get(i).getColor() == c){

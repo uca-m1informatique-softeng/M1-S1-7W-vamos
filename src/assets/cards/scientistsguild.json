@@ -7,6 +7,11 @@
       "PAPYRUS": 1,
       "ORE": 2
     },
-    "name": "scientists guild"
+    "name": "scientists guild",
+    "scienceChoiceEffect": [
+      "SCIENCE_COMPASS",
+      "SCIENCE_WHEEL",
+      "SCIENCE_TABLET"
+    ]
   }
 ]
