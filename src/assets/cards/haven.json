@@ -8,7 +8,9 @@
       "WOOD": 1
     },
     "name": "haven",
-    "players": 3
+    "players": 3,
+    "coinCardEffect": "BROWN"
+
   },
   {
     "age" : 3,
@@ -19,6 +21,8 @@
       "WOOD": 1
     },
     "name": "haven",
-    "players": 4
+    "players": 4,
+    "coinCardEffect": "BROWN"
+
   }
 ]

@@ -13,6 +13,7 @@ public class Card {
     private String name;
     private CardColor color;
     private CardColor coloredCardResourceEffect ;
+    private CardColor coinCardEffect;
     private int age;
     private int players;
     private Effect effect;
@@ -127,6 +128,15 @@ public class Card {
                     if (json.has("StrategistsGuildEffect")){
                         this.effect = new StrategistsGuildEffect() ;
                     }
+                    if(json.has("coinCardEffect")){
+                        if(json.get("coinCardEffect").equals("PYRAMID")) {
+                            this.coinCardEffect = null;
+                            this.effect = new CoinCardEffect(null, json.getInt("age"));
+                        } else {
+                            this.coinCardEffect = CardColor.valueOf(json.getString("coinCardEffect"));
+                            this.effect = new CoinCardEffect(CardColor.valueOf(json.getString("coinCardEffect")), json.getInt("age"));
+                        }
+                    }
                 }
             }
         }
@@ -143,6 +153,10 @@ public class Card {
 
     public CardColor getColoredCardResourceEffect() {
         return coloredCardResourceEffect;
+    }
+
+    public CardColor getCoinCardEffect() {
+        return coinCardEffect;
     }
 
     public int getAge() {

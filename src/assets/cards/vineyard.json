@@ -3,12 +3,16 @@
     "age" : 2,
     "CardColor" : "YELLOW",
     "name": "vineyard",
-    "players": 3
+    "players": 3,
+    "coinCardEffect": "BROWN"
+
   },
   {
     "age" : 2,
     "CardColor" : "YELLOW",
     "name": "vineyard",
-    "players": 6
+    "players": 6,
+    "coinCardEffect": "BROWN"
+
   }
 ]

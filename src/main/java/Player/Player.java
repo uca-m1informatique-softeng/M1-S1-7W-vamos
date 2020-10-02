@@ -9,6 +9,7 @@ import Card.CardPoints;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.TradeResourceEffect;
+import Card.CoinCardEffect;
 import Core.Wonder;
 import Utility.Writer;
 
@@ -195,6 +196,9 @@ public abstract class Player {
             }
             if (card.getEffect() !=null && card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
                 ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
+            }
+            if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
+                ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
             }
         }
 
