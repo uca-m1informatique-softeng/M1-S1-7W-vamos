@@ -35,7 +35,7 @@ public class Game {
 
     public static void main(String[] args) throws ParseException, IOException, WondersException {
 
-        int nbPlayers = 3;
+        int nbPlayers = 4;
         String typePartie  = STATS_MODE;
 
         if(typePartie.equals(GAME_MODE))
@@ -95,6 +95,8 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
+        if(players < 3 || players > 4)
+            throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         this.playersArray = new ArrayList<>(players);
         this.initPlayers();
@@ -114,15 +116,13 @@ public class Game {
     }
 
     public void initPlayers() {
-        for (int i = 0; i < players; i++) {
-            Random random = new Random();
-            if (random.nextInt(100) < 30) {
-                this.playersArray.add(new DumbPlayer("Stupid" + i));
-            } else if (random.nextInt(100) < 60){
-                this.playersArray.add(new MilitaryPlayer("Warrior" + i));
-            }
-            else  { this.playersArray.add(new IA_One("IA_One" + i)); }
-        }
+
+          this.playersArray.add(new DumbPlayer("Stupid"));
+          this.playersArray.add(new MilitaryPlayer("Warrior"));
+          this.playersArray.add(new IA_One("IA_One"));
+          if(players == 4)
+              this.playersArray.add(new DumbPlayer("Stupid Clone"));
+
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
