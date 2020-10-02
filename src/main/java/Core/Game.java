@@ -37,7 +37,7 @@ public class Game {
 
     public static void main(String[] args) throws WondersException {
 
-        int nbPlayers = 3;
+        int nbPlayers = 4;
         String typePartie  = STATS_MODE;
 
         if(typePartie.equals(GAME_MODE))
@@ -97,6 +97,8 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
+        if(players < 3 || players > 4)
+            throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
         this.initPlayers();
@@ -116,16 +118,13 @@ public class Game {
     }
 
     public void initPlayers() {
-        for (int i = 0; i < players; i++) {
-            int randInt = Game.rand.nextInt(100);
-            if (randInt < 30) {
-                Game.playersArray.add(new DumbPlayer("Stupid" + i));
-            } else if (randInt < 60){
-                Game.playersArray.add(new MilitaryPlayer("Warrior" + i));
-            } else {
-                Game.playersArray.add(new IA_One("IA_One" + i));
-            }
-        }
+
+        this.playersArray.add(new DumbPlayer("Stupid"));
+        this.playersArray.add(new MilitaryPlayer("Warrior"));
+        this.playersArray.add(new IA_One("IA_One"));
+        if (players == 4)
+            this.playersArray.add(new DumbPlayer("Stupid Clone"));
+
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
@@ -161,10 +160,49 @@ public class Game {
                 break;
 
             case END:
+                this.addVictoryPoints();
                 this.displayPlayersRanking();
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
+    }
+
+    }
+
+    private void addVictoryPoints(){
+        for(Player player : this.playersArray) {
+            Integer brownCards = 0;
+            Integer greyCards = 0;
+            Integer yellowCards = 0;
+            ArrayList<Card> builtCards = player.getBuiltCards();
+            for (Card card : builtCards) {
+                switch (card.getColor()) {
+                    case BROWN:
+                        brownCards += 1;
+                        break;
+                    case GREY:
+                        greyCards += 1;
+                        break;
+                    case YELLOW:
+                        yellowCards += 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            for(Card card : player.getBuiltCards()) {
+                if(card.getEffect() instanceof CoinCardEffect) {
+                    if(card.getCoinCardEffect() == CardColor.BROWN) {
+                        player.getPoints().put(CardPoints.VICTORY, brownCards);
+                    }else if(card.getCoinCardEffect() == CardColor.GREY) {
+                        player.getPoints().put(CardPoints.VICTORY, greyCards);
+                    }else if(card.getCoinCardEffect() == CardColor.YELLOW) {
+                        player.getPoints().put(CardPoints.VICTORY, yellowCards);
+                    }else if(card.getCoinCardEffect() == null) {
+                        player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState()*3);
+                    }
+                }
+            }
         }
     }
 
@@ -226,22 +264,17 @@ public class Game {
     }
 
     private void processEndAge() {
-
-
         if (this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
             this.state = GameState.END;
-
         if (this.round == 6 && this.currentAge < MAX_AGE) {
             for(Player player : Game.playersArray)
                 player.getHand().clear();
-
             this.battle();
             Writer.write("Age has ended! ");
             this.currentAge++;
             this.processNewAge();
             this.round = 1;
         }
-
     }
 
     private void battle() {
@@ -269,6 +302,9 @@ public class Game {
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
+
+            p1.addDefeatToken(1);
+
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         }
     }
@@ -279,9 +315,10 @@ public class Game {
         Player tmpWinner = players.get(0);
         RecapScore[] playerScores = new RecapScore[players.size()];
         for(Player p : players) {
-            Writer.write(p.getName() + " :  " + p.getCoins() + "coins");
-            Writer.write(p.getName() + " :  " + p.getSciencePoint() + "science points");
-            Writer.write(p.getName() + " :  " + p.getMilitaryPoints() + "military points");
+            Writer.write(p.getName() + " :  " + p.getCoins() + " coins");
+            Writer.write(p.getName() + " :  " + p.getSciencePoint() + " science points");
+            Writer.write(p.getName() + " :  " + p.getMilitaryPoints() + " military points");
+            Writer.write(p.getName() + " :  " + p.getPoints().get(CardPoints.VICTORY) + " victory points");
             if  (p.computeScore() > tmpWinner.computeScore() ||
                 (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;

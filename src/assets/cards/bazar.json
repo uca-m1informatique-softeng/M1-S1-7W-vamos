@@ -3,12 +3,16 @@
     "age" : 2,
     "CardColor" : "YELLOW",
     "name": "bazar",
-    "players": 4
+    "players": 4,
+    "coinCardEffect": "GREY"
+
   },
   {
     "age" : 2,
     "CardColor" : "YELLOW",
     "name": "bazar",
-    "players": 7
+    "players": 7,
+    "coinCardEffect": "GREY"
+
   }
 ]

@@ -7,7 +7,9 @@
       "PAPYRUS" : 1
     },
     "name": "chamber of commerce",
-    "players": 4
+    "players": 4,
+    "coinCardEffect": "GREY"
+
   },
   {
     "age" : 3,
@@ -17,6 +19,8 @@
       "PAPYRUS" : 1
     },
     "name": "chamber of commerce",
-    "players": 6
+    "players": 6,
+    "coinCardEffect": "GREY"
+
   }
 ]

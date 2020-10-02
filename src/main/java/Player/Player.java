@@ -1,5 +1,6 @@
 package Player;
 
+import Card.StrategistsGuildEffect ;
 import Card.ColoredCardResourceEffect ;
 import Card.ShipOwnersGuild ;
 import Card.BuildersGuildEffect ;
@@ -8,6 +9,7 @@ import Card.CardPoints;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.TradeResourceEffect;
+import Card.CoinCardEffect;
 import Core.Wonder;
 import Utility.Writer;
 
@@ -39,11 +41,15 @@ public abstract class Player {
     protected Player nextNeighbor;
 
     public SecureRandom rand = new SecureRandom();
+  
+    protected int defeatToken ;
+
 
 
     public Player(String name) {
         this.name = name;
         this.militaryPoints = 0;
+        this.defeatToken = 0 ;
 
         this.points = new EnumMap<>(CardPoints.class);
         for (CardPoints p : CardPoints.values()) {
@@ -145,6 +151,14 @@ public abstract class Player {
         this.wonder = wonder;
     }
 
+    public int getDefeatToken() {
+        return defeatToken;
+    }
+
+    public void addDefeatToken(int n){
+        this.defeatToken +=n ;
+    }
+
     public abstract void chooseCard();
 
     public abstract void chooseAction();
@@ -179,8 +193,14 @@ public abstract class Player {
             if (card.getEffect() !=null && card.getEffect() instanceof ShipOwnersGuild){ //Ship Owners Guild Effect
                 ((ShipOwnersGuild) card.getEffect()).applyEffect(this);
             }
-            if (card.getEffect() !=null && card.getEffect() instanceof BuildersGuildEffect){ //Builder sGuild Card Effect
+            if (card.getEffect() !=null && card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
                 ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
+            }
+            if (card.getEffect() !=null && card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
+                ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
+            }
+            if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
+                ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
             }
         }
 
