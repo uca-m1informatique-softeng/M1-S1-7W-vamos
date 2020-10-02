@@ -127,7 +127,7 @@ public class Game {
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
-                prevPlayer = this.playersArray.get(i);
+                prevPlayer = this.playersArray.get(i-1);
             } else {
                 prevPlayer = this.playersArray.get(this.playersArray.size()-1);
             }
