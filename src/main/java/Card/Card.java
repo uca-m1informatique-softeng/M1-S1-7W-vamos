@@ -123,6 +123,10 @@ public class Card {
                     if (json.has("BuildersGuildEffect")){
                         this.effect = new BuildersGuildEffect() ;
                     }
+
+                    if (json.has("StrategistsGuildEffect")){
+                        this.effect = new StrategistsGuildEffect() ;
+                    }
                 }
             }
         }

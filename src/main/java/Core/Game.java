@@ -279,6 +279,9 @@ public class Game {
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
+
+            p1.addDefeatToken(1);
+
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         }
     }
