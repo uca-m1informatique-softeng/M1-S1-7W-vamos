@@ -4,6 +4,7 @@ import Card.Card;
 import Card.CardManager;
 import Exceptions.WondersException;
 import Player.DumbPlayer;
+import Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -92,7 +93,7 @@ class GameTest {
          assertEquals(playersArray.size(),game.getPlayersArray().size());
 
          for (int i = 0; i < game.getPlayersArray().size(); i++) {
-             assertTrue(game.getPlayersArray().get(i) instanceof DumbPlayer);
+             assertTrue(game.getPlayersArray().get(i) instanceof Player);
          }
      }
 

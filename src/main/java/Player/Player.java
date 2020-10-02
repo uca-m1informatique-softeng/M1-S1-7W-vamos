@@ -421,4 +421,27 @@ public abstract class Player {
         return this.name ;
     }
 
+    /**
+     * Checks if card is buildable given the cards that are already built, and vuyable resources from neighbors.
+     * @param card Card to check if it's buildable
+     * @return true if card is buildable, false otherwise
+     */
+    protected boolean isBuildable(Card card) {
+        EnumMap<Resource, Integer> cardCost = card.getCost();
+
+        for (Card c : this.builtCards) {
+            if (c.getEffect() instanceof ResourceChoiceEffect) {
+                ((ResourceChoiceEffect) c.getEffect()).applyEffect(cardCost);
+            }
+        }
+
+        for (Resource r : Resource.values()) {
+            if (cardCost.get(r) > this.resources.get(r) + this.prevNeighbor.getResources().get(r) + this.nextNeighbor.getResources().get(r)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

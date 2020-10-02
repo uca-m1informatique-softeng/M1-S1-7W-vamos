@@ -111,11 +111,12 @@ public class Game {
     public void initPlayers() {
         for (int i = 0; i < players; i++) {
             Random random = new Random();
-            if (random.nextInt(100) < 90) {
+            if (random.nextInt(100) < 30) {
                 this.playersArray.add(new DumbPlayer("Stupid" + i));
-            } else {
+            } else if (random.nextInt(100) < 60){
                 this.playersArray.add(new MilitaryPlayer("Warrior" + i));
             }
+            else  { this.playersArray.add(new IA_One("IA_One" + i)); }
         }
 
         for (int i = 0; i < players; i++) {
