@@ -7,7 +7,8 @@
       "STONE" : 2
     },
     "name": "arena",
-    "players": 3
+    "players": 3,
+    "coinCardEffect": "PYRAMID"
   },
   {
     "age" : 3,
@@ -17,7 +18,8 @@
       "STONE" : 2
     },
     "name": "arena",
-    "players": 5
+    "players": 5,
+    "coinCardEffect": "PYRAMID"
   },
   {
     "age" : 3,
@@ -27,6 +29,8 @@
       "STONE" : 2
     },
     "name": "arena",
-    "players": 7
+    "players": 7,
+    "coinCardEffect": "PYRAMID"
+
   }
 ]
