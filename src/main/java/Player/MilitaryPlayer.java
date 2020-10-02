@@ -4,6 +4,7 @@ import Card.Card;
 import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.CardPoints;
+import Utility.Writer;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -66,7 +67,7 @@ public class MilitaryPlayer extends Player {
 
             this.chosenCard = preferredCard;
         } catch (IOException e) {
-            e.printStackTrace();
+            Writer.write("altar.json could not be read.");
         }
 
 

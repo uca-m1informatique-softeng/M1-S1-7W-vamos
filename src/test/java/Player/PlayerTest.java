@@ -1,12 +1,11 @@
 package Player;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.Random;
 import Card.*;
 import Core.Wonder;
-import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +29,7 @@ public class PlayerTest {
     DumbPlayer player;
 
     @Mock
-    Random rand;
+    SecureRandom rand;
 
     @BeforeEach
     void setUp(){

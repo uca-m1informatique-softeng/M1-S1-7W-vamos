@@ -6,12 +6,11 @@ import Player.*;
 import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
-
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 
 import static Utility.Constante.*;
 
@@ -30,10 +29,13 @@ public class Game {
     private ArrayList<Card> deck;
 
     private ArrayList<Wonder> wonderArrayList;
+
     public static Boolean debug = false;
 
+    private static SecureRandom rand = new SecureRandom();
 
-    public static void main(String[] args) throws ParseException, IOException, WondersException {
+
+    public static void main(String[] args) throws WondersException {
 
         int nbPlayers = 4;
         String typePartie  = STATS_MODE;
@@ -98,12 +100,12 @@ public class Game {
         if(players < 3 || players > 4)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
-        this.playersArray = new ArrayList<>(players);
+        Game.playersArray = new ArrayList<>(players);
         this.initPlayers();
         this.state = GameState.START;
         this.deck = new ArrayList<>();
         this.wonderArrayList = WonderManager.parseWonders();
-        initPlayersWonders();
+        this.initPlayersWonders();
 
     }
 
@@ -117,60 +119,52 @@ public class Game {
 
     public void initPlayers() {
 
-          this.playersArray.add(new DumbPlayer("Stupid"));
-          this.playersArray.add(new MilitaryPlayer("Warrior"));
-          this.playersArray.add(new IA_One("IA_One"));
-          if(players == 4)
-              this.playersArray.add(new DumbPlayer("Stupid Clone"));
+        this.playersArray.add(new DumbPlayer("Stupid"));
+        this.playersArray.add(new MilitaryPlayer("Warrior"));
+        this.playersArray.add(new IA_One("IA_One"));
+        if (players == 4)
+            this.playersArray.add(new DumbPlayer("Stupid Clone"));
 
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
-                prevPlayer = this.playersArray.get(i);
+                prevPlayer = Game.playersArray.get(i-1);
             } else {
-                prevPlayer = this.playersArray.get(this.playersArray.size()-1);
+                prevPlayer = Game.playersArray.get(Game.playersArray.size()-1);
             }
-            if (i < this.playersArray.size()-1) {
-                nextPlayer = this.playersArray.get(i+1);
+            if (i < Game.playersArray.size()-1) {
+                nextPlayer = Game.playersArray.get(i+1);
             } else {
-                nextPlayer = this.playersArray.get(0);
+                nextPlayer = Game.playersArray.get(0);
             }
 
-            this.playersArray.get(i).setPrevNeighbor(prevPlayer);
-            this.playersArray.get(i).setNextNeighbor(nextPlayer);
+            Game.playersArray.get(i).setPrevNeighbor(prevPlayer);
+            Game.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
     }
 
-    private void process() throws ParseException {
-        switch (this.state)
-        {
+    private void process() {
+        switch (this.state) {
             case START:
-            {
                 Writer.write("The game started with " + Game.players + "players on the board");
                 this.processNewAge();
                 this.state = GameState.PLAY;
-            }
-            break;
+                break;
 
             case PLAY:
-            {
                 Writer.write(YELLOW_UNDERLINED + "\n----ROUND " + getRound() + "----" + "\n" + RESET);
                 this.processTurn();
                 this.round++;
                 this.processEndAge();
-            }
-            break;
+                break;
 
             case END:
-            {
                 this.addVictoryPoints();
                 this.displayPlayersRanking();
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
-
-            }
-            break;
+                break;
     }
 
     }
@@ -212,11 +206,10 @@ public class Game {
         }
     }
 
-
     private void processTurn() {
-        for(Player player : this.playersArray)
+        for(Player player : Game.playersArray)
             player.chooseCard();
-        for(Player player : this.playersArray)
+        for(Player player : Game.playersArray)
             player.chooseAction();
 
         this.swapHands(this.currentAge);
@@ -274,7 +267,7 @@ public class Game {
         if (this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
             this.state = GameState.END;
         if (this.round == 6 && this.currentAge < MAX_AGE) {
-            for(Player player : this.playersArray)
+            for(Player player : Game.playersArray)
                 player.getHand().clear();
             this.battle();
             Writer.write("Age has ended! ");
@@ -285,7 +278,7 @@ public class Game {
     }
 
     private void battle() {
-        for (Player p : this.playersArray) {
+        for (Player p : Game.playersArray) {
             this.fight(p, p.getPrevNeighbor());
             this.fight(p, p.getNextNeighbor());
         }
@@ -345,7 +338,7 @@ public class Game {
     {
         if(debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());
-        for(Player player : playersArray)
+        for(Player player : Game.playersArray)
         {
             Collections.shuffle(wonderArrayList);
             player.setWonder(wonderArrayList.remove(0));
@@ -358,7 +351,7 @@ public class Game {
     }
 
     private void initPlayersHand() {
-        for(Player player : playersArray)
+        for(Player player : Game.playersArray)
             for(int i = 0; i < MAX_HAND; i++)
                 player.getHand().add(this.deck.remove(0));
     }

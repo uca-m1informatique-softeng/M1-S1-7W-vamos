@@ -13,6 +13,7 @@ import Card.CoinCardEffect;
 import Core.Wonder;
 import Utility.Writer;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 public abstract class Player {
@@ -39,9 +40,10 @@ public abstract class Player {
 
     protected Player nextNeighbor;
 
+    public SecureRandom rand = new SecureRandom();
+  
     protected int defeatToken ;
 
-    public Random rand = new Random();
 
 
     public Player(String name) {
