@@ -1,30 +1,17 @@
-[
-  {
-    "age": 3,
-    "CardColor": "GREEN",
-    "cardPoints": {
-      "SCIENCE_TABLET": 1
-    },
-    "cost": {
-      "WOOD": 2,
-      "GLASS": 1,
-      "PAPYRUS": 1
-    },
-    "name": "university",
-    "players": 3
-  },
-  {
+{
     "age": 2,
     "CardColor": "GREEN",
     "cardPoints": {
-      "SCIENCE_TABLET": 1
+        "SCIENCE_TABLET": 1
     },
     "cost": {
-      "WOOD": 2,
-      "GLASS": 1,
-      "PAPYRUS": 1
+        "WOOD": 2,
+        "GLASS": 1,
+        "PAPYRUS": 1
     },
     "name": "university",
-    "players": 4
-  }
-]
+    "players": [
+        3,
+        4
+    ]
+}

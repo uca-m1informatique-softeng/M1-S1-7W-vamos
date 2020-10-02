@@ -1,26 +1,15 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "BROWN",
     "cost": {
-      "COIN": 1
+        "COIN": 1
     },
     "name": "sawmill",
     "resource": {
-      "WOOD": 2
+        "WOOD": 2
     },
-    "players": 3
-  },
-  {
-    "age": 2,
-    "CardColor": "BROWN",
-    "cost": {
-      "COIN": 1
-    },
-    "name": "sawmill",
-    "resource": {
-      "WOOD": 2
-    },
-    "players": 4
-  }
-]
+    "players": [
+        3,
+        4
+    ]
+}

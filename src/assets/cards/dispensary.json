@@ -1,28 +1,16 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "GREEN",
     "cardPoints": {
-      "SCIENCE_COMPASS": 1
+        "SCIENCE_COMPASS": 1
     },
     "cost": {
-      "ORE": 2,
-      "GLASS": 1
+        "ORE": 2,
+        "GLASS": 1
     },
     "name": "dispensary",
-    "players": 3
-  },
-  {
-    "age": 2,
-    "CardColor": "GREEN",
-    "cardPoints": {
-      "SCIENCE_COMPASS": 1
-    },
-    "cost": {
-      "ORE": 2,
-      "GLASS": 1
-    },
-    "name": "dispensary",
-    "players": 4
-  }
-]
+    "players": [
+        3,
+        4
+    ]
+}

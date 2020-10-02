@@ -12,7 +12,7 @@ public class Card {
 
     private String name;
     private CardColor color;
-    private CardColor coloredCardResourceEffect ;
+    private CardColor coloredCardResourceEffect;
     private CardColor coinCardEffect;
     private int age;
     private int players;
@@ -24,123 +24,125 @@ public class Card {
 
     public Card(String name, int players) throws IOException {
         String content = Files.readString(Paths.get("src", "assets", "cards", name + ".json"));
-        JSONArray card = new JSONArray(content);
+        JSONObject card = new JSONObject(content);
 
         this.name = name;
         this.players = players;
 
         this.cardPoints = new EnumMap<>(CardPoints.class);
         for (CardPoints p : CardPoints.values()) {
-            this.cardPoints.put(p , 0);
+            this.cardPoints.put(p, 0);
         }
         this.resource = new EnumMap<>(Resource.class);
         for (Resource r : Resource.values()) {
-            this.resource.put(r , 0);
+            this.resource.put(r, 0);
         }
         this.cost = new EnumMap<>(Resource.class);
         for (Resource r : Resource.values()) {
-            this.cost.put(r , 0);
+            this.cost.put(r, 0);
         }
 
-        if (card.length() > 0) {
-            for (int i = 0; i < card.length(); i++) {
-
-                JSONObject json = card.getJSONObject(i);
-
-                if ((json.has("players") && json.getInt("players") <= players) || !json.has("players")) {
-                    // age
-                    this.age = json.getInt("age");
-
-                    // value of card = output that the player receives when playing the card
-                    if(json.has("cardPoints")) {
-                        CardPoints cardPointKey = CardPoints.valueOf(json.getJSONObject("cardPoints").keys().next());
-                        Integer cardPointValue = json.getJSONObject("cardPoints").getInt(json.getJSONObject("cardPoints").keys().next());
-                        this.cardPoints.put(cardPointKey, cardPointValue);
-                    }
-
-                    // cost for a card (if any)
-                    if(json.has("cost")) {
-                        for (int k = 0; k < json.getJSONObject("cost").names().length(); k++) {
-                            String key = json.getJSONObject("cost").names().getString(k);
-                            int value = json.getJSONObject("cost").getInt(key);
-
-                            this.cost.put(Resource.valueOf(key), value);
-                        }
-                    }
-
-                    // resource given by a card (if any)
-                    if(json.has("resource")) {
-                        for (int k = 0; k < json.getJSONObject("resource").names().length(); k++) {
-
-                            String key = json.getJSONObject("resource").names().getString(k);
-                            int value = json.getJSONObject("resource").getInt(key);
-
-                            this.resource.put(Resource.valueOf(key), value);
-                        }
-                    }
-
-                    // card color
-                    this.color = CardColor.valueOf(json.getString("CardColor"));
-
-                    if (json.has("resourceChoiceEffect")) {
-
-                        JSONArray resourceChoiceEffect = json.getJSONArray("resourceChoiceEffect");
-                        ArrayList<Resource> resList = new ArrayList<>();
-
-                        for (int k = 0; k < resourceChoiceEffect.length(); k++) {
-                            resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
-                        }
-
-                        this.effect = new ResourceChoiceEffect(resList);
-                    }
-
-                    if (json.has("tradeResourceEffect")) {
-
-                        JSONObject tradeResourceEffect = json.getJSONObject("tradeResourceEffect");
-                        ArrayList<Resource> resList = new ArrayList<>();
-
-                        for (int k = 0; k < tradeResourceEffect.length(); k++) {
-                            resList.add(Resource.valueOf(tradeResourceEffect.getJSONArray("resourcesModified").getString(k)));
-                        }
-
-                        this.effect = new TradeResourceEffect(
-                                tradeResourceEffect.getBoolean("prevPlayerAllowed"),
-                                tradeResourceEffect.getBoolean("nextPlayerAllowed"),
-                                resList);
-                    }
-
-                    if(json.has("coloredCardResourceEffect")){
-                        this.coloredCardResourceEffect=CardColor.valueOf(json.getString("coloredCardResourceEffect")) ;
-
-                        CardColor coloredCardResourceEffect = CardColor.valueOf(json.getString("coloredCardResourceEffect"));
-
-                        this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect) ;
-                    }
-
-                    if (json.has("ShipownersGuildEffect")){
-                        this.effect= new ShipOwnersGuild() ;
-                    }
-
-                    if (json.has("BuildersGuildEffect")){
-                        this.effect = new BuildersGuildEffect() ;
-                    }
-
-                    if (json.has("StrategistsGuildEffect")){
-                        this.effect = new StrategistsGuildEffect() ;
-                    }
-                    if(json.has("coinCardEffect")){
-                        if(json.get("coinCardEffect").equals("PYRAMID")) {
-                            this.coinCardEffect = null;
-                            this.effect = new CoinCardEffect(null, json.getInt("age"));
-                        } else {
-                            this.coinCardEffect = CardColor.valueOf(json.getString("coinCardEffect"));
-                            this.effect = new CoinCardEffect(CardColor.valueOf(json.getString("coinCardEffect")), json.getInt("age"));
-                        }
-                    }
+        //if (card.length() > 0) {
+        //for (int i = 0; i < card.length(); i++) {
+        Boolean validPlayerNb = false;
+        if (card.has("players")) {
+            for (int i = 0; i < card.getJSONArray("players").length(); i++) {
+                if (card.getJSONArray("players").getInt(i) <= players) {
+                    validPlayerNb = true;
                 }
             }
         }
+        if (validPlayerNb || !card.has("players")) {
+            // age
+            this.age = card.getInt("age");
 
+            // value of card = output that the player receives when playing the card
+            if (card.has("cardPoints")) {
+                CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject("cardPoints").keys().next());
+                Integer cardPointValue = card.getJSONObject("cardPoints").getInt(card.getJSONObject("cardPoints").keys().next());
+                this.cardPoints.put(cardPointKey, cardPointValue);
+            }
+
+            // cost for a card (if any)
+            if (card.has("cost")) {
+                for (int k = 0; k < card.getJSONObject("cost").names().length(); k++) {
+                    String key = card.getJSONObject("cost").names().getString(k);
+                    int value = card.getJSONObject("cost").getInt(key);
+
+                    this.cost.put(Resource.valueOf(key), value);
+                }
+            }
+
+            // resource given by a card (if any)
+            if (card.has("resource")) {
+                for (int k = 0; k < card.getJSONObject("resource").names().length(); k++) {
+
+                    String key = card.getJSONObject("resource").names().getString(k);
+                    int value = card.getJSONObject("resource").getInt(key);
+
+                    this.resource.put(Resource.valueOf(key), value);
+                }
+            }
+
+            // card color
+            this.color = CardColor.valueOf(card.getString("CardColor"));
+
+            if (card.has("resourceChoiceEffect")) {
+
+                JSONArray resourceChoiceEffect = card.getJSONArray("resourceChoiceEffect");
+                ArrayList<Resource> resList = new ArrayList<>();
+
+                for (int k = 0; k < resourceChoiceEffect.length(); k++) {
+                    resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
+                }
+
+                this.effect = new ResourceChoiceEffect(resList);
+            }
+
+            if (card.has("tradeResourceEffect")) {
+
+                JSONObject tradeResourceEffect = card.getJSONObject("tradeResourceEffect");
+                ArrayList<Resource> resList = new ArrayList<>();
+
+                for (int k = 0; k < tradeResourceEffect.length(); k++) {
+                    resList.add(Resource.valueOf(tradeResourceEffect.getJSONArray("resourcesModified").getString(k)));
+                }
+
+                this.effect = new TradeResourceEffect(
+                        tradeResourceEffect.getBoolean("prevPlayerAllowed"),
+                        tradeResourceEffect.getBoolean("nextPlayerAllowed"),
+                        resList);
+            }
+
+            if (card.has("coloredCardResourceEffect")) {
+                this.coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+
+                CardColor coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+
+                this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect);
+            }
+
+            if (card.has("ShipownersGuildEffect")) {
+                this.effect = new ShipOwnersGuild();
+            }
+
+            if (card.has("BuildersGuildEffect")) {
+                this.effect = new BuildersGuildEffect();
+            }
+
+            if (card.has("StrategistsGuildEffect")) {
+                this.effect = new StrategistsGuildEffect();
+            }
+            if (card.has("coinCardEffect")) {
+                if (card.get("coinCardEffect").equals("PYRAMID")) {
+                    this.coinCardEffect = null;
+                    this.effect = new CoinCardEffect(null, card.getInt("age"));
+                } else {
+                    this.coinCardEffect = CardColor.valueOf(card.getString("coinCardEffect"));
+                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString("coinCardEffect")), card.getInt("age"));
+                }
+            }
+        }
     }
 
     public String getName() {
@@ -167,7 +169,9 @@ public class Card {
         return players;
     }
 
-    public Effect getEffect() { return this.effect; }
+    public Effect getEffect() {
+        return this.effect;
+    }
 
     public EnumMap<CardPoints, Integer> getCardPoints() {
         return cardPoints;
@@ -181,9 +185,9 @@ public class Card {
         return cost;
     }
 
-    public Boolean isFree(){
-        for(Integer cost : cost.values())
-            if(cost > 0) return false;
+    public Boolean isFree() {
+        for (Integer cost : cost.values())
+            if (cost > 0) return false;
         return true;
     }
 

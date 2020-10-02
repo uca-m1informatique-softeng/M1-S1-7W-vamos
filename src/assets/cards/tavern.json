@@ -1,29 +1,13 @@
-[
-  {
-    "age" : 1,
-    "CardColor" : "YELLOW",
+{
+    "age": 1,
+    "CardColor": "YELLOW",
     "resource": {
-      "COIN": 5
+        "COIN": 5
     },
     "name": "tavern",
-    "players": 4
-  },
-  {
-    "age" : 1,
-    "CardColor" : "YELLOW",
-    "resource": {
-      "COIN": 5
-    },
-    "name": "tavern",
-    "players": 5
-  },
-  {
-    "age" : 1,
-    "CardColor" : "YELLOW",
-    "resource": {
-      "COIN": 5
-    },
-    "name": "tavern",
-    "players": 7
-  }
-]
+    "players": [
+        4,
+        5,
+        7
+    ]
+}

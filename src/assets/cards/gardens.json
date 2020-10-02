@@ -1,28 +1,16 @@
-[
-  {
+{
     "age": 3,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 5
+        "VICTORY": 5
     },
     "cost": {
-      "WOOD": 1,
-      "CLAY": 2
+        "WOOD": 1,
+        "CLAY": 2
     },
     "name": "gardens",
-    "players": 3
-  },
-  {
-    "age": 3,
-    "CardColor": "BLUE",
-    "cardPoints": {
-      "VICTORY": 5
-    },
-    "cost": {
-      "WOOD": 1,
-      "CLAY": 2
-    },
-    "name": "gardens",
-    "players": 4
-  }
-]
+    "players": [
+        3,
+        4
+    ]
+}

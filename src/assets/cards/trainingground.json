@@ -1,41 +1,17 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "RED",
     "cardPoints": {
-      "MILITARY": 2
+        "MILITARY": 2
     },
     "cost": {
-      "WOOD": 1,
-      "ORE": 2
+        "WOOD": 1,
+        "ORE": 2
     },
     "name": "training ground",
-    "players": 4
-  },
-  {
-    "age": 2,
-    "CardColor": "RED",
-    "cardPoints": {
-      "MILITARY": 2
-    },
-    "cost": {
-      "WOOD": 1,
-      "ORE": 2
-    },
-    "name": "training ground",
-    "players": 6
-  },
-  {
-    "age": 2,
-    "CardColor": "RED",
-    "cardPoints": {
-      "MILITARY": 2
-    },
-    "cost": {
-      "WOOD": 1,
-      "ORE": 2
-    },
-    "name": "training ground",
-    "players": 7
-  }
-]
+    "players": [
+        4,
+        6,
+        7
+    ]
+}

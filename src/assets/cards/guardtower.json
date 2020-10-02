@@ -1,26 +1,15 @@
-[
-  {
+{
     "age": 1,
     "CardColor": "RED",
     "cardPoints": {
-      "MILITARY": 1
+        "MILITARY": 1
     },
     "cost": {
-      "CLAY": 1
+        "CLAY": 1
     },
     "name": "guard tower",
-    "players": 3
-  },
-  {
-    "age": 1,
-    "CardColor": "RED",
-    "cardPoints": {
-      "MILITARY": 1
-    },
-    "cost": {
-      "CLAY": 1
-    },
-    "name": "guard tower",
-    "players": 4
-  }
-]
+    "players": [
+        3,
+        4
+    ]
+}

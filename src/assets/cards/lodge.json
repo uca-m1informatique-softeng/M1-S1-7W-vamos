@@ -1,30 +1,17 @@
-[
-  {
+{
     "age": 3,
     "CardColor": "GREEN",
     "cardPoints": {
-      "SCIENCE_COMPASS": 1
+        "SCIENCE_COMPASS": 1
     },
     "cost": {
-      "CLAY": 2,
-      "LOOM": 1,
-      "PAPYRUS": 1
+        "CLAY": 2,
+        "LOOM": 1,
+        "PAPYRUS": 1
     },
     "name": "lodge",
-    "players": 3
-  },
-  {
-    "age": 3,
-    "CardColor": "GREEN",
-    "cardPoints": {
-      "SCIENCE_COMPASS": 1
-    },
-    "cost": {
-      "CLAY": 2,
-      "LOOM": 1,
-      "PAPYRUS": 1
-    },
-    "name": "lodge",
-    "players": 6
-  }
-]
+    "players": [
+        3,
+        6
+    ]
+}

@@ -1,28 +1,16 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "GREEN",
     "cardPoints": {
-      "SCIENCE_TABLET": 1
+        "SCIENCE_TABLET": 1
     },
     "cost": {
-      "WOOD": 1,
-      "PAPYRUS": 1
+        "WOOD": 1,
+        "PAPYRUS": 1
     },
     "name": "school",
-    "players": 3
-  },
-  {
-    "age": 2,
-    "CardColor": "GREEN",
-    "cardPoints": {
-      "SCIENCE_TABLET": 1
-    },
-    "cost": {
-      "WOOD": 1,
-      "PAPYRUS": 1
-    },
-    "name": "school",
-    "players": 7
-  }
-]
+    "players": [
+        3,
+        7
+    ]
+}

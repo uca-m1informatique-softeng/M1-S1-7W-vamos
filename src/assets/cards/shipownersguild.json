@@ -1,13 +1,11 @@
-[
-  {
+{
     "age": 3,
     "CardColor": "PURPLE",
     "cost": {
-      "WOOD": 3,
-      "PAPYRUS": 1,
-      "GLASS": 1
+        "WOOD": 3,
+        "PAPYRUS": 1,
+        "GLASS": 1
     },
     "name": "shipowners guild",
     "ShipownersGuildEffect": "shipownersGuildEffect"
-  }
-]
+}

@@ -1,20 +1,12 @@
-[
-  {
+{
     "age": 1,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 3
+        "VICTORY": 3
     },
     "name": "pawnshop",
-    "players": 4
-  },
-  {
-    "age": 1,
-    "CardColor": "BLUE",
-    "cardPoints": {
-      "VICTORY": 3
-    },
-    "name": "pawnshop",
-    "players": 7
-  }
-]
+    "players": [
+        4,
+        7
+    ]
+}

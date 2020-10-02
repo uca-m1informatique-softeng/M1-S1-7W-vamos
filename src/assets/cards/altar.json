@@ -1,20 +1,12 @@
-[
-  {
+{
     "age": 1,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 2
+        "VICTORY": 2
     },
     "name": "altar",
-    "players": 3
-  },
-  {
-    "age": 1,
-    "CardColor": "BLUE",
-    "cardPoints": {
-      "VICTORY": 2
-    },
-    "name": "altar",
-    "players": 5
-  }
-]
+    "players": [
+        3,
+        5
+    ]
+}

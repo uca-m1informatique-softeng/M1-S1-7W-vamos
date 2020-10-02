@@ -1,28 +1,16 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "RED",
     "cardPoints": {
-      "MILITARY": 2
+        "MILITARY": 2
     },
     "cost": {
-      "ORE": 1,
-      "WOOD": 2
+        "ORE": 1,
+        "WOOD": 2
     },
     "name": "archery range",
-    "players": 3
-  },
-  {
-    "age": 2,
-    "CardColor": "RED",
-    "cardPoints": {
-      "MILITARY": 2
-    },
-    "cost": {
-      "ORE": 1,
-      "WOOD": 2
-    },
-    "name": "archery range",
-    "players": 6
-  }
-]
+    "players": [
+        3,
+        6
+    ]
+}

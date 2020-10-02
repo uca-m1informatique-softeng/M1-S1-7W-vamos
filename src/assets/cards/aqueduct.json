@@ -1,26 +1,15 @@
-[
-  {
+{
     "age": 2,
     "CardColor": "BLUE",
     "cardPoints": {
-      "VICTORY": 5
+        "VICTORY": 5
     },
     "cost": {
-      "STONE": 3
+        "STONE": 3
     },
     "name": "aqueduct",
-    "players": 3
-  },
-  {
-    "age": 2,
-    "CardColor": "BLUE",
-    "cardPoints": {
-      "VICTORY": 5
-    },
-    "cost": {
-      "STONE": 3
-    },
-    "name": "aqueduct",
-    "players": 7
-  }
-]
+    "players": [
+        3,
+        7
+    ]
+}

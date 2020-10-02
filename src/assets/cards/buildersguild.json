@@ -1,13 +1,11 @@
-[
-  {
+{
     "age": 3,
     "CardColor": "PURPLE",
     "cost": {
-      "STONE": 2,
-      "CLAY": 2,
-      "GLASS": 1
+        "STONE": 2,
+        "CLAY": 2,
+        "GLASS": 1
     },
     "name": "builders guild",
-    "BuildersGuildEffect" : "BuildersGuildEffect"
-  }
-]
+    "BuildersGuildEffect": "BuildersGuildEffect"
+}

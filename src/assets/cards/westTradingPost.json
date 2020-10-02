@@ -1,34 +1,19 @@
-[
-  {
-    "age" : 1,
-    "CardColor" : "YELLOW",
+{
+    "age": 1,
+    "CardColor": "YELLOW",
     "name": "west trading post",
-    "players": 3,
-    "tradeResourceEffect" : {
-      "nextPlayerAllowed" : false,
-      "prevPlayerAllowed" : true,
-      "resourcesModified" : [
-        "CLAY",
-        "STONE",
-        "WOOD",
-        "ORE"
-      ]
+    "players": [
+        3,
+        7
+    ],
+    "tradeResourceEffect": {
+        "nextPlayerAllowed": false,
+        "prevPlayerAllowed": true,
+        "resourcesModified": [
+            "CLAY",
+            "STONE",
+            "WOOD",
+            "ORE"
+        ]
     }
-  },
-  {
-    "age" : 1,
-    "CardColor" : "YELLOW",
-    "name": "west trading post",
-    "players": 7,
-    "tradeResourceEffect" : {
-      "nextPlayerAllowed" : false,
-      "prevPlayerAllowed" : true,
-      "resourcesModified" : [
-        "CLAY",
-        "STONE",
-        "WOOD",
-        "ORE"
-      ]
-    }
-  }
-]
+}
