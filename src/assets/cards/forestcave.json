@@ -5,7 +5,7 @@
         "COIN": 1
     },
     "name": "Forest Cave",
-    "players": 5,
+    "players": [5],
     "resourceChoiceEffect": [
         "ORE",
         "WOOD"

@@ -5,7 +5,7 @@
         "COIN": 1
     },
     "name": "mine",
-    "players": 6,
+    "players": [6],
     "resourceChoiceEffect": [
         "ORE",
         "STONE"

@@ -5,7 +5,7 @@
         "COIN": 1
     },
     "name": "Clay Pit",
-    "players": 3,
+    "players": [3],
     "resourceChoiceEffect": [
         "CLAY",
         "ORE"

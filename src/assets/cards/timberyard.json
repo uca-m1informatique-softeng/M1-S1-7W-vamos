@@ -5,7 +5,7 @@
         "COIN": 1
     },
     "name": "Timber Yard",
-    "players": 3,
+    "players": [3],
     "resourceChoiceEffect": [
         "STONE",
         "WOOD"
