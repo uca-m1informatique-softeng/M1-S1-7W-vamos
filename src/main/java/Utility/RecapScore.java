@@ -17,7 +17,7 @@ public class RecapScore
     double moyenne;
     int nbVictory;
     boolean victory;
-
+    public RecapScore() {}
     public RecapScore(Player player, boolean victory){
         this.victory = victory;
         totalPoints = player.computeScore();
