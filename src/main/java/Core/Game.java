@@ -14,20 +14,45 @@ import java.util.Collections;
 
 import static Utility.Constante.*;
 
+/**
+ *  Game class which will act as the core engine of the game.
+ *  Will be handled as a state machine
+ */
 public class Game {
 
+    /**
+     *  Current round of the current age
+     */
     private int round = 1;
+
+    /**
+     *  Number of players in the game
+     */
 
     private static int players;
 
+    /**
+     *  Current age, once this hits 3 and last round is played, the game is finished
+     */
     private int currentAge = 1;
 
+    /**
+     *  container of the players
+     */
     private static ArrayList<Player> playersArray;
 
+    /**
+     *  Current state of the game
+     */
     private GameState state;
 
+    /**
+     *  Current pool of cards of the current age
+     */
     private ArrayList<Card> deck;
-
+    /**
+     *  Pool of wonders players choose one from
+     */
     private ArrayList<Wonder> wonderArrayList;
 
     public static Boolean debug = false;
@@ -39,7 +64,9 @@ public class Game {
 
         int nbPlayers = 4;
         String typePartie  = STATS_MODE;
-
+        /**
+         *  Game mode, normal game, game output is displayed
+         */
         if(typePartie.equals(GAME_MODE))
         {
             Game game = new Game(nbPlayers);
@@ -50,6 +77,9 @@ public class Game {
             Utilities.displayGameOutput();
             Writer.deleteFile();
         }
+        /**
+         *  Stats mode, no game output is displayed, only end game stats.
+         */
         else if (typePartie.equals(STATS_MODE))
         {
             Writer.init(false);
@@ -81,9 +111,6 @@ public class Game {
                 System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
                 System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
                 System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
-
-
-
             }
         }
         else
@@ -109,6 +136,9 @@ public class Game {
 
     }
 
+    /**
+     *  Load the cards of the current age in the game engine
+     */
     public void initDeck() {
 
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
@@ -117,6 +147,9 @@ public class Game {
         this.deck = stack;
     }
 
+    /**
+     *  Instantiate the players
+     */
     public void initPlayers() {
 
         this.playersArray.add(new DumbPlayer("Stupid"));
@@ -144,6 +177,10 @@ public class Game {
         }
     }
 
+    /**
+     *  Main function of the game, process based on Game's current state
+     *
+     */
     private void process() {
         switch (this.state) {
             case START:
@@ -165,10 +202,13 @@ public class Game {
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
-    }
+         }
 
     }
 
+    /**
+     *  This function adds victory points to the player based on the card he built
+     */
     private void addVictoryPoints(){
         for(Player player : this.playersArray) {
             Integer brownCards = 0;
@@ -206,6 +246,9 @@ public class Game {
         }
     }
 
+    /**
+     *  Function to process one round during the game
+     */
     private void processTurn() {
         for(Player player : Game.playersArray)
             player.chooseCard();
@@ -284,6 +327,11 @@ public class Game {
         }
     }
 
+    /**
+     *  This function handles the fight mechanism between a player and another
+     * @param p1 first player
+     * @param p2 second one
+     */
     private void fight(Player p1, Player p2) {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
             switch (this.currentAge) {
@@ -309,6 +357,10 @@ public class Game {
         }
     }
 
+    /**
+     * This function handles end game's output
+     * @return a recap score for stats mode
+     */
     private RecapScore[] displayPlayersRanking() {
 
         ArrayList<Player> players = this.getPlayersArray();
@@ -334,8 +386,14 @@ public class Game {
 
     }
 
+    /**
+     *  each player chooses a wonder at the beginning of the game
+     */
     private void initPlayersWonders()
     {
+
+        //TODO  modify that with the current sides of the wonder so the same wonder cannot be chosen twice
+
         if(debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());
         for(Player player : Game.playersArray)

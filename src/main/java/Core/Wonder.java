@@ -17,23 +17,51 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *  Implementation of Wonders in the game.
+ *  The several states of the wonders are represented by an ArrayList where each element of the List represents a state.
+ */
 public class Wonder {
 
 
     private String name;
 
+    /**
+     *  Current state of the wonder, if this hits the maxstate value, then the wonder cannot be built further
+     */
     private int state = 0;
 
     private int maxstate;
 
+    /**
+     *  Properties of the wonder, will hold the cost of each state and the rewards
+     *  Basically the list is
+     *  {  [{COST : REWARD }] , .... , N }
+     */
     private ArrayList<HashMap<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>>> prop;
 
+    /**
+     *  The resource that the wonder produces, player will be given one after the choose their wonders.
+     */
     private Resource productedResource;
 
+    /**
+     *  If the state of the wonder doesn't give a reward ( fixed ressources or points) it will give an effect (choice between a list of resources ).
+     *  These effects will be stored in that list.
+     */
     private ArrayList<Effect> effects;
 
+    /**
+     *  List of already applied effects of the wonder, the player can stack them.
+     */
     private ArrayList<Effect> appliedEffects;
 
+    /**
+     *
+     * The wonder is parsed in the constructor from the json file
+     * @param name name of the wonder
+     * @throws IOException
+     */
     public Wonder(String name) throws IOException {
         String content = Files.readString(Paths.get("src", "assets", "wonders", name + ".json"));
         JSONArray card = new JSONArray(content);
@@ -155,6 +183,11 @@ public class Wonder {
         return state == maxstate;
     }
 
+    /**
+     * This function compares the player inventory with the current upgrade cost of the wonder.
+     * @param playerResources Player owned resources
+     * @return if the player can build his wonder of not
+     */
     public boolean canUpgrade(EnumMap<Resource, Integer> playerResources)
     {
         if(playerResources.isEmpty()) return false;

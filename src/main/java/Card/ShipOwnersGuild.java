@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class ShipOwnersGuild extends Effect{
 
+    /**
+     * Give one victory point for each card of color purple, brown and grey build.
+     * @param player
+     */
     public void applyEffect(Player player){
         ArrayList<Card> playerBuiltCards = new ArrayList<Card>();
         playerBuiltCards = player.getBuiltCards() ;

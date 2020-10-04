@@ -129,10 +129,13 @@ public class Card {
             if (card.has("BuildersGuildEffect")) {
                 this.effect = new BuildersGuildEffect();
             }
-
             if (card.has("StrategistsGuildEffect")) {
                 this.effect = new StrategistsGuildEffect();
             }
+            if (card.has("scienceChoiceEffect")) {
+                this.effect = new ScienceChoiceEffect();
+            }
+
             if (card.has("coinCardEffect")) {
                 if (card.get("coinCardEffect").equals("PYRAMID")) {
                     this.coinCardEffect = null;

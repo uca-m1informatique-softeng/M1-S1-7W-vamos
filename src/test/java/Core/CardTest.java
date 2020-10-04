@@ -90,4 +90,11 @@ class CardTest {
     void isFree() {
         assertEquals(false, card.isFree());
     }
+
+    @Test
+    void parseTest() throws IOException {
+        Card c = new Card("scientistsguild", 3);
+        assertTrue(c.getEffect() instanceof ScienceChoiceEffect);
+
+    }
 }

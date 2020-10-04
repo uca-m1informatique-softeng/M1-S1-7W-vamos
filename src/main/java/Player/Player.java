@@ -10,6 +10,7 @@ import Card.Resource;
 import Card.ResourceChoiceEffect;
 import Card.TradeResourceEffect;
 import Card.CoinCardEffect;
+import Card.ScienceChoiceEffect;
 import Core.Wonder;
 import Utility.Writer;
 
@@ -21,8 +22,6 @@ public abstract class Player {
     protected String name;
 
     protected Card chosenCard;
-
-    protected int militaryPoints;
 
     protected EnumMap<CardPoints, Integer> points;
 
@@ -48,7 +47,6 @@ public abstract class Player {
 
     public Player(String name) {
         this.name = name;
-        this.militaryPoints = 0;
         this.defeatToken = 0 ;
 
         this.points = new EnumMap<>(CardPoints.class);
@@ -113,10 +111,11 @@ public abstract class Player {
         return builtCards;
     }
 
-    public int getMilitaryPoints() { return this.militaryPoints; }
+    public int getMilitaryPoints() { return getPoints().get(CardPoints.MILITARY); }
 
     public void addMilitaryPoints(int mp) {
-        this.militaryPoints += mp;
+        mp = mp + getMilitaryPoints();
+        this.points.put(CardPoints.MILITARY, mp);
     }
 
     public EnumMap<Resource, Integer> getResources() {
@@ -202,6 +201,7 @@ public abstract class Player {
             if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
                 ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
             }
+                //The ScienceChoiceEffect is only apply at the end of the game.
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
@@ -414,9 +414,9 @@ public abstract class Player {
 
     public int computeScore() {
         int res = 0;
-
+        endApplyEffect();
         // Military points
-        res += this.militaryPoints;
+        res += this.getMilitaryPoints();
         // Treasury Contents
         res += this.getCoins()/3;
         // Civilian Structures and Wonders
@@ -463,6 +463,16 @@ public abstract class Player {
         }
 
         return true;
+    }
+
+    /**
+     * Apply the effect to the player if he have it.
+     */
+    protected void endApplyEffect(){
+        ScienceChoiceEffect o = new ScienceChoiceEffect();
+        if(this.getBuiltCards().contains(o)){
+            o.applyEffect(this);
+        }
     }
 
 }
