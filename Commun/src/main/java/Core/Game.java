@@ -63,7 +63,7 @@ public class Game {
     public static void main(String[] args) throws WondersException {
 
         int nbPlayers = 4;
-        String typePartie  = STATS_MODE;
+        String typePartie  = GAME_MODE;
         /**
          *  Game mode, normal game, game output is displayed
          */
