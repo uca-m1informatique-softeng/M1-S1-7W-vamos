@@ -1,6 +1,11 @@
 # exclusion des dossiers contenant les élements générés
 **/out/
-**/target/
+**/target/classes/
+**/target/test-classes/
+**/target/generated-sources/
+**/target/generated-test-sources/
+**/target/maven-archiver/
+**/target/maven-status/
 **/build/
 **/bin/
 # pour la javadoc (selon le nom du dossier pouvant la contenir)
