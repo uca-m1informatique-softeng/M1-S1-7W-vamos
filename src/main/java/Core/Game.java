@@ -6,6 +6,7 @@ import Player.*;
 import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
+
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.text.ParseException;
@@ -15,43 +16,43 @@ import java.util.Collections;
 import static Utility.Constante.*;
 
 /**
- *  Game class which will act as the core engine of the game.
- *  Will be handled as a state machine
+ * Game class which will act as the core engine of the game.
+ * Will be handled as a state machine
  */
 public class Game {
 
     /**
-     *  Current round of the current age
+     * Current round of the current age
      */
     private int round = 1;
 
     /**
-     *  Number of players in the game
+     * Number of players in the game
      */
 
     private static int players;
 
     /**
-     *  Current age, once this hits 3 and last round is played, the game is finished
+     * Current age, once this hits 3 and last round is played, the game is finished
      */
     private int currentAge = 1;
 
     /**
-     *  container of the players
+     * container of the players
      */
     private static ArrayList<Player> playersArray;
 
     /**
-     *  Current state of the game
+     * Current state of the game
      */
     private GameState state;
 
     /**
-     *  Current pool of cards of the current age
+     * Current pool of cards of the current age
      */
     private ArrayList<Card> deck;
     /**
-     *  Pool of wonders players choose one from
+     * Pool of wonders players choose one from
      */
     private ArrayList<Wonder> wonderArrayList;
 
@@ -63,15 +64,14 @@ public class Game {
     public static void main(String[] args) throws WondersException {
 
         int nbPlayers = 4;
-        String typePartie  = STATS_MODE;
+        String typePartie = GAME_MODE;
         /**
          *  Game mode, normal game, game output is displayed
          */
-        if(typePartie.equals(GAME_MODE))
-        {
+        if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
             Writer.init(true);
-            while(game.state != GameState.EXIT)
+            while (game.state != GameState.EXIT)
                 game.process();
             Writer.close();
             Utilities.displayGameOutput();
@@ -80,51 +80,40 @@ public class Game {
         /**
          *  Stats mode, no game output is displayed, only end game stats.
          */
-        else if (typePartie.equals(STATS_MODE))
-        {
+        else if (typePartie.equals(STATS_MODE)) {
             Writer.init(false);
             RecapScore[] recapScores = new RecapScore[nbPlayers];
-            for(int i=0; i<recapScores.length ; i++)
-            {
+            for (int i = 0; i < recapScores.length; i++) {
                 recapScores[i] = new RecapScore();
             }
-            for(int i = 0; i< NB_GAMES_STATS_MODE; i++)
-            {
+            for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
-                while(game.state != GameState.EXIT)
+                while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
-                for(int j=0; j<recapScores.length ; j++)
-                {
+                for (int j = 0; j < recapScores.length; j++) {
                     recapScores[j].addRecap(scoresTmp[j]);
                 }
             }
 
             System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
-            for(int i=0; i<playersArray.size() ; i++)
-            {
+            for (int i = 0; i < playersArray.size(); i++) {
                 recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
-                double victoires = (recapScores[i].getNbVictory()/(double) NB_GAMES_STATS_MODE)*100;
-                String joueur= playersArray.get(i).toString();
-                System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
-                System.out.println(joueur +" has a  "+ victoires +"% winrate");
-                System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
-                System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
-                System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
+                double victoires = (recapScores[i].getNbVictory() / (double) NB_GAMES_STATS_MODE) * 100;
+                String joueur = playersArray.get(i).toString();
+                System.out.println(joueur + " gets an average score of  " + recapScores[i].getAvgScore());
+                System.out.println(joueur + " has a  " + victoires + "% winrate");
+                System.out.println(joueur + " gets " + recapScores[i].getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
+                System.out.println(joueur + " gets   " + recapScores[i].getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
+                System.out.println(joueur + " gets " + recapScores[i].getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
             }
-        }
-        else
-        {
+        } else {
             throw new RuntimeException("Mode inexistant.");
         }
-
-
-
-
     }
 
-    public Game (int players) throws WondersException {
-        if(players < 3 || players > 4)
+    public Game(int players) throws WondersException {
+        if (players < 3 || players > 4)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
@@ -133,53 +122,47 @@ public class Game {
         this.deck = new ArrayList<>();
         this.wonderArrayList = WonderManager.parseWonders();
         this.initPlayersWonders();
-
     }
 
     /**
-     *  Load the cards of the current age in the game engine
+     * Load the cards of the current age in the game engine
      */
     public void initDeck() {
-
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
-        for(int i = stack.size(); i < MAX_HAND * players;i++ )
+        for (int i = stack.size(); i < MAX_HAND * players; i++)
             stack.add(stack.get(0));
         this.deck = stack;
     }
 
     /**
-     *  Instantiate the players
+     * Instantiate the players
      */
     public void initPlayers() {
-
         this.playersArray.add(new DumbPlayer("Stupid"));
         this.playersArray.add(new MilitaryPlayer("Warrior"));
         this.playersArray.add(new IA_One("IA_One"));
         if (players == 4)
             this.playersArray.add(new DumbPlayer("Stupid Clone"));
 
-
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
-                prevPlayer = Game.playersArray.get(i-1);
+                prevPlayer = Game.playersArray.get(i - 1);
             } else {
-                prevPlayer = Game.playersArray.get(Game.playersArray.size()-1);
+                prevPlayer = Game.playersArray.get(Game.playersArray.size() - 1);
             }
-            if (i < Game.playersArray.size()-1) {
-                nextPlayer = Game.playersArray.get(i+1);
+            if (i < Game.playersArray.size() - 1) {
+                nextPlayer = Game.playersArray.get(i + 1);
             } else {
                 nextPlayer = Game.playersArray.get(0);
             }
-
             Game.playersArray.get(i).setPrevNeighbor(prevPlayer);
             Game.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
     }
 
     /**
-     *  Main function of the game, process based on Game's current state
-     *
+     * Main function of the game, process based on Game's current state
      */
     private void process() {
         switch (this.state) {
@@ -202,15 +185,14 @@ public class Game {
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
-         }
-
+        }
     }
 
     /**
-     *  This function adds victory points to the player based on the card he built
+     * This function adds victory points to the player based on the card he built
      */
-    private void addVictoryPoints(){
-        for(Player player : this.playersArray) {
+    private void addVictoryPoints() {
+        for (Player player : this.playersArray) {
             Integer brownCards = 0;
             Integer greyCards = 0;
             Integer yellowCards = 0;
@@ -230,16 +212,16 @@ public class Game {
                         break;
                 }
             }
-            for(Card card : player.getBuiltCards()) {
-                if(card.getEffect() instanceof CoinCardEffect) {
-                    if(card.getCoinCardEffect() == CardColor.BROWN) {
+            for (Card card : player.getBuiltCards()) {
+                if (card.getEffect() instanceof CoinCardEffect) {
+                    if (card.getCoinCardEffect() == CardColor.BROWN) {
                         player.getPoints().put(CardPoints.VICTORY, brownCards);
-                    }else if(card.getCoinCardEffect() == CardColor.GREY) {
+                    } else if (card.getCoinCardEffect() == CardColor.GREY) {
                         player.getPoints().put(CardPoints.VICTORY, greyCards);
-                    }else if(card.getCoinCardEffect() == CardColor.YELLOW) {
+                    } else if (card.getCoinCardEffect() == CardColor.YELLOW) {
                         player.getPoints().put(CardPoints.VICTORY, yellowCards);
-                    }else if(card.getCoinCardEffect() == null) {
-                        player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState()*3);
+                    } else if (card.getCoinCardEffect() == null) {
+                        player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
                     }
                 }
             }
@@ -247,35 +229,32 @@ public class Game {
     }
 
     /**
-     *  Function to process one round during the game
+     * Function to process one round during the game
      */
     private void processTurn() {
-        for(Player player : Game.playersArray)
+        for (Player player : Game.playersArray)
             player.chooseCard();
-        for(Player player : Game.playersArray)
+        for (Player player : Game.playersArray)
             player.chooseAction();
-
         this.swapHands(this.currentAge);
     }
 
     private void swapHands(int currentAge) {
-
         ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
-        for(Player player : playersArray)
+        for (Player player : playersArray)
             tmpList.add(new ArrayList<>(player.getHand()));
 
-        if(debug) {
+        if (debug) {
             for (Player player : playersArray)
                 Writer.write("Hand before swapping  : " + player.getHand().toString());
         }
-        for(int i = 0; i < playersArray.size(); i++) {
-
+        for (int i = 0; i < playersArray.size(); i++) {
             ArrayList<Card> tmpMain = new ArrayList<>(playersArray.get(i).getHand());
 
             if (currentAge % 2 == 1) {
                 //Clockwise trade
 
-                if (i != 0 )
+                if (i != 0)
                     playersArray.get(i).setHand(tmpList.get(i - 1));
                 else
                     playersArray.get(i).setHand(tmpList.get(playersArray.size() - 1));
@@ -287,30 +266,26 @@ public class Game {
                     playersArray.get(playersArray.size() - 1).setHand(tmpList.get(i));
                 else
                     playersArray.get(i - 1).setHand(tmpList.get(i));
-
-
-
             }
         }
-        if(debug) {
+        if (debug) {
             for (Player player : playersArray)
                 Writer.write("Hand after swapping  : " + player.getHand().toString());
         }
-
     }
 
     private void processNewAge() {
         initDeck();
         initPlayersHand();
-        Writer.write("\n" +BLUE_UNDERLINED + "---- CURRENT AGE : " + currentAge  + " ----" + RESET + "\n");
+        Writer.write("\n" + BLUE_UNDERLINED + "---- CURRENT AGE : " + currentAge + " ----" + RESET + "\n");
         Writer.write("Each player drew " + MAX_HAND + "cards");
     }
 
     private void processEndAge() {
-        if (this.round == MAX_ROUNDS && this.currentAge  == MAX_AGE )
+        if (this.round == MAX_ROUNDS && this.currentAge == MAX_AGE)
             this.state = GameState.END;
         if (this.round == 6 && this.currentAge < MAX_AGE) {
-            for(Player player : Game.playersArray)
+            for (Player player : Game.playersArray)
                 player.getHand().clear();
             this.battle();
             Writer.write("Age has ended! ");
@@ -328,22 +303,23 @@ public class Game {
     }
 
     /**
-     *  This function handles the fight mechanism between a player and another
+     * This function handles the fight mechanism between a player and another
+     *
      * @param p1 first player
      * @param p2 second one
      */
     private void fight(Player p1, Player p2) {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
             switch (this.currentAge) {
-                case 1 :
+                case 1:
                     p1.addMilitaryPoints(1);
                     Writer.write(p1 + " fought " + p2 + " and won 1 Military Point.");
                     break;
-                case 2 :
+                case 2:
                     p1.addMilitaryPoints(3);
                     Writer.write(p1 + " fought " + p2 + " and won 3 Military Point.");
                     break;
-                case 3 :
+                case 3:
                     p1.addMilitaryPoints(5);
                     Writer.write(p1 + " fought " + p2 + " and won 5 Military Point.");
                     break;
@@ -359,26 +335,26 @@ public class Game {
 
     /**
      * This function handles end game's output
+     *
      * @return a recap score for stats mode
      */
     private RecapScore[] displayPlayersRanking() {
-
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
         RecapScore[] playerScores = new RecapScore[players.size()];
-        for(Player p : players) {
+        for (Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + " coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + " science points");
             Writer.write(p.getName() + " :  " + p.getMilitaryPoints() + " military points");
             Writer.write(p.getName() + " :  " + p.getPoints().get(CardPoints.VICTORY) + " victory points");
-            if  (p.computeScore() > tmpWinner.computeScore() ||
-                (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
+            if (p.computeScore() > tmpWinner.computeScore() ||
+                    (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
             }
         }
 
-        for(int i = 0; i < players.size();i++)
-            playerScores[i] = new RecapScore(players.get(i),players.get(i).equals(tmpWinner));
+        for (int i = 0; i < players.size(); i++)
+            playerScores[i] = new RecapScore(players.get(i), players.get(i).equals(tmpWinner));
 
         Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
 
@@ -387,30 +363,27 @@ public class Game {
     }
 
     /**
-     *  each player chooses a wonder at the beginning of the game
+     * each player chooses a wonder at the beginning of the game
      */
-    private void initPlayersWonders()
-    {
-
+    private void initPlayersWonders() {
         //TODO  modify that with the current sides of the wonder so the same wonder cannot be chosen twice
 
-        if(debug)
+        if (debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());
-        for(Player player : Game.playersArray)
-        {
+        for (Player player : Game.playersArray) {
             Collections.shuffle(wonderArrayList);
             player.setWonder(wonderArrayList.remove(0));
             Writer.write(player.getName() + " chose " + player.getWonder().getName() + " wonder for this game");
 
         }
-        if(debug)
+        if (debug)
             Writer.write("wonderList size after init : " + wonderArrayList.size());
 
     }
 
     private void initPlayersHand() {
-        for(Player player : Game.playersArray)
-            for(int i = 0; i < MAX_HAND; i++)
+        for (Player player : Game.playersArray)
+            for (int i = 0; i < MAX_HAND; i++)
                 player.getHand().add(this.deck.remove(0));
     }
 
