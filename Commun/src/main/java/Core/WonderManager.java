@@ -1,6 +1,5 @@
 package Core;
 
-import Card.Card;
 import Exceptions.WondersException;
 import Utility.Writer;
 
