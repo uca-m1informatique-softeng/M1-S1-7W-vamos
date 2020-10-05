@@ -23,7 +23,7 @@ public class Card {
 
 
     public Card(String name, int players) throws IOException {
-        String content = Files.readString(Paths.get("src", "assets", "cards", name + ".json"));
+        String content = Files.readString(Paths.get("Commun","src", "assets", "cards", name + ".json"));
         JSONObject card = new JSONObject(content);
 
         this.name = name;
@@ -42,8 +42,6 @@ public class Card {
             this.cost.put(r, 0);
         }
 
-        //if (card.length() > 0) {
-        //for (int i = 0; i < card.length(); i++) {
         Boolean validPlayerNb = false;
         if (card.has("players")) {
             for (int i = 0; i < card.getJSONArray("players").length(); i++) {

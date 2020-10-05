@@ -63,7 +63,7 @@ public class Wonder {
      * @throws IOException
      */
     public Wonder(String name) throws IOException {
-        String content = Files.readString(Paths.get("src", "assets", "wonders", name + ".json"));
+        String content = Files.readString(Paths.get("Commun","src", "assets", "wonders", name + ".json"));
         JSONArray card = new JSONArray(content);
 
         this.name = name;

@@ -19,7 +19,7 @@ public class WonderManager {
 
         ArrayList<Wonder> wondersList = new ArrayList<>();
 
-        File folder = new File("src/assets/wonders");
+        File folder = new File("Commun/src/assets/wonders");
 
         File[] listOfFiles = folder.listFiles(new FileFilter() {
             @Override

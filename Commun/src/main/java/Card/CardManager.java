@@ -12,7 +12,7 @@ public class CardManager {
 
         ArrayList<Card> cards = new ArrayList<>();
 
-        File folder = new File("src/assets/cards");
+        File folder = new File("Commun/src/assets/cards");
 
         File[] listOfFiles = folder.listFiles(new FileFilter() {
             @Override
