@@ -3,8 +3,6 @@ package Network;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-
-import java.io.IOException;
 import java.net.URISyntaxException;
 
 public enum Connexion {

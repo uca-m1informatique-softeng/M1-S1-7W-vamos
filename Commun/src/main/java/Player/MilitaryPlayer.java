@@ -2,13 +2,11 @@ package Player;
 
 import Card.Card;
 import Card.Resource;
-import Card.ResourceChoiceEffect;
 import Card.CardPoints;
 import Utility.Writer;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.EnumMap;
 
 /**
  * This class is used to define a player that tries to maximise its military might.

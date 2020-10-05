@@ -26,7 +26,7 @@ public class Server {
         server.addEventListener(STATS, String.class, new DataListener<String>() {
             @Override
             public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
-                System.out.println("STATS :\n " + string);
+                System.out.println("STATS :\n" + string);
             }
         });
 

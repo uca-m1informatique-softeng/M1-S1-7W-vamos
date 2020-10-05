@@ -7,19 +7,10 @@ import Player.*;
 import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
-import java.io.IOException;
 import java.security.SecureRandom;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import static Utility.Constante.* ;
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import io.socket.emitter.Emitter;
-import java.net.URISyntaxException;
-
-import static Utility.Constante.*;
 
 /**
  *  Game class which will act as the core engine of the game.
