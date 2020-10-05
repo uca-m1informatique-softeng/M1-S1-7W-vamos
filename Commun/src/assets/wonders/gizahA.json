@@ -1,42 +1,28 @@
-[
-  {
-    "productedRes": "STONE",
-    "name": "GIZAH",
-    "cost":
-    {
-      "WOOD": 2
+{
+  "producedRes": "STONE",
+  "name": "GIZAH",
+  "stage1": {
+    "reward": {
+      "VICTORY": 3
     },
-    "reward" :
-    {
-      "VICTORY" : 3
+    "cost": {
+      "STONE": 2
     }
-
-
   },
-  {
-    "cost" :
-    {
-      "CLAY": 2,
-      "LOOM": 1
-    },
-    "reward":
-    {
+  "stage2": {
+    "reward": {
       "VICTORY": 5
-    }
-
-  },
-  {
-    "cost":
-    {
-      "STONE":4
-
     },
-    "reward":
-    {
-
-      "VICTORY":7
+    "cost": {
+      "WOOD": 3
     }
-
-
+  },
+  "stage3": {
+    "reward": {
+      "VICTORY": 7
+    },
+    "cost": {
+      "STONE": 4
+    }
   }
-]
+}

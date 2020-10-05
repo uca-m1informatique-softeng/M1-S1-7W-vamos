@@ -28,7 +28,15 @@ public class WonderManager {
                 return name.endsWith(".json") && pathname.isFile();
             }
         });
-        if(listOfFiles.length < Game.getPlayers()) {
+        ArrayList<String> wonderNames = new ArrayList<String>();
+        for(File file : listOfFiles){
+            //check whether the wonder either in form A or B already exists in fileNames
+            String wonderName = (file.getName().replace(".json","")).substring(0, (file.getName().replace(".json","")).length() - 1);
+            if(!wonderNames.contains(wonderName)){
+                wonderNames.add(wonderName);
+            }
+        }
+        if(wonderNames.size() < Game.getPlayers()) {
             throw new WondersException("There aren't enough wonders for each player please lower the number of players and restart the game. exiting..");
         }
         String fileName = "";

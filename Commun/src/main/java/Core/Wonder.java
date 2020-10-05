@@ -1,9 +1,6 @@
 package Core;
 
-import Card.CardPoints;
-import Card.Effect;
-import Card.Resource;
-import Card.ResourceChoiceEffect;
+import Card.*;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
@@ -18,8 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  Implementation of Wonders in the game.
- *  The several states of the wonders are represented by an ArrayList where each element of the List represents a state.
+ * Implementation of Wonders in the game.
+ * The several states of the wonders are represented by an ArrayList where each element of the List represents a state.
  */
 public class Wonder {
 
@@ -27,93 +24,90 @@ public class Wonder {
     private String name;
 
     /**
-     *  Current state of the wonder, if this hits the maxstate value, then the wonder cannot be built further
+     * Current state of the wonder, if this hits the maxstate value, then the wonder cannot be built further
      */
     private int state = 0;
 
-    private int maxstate;
+    private int maxState;
 
     /**
-     *  Properties of the wonder, will hold the cost of each state and the rewards
-     *  Basically the list is
-     *  {  [{COST : REWARD }] , .... , N }
+     * Properties of the wonder, will hold the cost of each state and the rewards
+     * Basically the list is
+     * {  [{COST : REWARD }] , .... , N }
      */
-    private ArrayList<HashMap<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>>> prop;
+    private ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> prop;
 
     /**
-     *  The resource that the wonder produces, player will be given one after the choose their wonders.
+     * The resource that the wonder produces, player will be given one after the choose their wonders.
      */
-    private Resource productedResource;
+    private Resource producedResource;
 
     /**
-     *  If the state of the wonder doesn't give a reward ( fixed ressources or points) it will give an effect (choice between a list of resources ).
-     *  These effects will be stored in that list.
+     * If the state of the wonder doesn't give a reward ( fixed ressources or points) it will give an effect (choice between a list of resources ).
+     * These effects will be stored in that list.
      */
     private ArrayList<Effect> effects;
 
     /**
-     *  List of already applied effects of the wonder, the player can stack them.
+     * List of already applied effects of the wonder, the player can stack them.
      */
     private ArrayList<Effect> appliedEffects;
 
     /**
-     *
      * The wonder is parsed in the constructor from the json file
+     *
      * @param name name of the wonder
      * @throws IOException
      */
     public Wonder(String name) throws IOException {
-        String content = Files.readString(Paths.get("Commun","src", "assets", "wonders", name + ".json"));
-        JSONArray card = new JSONArray(content);
-
+        String content = Files.readString(Paths.get("Commun", "src", "assets", "wonders", name + ".json"));
+        JSONObject card = new JSONObject(content);
+        ArrayList<String> stages = new ArrayList<String>();
+        for (String key : card.keySet()) {
+            if (key.contains("stage"))
+                stages.add(key);
+        }
         this.name = name;
-        this.productedResource = Utilities.getResourceByString(card.getJSONObject(0).getString("productedRes"));
+        this.producedResource = Utilities.getResourceByString(card.getString("producedRes"));
         this.effects = new ArrayList<>();
-        if (card.length() > 0) {
-            maxstate = card.length();
-            prop = new ArrayList<>(card.length());
-            for (int i = 0; i < card.length(); i++) {
-                JSONObject json = card.getJSONObject(i);
-
+        if (stages.size() > 0) {
+            maxState = stages.size();
+            prop = new ArrayList<>(stages.size());
+            for (int i = 0; i < stages.size(); i++) {
                 EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
                 EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<>(CardPoints.class);
-                if (card.getJSONObject(i).has("resourceChoiceEffect")) {
-
-                    JSONArray resourceChoiceEffect = json.getJSONArray("resourceChoiceEffect");
-                    ArrayList<Resource> resList = new ArrayList<>();
-
-                    for (int k = 0; k < resourceChoiceEffect.length(); k++) {
-                        resList.add(Resource.valueOf(resourceChoiceEffect.getString(k)));
-                    }
-                    this.effects.add(new ResourceChoiceEffect(resList));
-
-                }
-
-                if (card.getJSONObject(i).has("cost")) {
-                    for (int k = 0; k < card.getJSONObject(i).getJSONObject("cost").names().length(); k++) {
-
-                        String keyStr = card.getJSONObject(i).getJSONObject("cost").names().getString(k);
-                        int value = card.getJSONObject(i).getJSONObject("cost").getInt(keyStr);
-
+                JSONObject stage = card.getJSONObject(stages.get(i));
+                if (stage.has("cost")) {
+                    for (int k = 0; k < stage.getJSONObject("cost").names().length(); k++) {
+                        String keyStr = stage.getJSONObject("cost").names().getString(k);
+                        int value = stage.getJSONObject("cost").getInt(keyStr);
                         tmpMap.put(Utilities.getResourceByString(keyStr), value);
                     }
                 }
-                if (card.getJSONObject(i).has("reward")) {
-                    for (int k = 0; k < card.getJSONObject(i).getJSONObject("reward").names().length(); k++) {
-
-                        String keyStr = card.getJSONObject(i).getJSONObject("reward").names().getString(k);
-                        int value = card.getJSONObject(i).getJSONObject("reward").getInt(keyStr);
-                        tmpMap2.put(Utilities.getCardPointByString(keyStr),value);
+                if (stage.has("reward")) {
+                    for (int k = 0; k < stage.getJSONObject("reward").names().length(); k++) {
+                        if (stage.getJSONObject("reward").has("scienceChoiceEffect")) {
+                            this.effects.add(new ScienceChoiceEffect());
+                        } else if (stage.getJSONObject("reward").has("resourceChoiceEffect")) {
+                            JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
+                            ArrayList<Resource> resList = new ArrayList<>();
+                            for (int l = 0; l < resourceChoiceEffect.length(); l++) {
+                                resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
+                            }
+                            this.effects.add(new ResourceChoiceEffect(resList));
+                        } else {
+                            String keyStr = stage.getJSONObject("reward").names().getString(k);
+                            int value = stage.getJSONObject("reward").getInt(keyStr);
+                            tmpMap2.put(Utilities.getCardPointByString(keyStr), value);
+                        }
                     }
                 }
                 HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
                 tmpPropMap.put(tmpMap, tmpMap2);
-
                 prop.add(tmpPropMap);
             }
         }
-        if(Game.debug) {
-
+        if (Game.debug) {
             Writer.write(prop.toString());
             Writer.write(getCurrentUpgradeCost().toString());
             Writer.write(getCurrentRewardsFromUpgrade().toString());
@@ -138,11 +132,11 @@ public class Wonder {
     }
 
     public int getMaxstate() {
-        return maxstate;
+        return maxState;
     }
 
-    public void setMaxstate(int maxstate) {
-        this.maxstate = maxstate;
+    public void setMaxstate(int maxStage) {
+        this.maxState = maxStage;
     }
 
     public ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> getProp() {
@@ -153,54 +147,50 @@ public class Wonder {
         this.prop = prop;
     }
 
-    public Resource getProductedResource() {
-        return productedResource;
+    public Resource getProducedResource() {
+        return producedResource;
     }
 
-    public void setProductedResource(Resource productedResource) {
-        this.productedResource = productedResource;
+    public void setProducedResource(Resource producedResource) {
+        this.producedResource = producedResource;
     }
 
-    public EnumMap<Resource, Integer> getCurrentUpgradeCost()
-    {
-        for(Map.Entry<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+    public EnumMap<Resource, Integer> getCurrentUpgradeCost() {
+        for (Map.Entry<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> test : prop.get(state).entrySet())
             return test.getKey();
 
         return null;
     }
 
-    public EnumMap<CardPoints,Integer> getCurrentRewardsFromUpgrade()
-    {
-        for(Map.Entry<EnumMap<Resource,Integer>, EnumMap<CardPoints,Integer>> test: prop.get(state).entrySet())
+    public EnumMap<CardPoints, Integer> getCurrentRewardsFromUpgrade() {
+        for (Map.Entry<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> test : prop.get(state).entrySet())
             return test.getValue();
 
         return null;
 
     }
 
-    public boolean isWonderFinished()
-    {
-        return state == maxstate;
+    public boolean isWonderFinished() {
+        return state == maxState;
     }
 
     /**
      * This function compares the player inventory with the current upgrade cost of the wonder.
+     *
      * @param playerResources Player owned resources
      * @return if the player can build his wonder of not
      */
-    public boolean canUpgrade(EnumMap<Resource, Integer> playerResources)
-    {
-        if(playerResources.isEmpty()) return false;
+    public boolean canUpgrade(EnumMap<Resource, Integer> playerResources) {
+        if (playerResources.isEmpty()) return false;
 
-        if(playerResources.size() < getCurrentUpgradeCost().size()) return false;
+        if (playerResources.size() < getCurrentUpgradeCost().size()) return false;
 
-        for(Map.Entry<Resource,Integer> entry1 : getCurrentUpgradeCost().entrySet())
-        {
+        for (Map.Entry<Resource, Integer> entry1 : getCurrentUpgradeCost().entrySet()) {
             Resource res1 = entry1.getKey();
             int nbRes1 = entry1.getValue();
-            if(playerResources.get(res1) == null) return false;
+            if (playerResources.get(res1) == null) return false;
 
-            else if(playerResources.get(res1) < nbRes1) return false;
+            else if (playerResources.get(res1) < nbRes1) return false;
         }
 
         return true;
@@ -211,9 +201,9 @@ public class Wonder {
         return "Wonder{" +
                 "name='" + name + '\'' +
                 ", state=" + state +
-                ", maxstate=" + maxstate +
+                ", maxState=" + maxState +
                 ", prop=" + prop +
-                ", productedResource=" + productedResource +
+                ", producedResource=" + producedResource +
                 ", effects=" + effects +
                 ", appliedEffects=" + appliedEffects +
                 '}';

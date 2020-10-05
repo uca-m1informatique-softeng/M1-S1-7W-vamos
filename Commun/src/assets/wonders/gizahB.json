@@ -1,21 +1,17 @@
 {
-  "producedRes": "CLAY",
-  "name": "BABYLON",
+  "producedRes": "STONE",
+  "name": "GIZAH",
   "stage1": {
     "reward": {
       "VICTORY": 3
     },
     "cost": {
-      "CLAY": 2
+      "STONE": 2
     }
   },
   "stage2": {
     "reward": {
-      "scienceChoiceEffect": [
-        "SCIENCE_COMPASS",
-        "SCIENCE_WHEEL",
-        "SCIENCE_TABLET"
-      ]
+      "VICTORY": 5
     },
     "cost": {
       "WOOD": 3
@@ -23,10 +19,19 @@
   },
   "stage3": {
     "reward": {
+      "VICTORY": 5
+    },
+    "cost": {
+      "CLAY": 3
+    }
+  },
+  "stage4": {
+    "reward": {
       "VICTORY": 7
     },
     "cost": {
-      "CLAY": 4
+      "STONE": 4,
+      "PAPYRUS": 1
     }
   }
 }

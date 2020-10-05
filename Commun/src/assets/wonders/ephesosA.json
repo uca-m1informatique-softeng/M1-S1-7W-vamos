@@ -1,24 +1,20 @@
 {
-  "producedRes": "CLAY",
-  "name": "BABYLON",
+  "producedRes": "PAPYRUS",
+  "name": "EPHESOS",
   "stage1": {
     "reward": {
       "VICTORY": 3
     },
     "cost": {
-      "CLAY": 2
+      "STONE": 2
     }
   },
   "stage2": {
     "reward": {
-      "scienceChoiceEffect": [
-        "SCIENCE_COMPASS",
-        "SCIENCE_WHEEL",
-        "SCIENCE_TABLET"
-      ]
+      "COIN": 9
     },
     "cost": {
-      "WOOD": 3
+      "WOOD": 2
     }
   },
   "stage3": {
@@ -26,7 +22,7 @@
       "VICTORY": 7
     },
     "cost": {
-      "CLAY": 4
+      "PAPYRUS": 2
     }
   }
 }

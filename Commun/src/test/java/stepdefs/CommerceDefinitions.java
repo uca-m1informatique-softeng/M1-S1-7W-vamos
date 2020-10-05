@@ -24,7 +24,7 @@ public class CommerceDefinitions {
     public void theNeighboringCityProducesTheResource() throws IOException {
         Wonder wonder = new Wonder("gizah");
         neighbor.setWonder(wonder);
-        assertEquals(neighbor.getWonder().getProductedResource(), resource);
+        assertEquals(neighbor.getWonder().getProducedResource(), resource);
     }
 
     @And("the player has 2 coins for trade")

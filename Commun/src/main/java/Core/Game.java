@@ -63,9 +63,9 @@ public class Game {
 
     public static void main(String[] args) throws WondersException {
 
-        int nbPlayers = 4;
+        int nbPlayers = 3;
 
-        String typePartie  = GAME_MODE;
+        String typePartie = GAME_MODE;
         /**
          *  Game mode, normal game, game output is displayed
          */
@@ -366,26 +366,23 @@ public class Game {
     /**
      * each player chooses a wonder at the beginning of the game
      */
-    private void initPlayersWonders()
-    {
-       ;
-       ArrayList<String> bannedWonders = new ArrayList<>();
+    private void initPlayersWonders() {
+        ArrayList<String> bannedWonders = new ArrayList<>();
 
         if (debug)
-           Writer.write("wonderList size before init : " + wonderArrayList.size());
+            Writer.write("wonderList size before init : " + wonderArrayList.size());
         for (Player player : Game.playersArray) {
             Collections.shuffle(wonderArrayList);
             Wonder tmpWonder = wonderArrayList.get(0);
 
-            while(bannedWonders.contains(tmpWonder.getName().substring(0,tmpWonder.getName().length() - 1)))
-            {
+            while (bannedWonders.contains(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1))) {
                 System.out.println("This wonder is already taken ! choose another one ");
                 Collections.shuffle(wonderArrayList);
                 tmpWonder = wonderArrayList.get(0);
             }
 
-            bannedWonders.add(tmpWonder.getName().substring(0,tmpWonder.getName().length()-1));
-            tmpWonder.setName(tmpWonder.getName().substring(0,tmpWonder.getName().length() - 1));
+            bannedWonders.add(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1));
+            tmpWonder.setName(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1));
             player.setWonder(wonderArrayList.remove(0));
 
         }

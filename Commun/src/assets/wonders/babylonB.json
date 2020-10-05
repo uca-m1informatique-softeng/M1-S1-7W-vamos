@@ -1,5 +1,5 @@
 {
-  "producedRes": "STONE",
+  "producedRes": "CLAY",
   "name": "BABYLON",
   "stage1": {
     "reward": {
@@ -7,7 +7,7 @@
     },
     "cost": {
       "LOOM": 1,
-      "STONE": 1
+      "CLAY": 1
     }
   },
   "stage2": {
@@ -28,7 +28,7 @@
       ]
     },
     "cost": {
-      "STONE": 3,
+      "CLAY": 3,
       "PAPYRUS": 1
     }
   }
