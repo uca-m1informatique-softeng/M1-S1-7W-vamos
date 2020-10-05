@@ -56,7 +56,7 @@ public class Game {
      */
     private ArrayList<Wonder> wonderArrayList;
 
-    public static Boolean debug = false;
+    public static Boolean debug = true;
 
     private static SecureRandom rand = new SecureRandom();
 
@@ -366,15 +366,27 @@ public class Game {
     /**
      * each player chooses a wonder at the beginning of the game
      */
-    private void initPlayersWonders() {
-        //TODO  modify that with the current sides of the wonder so the same wonder cannot be chosen twice
+    private void initPlayersWonders()
+    {
+       ;
+       ArrayList<String> bannedWonders = new ArrayList<>();
 
         if (debug)
-            Writer.write("wonderList size before init : " + wonderArrayList.size());
+           Writer.write("wonderList size before init : " + wonderArrayList.size());
         for (Player player : Game.playersArray) {
             Collections.shuffle(wonderArrayList);
+            Wonder tmpWonder = wonderArrayList.get(0);
+
+            while(bannedWonders.contains(tmpWonder.getName().substring(0,tmpWonder.getName().length() - 1)))
+            {
+                System.out.println("This wonder is already taken ! choose another one ");
+                Collections.shuffle(wonderArrayList);
+                tmpWonder = wonderArrayList.get(0);
+            }
+
+            bannedWonders.add(tmpWonder.getName().substring(0,tmpWonder.getName().length()-1));
+            tmpWonder.setName(tmpWonder.getName().substring(0,tmpWonder.getName().length() - 1));
             player.setWonder(wonderArrayList.remove(0));
-            Writer.write(player.getName() + " chose " + player.getWonder().getName() + " wonder for this game");
 
         }
         if (debug)
