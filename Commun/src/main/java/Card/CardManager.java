@@ -20,7 +20,7 @@ public class CardManager {
                 String name = pathname.getName().toLowerCase();
                 return name.endsWith(".json") && pathname.isFile();
             }
-            });
+        });
 
         String fileName = "";
 

@@ -4,6 +4,9 @@ package Utility;
  * This class will contains all const values (String,Integers..) needed to make the code clearer
  */
 public final class Constante {
+    //Server constants
+    public static final String STATS = "Sending stats to the server" ;
+
     private Constante(){}
 
 

@@ -2,6 +2,7 @@ package Core;
 
 import Card.*;
 import Exceptions.WondersException;
+import Network.Connexion;
 import Player.*;
 import Utility.RecapScore;
 import Utility.Utilities;
@@ -11,6 +12,12 @@ import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static Utility.Constante.* ;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import java.net.URISyntaxException;
 
 import static Utility.Constante.*;
 
@@ -61,9 +68,10 @@ public class Game {
 
 
     public static void main(String[] args) throws WondersException {
+        StringBuilder stringBuilder = new StringBuilder() ;
 
         int nbPlayers = 4;
-        String typePartie  = GAME_MODE;
+        String typePartie  = STATS_MODE;
         /**
          *  Game mode, normal game, game output is displayed
          */
@@ -111,7 +119,17 @@ public class Game {
                 System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
                 System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
                 System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
+
+                stringBuilder.append(joueur +" gets an average score of  "+recapScores[i].getAvgScore() + "\n" ) ;
+                stringBuilder.append(joueur +" has a  "+ victoires +"% winrate \n") ;
+                stringBuilder.append(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game \n" ) ;
+                stringBuilder.append(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game \n") ;
+                stringBuilder.append(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game \n") ;
             }
+            //Stats sent to the server
+            Connexion.CONNEXION.startListening();
+            Connexion.CONNEXION.sendMessage(STATS , stringBuilder) ;
+            //Connexion.CONNEXION.stopListening();
         }
         else
         {
