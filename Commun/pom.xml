@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>Commun</artifactId>
+    <version>1.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>

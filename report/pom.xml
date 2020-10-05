@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.example</groupId>
         <artifactId>Vamos</artifactId>
-        <version>1.0</version>
+        <version>1.2-SNAPSHOT</version>
     </parent>
 
 
@@ -24,12 +24,12 @@
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>Commun</artifactId>
-            <version>1.0</version>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>Server</artifactId>
-            <version>1.0</version>
+            <version>1.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
