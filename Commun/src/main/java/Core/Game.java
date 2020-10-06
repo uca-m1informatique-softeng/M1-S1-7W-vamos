@@ -63,7 +63,7 @@ public class Game {
 
         int nbPlayers = MAX_PLAYER;
         String typePartie  = STATS_MODE;
-        /**
+        /*
          *  Game mode, normal game, game output is displayed
          */
         if(typePartie.equals(GAME_MODE))
@@ -76,7 +76,7 @@ public class Game {
             Utilities.displayGameOutput();
             Writer.deleteFile();
         }
-        /**
+        /*
          *  Stats mode, no game output is displayed, only end game stats.
          */
         else if (typePartie.equals(STATS_MODE))
@@ -269,9 +269,7 @@ public class Game {
      */
     private void processTurn() {
         for(Player player : Game.playersArray)
-            player.chooseCard();
-        for(Player player : Game.playersArray)
-            player.chooseAction();
+            player.play();
 
         this.swapHands(this.currentAge);
     }

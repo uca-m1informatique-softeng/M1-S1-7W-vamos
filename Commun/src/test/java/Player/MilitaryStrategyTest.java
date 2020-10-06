@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MilitarytrategyTest {
+public class MilitaryStrategyTest {
 
     private Player player;
     private Player prevNeighbor;
