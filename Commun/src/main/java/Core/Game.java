@@ -56,7 +56,7 @@ public class Game {
      */
     private ArrayList<Wonder> wonderArrayList;
 
-    public static Boolean debug = true;
+    public static Boolean debug = false;
 
     private static SecureRandom rand = new SecureRandom();
 
@@ -64,9 +64,11 @@ public class Game {
     public static void main(String[] args) throws WondersException {
         StringBuilder stringBuilder = new StringBuilder() ;
 
-        int nbPlayers = 3;
-        String typePartie = GAME_MODE;
+        int nbPlayers = MAX_PLAYER;
+        String typePartie  = GAME_MODE;
         /**
+        String typePartie  = GAME_MODE;
+        /*
          *  Game mode, normal game, game output is displayed
          */
         if (typePartie.equals(GAME_MODE)) {
@@ -125,8 +127,8 @@ public class Game {
         }
     }
 
-    public Game(int players) throws WondersException {
-        if (players < 3 || players > 4)
+    public Game (int players) throws WondersException {
+        if (players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
@@ -151,11 +153,13 @@ public class Game {
      * Instantiate the players
      */
     public void initPlayers() {
-        this.playersArray.add(new DumbPlayer("Stupid"));
-        this.playersArray.add(new MilitaryPlayer("Warrior"));
-        this.playersArray.add(new IA_One("IA_One"));
-        if (players == 4)
-            this.playersArray.add(new DumbPlayer("Stupid Clone"));
+
+        this.playersArray.add(new Player("Stupid"));
+        this.getPlayersArray().get(0).setStrategy(new DumbStrategy());
+        this.playersArray.add(new Player("Warrior"));
+        this.getPlayersArray().get(1).setStrategy(new MilitaryStrategy());
+        this.playersArray.add(new Player("Scientist"));
+        this.getPlayersArray().get(2).setStrategy(new ScienceStrategy());
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
@@ -198,7 +202,10 @@ public class Game {
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
-        }
+            default :
+                break;
+         }
+
     }
 
     /**
@@ -225,16 +232,25 @@ public class Game {
                         break;
                 }
             }
-            for (Card card : player.getBuiltCards()) {
-                if (card.getEffect() instanceof CoinCardEffect) {
-                    if (card.getCoinCardEffect() == CardColor.BROWN) {
-                        player.getPoints().put(CardPoints.VICTORY, brownCards);
-                    } else if (card.getCoinCardEffect() == CardColor.GREY) {
-                        player.getPoints().put(CardPoints.VICTORY, greyCards);
-                    } else if (card.getCoinCardEffect() == CardColor.YELLOW) {
-                        player.getPoints().put(CardPoints.VICTORY, yellowCards);
-                    } else if (card.getCoinCardEffect() == null) {
+            for(Card card : player.getBuiltCards()) {
+                if(card.getEffect() instanceof CoinCardEffect) {
+                    if(card.getCoinCardEffect() == null) {
                         player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
+                        continue;
+                    }
+                    switch(card.getCoinCardEffect())
+                    {
+                        case BROWN:
+                            player.getPoints().put(CardPoints.VICTORY, brownCards);
+                            break;
+                        case GREY:
+                            player.getPoints().put(CardPoints.VICTORY, greyCards);
+                            break;
+                        case YELLOW:
+                            player.getPoints().put(CardPoints.VICTORY, yellowCards);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -245,10 +261,9 @@ public class Game {
      * Function to process one round during the game
      */
     private void processTurn() {
-        for (Player player : Game.playersArray)
-            player.chooseCard();
-        for (Player player : Game.playersArray)
-            player.chooseAction();
+        for(Player player : Game.playersArray)
+            player.play();
+
         this.swapHands(this.currentAge);
     }
 
@@ -326,16 +341,18 @@ public class Game {
             switch (this.currentAge) {
                 case 1:
                     p1.addMilitaryPoints(1);
-                    Writer.write(p1 + " fought " + p2 + " and won 1 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,1));
                     break;
                 case 2:
                     p1.addMilitaryPoints(3);
-                    Writer.write(p1 + " fought " + p2 + " and won 3 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,3));
                     break;
                 case 3:
                     p1.addMilitaryPoints(5);
-                    Writer.write(p1 + " fought " + p2 + " and won 5 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,5));
                     break;
+                default :
+                    throw new RuntimeException("Age cannot be superior to 3 or inferior to 1!");
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
@@ -378,8 +395,9 @@ public class Game {
     /**
      * each player chooses a wonder at the beginning of the game
      */
-    private void initPlayersWonders() {
-        ArrayList<String> bannedWonders = new ArrayList<>();
+    private void initPlayersWonders()
+    {
+       ArrayList<String> bannedWonders = new ArrayList<>();
 
         if (debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());

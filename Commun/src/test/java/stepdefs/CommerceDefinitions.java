@@ -1,7 +1,7 @@
 package stepdefs;
 
 import Card.Resource;
-import Player.DumbPlayer;
+import Player.Player;
 import Wonder.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
@@ -13,8 +13,8 @@ import static org.junit.Assert.*;
 
 public class CommerceDefinitions {
     Resource resource;
-    DumbPlayer player = new DumbPlayer("main");
-    DumbPlayer neighbor  = new DumbPlayer("neighbor");
+    Player player = new Player("main");
+    Player neighbor  = new Player("neighbor");
 
     @Given("a player wants to have the resource \\{Resource} from his neighbor")
     public void player_needs_resource() {

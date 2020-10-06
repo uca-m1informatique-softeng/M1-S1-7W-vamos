@@ -26,7 +26,7 @@ public class PlayerTest {
     private ArrayList<Card> hand ;
     private ArrayList<Card> builtCards;
     private EnumMap<CardPoints, Integer> points;
-    DumbPlayer player;
+    Player player;
 
     @Mock
     SecureRandom rand;
@@ -36,11 +36,12 @@ public class PlayerTest {
         coins=0;
         militaryPoints=0 ;
         hand = new ArrayList<>(7);
-        player = new DumbPlayer("Robot");
+        player = new Player("Robot");
+        player.setStrategy(new DumbStrategy());
         player.rand = rand; //assigner le mock au rand de Player
         builtCards = new ArrayList<>();
-        player.setPrevNeighbor(new DumbPlayer("PreviousRobot"));
-        player.setNextNeighbor(new DumbPlayer("NextRobot"));
+        player.setPrevNeighbor(new Player("PreviousRobot"));
+        player.setNextNeighbor(new Player("NextRobot"));
 
         points = new EnumMap<>(CardPoints.class);
         for (CardPoints p : CardPoints.values()) {
@@ -126,35 +127,6 @@ public class PlayerTest {
         //after addition
         player.addMilitaryPoints(3);
         assertEquals(3,player.getMilitaryPoints());
-    }
-
-    @Test
-    public void chooseAction(){
-        when(rand.nextInt(1000)).thenReturn(599,600,700);
-
-        //if we get inside the if statement
-        try {
-            Card chosenCard = new Card("altar",3) ;
-            player.setChosenCard(chosenCard);
-            player.getBuiltCards().add(chosenCard) ;
-            player.chooseAction(); //calls player.buildCard()
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        //if we get inside the elseif
-        try {
-            Wonder wonder = new Wonder("gizah");
-            player.setWonder(wonder);
-            player.chooseAction(); //calls player.buildStageWonder()
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        //if we get inside the else
-        player.chooseAction(); //calls player.dumpCard()
     }
 
     @Test
@@ -326,7 +298,7 @@ public class PlayerTest {
     @Test
     public void buyResource1() {
         Resource resourceToBuy = Resource.CLAY;
-        DumbPlayer neighbor = new DumbPlayer("Neighbor");
+        Player neighbor = new Player("Neighbor");
 
         int oldCoins = player.getCoins();
         player.setCoins(oldCoins + 2);
@@ -340,7 +312,7 @@ public class PlayerTest {
     @Test
     public void buyResource2() {
         Resource resourceToBuy = Resource.CLAY;
-        DumbPlayer neighbor = new DumbPlayer("Neighbor");
+        Player neighbor = new Player("Neighbor");
 
         player.setCoins(0);
         neighbor.getResources().put(resourceToBuy, 2);
@@ -351,7 +323,7 @@ public class PlayerTest {
     @Test
     public void buyResource3() {
         Resource resourceToBuy = Resource.CLAY;
-        DumbPlayer neighbor = new DumbPlayer("Neighbor");
+        Player neighbor = new Player("Neighbor");
 
         player.setCoins(2);
 
@@ -361,7 +333,7 @@ public class PlayerTest {
     @Test
     public void clearBoughtResources() {
         Resource resourceToBuy = Resource.CLAY;
-        DumbPlayer neighbor = (DumbPlayer) player.getNextNeighbor();
+        Player neighbor = player.getNextNeighbor();
 
         int oldCoins = player.getCoins();
         player.setCoins(oldCoins + 2);

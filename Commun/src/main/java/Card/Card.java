@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
+import static Utility.Constante.*;
+
 public class Card {
 
     private String name;
@@ -44,40 +46,40 @@ public class Card {
         }
 
         Boolean validPlayerNb = false;
-        if (card.has("players")) {
-            for (int i = 0; i < card.getJSONArray("players").length(); i++) {
+        if (card.has(STR_PLAYERS)) {
+            for (int i = 0; i < card.getJSONArray(STR_PLAYERS).length(); i++) {
                 if (card.getJSONArray("players").getInt(i) <= players) {
                     validPlayerNb = true;
                 }
             }
         }
-        if (validPlayerNb || !card.has("players")) {
+        if (validPlayerNb || !card.has(STR_PLAYERS)) {
             // age
             this.age = card.getInt("age");
 
             // value of card = output that the player receives when playing the card
-            if (card.has("cardPoints")) {
-                CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject("cardPoints").keys().next());
-                Integer cardPointValue = card.getJSONObject("cardPoints").getInt(card.getJSONObject("cardPoints").keys().next());
+            if (card.has(STR_CARDPOINTS)) {
+                CardPoints cardPointKey = CardPoints.valueOf(card.getJSONObject(STR_CARDPOINTS).keys().next());
+                Integer cardPointValue = card.getJSONObject(STR_CARDPOINTS).getInt(card.getJSONObject(STR_CARDPOINTS).keys().next());
                 this.cardPoints.put(cardPointKey, cardPointValue);
             }
 
             // cost for a card (if any)
-            if (card.has("cost")) {
-                for (int k = 0; k < card.getJSONObject("cost").names().length(); k++) {
-                    String key = card.getJSONObject("cost").names().getString(k);
-                    int value = card.getJSONObject("cost").getInt(key);
+            if (card.has(STR_COST)) {
+                for (int k = 0; k < card.getJSONObject(STR_COST).names().length(); k++) {
+                    String key = card.getJSONObject(STR_COST).names().getString(k);
+                    int value = card.getJSONObject(STR_COST).getInt(key);
 
                     this.cost.put(Resource.valueOf(key), value);
                 }
             }
 
             // resource given by a card (if any)
-            if (card.has("resource")) {
-                for (int k = 0; k < card.getJSONObject("resource").names().length(); k++) {
+            if (card.has(STR_RESOURCE)) {
+                for (int k = 0; k < card.getJSONObject(STR_RESOURCE).names().length(); k++) {
 
-                    String key = card.getJSONObject("resource").names().getString(k);
-                    int value = card.getJSONObject("resource").getInt(key);
+                    String key = card.getJSONObject(STR_RESOURCE).names().getString(k);
+                    int value = card.getJSONObject(STR_RESOURCE).getInt(key);
 
                     this.resource.put(Resource.valueOf(key), value);
                 }
@@ -113,12 +115,12 @@ public class Card {
                         resList);
             }
 
-            if (card.has("coloredCardResourceEffect")) {
-                this.coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+            if (card.has(STR_COLOREDCARDEFFECT)) {
+                this.coloredCardResourceEffect = CardColor.valueOf(card.getString(STR_COLOREDCARDEFFECT));
 
-                CardColor coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+                CardColor tmpCardResEffect = CardColor.valueOf(card.getString(STR_COLOREDCARDEFFECT));
 
-                this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect);
+                this.effect = new ColoredCardResourceEffect(tmpCardResEffect);
             }
 
             if (card.has("ShipownersGuildEffect")) {
@@ -188,8 +190,8 @@ public class Card {
     }
 
     public Boolean isFree() {
-        for (Integer cost : cost.values())
-            if (cost > 0) return false;
+        for (Integer i : cost.values())
+            if (i > 0) return false;
         return true;
     }
 

@@ -1,8 +1,7 @@
 package Card;
 
-import Effects.ScienceChoiceEffect;
-import Player.DumbPlayer;
 import Player.Player;
+import Effects.ScienceChoiceEffect;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +10,7 @@ class ScienceChoiceEffectTest {
 
     @Test
     void applyEffect() {
-        Player player = new DumbPlayer("Test_player");
+        Player player = new Player("Test_player");
         ScienceChoiceEffect sc = new ScienceChoiceEffect();
         sc.applyEffect(player);
         assertEquals(1, player.getPoints().get(CardPoints.SCIENCE_COMPASS));
