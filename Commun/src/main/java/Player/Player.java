@@ -389,6 +389,7 @@ public class Player {
             this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN));
             Writer.write(this.name + " builds a stage of wonder.");
             this.hand.remove(this.chosenCard);
+            this.clearBoughtResources();
             return true;
         } else { //if the player don't have enough resources to buy a stage rechoose action
             Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");
@@ -515,6 +516,32 @@ public class Player {
         ScienceChoiceEffect o = new ScienceChoiceEffect();
         if (this.getBuiltCards().contains(o)) {
             o.applyEffect(this);
+        }
+    }
+
+    /**
+     * This method is used in order to choose a specific strategy depending on the wonder.
+     * In most cases, this method chooses a random strategy because few wonders are helpful in regards of strategy.
+     */
+    public void chooseStrategy() {
+        if (this.wonder.getName() == "rhodesA" || this.wonder.getName() == "rhodesB") {
+            this.strategy = new MilitaryStrategy();
+            this.name += " (Military)";
+        } else if (this.wonder.getName() == "babylonA") {
+            this.strategy = new ScienceStrategy();
+            this.name += " (Science)";
+        } else {
+            int randomInt = this.rand.nextInt(100);
+            if (randomInt < 33) {
+                this.strategy = new DumbStrategy();
+                this.name += " (Dumb)";
+            } else if (randomInt < 66) {
+                this.strategy = new MilitaryStrategy();
+                this.name += " (Military)";
+            } else {
+                this.strategy = new ScienceStrategy();
+                this.name += " (Science)";
+            }
         }
     }
 

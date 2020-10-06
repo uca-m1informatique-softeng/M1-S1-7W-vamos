@@ -144,8 +144,6 @@ public class Game {
      */
     public void initDeck() {
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
-        for (int i = stack.size(); i < MAX_HAND * players; i++)
-            stack.add(stack.get(0));
         this.deck = stack;
     }
 
@@ -154,12 +152,9 @@ public class Game {
      */
     public void initPlayers() {
 
-        this.playersArray.add(new Player("Stupid"));
-        this.getPlayersArray().get(0).setStrategy(new DumbStrategy());
-        this.playersArray.add(new Player("Warrior"));
-        this.getPlayersArray().get(1).setStrategy(new MilitaryStrategy());
-        this.playersArray.add(new Player("Scientist"));
-        this.getPlayersArray().get(2).setStrategy(new ScienceStrategy());
+        this.playersArray.add(new Player("Bot1"));
+        this.playersArray.add(new Player("Bot2"));
+        this.playersArray.add(new Player("Bot3"));
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
@@ -323,7 +318,11 @@ public class Game {
         }
     }
 
+    /**
+     * Launches fights between all players in playersArray
+     */
     private void battle() {
+        Writer.write(BLUE_BOLD + "\nPlayers start fighting !" + RESET);
         for (Player p : Game.playersArray) {
             this.fight(p, p.getPrevNeighbor());
             this.fight(p, p.getNextNeighbor());
@@ -372,6 +371,8 @@ public class Game {
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
         RecapScore[] playerScores = new RecapScore[players.size()];
+        Writer.write("\n" + BLUE_UNDERLINED + "----SCORES----");
+        Writer.write(YELLOW_BRIGHT);
         for (Player p : players) {
             Writer.write(p.getName() + " :  " + p.getCoins() + " coins");
             Writer.write(p.getName() + " :  " + p.getSciencePoint() + " science points");
@@ -386,7 +387,7 @@ public class Game {
         for (int i = 0; i < players.size(); i++)
             playerScores[i] = new RecapScore(players.get(i), players.get(i).equals(tmpWinner));
 
-        Writer.write(tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !");
+        Writer.write(WHITE_BOLD + tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !" + RESET);
 
         return playerScores;
 
@@ -395,8 +396,7 @@ public class Game {
     /**
      * each player chooses a wonder at the beginning of the game
      */
-    private void initPlayersWonders()
-    {
+    private void initPlayersWonders() {
        ArrayList<String> bannedWonders = new ArrayList<>();
 
         if (debug)
@@ -414,6 +414,8 @@ public class Game {
             bannedWonders.add(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1));
             tmpWonder.setName(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1));
             player.setWonder(wonderArrayList.remove(0));
+            player.getResources().put(player.getWonder().getProducedResource(), player.getResources().get(player.getWonder().getProducedResource()) + 1);
+            player.chooseStrategy();
 
         }
         if (debug)
