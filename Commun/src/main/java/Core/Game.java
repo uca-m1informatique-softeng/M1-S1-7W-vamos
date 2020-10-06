@@ -1,12 +1,15 @@
 package Core;
 
 import Card.*;
+import Effects.CoinCardEffect;
 import Exceptions.WondersException;
 import Network.Connexion;
 import Player.*;
 import Utility.RecapScore;
 import Utility.Utilities;
 import Utility.Writer;
+import Wonder.Wonder;
+import Wonder.WonderManager;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;

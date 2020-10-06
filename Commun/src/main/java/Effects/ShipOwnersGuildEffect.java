@@ -1,11 +1,11 @@
-package Card;
+package Effects;
 
+import Card.*;
 import Player.Player;
 import Utility.Writer;
-
 import java.util.ArrayList;
 
-public class ShipOwnersGuild extends Effect{
+public class ShipOwnersGuildEffect extends Effect{
 
     /**
      * Give one victory point for each card of color purple, brown and grey build.

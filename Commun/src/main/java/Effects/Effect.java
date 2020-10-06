@@ -1,4 +1,4 @@
-package Card;
+package Effects;
 
 /**
  * This class is just used as an abstraction level to define what special effects a card can have.

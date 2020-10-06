@@ -1,6 +1,6 @@
 package Card;
 
-import Core.Wonder;
+import Wonder.Wonder;
 import Player.DumbPlayer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

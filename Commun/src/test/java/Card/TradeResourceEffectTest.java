@@ -1,5 +1,6 @@
 package Card;
 
+import Effects.TradeResourceEffect;
 import Player.DumbPlayer;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;

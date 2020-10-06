@@ -1,5 +1,6 @@
-package Card;
+package Effects;
 
+import Card.*;
 import Player.Player;
 import Utility.Writer;
 

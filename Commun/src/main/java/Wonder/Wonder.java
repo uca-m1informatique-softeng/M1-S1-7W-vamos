@@ -1,6 +1,10 @@
-package Core;
+package Wonder;
 
 import Card.*;
+import Core.Game;
+import Effects.Effect;
+import Effects.ResourceChoiceEffect;
+import Effects.ScienceChoiceEffect;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
@@ -19,7 +23,6 @@ import java.util.Map;
  * The several states of the wonders are represented by an ArrayList where each element of the List represents a state.
  */
 public class Wonder {
-
 
     private String name;
 
@@ -112,7 +115,6 @@ public class Wonder {
             Writer.write(getCurrentUpgradeCost().toString());
             Writer.write(getCurrentRewardsFromUpgrade().toString());
         }
-
     }
 
     public String getName() {
@@ -165,7 +167,6 @@ public class Wonder {
     public EnumMap<CardPoints, Integer> getCurrentRewardsFromUpgrade() {
         for (Map.Entry<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> test : prop.get(state).entrySet())
             return test.getValue();
-
         return null;
 
     }

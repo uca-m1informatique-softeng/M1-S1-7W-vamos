@@ -1,4 +1,6 @@
-package Card;
+package Effects;
+
+import Card.Resource;
 
 import java.util.ArrayList;
 import java.util.EnumMap;

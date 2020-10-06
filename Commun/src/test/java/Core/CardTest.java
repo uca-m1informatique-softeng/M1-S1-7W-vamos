@@ -1,6 +1,7 @@
 package Core;
 
 import Card.*;
+import Effects.ScienceChoiceEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

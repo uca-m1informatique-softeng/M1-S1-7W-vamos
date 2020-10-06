@@ -2,7 +2,7 @@ package stepdefs;
 
 import Card.Resource;
 import Player.DumbPlayer;
-import Core.Wonder;
+import Wonder.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;

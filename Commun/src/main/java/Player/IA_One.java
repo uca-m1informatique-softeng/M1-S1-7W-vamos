@@ -1,8 +1,8 @@
 package Player;
 
 import Card.CardColor;
-import Card.Effect;
-import Card.ScienceChoiceEffect;
+import Effects.Effect;
+import Effects.ScienceChoiceEffect;
 
 public class IA_One extends Player{
 

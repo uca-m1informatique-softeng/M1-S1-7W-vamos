@@ -1,6 +1,7 @@
-package Card;
+package Effects;
 
-import Core.Wonder;
+import Card.CardPoints;
+import Wonder.Wonder;
 import Player.Player;
 import Utility.Writer;
 

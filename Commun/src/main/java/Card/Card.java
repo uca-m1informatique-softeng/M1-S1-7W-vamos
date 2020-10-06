@@ -1,5 +1,6 @@
 package Card;
 
+import Effects.*;
 import org.json.*;
 
 import java.io.IOException;
@@ -121,7 +122,7 @@ public class Card {
             }
 
             if (card.has("ShipownersGuildEffect")) {
-                this.effect = new ShipOwnersGuild();
+                this.effect = new ShipOwnersGuildEffect();
             }
 
             if (card.has("BuildersGuildEffect")) {

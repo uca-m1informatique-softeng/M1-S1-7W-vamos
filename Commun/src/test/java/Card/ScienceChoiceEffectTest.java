@@ -1,5 +1,6 @@
 package Card;
 
+import Effects.ScienceChoiceEffect;
 import Player.DumbPlayer;
 import Player.Player;
 import org.junit.jupiter.api.Test;

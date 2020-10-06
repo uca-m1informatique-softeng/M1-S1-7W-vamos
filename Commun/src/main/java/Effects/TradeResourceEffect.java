@@ -1,4 +1,6 @@
-package Card;
+package Effects;
+
+import Card.Resource;
 
 import java.util.ArrayList;
 
@@ -21,7 +23,7 @@ public class TradeResourceEffect extends Effect {
     /**
      * List of resources the player can buy for 1 coin instead of 2
      */
-    ArrayList<Resource> resourcesModified;
+    public ArrayList<Resource> resourcesModified;
 
 
     /**

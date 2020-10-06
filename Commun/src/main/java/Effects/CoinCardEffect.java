@@ -1,5 +1,7 @@
-package Card;
+package Effects;
 
+import Card.Card;
+import Card.CardColor;
 import Player.Player;
 import Utility.Writer;
 import java.util.ArrayList;
