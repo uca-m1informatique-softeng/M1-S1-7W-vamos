@@ -1,0 +1,28 @@
+{
+  "producedRes": "PAPYRUS",
+  "name": "EPHESOS",
+  "stage1": {
+    "reward": {
+      "VICTORY": 3
+    },
+    "cost": {
+      "STONE": 2
+    }
+  },
+  "stage2": {
+    "reward": {
+      "COIN": 9
+    },
+    "cost": {
+      "WOOD": 2
+    }
+  },
+  "stage3": {
+    "reward": {
+      "VICTORY": 7
+    },
+    "cost": {
+      "PAPYRUS": 2
+    }
+  }
+}

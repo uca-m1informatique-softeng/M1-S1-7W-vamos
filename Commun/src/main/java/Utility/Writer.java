@@ -1,7 +1,7 @@
 package Utility;
-import java.io.File;
-        import java.io.FileWriter;
 
+import java.io.File;
+import java.io.FileWriter;
 /**
  * Gestion d'écriture des fichiers sorties
  * On a 2 fichiers sorties qui enregistrent :

@@ -1,0 +1,35 @@
+{
+  "producedRes": "CLAY",
+  "name": "BABYLON",
+  "stage1": {
+    "reward": {
+      "VICTORY": 3
+    },
+    "cost": {
+      "LOOM": 1,
+      "CLAY": 1
+    }
+  },
+  "stage2": {
+    "reward": {
+      "cardEffect": "playSeventhCard"
+    },
+    "cost": {
+      "WOOD": 2,
+      "GLASS": 1
+    }
+  },
+  "stage3": {
+    "reward": {
+      "scienceChoiceEffect": [
+        "SCIENCE_COMPASS",
+        "SCIENCE_WHEEL",
+        "SCIENCE_TABLET"
+      ]
+    },
+    "cost": {
+      "CLAY": 3,
+      "PAPYRUS": 1
+    }
+  }
+}

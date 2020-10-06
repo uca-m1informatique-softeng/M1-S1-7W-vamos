@@ -4,13 +4,33 @@ package Utility;
  * This class will contains all const values (String,Integers..) needed to make the code clearer
  */
 public final class Constante {
+    //Server constants
+    public static final String STATS = "Sending stats to the server" ;
+
     private Constante(){}
 
 
     // Core game const values
-    public static int MAX_AGE = 3;
-    public static int MAX_ROUNDS =6;
-    public static int MAX_HAND = 7;
+    public final static int MAX_AGE = 3;
+    public final static int MAX_ROUNDS =6;
+    public final static int MAX_HAND = 7;
+    public final static int MIN_PLAYER = 3;
+    public final static int MAX_PLAYER = 3;
+
+
+    public static final String STR_PLAYERS = "players";
+    public static final String STR_CARDPOINTS = "cardPoints";
+    public static final String STR_COST = "cost";
+    public static final String STR_RESOURCE = "resource";
+    public static final String STR_COLOREDCARDEFFECT = "coloredCardResourceEffect";
+    public static final String STR_REWARD = "reward";
+
+
+
+    public static final String STR_BATTLE_FORMAT = "%s fought %s and won %d military points!";
+
+
+
 
     /**
      *

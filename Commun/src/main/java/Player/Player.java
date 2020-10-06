@@ -1,23 +1,14 @@
 package Player;
 
-import Card.StrategistsGuildEffect ;
-import Card.ColoredCardResourceEffect ;
-import Card.ShipOwnersGuild ;
-import Card.BuildersGuildEffect ;
-import Card.Card;
-import Card.CardPoints;
-import Card.Resource;
-import Card.ResourceChoiceEffect;
-import Card.TradeResourceEffect;
-import Card.CoinCardEffect;
-import Card.ScienceChoiceEffect;
-import Core.Wonder;
+import Effects.*;
+import Card.*;
+import Wonder.Wonder;
 import Utility.Writer;
 
 import java.security.SecureRandom;
 import java.util.*;
 
-public abstract class Player {
+public class Player {
 
     protected String name;
 
@@ -39,15 +30,16 @@ public abstract class Player {
 
     protected Player nextNeighbor;
 
-    public SecureRandom rand = new SecureRandom();
+    protected SecureRandom rand = new SecureRandom();
   
     protected int defeatToken ;
 
+    protected Strategy strategy;
 
 
     public Player(String name) {
         this.name = name;
-        this.defeatToken = 0 ;
+        this.defeatToken = 0;
 
         this.points = new EnumMap<>(CardPoints.class);
         for (CardPoints p : CardPoints.values()) {
@@ -67,7 +59,7 @@ public abstract class Player {
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
 
-        Writer.write("Player " + name +  " joined the game!");
+        Writer.write("Player " + name + " joined the game!");
     }
 
 
@@ -111,7 +103,9 @@ public abstract class Player {
         return builtCards;
     }
 
-    public int getMilitaryPoints() { return getPoints().get(CardPoints.MILITARY); }
+    public int getMilitaryPoints() {
+        return getPoints().get(CardPoints.MILITARY);
+    }
 
     public void addMilitaryPoints(int mp) {
         mp = mp + getMilitaryPoints();
@@ -154,20 +148,40 @@ public abstract class Player {
         return defeatToken;
     }
 
-    public void addDefeatToken(int n){
-        this.defeatToken +=n ;
+    public void addDefeatToken(int n) {
+        this.defeatToken += n;
     }
 
-    public abstract void chooseCard();
+    protected Strategy getStrategy() {
+        return strategy;
+    }
 
-    public abstract void chooseAction();
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void play() {
+        Action action = this.strategy.chooseAction(this);
+        this.chosenCard = action.getCard();
+
+        switch (action.getAction()) {
+            case Action.BUILD:
+                this.buildCard();
+                break;
+            case Action.WONDER:
+                this.buildStageWonder();
+                break;
+            case Action.DUMP:
+                this.dumpCard();
+                break;
+        }
+    }
 
     /**
      * Remove the chosen card of this hand and give 3 coins to the player.
      */
     public void dumpCard() {
         this.hand.remove(this.chosenCard);
-        Writer.write(this.name + "has now " + this.hand.size() + " cards in hand");
         Writer.write(this.name + " has obtained 3 coins for tossing");
         this.setCoins(this.getCoins() + 3);
     }
@@ -178,35 +192,37 @@ public abstract class Player {
      * Seul le cout en or est supprimmer.
      */
     public boolean buildCard() {
-        boolean enoughResources = true ;
+        boolean enoughResources = true;
 
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
         for (Card card : this.builtCards) {
-            if (card.getEffect() != null && card.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+            if (card.getEffect() != null) {
+                if (card.getEffect() instanceof ResourceChoiceEffect) {
+                    ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+                }
+                if (card.getEffect() instanceof ColoredCardResourceEffect){
+                    ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
+                }
+                if (card.getEffect() instanceof ShipOwnersGuildEffect){ //Ship Owners Guild Effect
+                    ((ShipOwnersGuildEffect) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
+                    ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
+                    ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof CoinCardEffect) {
+                    ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
+                }
             }
-            if (card.getEffect() != null && card.getEffect() instanceof ColoredCardResourceEffect){
-                ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof ShipOwnersGuild){ //Ship Owners Guild Effect
-                ((ShipOwnersGuild) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
-                ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
-                ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
-                ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
-            }
-                //The ScienceChoiceEffect is only apply at the end of the game.
+            //The ScienceChoiceEffect is only apply at the end of the game.
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
-        for (Resource resource : costAfterEffects.keySet()){
-            if (costAfterEffects.get(resource) > this.resources.get(resource)){
+        for (Resource resource : costAfterEffects.keySet()) {
+            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
 
                 int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
                 this.buyResource(resource, missingResources, this.prevNeighbor);
@@ -224,26 +240,23 @@ public abstract class Player {
             }
         }
 
-        if (chosenCard.isFree())
-        {
+        if (chosenCard.isFree()) {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
             this.hand.remove(this.chosenCard);
             return true;
-        }
-        else{ //not a free card sowe check if the player have enough resources to build the card
-            if (enoughResources){
+        } else { //not a free card sowe check if the player have enough resources to build the card
+            if (enoughResources) {
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
                 this.clearBoughtResources();
 
                 //removing the cost of a card if it's not a free card
-                this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
+                this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN));
 
                 this.hand.remove(this.chosenCard);
                 return enoughResources;
-            }
-            else{ //if the player don't have enough resources to buy the card he toss it
+            } else { //if the player don't have enough resources to buy the card he toss it
                 Writer.write("Not enough ressources");
                 return false;
             }
@@ -253,8 +266,9 @@ public abstract class Player {
 
     /**
      * Buys a resource from a neighbor in case the player doesn't have enough resources to build a card.
+     *
      * @param resourceToBuy Resource the player wishes to buy
-     * @param neighbor Neighbor to buy the resource from
+     * @param neighbor      Neighbor to buy the resource from
      * @return true if resource could be bought, false if not
      */
     public boolean buyResource(Resource resourceToBuy, int quantity, Player neighbor) {
@@ -283,20 +297,20 @@ public abstract class Player {
 
                 this.boughtResources.put(r, this.boughtResources.get(r) + quantity);
 
-                if (   ((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
+                if (((this.prevNeighbor.equals(neighbor) && tradeResourceModifier.get("prev").contains(r)) ||
                         (this.nextNeighbor.equals(neighbor) && tradeResourceModifier.get("next").contains(r))) &&
-                         this.getCoins() >= 1) {
+                        this.getCoins() >= 1) {
                     neighbor.setCoins(neighbor.getCoins() + quantity);
                     this.setCoins(this.getCoins() - quantity);
 
                     Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + quantity + " coin(s).");
 
                     return true;
-                } else if (this.getCoins() >= 2*quantity){
-                    neighbor.setCoins(neighbor.getCoins() + 2*quantity);
-                    this.setCoins(this.getCoins() - 2*quantity);
+                } else if (this.getCoins() >= 2 * quantity) {
+                    neighbor.setCoins(neighbor.getCoins() + 2 * quantity);
+                    this.setCoins(this.getCoins() - 2 * quantity);
 
-                    Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + 2*quantity + " coin(s).");
+                    Writer.write(this + " buys " + quantity + " " + r + " from " + neighbor + " for " + 2 * quantity + " coin(s).");
 
                     return true;
                 }
@@ -319,8 +333,8 @@ public abstract class Player {
      * Buy a stage of a wonder, give reward, and remove one card.
      */
     public boolean buildStageWonder() {
-        boolean enoughResources = true ;
-        if(wonder.isWonderFinished()) return false;
+        boolean enoughResources = true;
+        if (wonder.isWonderFinished()) return false;
         EnumMap<Resource, Integer> costAfterEffects = this.wonder.getCurrentUpgradeCost();
 
         for (Card card : this.builtCards) {
@@ -332,28 +346,27 @@ public abstract class Player {
             }
         }
 
-        for (Resource resource : costAfterEffects.keySet()){
-            if (costAfterEffects.get(resource) > this.resources.get(resource)){
-                enoughResources = false ;
+        for (Resource resource : costAfterEffects.keySet()) {
+            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
+                enoughResources = false;
             }
         }
 
-            if (enoughResources){
-                this.addWonderReward();
-                this.wonder.setState(wonder.getState() + 1);
-                //removing the cost in coin of the wonder
-                this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN)  );
-                Writer.write("Player " + this.name + "build a stage of wonder.");
-                this.hand.remove(this.chosenCard);
-                return enoughResources;
-            }
-            else{ //if the player don't have enough resources to buy a stage rechoose action
-                Writer.write("Player " + this.name + "try to build stage of wonder, but he don't have enough ressources.");
-                return false;
-            }
+        if (enoughResources) {
+            this.addWonderReward();
+            this.wonder.setState(wonder.getState() + 1);
+            //removing the cost in coin of the wonder
+            this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN));
+            Writer.write("Player " + this.name + "build a stage of wonder.");
+            this.hand.remove(this.chosenCard);
+            return enoughResources;
+        } else { //if the player don't have enough resources to buy a stage rechoose action
+            Writer.write("Player " + this.name + "try to build stage of wonder, but he don't have enough ressources.");
+            return false;
         }
+    }
 
-    public void addPointsAndResources(){
+    public void addPointsAndResources() {
         //adding points if the card gives a points
         int currentVP = this.points.get(CardPoints.VICTORY);
         int cardVP = this.chosenCard.getCardPoints().get(CardPoints.VICTORY);
@@ -376,34 +389,33 @@ public abstract class Player {
         this.points.put(CardPoints.SCIENCE_COMPASS, currentSCP + cardSCP);
 
         //adding resource(s) if the card gives a ressource(s)
-        for(Resource resource : this.chosenCard.getResource().keySet()){
+        for (Resource resource : this.chosenCard.getResource().keySet()) {
             int currentResource = this.resources.get(resource);
             int cardResource = this.chosenCard.getResource().get(resource);
             this.resources.put(resource, currentResource + cardResource);
-            if (cardResource != 0){
-                Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource +" " + resource );
+            if (cardResource != 0) {
+                Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardResource + " " + resource);
             }
         }
 
-        Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points, " + cardMP + " military points, and " + (cardSCP+cardSTP+cardSWP) + " science points.");
+        Writer.write(this.name + " played the card " + this.chosenCard.getName() + " and got " + cardVP + " victory points, " + cardMP + " military points, and " + (cardSCP + cardSTP + cardSWP) + " science points.");
     }
 
     /**
      * adds military points, and victory points to the player equal to the construction of the current stage of the wonder
      */
     public void addWonderReward() {
-
         EnumMap<CardPoints, Integer> reward = this.wonder.getCurrentRewardsFromUpgrade();
         int currentVP = 0;
         int wonderVP = 0;
         int currentMP = 0;
         int wonderMP = 0;
-        if (reward.containsKey(CardPoints.VICTORY)){
+        if (reward.containsKey(CardPoints.VICTORY)) {
             currentVP = this.points.get(CardPoints.VICTORY);
             wonderVP = reward.get(CardPoints.VICTORY);
         }
         this.points.put(CardPoints.VICTORY, currentVP + wonderVP);
-        if (reward.containsKey(CardPoints.MILITARY)){
+        if (reward.containsKey(CardPoints.MILITARY)) {
             currentMP = this.points.get(CardPoints.MILITARY);
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
@@ -418,7 +430,7 @@ public abstract class Player {
         // Military points
         res += this.getMilitaryPoints();
         // Treasury Contents
-        res += this.getCoins()/3;
+        res += this.getCoins() / 3;
         // Civilian Structures and Wonders
         res += this.getPoints().get(CardPoints.VICTORY);
         res += getSciencePoint();
@@ -429,21 +441,22 @@ public abstract class Player {
     public int getSciencePoint() {
         int res = 0;
         // Science score
-        res += this.getPoints().get(CardPoints.SCIENCE_WHEEL)* this.getPoints().get(CardPoints.SCIENCE_WHEEL);
-        res += this.getPoints().get(CardPoints.SCIENCE_COMPASS)*this.getPoints().get(CardPoints.SCIENCE_COMPASS);
-        res += this.getPoints().get(CardPoints.SCIENCE_TABLET)*this.getPoints().get(CardPoints.SCIENCE_TABLET);
+        res += this.getPoints().get(CardPoints.SCIENCE_WHEEL) * this.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        res += this.getPoints().get(CardPoints.SCIENCE_COMPASS) * this.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        res += this.getPoints().get(CardPoints.SCIENCE_TABLET) * this.getPoints().get(CardPoints.SCIENCE_TABLET);
         // Sets of different symbols
-        res += 7*Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
+        res += 7 * Math.min(Math.min(this.getPoints().get(CardPoints.SCIENCE_TABLET), this.getPoints().get(CardPoints.SCIENCE_WHEEL)), Math.min(this.getPoints().get(CardPoints.SCIENCE_WHEEL), this.getPoints().get(CardPoints.SCIENCE_COMPASS)));
         return res;
     }
 
     @Override
     public String toString() {
-        return this.name ;
+        return this.name;
     }
 
     /**
      * Checks if card is buildable given the cards that are already built, and vuyable resources from neighbors.
+     *
      * @param card Card to check if it's buildable
      * @return true if card is buildable, false otherwise
      */
@@ -468,9 +481,9 @@ public abstract class Player {
     /**
      * Apply the effect to the player if he have it.
      */
-    protected void endApplyEffect(){
+    protected void endApplyEffect() {
         ScienceChoiceEffect o = new ScienceChoiceEffect();
-        if(this.getBuiltCards().contains(o)){
+        if (this.getBuiltCards().contains(o)) {
             o.applyEffect(this);
         }
     }

@@ -14,20 +14,15 @@ public class CardManager {
 
         File folder = new File("Commun/src/assets/cards");
 
-        File[] listOfFiles = folder.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                String name = pathname.getName().toLowerCase();
-                return name.endsWith(".json") && pathname.isFile();
-            }
-            });
+        File[] listOfFiles = folder.listFiles(pathname -> {
+            String name = pathname.getName().toLowerCase();
+            return name.endsWith(".json") && pathname.isFile();
+        });
 
         String fileName = "";
 
         for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile() && !listOfFiles[i].getName().contains(".DS_Store")) {
-                fileName = listOfFiles[i].getName();
-            } else if (listOfFiles[i].isDirectory()) {
+            if (listOfFiles[i].isFile() && !listOfFiles[i].getName().contains(".DS_Store") || listOfFiles[i].isDirectory()) {
                 fileName = listOfFiles[i].getName();
             }
             if(!fileName.equals("")) {
