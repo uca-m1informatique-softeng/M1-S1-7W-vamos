@@ -11,11 +11,19 @@ public final class Constante {
 
 
     // Core game const values
-    public static int MAX_AGE = 3;
-    public static int MAX_ROUNDS =6;
-    public static int MAX_HAND = 7;
-    public static int MIN_PLAYER = 3;
-    public static int MAX_PLAYER = 4;
+    public final static int MAX_AGE = 3;
+    public final static int MAX_ROUNDS =6;
+    public final static int MAX_HAND = 7;
+    public final static int MIN_PLAYER = 3;
+    public final static int MAX_PLAYER = 4;
+
+
+    public static final String STR_PLAYERS = "players";
+    public static final String STR_CARDPOINTS = "cardPoints";
+    public static final String STR_COST = "cost";
+    public static final String STR_RESOURCE = "resource";
+
+
 
 
     /**
