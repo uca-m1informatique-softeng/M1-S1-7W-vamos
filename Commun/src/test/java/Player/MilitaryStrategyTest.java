@@ -1,8 +1,7 @@
 package Player;
 
-import Card.Card;
-import Card.Resource;
-import Core.Wonder;
+import Card.*;
+import Wonder.Wonder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,6 +1,7 @@
 package Player;
 
 import Card.*;
+import Effects.*;
 
 public class ScienceStrategy extends Strategy {
 
