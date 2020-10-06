@@ -5,11 +5,12 @@ import Core.Game;
 import Effects.Effect;
 import Effects.ResourceChoiceEffect;
 import Effects.ScienceChoiceEffect;
+import Utility.Constante;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import static Utility.Constante.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -80,18 +81,18 @@ public class Wonder {
                 EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
                 EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<>(CardPoints.class);
                 JSONObject stage = card.getJSONObject(stages.get(i));
-                if (stage.has("cost")) {
-                    for (int k = 0; k < stage.getJSONObject("cost").names().length(); k++) {
-                        String keyStr = stage.getJSONObject("cost").names().getString(k);
-                        int value = stage.getJSONObject("cost").getInt(keyStr);
+                if (stage.has(STR_COST)) {
+                    for (int k = 0; k < stage.getJSONObject(STR_COST).names().length(); k++) {
+                        String keyStr = stage.getJSONObject(STR_COST).names().getString(k);
+                        int value = stage.getJSONObject(STR_COST).getInt(keyStr);
                         tmpMap.put(Utilities.getResourceByString(keyStr), value);
                     }
                 }
                 if (stage.has("reward")) {
-                    for (int k = 0; k < stage.getJSONObject("reward").names().length(); k++) {
-                        if (stage.getJSONObject("reward").has("scienceChoiceEffect")) {
+                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
+                        if (stage.getJSONObject(STR_REWARD).has("scienceChoiceEffect")) {
                             this.effects.add(new ScienceChoiceEffect());
-                        } else if (stage.getJSONObject("reward").has("resourceChoiceEffect")) {
+                        } else if (stage.getJSONObject(STR_REWARD).has("resourceChoiceEffect")) {
                             JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
                             ArrayList<Resource> resList = new ArrayList<>();
                             for (int l = 0; l < resourceChoiceEffect.length(); l++) {
@@ -99,8 +100,8 @@ public class Wonder {
                             }
                             this.effects.add(new ResourceChoiceEffect(resList));
                         } else {
-                            String keyStr = stage.getJSONObject("reward").names().getString(k);
-                            int value = stage.getJSONObject("reward").getInt(keyStr);
+                            String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
+                            int value = stage.getJSONObject(STR_REWARD).getInt(keyStr);
                             tmpMap2.put(Utilities.getCardPointByString(keyStr), value);
                         }
                     }
