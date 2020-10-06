@@ -35,4 +35,12 @@ public class Action {
         this.action = action;
     }
 
+
+    public Card getCard() {
+        return this.card;
+    }
+
+    public int getAction() {
+        return this.action;
+    }
 }

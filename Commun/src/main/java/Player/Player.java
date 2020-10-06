@@ -160,6 +160,10 @@ public abstract class Player {
         this.defeatToken +=n ;
     }
 
+    protected Strategy getStrategy() {
+        return strategy;
+    }
+
     public abstract void chooseCard();
 
     public abstract void chooseAction();
