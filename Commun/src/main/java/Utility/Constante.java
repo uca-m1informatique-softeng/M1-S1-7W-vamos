@@ -25,6 +25,8 @@ public final class Constante {
     public static final String STR_COLOREDCARDEFFECT = "coloredCardResourceEffect";
 
 
+    public static final String STR_BATTLE_FORMAT = "%s fought %s and won %d military points!";
+
 
 
 

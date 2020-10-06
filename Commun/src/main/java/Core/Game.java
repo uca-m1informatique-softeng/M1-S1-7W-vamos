@@ -53,7 +53,7 @@ public class Game {
      */
     private ArrayList<Wonder> wonderArrayList;
 
-    public static Boolean debug = true;
+    public static Boolean debug = false;
 
     private static SecureRandom rand = new SecureRandom();
 
@@ -62,7 +62,7 @@ public class Game {
         StringBuilder stringBuilder = new StringBuilder() ;
 
         int nbPlayers = MAX_PLAYER;
-        String typePartie  = STATS_MODE;
+        String typePartie  = GAME_MODE;
         /**
          *  Game mode, normal game, game output is displayed
          */
@@ -211,6 +211,8 @@ public class Game {
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
+            default :
+                break;
          }
 
     }
@@ -355,16 +357,18 @@ public class Game {
             switch (this.currentAge) {
                 case 1 :
                     p1.addMilitaryPoints(1);
-                    Writer.write(p1 + " fought " + p2 + " and won 1 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,1));
                     break;
                 case 2 :
                     p1.addMilitaryPoints(3);
-                    Writer.write(p1 + " fought " + p2 + " and won 3 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,3));
                     break;
                 case 3 :
                     p1.addMilitaryPoints(5);
-                    Writer.write(p1 + " fought " + p2 + " and won 5 Military Point.");
+                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,5));
                     break;
+                default :
+                    throw new RuntimeException("Age cannot be superior to 3 or inferior to 1!");
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
