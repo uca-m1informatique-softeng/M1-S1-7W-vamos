@@ -61,12 +61,12 @@ public class Wonder {
      * The wonder is parsed in the constructor from the json file
      *
      * @param name name of the wonder
-     * @throws IOException
+     * @throws IOException if wonder's file could not be accessed
      */
     public Wonder(String name) throws IOException {
         String content = Files.readString(Paths.get("Commun", "src", "assets", "wonders", name + ".json"));
         JSONObject card = new JSONObject(content);
-        ArrayList<String> stages = new ArrayList<String>();
+        ArrayList<String> stages = new ArrayList<>();
         for (String key : card.keySet()) {
             if (key.contains("stage"))
                 stages.add(key);
@@ -174,6 +174,10 @@ public class Wonder {
 
     public boolean isWonderFinished() {
         return state == maxState;
+    }
+
+    public ArrayList<Effect> getAppliedEffects() {
+        return appliedEffects;
     }
 
     /**

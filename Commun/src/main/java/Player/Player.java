@@ -196,6 +196,7 @@ public class Player {
 
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
+
         for (Card card : this.builtCards) {
             if (card.getEffect() != null) {
                 if (card.getEffect() instanceof ResourceChoiceEffect) {
@@ -218,6 +219,15 @@ public class Player {
                 }
             }
             //The ScienceChoiceEffect is only apply at the end of the game.
+        }
+
+        // Applies ResourceChoiceEffects from the wonder
+        if (this.wonder.getAppliedEffects() != null) {
+            for (Effect effect : this.wonder.getAppliedEffects()) {
+                if (effect instanceof ResourceChoiceEffect) {
+                    ((ResourceChoiceEffect) effect).applyEffect(costAfterEffects);
+                }
+            }
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
@@ -341,13 +351,33 @@ public class Player {
             if (card.getEffect() instanceof ResourceChoiceEffect) {
                 ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
             }
-            if (card.getEffect() instanceof TradeResourceEffect) {
-                //TODO after TradeREsourceEffect is finished
+        }
+
+        // Applies ResourceChoiceEffects from the wonder
+        if (this.wonder.getAppliedEffects() != null) {
+            for (Effect effect : this.wonder.getAppliedEffects()) {
+                if (effect instanceof ResourceChoiceEffect) {
+                    ((ResourceChoiceEffect) effect).applyEffect(costAfterEffects);
+                }
+            }
+        }
+
+        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
+        for (Resource resource : costAfterEffects.keySet()) {
+            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
+
+                int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
+                this.buyResource(resource, missingResources, this.prevNeighbor);
+
+                missingResources -= this.boughtResources.get(resource);
+                if (missingResources > 0) {
+                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
+                }
             }
         }
 
         for (Resource resource : costAfterEffects.keySet()) {
-            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
+            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)) {
                 enoughResources = false;
             }
         }
@@ -357,11 +387,11 @@ public class Player {
             this.wonder.setState(wonder.getState() + 1);
             //removing the cost in coin of the wonder
             this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN));
-            Writer.write("Player " + this.name + "build a stage of wonder.");
+            Writer.write(this.name + " builds a stage of wonder.");
             this.hand.remove(this.chosenCard);
-            return enoughResources;
+            return true;
         } else { //if the player don't have enough resources to buy a stage rechoose action
-            Writer.write("Player " + this.name + "try to build stage of wonder, but he don't have enough ressources.");
+            Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");
             return false;
         }
     }
