@@ -4,6 +4,9 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
+
+import java.util.logging.Logger;
+
 import static Utility.Constante.* ;
 
 public class Server {
@@ -23,12 +26,7 @@ public class Server {
             }
         });
 
-        server.addEventListener(STATS, String.class, new DataListener<String>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, String string, AckRequest ackRequest) throws Exception {
-                System.out.println("STATS :\n" + string);
-            }
-        });
+        server.addEventListener(STATS, String.class, (socketIOClient, string, ackRequest) -> System.out.println("STATS :\n" + string));
 
     }
 }
