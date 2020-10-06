@@ -114,12 +114,12 @@ public class Card {
                         resList);
             }
 
-            if (card.has("coloredCardResourceEffect")) {
-                this.coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+            if (card.has(STR_COLOREDCARDEFFECT)) {
+                this.coloredCardResourceEffect = CardColor.valueOf(card.getString(STR_COLOREDCARDEFFECT));
 
-                CardColor coloredCardResourceEffect = CardColor.valueOf(card.getString("coloredCardResourceEffect"));
+                CardColor tmpCardResEffect = CardColor.valueOf(card.getString(STR_COLOREDCARDEFFECT));
 
-                this.effect = new ColoredCardResourceEffect(coloredCardResourceEffect);
+                this.effect = new ColoredCardResourceEffect(tmpCardResEffect);
             }
 
             if (card.has("ShipownersGuildEffect")) {
@@ -189,8 +189,8 @@ public class Card {
     }
 
     public Boolean isFree() {
-        for (Integer cost : cost.values())
-            if (cost > 0) return false;
+        for (Integer i : cost.values())
+            if (i > 0) return false;
         return true;
     }
 

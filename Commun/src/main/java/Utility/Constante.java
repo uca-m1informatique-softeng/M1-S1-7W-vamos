@@ -22,6 +22,8 @@ public final class Constante {
     public static final String STR_CARDPOINTS = "cardPoints";
     public static final String STR_COST = "cost";
     public static final String STR_RESOURCE = "resource";
+    public static final String STR_COLOREDCARDEFFECT = "coloredCardResourceEffect";
+
 
 
 
