@@ -406,7 +406,6 @@ public class Game {
             Wonder tmpWonder = wonderArrayList.get(0);
 
             while (bannedWonders.contains(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1))) {
-                System.out.println("This wonder is already taken ! choose another one ");
                 Collections.shuffle(wonderArrayList);
                 tmpWonder = wonderArrayList.get(0);
             }
