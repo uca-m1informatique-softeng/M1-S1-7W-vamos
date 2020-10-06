@@ -39,9 +39,11 @@ public abstract class Player {
 
     protected Player nextNeighbor;
 
-    public SecureRandom rand = new SecureRandom();
+    protected SecureRandom rand = new SecureRandom();
   
     protected int defeatToken ;
+
+    protected Strategy strategy;
 
 
 
