@@ -36,7 +36,7 @@ class TradeResourceEffectTest {
     void buyCheaperResource() {
         Player player = new Player("George");
         Player neighbor = new Player("Bob");
-        player.setPrevNeighbor(new DumbPlayer("BOBZZ"));
+        player.setPrevNeighbor(new Player("BOBZZ"));
         player.setNextNeighbor(neighbor);
         player.setCoins(2);
         neighbor.getResources().put(Resource.CLAY, 2);

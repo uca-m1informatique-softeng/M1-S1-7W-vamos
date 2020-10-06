@@ -62,7 +62,7 @@ public class Game {
         StringBuilder stringBuilder = new StringBuilder() ;
 
         int nbPlayers = MAX_PLAYER;
-        String typePartie  = STATS_MODE;
+        String typePartie  = GAME_MODE;
         /*
          *  Game mode, normal game, game output is displayed
          */
@@ -165,7 +165,8 @@ public class Game {
         this.getPlayersArray().get(0).setStrategy(new DumbStrategy());
         this.playersArray.add(new Player("Warrior"));
         this.getPlayersArray().get(1).setStrategy(new MilitaryStrategy());
-        this.playersArray.add(new IA_One("IA_One"));
+        this.playersArray.add(new Player("Scientist"));
+        this.getPlayersArray().get(2).setStrategy(new ScienceStrategy());
 
 
         for (int i = 0; i < players; i++) {

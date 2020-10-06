@@ -32,10 +32,11 @@ public class MilitaryStrategy extends Strategy {
                 }
             }
 
-            if (player.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY) > mostMilitary.getCardPoints().get(CardPoints.MILITARY) &&
+            /* if (player.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY) > mostMilitary.getCardPoints().get(CardPoints.MILITARY) &&
                 player.wonder.canUpgrade(player.resources)) {
                 return new Action(mostMilitary, Action.WONDER);
-            } else if (player.isBuildable(mostMilitary)) {
+            } else */
+            if (player.isBuildable(mostMilitary)) {
                 return new Action(mostMilitary, Action.BUILD);
             } else if (player.isBuildable(mostResources)) {
                 return new Action(mostResources, Action.BUILD);
