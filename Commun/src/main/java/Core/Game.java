@@ -61,7 +61,7 @@ public class Game {
     public static void main(String[] args) throws WondersException {
         StringBuilder stringBuilder = new StringBuilder() ;
 
-        int nbPlayers = 4;
+        int nbPlayers = MAX_PLAYER;
         String typePartie  = STATS_MODE;
         /**
          *  Game mode, normal game, game output is displayed
@@ -133,7 +133,7 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
-        if(players < 3 || players > 4)
+        if(players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
@@ -164,7 +164,7 @@ public class Game {
         this.playersArray.add(new DumbPlayer("Stupid"));
         this.playersArray.add(new MilitaryPlayer("Warrior"));
         this.playersArray.add(new IA_One("IA_One"));
-        if (players == 4)
+        if (players == MAX_PLAYER)
             this.playersArray.add(new DumbPlayer("Stupid Clone"));
 
 
@@ -400,7 +400,6 @@ public class Game {
      */
     private void initPlayersWonders()
     {
-       ;
        ArrayList<String> bannedWonders = new ArrayList<>();
 
         if(debug)
