@@ -241,14 +241,23 @@ public class Game {
             }
             for(Card card : player.getBuiltCards()) {
                 if(card.getEffect() instanceof CoinCardEffect) {
-                    if(card.getCoinCardEffect() == CardColor.BROWN) {
-                        player.getPoints().put(CardPoints.VICTORY, brownCards);
-                    }else if(card.getCoinCardEffect() == CardColor.GREY) {
-                        player.getPoints().put(CardPoints.VICTORY, greyCards);
-                    }else if(card.getCoinCardEffect() == CardColor.YELLOW) {
-                        player.getPoints().put(CardPoints.VICTORY, yellowCards);
-                    }else if(card.getCoinCardEffect() == null) {
-                        player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState()*3);
+                    if(card.getCoinCardEffect() == null) {
+                        player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
+                        continue;
+                    }
+                    switch(card.getCoinCardEffect())
+                    {
+                        case BROWN:
+                            player.getPoints().put(CardPoints.VICTORY, brownCards);
+                            break;
+                        case GREY:
+                            player.getPoints().put(CardPoints.VICTORY, greyCards);
+                            break;
+                        case YELLOW:
+                            player.getPoints().put(CardPoints.VICTORY, yellowCards);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
