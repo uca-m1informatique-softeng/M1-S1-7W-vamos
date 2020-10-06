@@ -13,6 +13,7 @@ public class DumbStrategy extends Strategy {
      */
     SecureRandom rand = new SecureRandom();
 
+
     /**
      * Implementation of Strategy::chooseAction(Player player).
      * This implementation chooses a random card and a random action available from its hand.
