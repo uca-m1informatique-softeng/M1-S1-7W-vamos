@@ -1,0 +1,28 @@
+{
+  "producedRes": "ORE" ,
+  "name" : "rhodos" ,
+  "stage1" : {
+    "reward" : {
+      "VICTORY": 3
+    },
+    "cost" : {
+      "WOOD" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "MILITARY" : 2
+    },
+    "cost" : {
+      "CLAY" : 3
+    }
+  },
+  "stage3" : {
+    "reward" : {
+      "VICTORY" : 7
+    },
+    "cost" : {
+      "ORE" : 4
+    }
+  }
+}
