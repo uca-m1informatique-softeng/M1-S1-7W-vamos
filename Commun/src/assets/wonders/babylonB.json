@@ -12,7 +12,7 @@
   },
   "stage2": {
     "reward": {
-      "cardEffect": "playSeventhCard"
+      "playSeventhCardEffect": 1
     },
     "cost": {
       "WOOD": 2,

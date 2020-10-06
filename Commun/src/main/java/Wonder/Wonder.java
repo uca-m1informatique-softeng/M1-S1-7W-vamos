@@ -3,6 +3,7 @@ package Wonder;
 import Card.*;
 import Core.Game;
 import Effects.Effect;
+import Effects.PlaySeventhCardEffect;
 import Effects.ResourceChoiceEffect;
 import Effects.ScienceChoiceEffect;
 import Utility.Constante;
@@ -99,6 +100,8 @@ public class Wonder {
                                 resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
                             }
                             this.effects.add(new ResourceChoiceEffect(resList));
+                        } else if (stage.getJSONObject(STR_REWARD).has("playSeventhCardEffect")){
+                            this.effects.add(new PlaySeventhCardEffect());
                         } else {
                             String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
                             int value = stage.getJSONObject(STR_REWARD).getInt(keyStr);
