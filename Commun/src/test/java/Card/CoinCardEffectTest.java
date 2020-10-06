@@ -1,6 +1,6 @@
 package Card;
 
-import Player.DumbPlayer;
+import Player.*;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,12 +9,12 @@ public class CoinCardEffectTest {
     @Test
     //build all yellow cards
     public void setup() throws IOException {
-        DumbPlayer player1 = new DumbPlayer("Player1");
-        DumbPlayer player2 = new DumbPlayer("Player2");
-        DumbPlayer player3 = new DumbPlayer("Player3");
-        DumbPlayer player4 = new DumbPlayer("Player4");
-        DumbPlayer player5 = new DumbPlayer("Player5");
-        DumbPlayer player6 = new DumbPlayer("Player6");
+        Player player1 = new Player("Player1");
+        Player player2 = new Player("Player2");
+        Player player3 = new Player("Player3");
+        Player player4 = new Player("Player4");
+        Player player5 = new Player("Player5");
+        Player player6 = new Player("Player6");
 
         Card card1  = new Card("arena" , 7);
         Card card2 = new Card("chamberOfCommerce" , 6);
@@ -51,7 +51,7 @@ public class CoinCardEffectTest {
         this.testEffects(player1, card2);
     }
 
-    public void testEffects(DumbPlayer player, Card card){
+    public void testEffects(Player player, Card card){
 
         System.out.println("before " + player.getCoins());
         ((CoinCardEffect) card.getEffect()).addCoins(player, card.getCoinCardEffect(), card.getAge());

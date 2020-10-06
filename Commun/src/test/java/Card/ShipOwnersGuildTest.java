@@ -1,6 +1,6 @@
 package Card;
 
-import Player.DumbPlayer;
+import Player.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShipOwnersGuildTest {
-    DumbPlayer player ;
+    Player player ;
 
     @BeforeEach
     void setUp(){
-        player=new DumbPlayer("Marc") ;
+        player=new Player("Marc") ;
+        player.setStrategy(new DumbStrategy());
     }
 
     @Test

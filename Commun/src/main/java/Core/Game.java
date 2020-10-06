@@ -64,6 +64,8 @@ public class Game {
         int nbPlayers = MAX_PLAYER;
         String typePartie  = GAME_MODE;
         /**
+        String typePartie  = GAME_MODE;
+        /*
          *  Game mode, normal game, game output is displayed
          */
         if(typePartie.equals(GAME_MODE))
@@ -76,9 +78,7 @@ public class Game {
             Utilities.displayGameOutput();
             Writer.deleteFile();
         }
-        /**
-         *  Stats mode, no game output is displayed, only end game stats.
-         */
+        // Stats mode, no game output is displayed, only end game stats.
         else if (typePartie.equals(STATS_MODE))
         {
             Writer.init(false);
@@ -133,7 +133,7 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
-        if(players < MIN_PLAYER || players > MAX_PLAYER)
+        if (players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
@@ -161,11 +161,12 @@ public class Game {
      */
     public void initPlayers() {
 
-        this.playersArray.add(new DumbPlayer("Stupid"));
-        this.playersArray.add(new MilitaryPlayer("Warrior"));
-        this.playersArray.add(new IA_One("IA_One"));
-        if (players == MAX_PLAYER)
-            this.playersArray.add(new DumbPlayer("Stupid Clone"));
+        this.playersArray.add(new Player("Stupid"));
+        this.getPlayersArray().get(0).setStrategy(new DumbStrategy());
+        this.playersArray.add(new Player("Warrior"));
+        this.getPlayersArray().get(1).setStrategy(new MilitaryStrategy());
+        this.playersArray.add(new Player("Scientist"));
+        this.getPlayersArray().get(2).setStrategy(new ScienceStrategy());
 
 
         for (int i = 0; i < players; i++) {
@@ -271,9 +272,7 @@ public class Game {
      */
     private void processTurn() {
         for(Player player : Game.playersArray)
-            player.chooseCard();
-        for(Player player : Game.playersArray)
-            player.chooseAction();
+            player.play();
 
         this.swapHands(this.currentAge);
     }

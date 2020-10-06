@@ -15,7 +15,7 @@ public final class Constante {
     public final static int MAX_ROUNDS =6;
     public final static int MAX_HAND = 7;
     public final static int MIN_PLAYER = 3;
-    public final static int MAX_PLAYER = 4;
+    public final static int MAX_PLAYER = 3;
 
 
     public static final String STR_PLAYERS = "players";

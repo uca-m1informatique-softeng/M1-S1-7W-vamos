@@ -17,7 +17,7 @@ import Utility.Writer;
 import java.security.SecureRandom;
 import java.util.*;
 
-public abstract class Player {
+public class Player {
 
     protected String name;
 
@@ -39,9 +39,11 @@ public abstract class Player {
 
     protected Player nextNeighbor;
 
-    public SecureRandom rand = new SecureRandom();
+    protected SecureRandom rand = new SecureRandom();
   
     protected int defeatToken ;
+
+    protected Strategy strategy;
 
 
 
@@ -158,16 +160,36 @@ public abstract class Player {
         this.defeatToken +=n ;
     }
 
-    public abstract void chooseCard();
+    protected Strategy getStrategy() {
+        return strategy;
+    }
 
-    public abstract void chooseAction();
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void play() {
+        Action action = this.strategy.chooseAction(this);
+        this.chosenCard = action.getCard();
+
+        switch (action.getAction()) {
+            case Action.BUILD:
+                this.buildCard();
+                break;
+            case Action.WONDER:
+                this.buildStageWonder();
+                break;
+            case Action.DUMP:
+                this.dumpCard();
+                break;
+        }
+    }
 
     /**
      * Remove the chosen card of this hand and give 3 coins to the player.
      */
     public void dumpCard() {
         this.hand.remove(this.chosenCard);
-        Writer.write(this.name + "has now " + this.hand.size() + " cards in hand");
         Writer.write(this.name + " has obtained 3 coins for tossing");
         this.setCoins(this.getCoins() + 3);
     }
@@ -183,23 +205,25 @@ public abstract class Player {
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
         for (Card card : this.builtCards) {
-            if (card.getEffect() != null && card.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
-            }
-            if (card.getEffect() != null && card.getEffect() instanceof ColoredCardResourceEffect){
-                ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof ShipOwnersGuild){ //Ship Owners Guild Effect
-                ((ShipOwnersGuild) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
-                ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() !=null && card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
-                ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
-            }
-            if (card.getEffect() != null && card.getEffect() instanceof CoinCardEffect) {
-                ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
+            if (card.getEffect() != null) {
+                if (card.getEffect() instanceof ResourceChoiceEffect) {
+                    ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+                }
+                if (card.getEffect() instanceof ColoredCardResourceEffect){
+                    ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
+                }
+                if (card.getEffect() instanceof ShipOwnersGuild){ //Ship Owners Guild Effect
+                    ((ShipOwnersGuild) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
+                    ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
+                    ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
+                }
+                if (card.getEffect() instanceof CoinCardEffect) {
+                    ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
+                }
             }
                 //The ScienceChoiceEffect is only apply at the end of the game.
         }

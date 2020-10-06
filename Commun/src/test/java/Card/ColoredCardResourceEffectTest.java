@@ -1,6 +1,6 @@
 package Card;
 
-import Player.DumbPlayer;
+import Player.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
@@ -8,17 +8,18 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ColoredCardResourceEffectTest {
-    private DumbPlayer player;
+    private Player player;
 
     @BeforeEach
     void setUp(){
-        player = new DumbPlayer("Maestro") ;
+        player = new Player("Maestro") ;
+        player.setStrategy(new DumbStrategy());
     }
 
     @Test
     public void applyColor() throws IOException {
-        DumbPlayer player2 = new DumbPlayer("Maestro2");
-        DumbPlayer player3 = new DumbPlayer("Maestro3");
+        Player player2 = new Player("Maestro2");
+        Player player3 = new Player("Maestro3");
 
         Card card  = new Card("workersguild" , 7);
         Card card2 = new Card("craftmensguild" , 7);
