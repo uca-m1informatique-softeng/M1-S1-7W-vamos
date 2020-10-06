@@ -1,20 +1,22 @@
 package Card;
 
-import Player.DumbPlayer;
+import Player.Player;
+import Player.DumbStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StrategistsGuildEffectTest {
-    DumbPlayer dumbPlayer ;
-    DumbPlayer dumbPlayer2 ;
-    DumbPlayer dumbPlayer3 ;
+    Player dumbPlayer ;
+    Player dumbPlayer2 ;
+    Player dumbPlayer3 ;
 
     @BeforeEach
     void setUp(){
-        dumbPlayer = new DumbPlayer("Marc") ;
-        dumbPlayer2 = new DumbPlayer("Marc2") ;
-        dumbPlayer3 = new DumbPlayer("Marc3") ;
+        dumbPlayer = new Player("Marc") ;
+        dumbPlayer.setStrategy(new DumbStrategy());
+        dumbPlayer2 = new Player("Marc2") ;
+        dumbPlayer3 = new Player("Marc3") ;
     }
 
     @Test

@@ -133,7 +133,7 @@ public class Game {
     }
 
     public Game (int players) throws WondersException {
-        if(players < MIN_PLAYER || players > MAX_PLAYER)
+        if (players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
         Game.playersArray = new ArrayList<>(players);
@@ -161,11 +161,11 @@ public class Game {
      */
     public void initPlayers() {
 
-        this.playersArray.add(new DumbPlayer("Stupid"));
-        this.playersArray.add(new MilitaryPlayer("Warrior"));
+        this.playersArray.add(new Player("Stupid"));
+        this.getPlayersArray().get(0).setStrategy(new DumbStrategy());
+        this.playersArray.add(new Player("Warrior"));
+        this.getPlayersArray().get(1).setStrategy(new MilitaryStrategy());
         this.playersArray.add(new IA_One("IA_One"));
-        if (players == MAX_PLAYER)
-            this.playersArray.add(new DumbPlayer("Stupid Clone"));
 
 
         for (int i = 0; i < players; i++) {

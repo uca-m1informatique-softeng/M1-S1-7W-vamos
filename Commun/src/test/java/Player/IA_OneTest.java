@@ -14,12 +14,12 @@ class IA_OneTest {
 
     IA_One player;
     Card c1, c2;
-    DumbPlayer pright;
+    Player pright;
 
     @BeforeEach
     void setUp() {
         player = new IA_One("Scientist");
-        pright = new DumbPlayer("Scientist");
+        pright = new Player("Scientist");
         player.setNextNeighbor(pright);
         player.setPrevNeighbor(pright);
         try {

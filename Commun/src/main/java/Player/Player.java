@@ -164,6 +164,10 @@ public class Player {
         return strategy;
     }
 
+    public void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
     public void play() {
         Action action = this.strategy.chooseAction(this);
         this.chosenCard = action.getCard();
