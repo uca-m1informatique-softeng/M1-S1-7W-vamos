@@ -10,6 +10,9 @@
     }
   },
   "stage2" : {
+    "reward" : {
+      "TookOneDiscardedCard" : null
+    },
     "cost" : {
       "ORE" : 3
     }

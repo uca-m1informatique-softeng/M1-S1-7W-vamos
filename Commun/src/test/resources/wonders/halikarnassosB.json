@@ -3,7 +3,8 @@
   "name" : "HALIKARNASSOS" ,
   "stage1" : {
     "reward" : {
-      "VICTORY": 2
+      "VICTORY": 2,
+      "TookOneDiscardedCard" : null
     },
     "cost" : {
       "ORE" : 2
@@ -11,13 +12,17 @@
   },
   "stage2" : {
     "reward" : {
-      "VICTORY": 1
+      "VICTORY": 1,
+      "TookOneDiscardedCard" : null
     },
     "cost" : {
       "CLAY" : 3
     }
   },
   "stage3" : {
+    "reward" : {
+      "FreeCardPerAgeEffect" : null
+    },
     "cost" : {
       "GLASS" : 1,
       "PAPYRUS" : 1,

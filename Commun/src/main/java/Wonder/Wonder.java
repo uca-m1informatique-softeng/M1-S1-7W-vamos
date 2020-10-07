@@ -97,17 +97,22 @@ public class Wonder {
                     }
                 }
                 if (stage.has("reward")) {
-                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
-                        if (stage.getJSONObject(STR_REWARD).has("scienceChoiceEffect")) {
+                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length()-1; k++) {
+                        if (stage.getJSONObject(STR_REWARD).has("ScienceChoiceEffect")) {
                             this.effects.put(k , new ScienceChoiceEffect());
-                        } else if (stage.getJSONObject(STR_REWARD).has("resourceChoiceEffect")) {
-                            JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("TookOneDiscardedCard")) {
+                            //TODO Nicolas will implemente this effect soon.
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceEffect")) {
+                            JSONArray effectW = stage.getJSONArray("ResourceChoiceEffect");
                             ArrayList<Resource> resList = new ArrayList<>();
-                            for (int l = 0; l < resourceChoiceEffect.length(); l++) {
-                                resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
+                            for (int l = 0; l < effectW.length(); l++) {
+                                resList.add(Resource.valueOf(effectW.getString(l)));
                             }
                             this.effects.put(k,new ResourceChoiceEffect(resList));
-                        } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
                             this.effects.put(k , new FreeCardPerAgeEffect());
                         }
                         else {

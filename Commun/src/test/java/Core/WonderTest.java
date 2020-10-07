@@ -1,5 +1,7 @@
 package Core;
 import Card.*;
+import Effects.ResourceChoiceEffect;
+import Effects.ScienceChoiceEffect;
 import Wonder.Wonder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,5 +55,27 @@ public class WonderTest {
     @Test
     void canUpgrade() {
         assertFalse(wonder.canUpgrade(new EnumMap<Resource, Integer>(Resource.class)));
+    }
+
+    @Test
+    void parseTest() throws IOException {
+        Wonder w = new Wonder("alexandriaA");
+        Wonder w2 = new Wonder("alexandriaB");
+        Wonder w3 = new Wonder("babylonB");
+        Wonder w4 = new Wonder("babylonB");
+        Wonder w5 = new Wonder("ephesosA");
+        Wonder w6 = new Wonder("ephesosB");
+        Wonder w7 = new Wonder("gizahA");
+        Wonder w8 = new Wonder("gizahB");
+        Wonder w9 = new Wonder("halikarnassosA");
+        Wonder w10 = new Wonder("halikarnassosB");
+        Wonder w11 = new Wonder("olympiaA");
+        Wonder w12 = new Wonder("olympiaB");
+        Wonder w13 = new Wonder("rhodosA");
+        Wonder w14 = new Wonder("rhodosB");
+
+        System.out.println(w2);
+        //assertTrue(w.getEffects().get(2) instanceof ResourceChoiceEffect);
+
     }
 }
