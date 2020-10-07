@@ -36,6 +36,8 @@ public class Player {
 
     protected Strategy strategy;
 
+    protected HashMap<Integer , Boolean> freeCardPerAge ; //{1:true or false ...} true if the effect was used in the age(the key) and false if not
+
 
     public Player(String name) {
         this.name = name;
@@ -58,6 +60,8 @@ public class Player {
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
+
+        this.freeCardPerAge=new HashMap<>() ;
 
         Writer.write("Player " + name + " joined the game!");
     }
@@ -255,7 +259,22 @@ public class Player {
             addPointsAndResources();
             this.hand.remove(this.chosenCard);
             return true;
-        } else { //not a free card sowe check if the player have enough resources to build the card
+
+            //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
+        } else if (this.wonder.getAppliedEffects() !=null && this.freeCardPerAge.get(this.hand.get(0).getAge()) == false){
+            Effect effect ;
+            for (int i = 0; i < this.wonder.getEffects().size(); i++) {
+                effect= this.wonder.getEffects().get(i) ;
+                if (effect instanceof FreeCardPerAgeEffect){
+                    ((FreeCardPerAgeEffect) effect).applyEffect(this);
+                    //adding the effect to the appliedEffects
+                    this.wonder.getAppliedEffects().add(effect) ;
+                    //saying that the effect is used for the current age
+                    this.freeCardPerAge.put(this.hand.get(0).getAge() , true) ;
+                }
+            }
+            return true ;
+        } else{ //not a free card sow check if the player have enough resources to build the card
             if (enoughResources) {
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
@@ -382,7 +401,7 @@ public class Player {
             }
         }
 
-        if (enoughResources) {
+        if (enoughResources) { //enoughResources so the player construct the stage of the wonder
             this.addWonderReward();
             this.wonder.setState(wonder.getState() + 1);
             //removing the cost in coin of the wonder
@@ -390,6 +409,12 @@ public class Player {
             Writer.write(this.name + " builds a stage of wonder.");
             this.hand.remove(this.chosenCard);
             this.clearBoughtResources();
+
+            //adding the stage Effect(if any) to the appliedEffects
+            if (this.wonder.getEffects().get(this.wonder.getState()) != null){
+                this.wonder.getAppliedEffects().add(this.wonder.getEffects().get(this.wonder.getState())) ;
+            }
+
             return true;
         } else { //if the player don't have enough resources to buy a stage rechoose action
             Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");

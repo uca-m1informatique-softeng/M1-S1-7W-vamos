@@ -3,6 +3,7 @@ package Wonder;
 import Card.*;
 import Core.Game;
 import Effects.Effect;
+import Effects.FreeCardPerAgeEffect;
 import Effects.ResourceChoiceEffect;
 import Effects.ScienceChoiceEffect;
 import Utility.Constante;
@@ -50,7 +51,8 @@ public class Wonder {
      * If the state of the wonder doesn't give a reward ( fixed ressources or points) it will give an effect (choice between a list of resources ).
      * These effects will be stored in that list.
      */
-    private ArrayList<Effect> effects;
+    //private ArrayList<Effect> effects;
+    private HashMap<Integer , Effect> effects;
 
     /**
      * List of already applied effects of the wonder, the player can stack them.
@@ -73,7 +75,7 @@ public class Wonder {
         }
         this.name = name;
         this.producedResource = Utilities.getResourceByString(card.getString("producedRes"));
-        this.effects = new ArrayList<>();
+        this.effects = new HashMap<>();
         if (stages.size() > 0) {
             maxState = stages.size();
             prop = new ArrayList<>(stages.size());
@@ -91,15 +93,18 @@ public class Wonder {
                 if (stage.has("reward")) {
                     for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
                         if (stage.getJSONObject(STR_REWARD).has("scienceChoiceEffect")) {
-                            this.effects.add(new ScienceChoiceEffect());
+                            this.effects.put(k , new ScienceChoiceEffect());
                         } else if (stage.getJSONObject(STR_REWARD).has("resourceChoiceEffect")) {
                             JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
                             ArrayList<Resource> resList = new ArrayList<>();
                             for (int l = 0; l < resourceChoiceEffect.length(); l++) {
                                 resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
                             }
-                            this.effects.add(new ResourceChoiceEffect(resList));
-                        } else {
+                            this.effects.put(k,new ResourceChoiceEffect(resList));
+                        } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
+                            this.effects.put(k , new FreeCardPerAgeEffect());
+                        }
+                        else {
                             String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
                             int value = stage.getJSONObject(STR_REWARD).getInt(keyStr);
                             tmpMap2.put(Utilities.getCardPointByString(keyStr), value);
@@ -174,6 +179,10 @@ public class Wonder {
 
     public boolean isWonderFinished() {
         return state == maxState;
+    }
+
+    public HashMap<Integer , Effect> getEffects() {
+        return effects;
     }
 
     public ArrayList<Effect> getAppliedEffects() {
