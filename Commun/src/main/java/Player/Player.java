@@ -266,7 +266,7 @@ public class Player {
             for (int i = 0; i < this.wonder.getEffects().size(); i++) {
                 effect= this.wonder.getEffects().get(i) ;
                 if (effect instanceof FreeCardPerAgeEffect){
-                    ((FreeCardPerAgeEffect) effect).applyEffect(this);
+                    ((FreeCardPerAgeEffect) effect).applyEffect(this, null, null, null);
                     //adding the effect to the appliedEffects
                     this.wonder.getAppliedEffects().add(effect) ;
                     //saying that the effect is used for the current age

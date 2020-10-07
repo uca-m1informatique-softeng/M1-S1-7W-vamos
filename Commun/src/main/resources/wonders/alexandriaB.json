@@ -4,7 +4,7 @@
   "stage1" : {
     "reward" : {
       "effect" : {
-        "ResourceChoiceEffect" : [
+        "resourceChoiceEffect" : [
           "CLAY",
           "STONE",
           "ORE",
@@ -19,7 +19,7 @@
   "stage2" : {
     "reward" : {
       "effect": {
-        "ResourceChoiceEffect" : [
+        "resourceChoiceEffect" : [
           "GLASS",
           "LOOM",
           "PAPYRUS"

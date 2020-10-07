@@ -22,7 +22,7 @@ public class CopyOneGuildEffect extends Effect {
         if(builtCards.size() > 0){
             Random newrandom = new Random();
             Card card = builtCards.get(newrandom.nextInt(builtCards.size()));
-            //TODO: copy card and add it to players hand
+            player.getBuiltCards().add(card);
         }
     }
 }

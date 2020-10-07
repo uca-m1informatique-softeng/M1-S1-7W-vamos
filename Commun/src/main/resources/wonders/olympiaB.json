@@ -3,7 +3,7 @@
   "name" : "OLYMPIA" ,
   "stage1" : {
     "reward" : {
-      "effect" : "ResourceChoiceFromBoardEffect"
+      "effect" : "resourceChoiceFromBoardEffect"
     },
     "cost" : {
       "WOOD" : 2
