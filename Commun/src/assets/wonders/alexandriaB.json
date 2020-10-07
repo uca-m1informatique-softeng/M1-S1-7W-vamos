@@ -1,0 +1,37 @@
+{
+  "producedRes": "GLASS" ,
+  "name" : "ALEXANDRIA" ,
+  "stage1" : {
+    "reward" : {
+      "ResourceChoiceEffect" : [
+        "CLAY",
+        "STONE",
+        "ORE",
+        "WOOD"
+      ]
+    },
+    "cost" : {
+      "CLAY" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "ResourceChoiceEffect" : [
+        "GLASS",
+        "LOOM",
+        "PAPYRUS"
+      ]
+    },
+    "cost" : {
+      "WOOD" : 2
+    }
+  },
+  "stage3" : {
+    "reward" : {
+      "VICTORY" : 7
+    },
+    "cost" : {
+      "STONE" : 3
+    }
+  }
+}
