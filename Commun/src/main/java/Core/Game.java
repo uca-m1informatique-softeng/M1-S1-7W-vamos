@@ -64,8 +64,8 @@ public class Game {
     public static void main(String[] args) throws WondersException {
         StringBuilder stringBuilder = new StringBuilder() ;
 
-        int nbPlayers = MAX_PLAYER;
-        String typePartie  = GAME_MODE;
+        int nbPlayers = Integer.parseInt(args[0]);
+        String typePartie  = args[1];
         /**
         String typePartie  = GAME_MODE;
         /*
