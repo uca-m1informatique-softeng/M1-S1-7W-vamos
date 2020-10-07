@@ -79,6 +79,7 @@ public class Wonder {
         this.name = name;
         this.producedResource = Utilities.getResourceByString(card.getString("producedRes"));
         this.effects = new HashMap<>();
+        this.appliedEffects = new ArrayList<>() ;
         if (stages.size() > 0) {
             maxState = stages.size();
             prop = new ArrayList<>(stages.size());

@@ -7,7 +7,7 @@ import Utility.Writer;
 import java.util.ArrayList;
 import java.util.EnumMap;
 
-/*
+/**
  * This class defines the ability of a card of color x to let her owner
  * get victory point(s) per the number of x cards in both neighboring cities.
  */

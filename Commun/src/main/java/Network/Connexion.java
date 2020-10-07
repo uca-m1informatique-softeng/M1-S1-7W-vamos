@@ -26,6 +26,7 @@ public enum Connexion {
 
     public void stopListening() {
         socket.disconnect();
+        System.out.println("Socket disconnected");
     }
 
     public void sendMessage(String tag,StringBuilder msg) {
