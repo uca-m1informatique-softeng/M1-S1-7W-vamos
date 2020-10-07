@@ -8,7 +8,6 @@ import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import static Utility.Constante.*;
 
 import java.io.*;
@@ -95,25 +94,31 @@ public class Wonder {
                     }
                 }
                 if (stage.has(STR_REWARD)) {
-                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
-                        if (stage.getJSONObject(STR_REWARD).has("effect")) {
-                            if (stage.getJSONObject(STR_REWARD).get("effect") instanceof JSONObject && stage.getJSONObject(STR_REWARD).getJSONObject("effect").has("scienceChoiceEffect")) {
-                                this.effects.put(k, new ScienceChoiceEffect());
-                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof JSONObject && stage.getJSONObject(STR_REWARD).getJSONObject("effect").has("resourceChoiceEffect")) {
-                                JSONArray resourceChoiceEffect = stage.getJSONObject(STR_REWARD).getJSONObject("effect").getJSONArray("resourceChoiceEffect");
-                                ArrayList<Resource> resList = new ArrayList<>();
-                                for (int l = 0; l < resourceChoiceEffect.length(); l++) {
-                                    resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
-                                }
-                                this.effects.put(k, new ResourceChoiceEffect(resList));
-                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof String && stage.getJSONObject(STR_REWARD).getString("effect").equals("playSeventhCardEffect")) {
-                                this.effects.put(k, new PlaySeventhCardEffect());
-                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof String && stage.getJSONObject(STR_REWARD).getString("effect").equals("copyOneGuildEffect")) {
-                                this.effects.put(k, new CopyOneGuildEffect());
-                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof String && stage.getJSONObject(STR_REWARD).getString("effect").equals("freeCardPerAgeEffect")){
-                                this.effects.put(k , new FreeCardPerAgeEffect());
+                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length()-1; k++) {
+                        if (stage.getJSONObject(STR_REWARD).has("ScienceChoiceEffect")) {
+                            this.effects.put(k , new ScienceChoiceEffect());
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("TookOneDiscardedCard")) {
+                            //TODO Nicolas will implemente this effect soon.
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceEffect")) {
+                            JSONArray effectW = stage.getJSONArray("ResourceChoiceEffect");
+                            ArrayList<Resource> resList = new ArrayList<>();
+                            for (int l = 0; l < effectW.length(); l++) {
+                                resList.add(Resource.valueOf(effectW.getString(l)));
                             }
-                        } else {
+                            this.effects.put(k,new ResourceChoiceEffect(resList));
+
+                        } else if (stage.getJSONObject(STR_REWARD).has("PlaySeventhCardEffect")) {
+                            this.effects.put(k, new PlaySeventhCardEffect());
+                        } else if (stage.getJSONObject(STR_REWARD).has("CopyOneGuildEffect")) {
+                            this.effects.put(k, new CopyOneGuildEffect());
+                        } else if (stage.getJSONObject(STR_REWARD).has("freeCardPerAgeEffect")){
+                            this.effects.put(k , new FreeCardPerAgeEffect());
+                        }
+
+
+                        else {
                             String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
                             int value = stage.getJSONObject(STR_REWARD).getInt(keyStr);
                             tmpMap2.put(Utilities.getCardPointByString(keyStr), value);
@@ -198,9 +203,6 @@ public class Wonder {
         return appliedEffects;
     }
 
-   /* public ArrayList<Effect> getEffects(){
-        return this.effects;
-    }*/
     /**
      * This function compares the player inventory with the current upgrade cost of the wonder.
      *
