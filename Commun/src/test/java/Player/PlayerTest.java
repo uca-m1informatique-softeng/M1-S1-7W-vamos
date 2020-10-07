@@ -148,25 +148,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void buildCard(){
-        try {
-            chosenCard = new Card("altar", 3);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //cheching that altar is a free card
-        assertEquals(true,chosenCard.isFree());
-
-        //method call
-        player.setChosenCard(chosenCard);
-        player.buildCard();
-
-        builtCards.add(chosenCard);
-        assertEquals(builtCards,player.getBuiltCards());
-
-    }
-
-    @Test
     public void addPointsAndResources() {
         try {
             chosenCard0 = new Card("sawmill", 3);

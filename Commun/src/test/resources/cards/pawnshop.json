@@ -1,0 +1,12 @@
+{
+    "age": 1,
+    "CardColor": "BLUE",
+    "cardPoints": {
+        "VICTORY": 3
+    },
+    "name": "pawnshop",
+    "players": [
+        4,
+        7
+    ]
+}

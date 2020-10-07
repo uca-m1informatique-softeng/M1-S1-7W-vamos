@@ -65,6 +65,7 @@
             <version>6.7.0</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <properties>
@@ -97,20 +98,6 @@
             </plugin>
 
             <plugin>
-                <!-- Build an executable JAR -->
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>Core.Game</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
@@ -123,6 +110,10 @@
                 </executions>
                 <configuration>
                     <mainClass>Core.Game</mainClass>
+                        <arguments>
+                            <argument>3</argument>
+                            <arguments>game</arguments>
+                        </arguments>
                 </configuration>
             </plugin>
 

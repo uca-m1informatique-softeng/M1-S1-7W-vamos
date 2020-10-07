@@ -1,0 +1,14 @@
+{
+    "age": 2,
+    "CardColor": "GREY",
+    "resource": {
+        "PAPYRUS": 1
+    },
+    "name": "press",
+    "players": [
+        3,
+        6,
+        3,
+        5
+    ]
+}

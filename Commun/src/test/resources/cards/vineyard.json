@@ -1,0 +1,10 @@
+{
+    "age": 2,
+    "CardColor": "YELLOW",
+    "name": "vineyard",
+    "players": [
+        3,
+        6
+    ],
+    "coinCardEffect": "BROWN"
+}

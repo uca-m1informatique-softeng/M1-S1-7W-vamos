@@ -1,0 +1,17 @@
+{
+    "age": 3,
+    "CardColor": "GREEN",
+    "cardPoints": {
+        "SCIENCE_TABLET": 1
+    },
+    "cost": {
+        "ORE": 2,
+        "GLASS": 1,
+        "LOOM": 1
+    },
+    "name": "observatory",
+    "players": [
+        3,
+        7
+    ]
+}

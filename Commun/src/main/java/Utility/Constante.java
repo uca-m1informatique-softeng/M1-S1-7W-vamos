@@ -94,8 +94,8 @@ public final class Constante {
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m"; // WHITE
 
     //Mode de partie
-    public final static String GAME_MODE ="partie";
-    public final static String STATS_MODE ="stat";
+    public final static String GAME_MODE ="game";
+    public final static String STATS_MODE ="stats";
     public final static int NB_GAMES_STATS_MODE = 2000;
 }
 

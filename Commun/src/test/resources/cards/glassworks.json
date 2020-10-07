@@ -1,0 +1,14 @@
+{
+    "age": 2,
+    "CardColor": "GREY",
+    "resource": {
+        "GLASS": 1
+    },
+    "name": "glassworks",
+    "players": [
+        3,
+        6,
+        3,
+        5
+    ]
+}

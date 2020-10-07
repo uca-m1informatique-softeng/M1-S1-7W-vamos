@@ -1,0 +1,18 @@
+{
+    "age": 3,
+    "CardColor": "RED",
+    "cardPoints": {
+        "MILITARY": 3
+    },
+    "cost": {
+        "WOOD": 2,
+        "ORE": 1,
+        "LOOM": 1
+    },
+    "name": "arsenal",
+    "players": [
+        3,
+        4,
+        7
+    ]
+}

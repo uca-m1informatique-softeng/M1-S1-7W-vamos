@@ -1,0 +1,28 @@
+{
+  "producedRes": "WOOD" ,
+  "name" : "OLYMPIA" ,
+  "stage1" : {
+    "reward" : {
+      "VICTORY": 3
+    },
+    "cost" : {
+      "WOOD" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "FreeCardPerAgeEffect" : 1
+    },
+    "cost" : {
+      "STONE" : 2
+    }
+  },
+  "stage3" : {
+    "reward" : {
+      "VICTORY" : 7
+    },
+    "cost" : {
+      "ORE" : 2
+    }
+  }
+}
