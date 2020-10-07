@@ -12,5 +12,12 @@ import java.util.EnumMap;
  * resources with your neighbors.
  */
 public abstract class Effect {
-    public abstract void applyEffect(Player player, CardColor card, Integer age, EnumMap<Resource, Integer> cost);
+    public abstract void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost);
+    public boolean equals(Effect effect){
+        if(this == effect){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

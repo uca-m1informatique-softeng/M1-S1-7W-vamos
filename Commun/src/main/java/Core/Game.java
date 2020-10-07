@@ -2,6 +2,8 @@ package Core;
 
 import Card.*;
 import Effects.CoinCardEffect;
+import Effects.CopyOneGuildEffect;
+import Effects.Effect;
 import Effects.PlaySeventhCardEffect;
 import Exceptions.WondersException;
 import Network.Connexion;
@@ -11,10 +13,12 @@ import Utility.Utilities;
 import Utility.Writer;
 import Wonder.Wonder;
 import Wonder.WonderManager;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
-import static Utility.Constante.* ;
+
+import static Utility.Constante.*;
 
 /**
  * Game class which will act as the core engine of the game.
@@ -63,13 +67,13 @@ public class Game {
 
 
     public static void main(String[] args) throws WondersException {
-        StringBuilder stringBuilder = new StringBuilder() ;
+        StringBuilder stringBuilder = new StringBuilder();
 
         int nbPlayers = MAX_PLAYER;
-        String typePartie  = GAME_MODE;
+        String typePartie = GAME_MODE;
         /**
-        String typePartie  = GAME_MODE;
-        /*
+         String typePartie  = GAME_MODE;
+         /*
          *  Game mode, normal game, game output is displayed
          */
         if (typePartie.equals(GAME_MODE)) {
@@ -103,32 +107,30 @@ public class Game {
             System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
             for (int i = 0; i < playersArray.size(); i++) {
                 recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
-                double victoires = (recapScores[i].getNbVictory()/(double) NB_GAMES_STATS_MODE)*100;
-                String joueur= playersArray.get(i).toString();
-                System.out.println(joueur +" gets an average score of  "+recapScores[i].getAvgScore());
-                System.out.println(joueur +" has a  "+ victoires +"% winrate");
-                System.out.println(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game");
-                System.out.println(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game");
-                System.out.println(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game");
+                double victoires = (recapScores[i].getNbVictory() / (double) NB_GAMES_STATS_MODE) * 100;
+                String joueur = playersArray.get(i).toString();
+                System.out.println(joueur + " gets an average score of  " + recapScores[i].getAvgScore());
+                System.out.println(joueur + " has a  " + victoires + "% winrate");
+                System.out.println(joueur + " gets " + recapScores[i].getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
+                System.out.println(joueur + " gets   " + recapScores[i].getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
+                System.out.println(joueur + " gets " + recapScores[i].getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
 
-                stringBuilder.append(joueur +" gets an average score of  "+recapScores[i].getAvgScore() + "\n" ) ;
-                stringBuilder.append(joueur +" has a  "+ victoires +"% winrate \n") ;
-                stringBuilder.append(joueur +" gets "+recapScores[i].getMilitaryPoints() /(double)NB_GAMES_STATS_MODE + "military points per game \n" ) ;
-                stringBuilder.append(joueur +" gets   "+recapScores[i].getSciencePoints() /(double)NB_GAMES_STATS_MODE+ " science points per game \n") ;
-                stringBuilder.append(joueur +" gets "+recapScores[i].getCoins()/(double)NB_GAMES_STATS_MODE + "coins per game \n") ;
+                stringBuilder.append(joueur + " gets an average score of  " + recapScores[i].getAvgScore() + "\n");
+                stringBuilder.append(joueur + " has a  " + victoires + "% winrate \n");
+                stringBuilder.append(joueur + " gets " + recapScores[i].getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game \n");
+                stringBuilder.append(joueur + " gets   " + recapScores[i].getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game \n");
+                stringBuilder.append(joueur + " gets " + recapScores[i].getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game \n");
             }
             //Stats sent to the server
             Connexion.CONNEXION.startListening();
-            Connexion.CONNEXION.sendMessage(STATS , stringBuilder) ;
+            Connexion.CONNEXION.sendMessage(STATS, stringBuilder);
             //Connexion.CONNEXION.stopListening();
-        }
-        else
-        {
+        } else {
             throw new RuntimeException("Mode inexistant.");
         }
     }
 
-    public Game (int players) throws WondersException {
+    public Game(int players) throws WondersException {
         if (players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
@@ -198,9 +200,9 @@ public class Game {
                 Writer.write("Core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
-            default :
+            default:
                 break;
-         }
+        }
 
     }
 
@@ -228,14 +230,13 @@ public class Game {
                         break;
                 }
             }
-            for(Card card : player.getBuiltCards()) {
-                if(card.getEffect() instanceof CoinCardEffect) {
-                    if(card.getCoinCardEffect() == null) {
+            for (Card card : player.getBuiltCards()) {
+                if (card.getEffect() instanceof CoinCardEffect) {
+                    if (card.getCoinCardEffect() == null) {
                         player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
                         continue;
                     }
-                    switch(card.getCoinCardEffect())
-                    {
+                    switch (card.getCoinCardEffect()) {
                         case BROWN:
                             player.getPoints().put(CardPoints.VICTORY, brownCards);
                             break;
@@ -257,7 +258,7 @@ public class Game {
      * Function to process one round during the game
      */
     private void processTurn() {
-        for(Player player : Game.playersArray) {
+        for (Player player : Game.playersArray) {
             player.play();
         }
         this.swapHands(this.currentAge);
@@ -305,19 +306,27 @@ public class Game {
         Writer.write("Each player drew " + MAX_HAND + "cards");
     }
 
-    private void processEndAge() {
-        if(this.round == MAX_ROUNDS) {
-            for(Player player : Game.playersArray) {
-                for(Card card: player.getBuiltCards()){
-                    if(card.getEffect() instanceof PlaySeventhCardEffect){
-                        card.getEffect().applyEffect(player, null, null, null);
+    private void checkEffect(Class effectClass) {
+        for (Player player : Game.playersArray) {
+            for (Effect effect : player.getWonder().getEffects()) {
+                if ((effect.getClass()).equals(effectClass)) {
+                    if (effectClass == PlaySeventhCardEffect.class) {
+                        effect.applyEffect(player, null, null, null);
                         Writer.write("Player was able to play seventh card");
+                    } else if (effectClass == CopyOneGuildEffect.class) {
+                        effect.applyEffect(player, CardColor.PURPLE, null, null);
+                        Writer.write("Player was able to copy a guild");
                     }
                 }
             }
+
         }
-        if (this.round == MAX_ROUNDS && this.currentAge == MAX_AGE)
-            this.state = GameState.END;
+    }
+
+    private void processEndAge() {
+        if (this.round == MAX_ROUNDS) {
+            this.checkEffect(PlaySeventhCardEffect.class);
+        }
         if (this.round == MAX_ROUNDS && this.currentAge < MAX_AGE) {
             for (Player player : Game.playersArray)
                 player.getHand().clear();
@@ -326,6 +335,9 @@ public class Game {
             this.currentAge++;
             this.processNewAge();
             this.round = 1;
+        } else if (this.round == MAX_ROUNDS && this.currentAge == MAX_AGE) {
+            this.checkEffect(CopyOneGuildEffect.class);
+            this.state = GameState.END;
         }
     }
 
@@ -351,17 +363,17 @@ public class Game {
             switch (this.currentAge) {
                 case 1:
                     p1.addMilitaryPoints(1);
-                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,1));
+                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 1));
                     break;
                 case 2:
                     p1.addMilitaryPoints(3);
-                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,3));
+                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 3));
                     break;
                 case 3:
                     p1.addMilitaryPoints(5);
-                    Writer.write(String.format(STR_BATTLE_FORMAT,p1,p2,5));
+                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 5));
                     break;
-                default :
+                default:
                     throw new RuntimeException("Age cannot be superior to 3 or inferior to 1!");
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
@@ -408,7 +420,7 @@ public class Game {
      * each player chooses a wonder at the beginning of the game
      */
     private void initPlayersWonders() {
-       ArrayList<String> bannedWonders = new ArrayList<>();
+        ArrayList<String> bannedWonders = new ArrayList<>();
 
         if (debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());

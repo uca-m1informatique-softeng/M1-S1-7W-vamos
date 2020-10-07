@@ -2,10 +2,7 @@ package Wonder;
 
 import Card.*;
 import Core.Game;
-import Effects.Effect;
-import Effects.PlaySeventhCardEffect;
-import Effects.ResourceChoiceEffect;
-import Effects.ScienceChoiceEffect;
+import Effects.*;
 import Utility.Constante;
 import Utility.Utilities;
 import Utility.Writer;
@@ -94,17 +91,19 @@ public class Wonder {
                 if (stage.has(STR_REWARD)) {
                     for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
                         if (stage.getJSONObject(STR_REWARD).has("effect")) {
-                            if (stage.getJSONObject(STR_REWARD).getString("effect").equals("scienceChoiceEffect")) {
+                            if (stage.getJSONObject(STR_REWARD).get("effect") instanceof JSONObject && stage.getJSONObject(STR_REWARD).getJSONObject("effect").equals("scienceChoiceEffect")) {
                                 this.effects.add(new ScienceChoiceEffect());
-                            } else if (stage.getJSONObject(STR_REWARD).getString("effect").equals("resourceChoiceEffect")) {
+                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof JSONObject && stage.getJSONObject(STR_REWARD).getJSONObject("effect").equals("resourceChoiceEffect")) {
                                 JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
                                 ArrayList<Resource> resList = new ArrayList<>();
                                 for (int l = 0; l < resourceChoiceEffect.length(); l++) {
                                     resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
                                 }
                                 this.effects.add(new ResourceChoiceEffect(resList));
-                            } else if (stage.getJSONObject(STR_REWARD).getString("effect").equals("playSeventhCardEffect")) {
+                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof String && stage.getJSONObject(STR_REWARD).getString("effect").equals("playSeventhCardEffect")) {
                                 this.effects.add(new PlaySeventhCardEffect());
+                            } else if (stage.getJSONObject(STR_REWARD).get("effect") instanceof String && stage.getJSONObject(STR_REWARD).getString("effect").equals("copyOneGuildEffect")) {
+                                this.effects.add(new CopyOneGuildEffect());
                             }
                         } else {
                             String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
@@ -187,6 +186,9 @@ public class Wonder {
         return appliedEffects;
     }
 
+    public ArrayList<Effect> getEffects(){
+        return this.effects;
+    }
     /**
      * This function compares the player inventory with the current upgrade cost of the wonder.
      *

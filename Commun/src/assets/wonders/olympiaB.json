@@ -19,7 +19,7 @@
   },
   "stage3" : {
     "reward" : {
-      "effect" : "CopyOneGuildEffect"
+      "effect" : "copyOneGuildEffect"
     },
     "cost" : {
       "ORE" : 2 ,

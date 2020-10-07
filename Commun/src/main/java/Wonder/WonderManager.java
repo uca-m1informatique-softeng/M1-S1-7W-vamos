@@ -46,7 +46,10 @@ public class WonderManager {
             } else if (listOfFiles[i].isDirectory()) {
                 fileName = listOfFiles[i].getName();
             }
-            if (!fileName.equals("")) {
+            if (!fileName.equals("") &&
+                    //FOR TESTING
+                    (!fileName.contains("alexandria")&&!fileName.contains("gizah")
+                            &&!fileName.contains("ephesos") && !fileName.contains("halikarnassos"))) {
                 try {
                     Wonder wonder = new Wonder(fileName.replace(".json", ""));
                     wondersList.add(wonder);
