@@ -32,7 +32,7 @@ public class Player {
 
     protected SecureRandom rand = new SecureRandom();
 
-    protected int defeatToken;
+    protected int defeatToken ;
 
     protected Strategy strategy;
 
@@ -156,7 +156,7 @@ public class Player {
         this.defeatToken += n;
     }
 
-    public Strategy getStrategy() {
+    protected Strategy getStrategy() {
         return strategy;
     }
 
@@ -253,7 +253,6 @@ public class Player {
                 enoughResources = false;
             }
         }
-
         if (chosenCard.isFree()) {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
@@ -261,19 +260,21 @@ public class Player {
             return true;
 
             //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
-        } else if (this.wonder.getAppliedEffects() !=null && this.freeCardPerAge.get(this.hand.get(0).getAge()) == false){
-            Effect effect ;
-            for (int i = 0; i < this.wonder.getEffects().size(); i++) {
-                effect= this.wonder.getEffects().get(i) ;
-                if (effect instanceof FreeCardPerAgeEffect){
-                    ((FreeCardPerAgeEffect) effect).applyEffect(this, null, null, null);
-                    //adding the effect to the appliedEffects
-                    this.wonder.getAppliedEffects().add(effect) ;
-                    //saying that the effect is used for the current age
-                    this.freeCardPerAge.put(this.hand.get(0).getAge() , true) ;
+        } else if (this.wonder.getAppliedEffects() != null) {
+            if (this.freeCardPerAge.get(this.hand.get(0).getAge()) == false) {
+                Effect effect;
+                for (int i = 0; i < this.wonder.getEffects().size(); i++) {
+                    effect = this.wonder.getEffects().get(i);
+                    if (effect instanceof FreeCardPerAgeEffect) {
+                        ((FreeCardPerAgeEffect) effect).applyEffect(this, null, null, null);
+                        //adding the effect to the appliedEffects
+                        this.wonder.getAppliedEffects().add(effect);
+                        //saying that the effect is used for the current age
+                        this.freeCardPerAge.put(this.hand.get(0).getAge(), true);
+                    }
                 }
             }
-            return true ;
+                return true;
         } else{ //not a free card sow check if the player have enough resources to build the card
             if (enoughResources) {
                 this.builtCards.add(this.chosenCard);

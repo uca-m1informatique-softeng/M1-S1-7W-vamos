@@ -12,7 +12,7 @@
   },
   "stage2": {
     "reward": {
-      "effect": "PlaySeventhCardEffect"
+       "PlaySeventhCardEffect" : null
     },
     "cost": {
       "WOOD": 2,
@@ -21,13 +21,7 @@
   },
   "stage3": {
     "reward": {
-      "effect": {
-        "ScienceChoiceEffect": [
-          "SCIENCE_COMPASS",
-          "SCIENCE_WHEEL",
-          "SCIENCE_TABLET"
-        ]
-      }
+        "ScienceChoiceEffect": null
     },
     "cost": {
       "CLAY": 3,

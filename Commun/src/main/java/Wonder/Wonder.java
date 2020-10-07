@@ -95,27 +95,30 @@ public class Wonder {
                     }
                 }
                 if (stage.has(STR_REWARD)) {
-                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length()-1; k++) {
+                    for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
                         if (stage.getJSONObject(STR_REWARD).has("ScienceChoiceEffect")) {
-                            this.effects.put(k , new ScienceChoiceEffect());
+                            this.effects.put(i + 1 , new ScienceChoiceEffect());
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("TookOneDiscardedCard")) {
                             //TODO Nicolas will implemente this effect soon.
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceEffect")) {
-                            JSONArray effectW = stage.getJSONArray("ResourceChoiceEffect");
+                            JSONArray effectW = stage.getJSONObject(STR_REWARD).getJSONArray("ResourceChoiceEffect");
                             ArrayList<Resource> resList = new ArrayList<>();
                             for (int l = 0; l < effectW.length(); l++) {
                                 resList.add(Resource.valueOf(effectW.getString(l)));
                             }
-                            this.effects.put(k,new ResourceChoiceEffect(resList));
-
-                        } else if (stage.getJSONObject(STR_REWARD).has("PlaySeventhCardEffect")) {
-                            this.effects.put(k, new PlaySeventhCardEffect());
+                            this.effects.put(i + 1,new ResourceChoiceEffect(resList));
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("PlaySeventhCardEffect")) {
+                            this.effects.put(i + 1, new PlaySeventhCardEffect());
                         } else if (stage.getJSONObject(STR_REWARD).has("CopyOneGuildEffect")) {
-                            this.effects.put(k, new CopyOneGuildEffect());
-                        } else if (stage.getJSONObject(STR_REWARD).has("freeCardPerAgeEffect")){
-                            this.effects.put(k , new FreeCardPerAgeEffect());
+                            this.effects.put(i + 1, new CopyOneGuildEffect());
+                        } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
+                            //this.effects.put(i + 1, new FreeCardPerAgeEffect());
+                        }
+                        else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceFromBoardEffect")){
+                            //TODO Implement ResourceChoiceFromBoardEffect this.effects.put(i + 1, new ResourceChoiceFromBoardEffect());
                         }
 
 
@@ -196,6 +199,10 @@ public class Wonder {
         return state == maxState;
     }
 
+    /**
+     * Return the effects of the stage wonder.
+     * @return key are the index of the step wonder who give the effect
+     */
     public HashMap<Integer , Effect> getEffects() {
         return effects;
     }

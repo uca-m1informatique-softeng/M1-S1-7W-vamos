@@ -62,7 +62,7 @@ public class WonderTest {
     void parseTest() throws IOException {
         Wonder w = new Wonder("alexandriaA");
         Wonder w2 = new Wonder("alexandriaB");
-        Wonder w3 = new Wonder("babylonB");
+        Wonder w3 = new Wonder("babylonA");
         Wonder w4 = new Wonder("babylonB");
         Wonder w5 = new Wonder("ephesosA");
         Wonder w6 = new Wonder("ephesosB");
@@ -75,8 +75,8 @@ public class WonderTest {
         Wonder w13 = new Wonder("rhodosA");
         Wonder w14 = new Wonder("rhodosB");
 
-        System.out.println(w2);
-        //assertTrue(w.getEffects().get(2) instanceof ResourceChoiceEffect);
+        //Display the good effect.
+        assertTrue(w.getEffects().get(2) instanceof ResourceChoiceEffect);
 
     }
 }
