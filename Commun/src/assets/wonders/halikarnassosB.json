@@ -1,0 +1,27 @@
+{
+  "producedRes": "LOOM" ,
+  "name" : "halikarnassos" ,
+  "stage1" : {
+    "reward" : {
+      "VICTORY": 2
+    },
+    "cost" : {
+      "ORE" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "VICTORY": 1
+    },
+    "cost" : {
+      "CLAY" : 3
+    }
+  },
+  "stage3" : {
+    "cost" : {
+      "GLASS" : 1,
+      "PAPYRUS" : 1,
+      "LOOM" : 1
+    }
+  }
+}
