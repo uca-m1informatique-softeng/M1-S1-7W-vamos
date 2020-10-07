@@ -20,7 +20,7 @@
 #.idea/inspectionProfiles/
 #.idea/vcs.xml
 
-**/*.jar
+**/*/target/*.jar
 
 #pour Eclipse
 **/.project
