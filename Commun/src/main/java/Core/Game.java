@@ -258,11 +258,6 @@ public class Game {
      */
     private void processTurn() {
         for(Player player : Game.playersArray) {
-            for (Card card : player.getBuiltCards()) {
-                if (card.getEffect() instanceof PlaySeventhCardEffect) {
-                    
-                }
-            }
             player.play();
         }
         this.swapHands(this.currentAge);
@@ -311,9 +306,19 @@ public class Game {
     }
 
     private void processEndAge() {
+        if(this.round == MAX_ROUNDS) {
+            for(Player player : Game.playersArray) {
+                for(Card card: player.getBuiltCards()){
+                    if(card.getEffect() instanceof PlaySeventhCardEffect){
+                        card.getEffect().applyEffect(player, null, null, null);
+                        Writer.write("Player was able to play seventh card");
+                    }
+                }
+            }
+        }
         if (this.round == MAX_ROUNDS && this.currentAge == MAX_AGE)
             this.state = GameState.END;
-        if (this.round == 6 && this.currentAge < MAX_AGE) {
+        if (this.round == MAX_ROUNDS && this.currentAge < MAX_AGE) {
             for (Player player : Game.playersArray)
                 player.getHand().clear();
             this.battle();

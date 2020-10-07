@@ -12,15 +12,15 @@ class ScienceChoiceEffectTest {
     void applyEffect() {
         Player player = new Player("Test_player");
         ScienceChoiceEffect sc = new ScienceChoiceEffect();
-        sc.applyEffect(player);
+        sc.applyEffect(player, null, null, null);
         assertEquals(1, player.getPoints().get(CardPoints.SCIENCE_COMPASS));
-        sc.applyEffect(player);
-        sc.applyEffect(player);
+        sc.applyEffect(player, null, null, null);
+        sc.applyEffect(player, null, null, null);
         assertEquals(3, player.getPoints().get(CardPoints.SCIENCE_COMPASS));
 
         player.getPoints().put(CardPoints.SCIENCE_COMPASS, player.getPoints().get(CardPoints.SCIENCE_COMPASS) - 2);
         player.getPoints().put(CardPoints.SCIENCE_WHEEL, player.getPoints().get(CardPoints.SCIENCE_WHEEL) + 1);
-        sc.applyEffect(player);
+        sc.applyEffect(player, null, null, null);
         assertEquals(1, player.getPoints().get(CardPoints.SCIENCE_TABLET));
 
         int best_score = player.getSciencePoint();

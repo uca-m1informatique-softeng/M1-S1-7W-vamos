@@ -1,6 +1,8 @@
 package Effects;
 
+import Card.CardColor;
 import Card.CardPoints;
+import Card.Resource;
 import Player.Player;
 
 import java.util.EnumMap;
@@ -14,7 +16,7 @@ public class ScienceChoiceEffect extends Effect {
      * Warning this method do side effect on the EnumMap player.points.
      * @param player
      */
-    public void applyEffect(Player player) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
         CardPoints best = CardPoints.SCIENCE_COMPASS;
         science_points = player.getPoints();
 

@@ -1,15 +1,14 @@
 package Effects;
 
-import Player.*;
 import Card.*;
+import Player.*;
 
-import java.util.ArrayList;
+import java.util.EnumMap;
 
 public class PlaySeventhCardEffect extends Effect{
-    void applyEffect(Player player, Strategy strategy) {
-        Action action = strategy.chooseAction(player);
-        ArrayList<Card> cards = player.getHand();
-        Card lastCard = cards.get(cards.size());
+
+    @Override
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
         player.play();
     }
 }

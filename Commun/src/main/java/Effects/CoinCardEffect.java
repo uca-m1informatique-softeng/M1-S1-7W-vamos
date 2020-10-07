@@ -1,10 +1,10 @@
 package Effects;
 
-import Card.Card;
-import Card.CardColor;
+import Card.*;
 import Player.Player;
 import Utility.Writer;
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 /**
  * Yellow cards in Age 2 can have card effects that grant the player additional coins
@@ -26,8 +26,8 @@ public class CoinCardEffect extends Effect {
         this.color = color;
         this.age = age;
     }
-
-    public void addCoins(Player player, CardColor color, Integer age) {
+    @Override
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
         if (color != null) {
             ArrayList<Card> builtCards = new ArrayList<Card>();
             builtCards.addAll(player.getBuiltCards());

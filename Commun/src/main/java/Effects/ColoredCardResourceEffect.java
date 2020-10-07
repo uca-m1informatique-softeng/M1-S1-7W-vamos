@@ -5,6 +5,7 @@ import Player.Player;
 import Utility.Writer;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 /*
  * This class defines the ability of a card of color x to let her owner
@@ -21,7 +22,7 @@ public class ColoredCardResourceEffect extends Effect{
         return cardColor;
     }
 
-    public void applyColor(Player player , CardColor cardColor){
+    public void applyEffect(Player player , CardColor cardColor, Integer age, EnumMap<Resource, Integer> cost){
         ArrayList<Card> previousPlayerBuiltCards = player.getPrevNeighbor().getBuiltCards();
         ArrayList<Card> NextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
 

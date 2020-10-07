@@ -1,6 +1,8 @@
 package Effects;
 
+import Card.CardColor;
 import Card.Resource;
+import Player.Player;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -43,7 +45,7 @@ public class ResourceChoiceEffect extends Effect {
      *          After effect.applyEffect(cost), cost will be 1 ORE and 1 STONE
      * @param cost Initial cost of a card.
      */
-    public void applyEffect(EnumMap<Resource, Integer> cost) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
         boolean applied = false;
 
         for (Resource neededResource : cost.keySet()) {

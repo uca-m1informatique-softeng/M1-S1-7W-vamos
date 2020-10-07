@@ -2,6 +2,7 @@ package Card;
 
 import Effects.ResourceChoiceEffect;
 import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 import java.util.EnumMap;
 
@@ -57,7 +58,7 @@ class ResourceChoiceEffectTest {
             oracle.put(Resource.COIN, 0);
 
             EnumMap<Resource, Integer> costAfterEffect = card2.getCost();
-            ((ResourceChoiceEffect) (card1.getEffect())).applyEffect(costAfterEffect);
+            ((ResourceChoiceEffect) (card1.getEffect())).applyEffect(null, null, null, costAfterEffect);
 
             assertEquals(costAfterEffect, oracle);
         } catch (IOException e) {

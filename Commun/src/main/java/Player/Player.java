@@ -31,8 +31,8 @@ public class Player {
     protected Player nextNeighbor;
 
     protected SecureRandom rand = new SecureRandom();
-  
-    protected int defeatToken ;
+
+    protected int defeatToken;
 
     protected Strategy strategy;
 
@@ -152,7 +152,7 @@ public class Player {
         this.defeatToken += n;
     }
 
-    protected Strategy getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
@@ -200,22 +200,22 @@ public class Player {
         for (Card card : this.builtCards) {
             if (card.getEffect() != null) {
                 if (card.getEffect() instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+                    ((ResourceChoiceEffect) (card.getEffect())).applyEffect(null, null, null, costAfterEffects);
                 }
-                if (card.getEffect() instanceof ColoredCardResourceEffect){
-                    ((ColoredCardResourceEffect) card.getEffect()).applyColor(this , card.getColor()) ;
+                if (card.getEffect() instanceof ColoredCardResourceEffect) {
+                    ((ColoredCardResourceEffect) card.getEffect()).applyEffect(this, card.getColor(), null, null);
                 }
-                if (card.getEffect() instanceof ShipOwnersGuildEffect){ //Ship Owners Guild Effect
-                    ((ShipOwnersGuildEffect) card.getEffect()).applyEffect(this);
+                if (card.getEffect() instanceof ShipOwnersGuildEffect) { //Ship Owners Guild Effect
+                    ((ShipOwnersGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
                 }
-                if (card.getEffect() instanceof BuildersGuildEffect){ //Builders Guild Card Effect
-                    ((BuildersGuildEffect) card.getEffect()).applyEffect(this);
+                if (card.getEffect() instanceof BuildersGuildEffect) { //Builders Guild Card Effect
+                    ((BuildersGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
                 }
-                if (card.getEffect() instanceof StrategistsGuildEffect){ //Strategist Guild Card Effect
-                    ((StrategistsGuildEffect) card.getEffect()).applyEffect(this);
+                if (card.getEffect() instanceof StrategistsGuildEffect) { //Strategist Guild Card Effect
+                    ((StrategistsGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
                 }
                 if (card.getEffect() instanceof CoinCardEffect) {
-                    ((CoinCardEffect) card.getEffect()).addCoins(this, card.getCoinCardEffect(), card.getAge());
+                    ((CoinCardEffect) card.getEffect()).applyEffect(this, card.getCoinCardEffect(), card.getAge(), null);
                 }
             }
             //The ScienceChoiceEffect is only apply at the end of the game.
@@ -225,7 +225,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) effect).applyEffect(costAfterEffects);
+                    ((ResourceChoiceEffect) effect).applyEffect(null, null, null, costAfterEffects);
                 }
             }
         }
@@ -349,7 +349,7 @@ public class Player {
 
         for (Card card : this.builtCards) {
             if (card.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(costAfterEffects);
+                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(null, null, null, costAfterEffects);
             }
         }
 
@@ -357,7 +357,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) effect).applyEffect(costAfterEffects);
+                    ((ResourceChoiceEffect) effect).applyEffect(null, null, null, costAfterEffects);
                 }
             }
         }
@@ -496,7 +496,7 @@ public class Player {
 
         for (Card c : this.builtCards) {
             if (c.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) c.getEffect()).applyEffect(cardCost);
+                ((ResourceChoiceEffect) c.getEffect()).applyEffect(null, null, null, cardCost);
             }
         }
 
@@ -515,7 +515,7 @@ public class Player {
     protected void endApplyEffect() {
         ScienceChoiceEffect o = new ScienceChoiceEffect();
         if (this.getBuiltCards().contains(o)) {
-            o.applyEffect(this);
+            o.applyEffect(this, null, null, null);
         }
     }
 

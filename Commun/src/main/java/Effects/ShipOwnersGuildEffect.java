@@ -4,6 +4,7 @@ import Card.*;
 import Player.Player;
 import Utility.Writer;
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 public class ShipOwnersGuildEffect extends Effect{
 
@@ -11,7 +12,8 @@ public class ShipOwnersGuildEffect extends Effect{
      * Give one victory point for each card of color purple, brown and grey build.
      * @param player
      */
-    public void applyEffect(Player player){
+    @Override
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost){
         ArrayList<Card> playerBuiltCards = new ArrayList<Card>();
         playerBuiltCards = player.getBuiltCards() ;
 
