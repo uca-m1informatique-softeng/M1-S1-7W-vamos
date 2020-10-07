@@ -3,12 +3,14 @@
   "name" : "ALEXANDRIA" ,
   "stage1" : {
     "reward" : {
-      "ResourceChoiceEffect" : [
-        "CLAY",
-        "STONE",
-        "ORE",
-        "WOOD"
-      ]
+      "effect" : {
+        "ResourceChoiceEffect" : [
+          "CLAY",
+          "STONE",
+          "ORE",
+          "WOOD"
+        ]
+      }
     },
     "cost" : {
       "CLAY" : 2
@@ -16,11 +18,13 @@
   },
   "stage2" : {
     "reward" : {
-      "ResourceChoiceEffect" : [
-        "GLASS",
-        "LOOM",
-        "PAPYRUS"
-      ]
+      "effect": {
+        "ResourceChoiceEffect" : [
+          "GLASS",
+          "LOOM",
+          "PAPYRUS"
+        ]
+      }
     },
     "cost" : {
       "WOOD" : 2

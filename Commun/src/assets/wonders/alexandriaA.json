@@ -11,12 +11,14 @@
   },
   "stage2" : {
     "reward" : {
-      "ResourceChoiceEffect" : [
-        "CLAY",
-        "STONE",
-        "ORE",
-        "WOOD"
-      ]
+      "effect":{
+        "ResourceChoiceEffect" : [
+          "CLAY",
+          "STONE",
+          "ORE",
+          "WOOD"
+        ]
+      }
     },
     "cost" : {
       "ORE" : 2

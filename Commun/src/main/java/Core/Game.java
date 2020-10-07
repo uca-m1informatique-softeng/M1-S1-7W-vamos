@@ -2,6 +2,7 @@ package Core;
 
 import Card.*;
 import Effects.CoinCardEffect;
+import Effects.PlaySeventhCardEffect;
 import Exceptions.WondersException;
 import Network.Connexion;
 import Player.*;
@@ -256,9 +257,14 @@ public class Game {
      * Function to process one round during the game
      */
     private void processTurn() {
-        for(Player player : Game.playersArray)
+        for(Player player : Game.playersArray) {
+            for (Card card : player.getBuiltCards()) {
+                if (card.getEffect() instanceof PlaySeventhCardEffect) {
+                    
+                }
+            }
             player.play();
-
+        }
         this.swapHands(this.currentAge);
     }
 

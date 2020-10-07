@@ -11,11 +11,13 @@
   },
   "stage2": {
     "reward": {
-      "scienceChoiceEffect": [
-        "SCIENCE_COMPASS",
-        "SCIENCE_WHEEL",
-        "SCIENCE_TABLET"
-      ]
+      "effect": {
+        "scienceChoiceEffect": [
+          "SCIENCE_COMPASS",
+          "SCIENCE_WHEEL",
+          "SCIENCE_TABLET"
+        ]
+      }
     },
     "cost": {
       "WOOD": 3

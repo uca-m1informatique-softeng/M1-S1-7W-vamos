@@ -10,5 +10,6 @@ public class PlaySeventhCardEffect extends Effect{
         Action action = strategy.chooseAction(player);
         ArrayList<Card> cards = player.getHand();
         Card lastCard = cards.get(cards.size());
+        player.play();
     }
 }

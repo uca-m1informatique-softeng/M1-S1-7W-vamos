@@ -3,7 +3,7 @@
   "name" : "OLYMPIA" ,
   "stage1" : {
     "reward" : {
-      "Effect" : "ResourceChoiceFromBoardEffect"
+      "effect" : "ResourceChoiceFromBoardEffect"
     },
     "cost" : {
       "WOOD" : 2
@@ -19,7 +19,7 @@
   },
   "stage3" : {
     "reward" : {
-      "Effect" : "CopyOneGuildEffect"
+      "effect" : "CopyOneGuildEffect"
     },
     "cost" : {
       "ORE" : 2 ,

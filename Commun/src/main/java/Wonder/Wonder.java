@@ -11,7 +11,9 @@ import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import static Utility.Constante.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -89,19 +91,21 @@ public class Wonder {
                         tmpMap.put(Utilities.getResourceByString(keyStr), value);
                     }
                 }
-                if (stage.has("reward")) {
+                if (stage.has(STR_REWARD)) {
                     for (int k = 0; k < stage.getJSONObject(STR_REWARD).names().length(); k++) {
-                        if (stage.getJSONObject(STR_REWARD).has("scienceChoiceEffect")) {
-                            this.effects.add(new ScienceChoiceEffect());
-                        } else if (stage.getJSONObject(STR_REWARD).has("resourceChoiceEffect")) {
-                            JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
-                            ArrayList<Resource> resList = new ArrayList<>();
-                            for (int l = 0; l < resourceChoiceEffect.length(); l++) {
-                                resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
+                        if (stage.getJSONObject(STR_REWARD).has("effect")) {
+                            if (stage.getJSONObject(STR_REWARD).getString("effect").equals("scienceChoiceEffect")) {
+                                this.effects.add(new ScienceChoiceEffect());
+                            } else if (stage.getJSONObject(STR_REWARD).getString("effect").equals("resourceChoiceEffect")) {
+                                JSONArray resourceChoiceEffect = stage.getJSONArray("resourceChoiceEffect");
+                                ArrayList<Resource> resList = new ArrayList<>();
+                                for (int l = 0; l < resourceChoiceEffect.length(); l++) {
+                                    resList.add(Resource.valueOf(resourceChoiceEffect.getString(l)));
+                                }
+                                this.effects.add(new ResourceChoiceEffect(resList));
+                            } else if (stage.getJSONObject(STR_REWARD).getString("effect").equals("playSeventhCardEffect")) {
+                                this.effects.add(new PlaySeventhCardEffect());
                             }
-                            this.effects.add(new ResourceChoiceEffect(resList));
-                        } else if (stage.getJSONObject(STR_REWARD).has("playSeventhCardEffect")){
-                            this.effects.add(new PlaySeventhCardEffect());
                         } else {
                             String keyStr = stage.getJSONObject(STR_REWARD).names().getString(k);
                             int value = stage.getJSONObject(STR_REWARD).getInt(keyStr);
