@@ -12,7 +12,7 @@
   "stage2": {
     "reward": {
       "effect": {
-        "scienceChoiceEffect": [
+        "ScienceChoiceEffect": [
           "SCIENCE_COMPASS",
           "SCIENCE_WHEEL",
           "SCIENCE_TABLET"

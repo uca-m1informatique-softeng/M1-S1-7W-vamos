@@ -11,7 +11,7 @@
   },
   "stage2" : {
     "reward" : {
-      "freeCardPerAgeEffect" : 1
+      "FreeCardPerAgeEffect" : null
     },
     "cost" : {
       "STONE" : 2

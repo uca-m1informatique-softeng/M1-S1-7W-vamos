@@ -19,7 +19,7 @@
   "stage2" : {
     "reward" : {
       "effect": {
-        "resourceChoiceEffect" : [
+        "ResourceChoiceEffect" : [
           "GLASS",
           "LOOM",
           "PAPYRUS"
