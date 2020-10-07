@@ -1,0 +1,10 @@
+{
+    "age": 2,
+    "CardColor": "YELLOW",
+    "name": "bazar",
+    "players": [
+        4,
+        7
+    ],
+    "coinCardEffect": "GREY"
+}

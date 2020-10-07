@@ -1,0 +1,37 @@
+{
+  "producedRes": "STONE",
+  "name": "GIZAH",
+  "stage1": {
+    "reward": {
+      "VICTORY": 3
+    },
+    "cost": {
+      "STONE": 2
+    }
+  },
+  "stage2": {
+    "reward": {
+      "VICTORY": 5
+    },
+    "cost": {
+      "WOOD": 3
+    }
+  },
+  "stage3": {
+    "reward": {
+      "VICTORY": 5
+    },
+    "cost": {
+      "CLAY": 3
+    }
+  },
+  "stage4": {
+    "reward": {
+      "VICTORY": 7
+    },
+    "cost": {
+      "STONE": 4,
+      "PAPYRUS": 1
+    }
+  }
+}

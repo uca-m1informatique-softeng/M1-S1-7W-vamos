@@ -1,0 +1,15 @@
+{
+    "age": 1,
+    "CardColor": "GREEN",
+    "cardPoints": {
+        "SCIENCE_COMPASS": 1
+    },
+    "cost": {
+        "LOOM": 1
+    },
+    "name": "apothecary",
+    "players": [
+        3,
+        5
+    ]
+}

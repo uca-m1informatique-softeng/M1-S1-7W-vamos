@@ -1,13 +1,15 @@
 package Card;
 
 import Effects.*;
+import Core.Game;
 import org.json.*;
 
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.stream.Collectors;
 
 import static Utility.Constante.*;
 
@@ -26,7 +28,10 @@ public class Card {
 
 
     public Card(String name, int players) throws IOException {
-        String content = Files.readString(Paths.get("Commun","src", "assets", "cards", name + ".json"));
+        InputStream is = Card.class.getClassLoader().getResourceAsStream("cards/"+name+".json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String content = br.lines().collect(Collectors.joining());
+        //String content = Files.readString(Paths.get("Commun","src", "main", "assets", "cards", name + ".json"));
         JSONObject card = new JSONObject(content);
 
         this.name = name;

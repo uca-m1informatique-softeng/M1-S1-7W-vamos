@@ -14,14 +14,14 @@ public class WonderTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        wonder = new Wonder("babylon");
+        wonder = new Wonder("babylonA");
     }
 
 
 
     @Test
     void testGetName() {
-        String str = "babylon";
+        String str = "babylonA";
         assertEquals(str,wonder.getName());
     }
 

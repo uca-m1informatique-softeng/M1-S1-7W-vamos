@@ -1,10 +1,14 @@
 package Card;
 
-import java.io.File;
-import java.io.FileFilter;
+import java.io.*;
+
 import Utility.Writer;
+
+import java.nio.file.DirectoryStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CardManager {
 
@@ -12,8 +16,24 @@ public class CardManager {
 
         ArrayList<Card> cards = new ArrayList<>();
 
-        File folder = new File("Commun/src/assets/cards");
+        InputStream is = Card.class.getClassLoader().getResourceAsStream("cards");
+        InputStreamReader isr = new InputStreamReader(is, UTF_8);
+        BufferedReader br = new BufferedReader(isr);
 
+        ArrayList<String> files = new ArrayList<>();
+        try {
+            while (br.ready()) {
+                files.add(br.readLine());
+            }
+            for (String fileName : files) {
+                cards.add(new Card(fileName.replace(".json", ""), players));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //File folder = new File("Commun/src/main/assets/cards");
+        /*
         File[] listOfFiles = folder.listFiles(pathname -> {
             String name = pathname.getName().toLowerCase();
             return name.endsWith(".json") && pathname.isFile();
@@ -34,7 +54,7 @@ public class CardManager {
                     Writer.write(fileName + " could not be read.");
                 }
             }
-        }
+        }*/
 
         return cards;
 

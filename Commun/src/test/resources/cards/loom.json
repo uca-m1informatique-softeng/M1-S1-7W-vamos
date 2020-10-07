@@ -1,0 +1,14 @@
+{
+    "age": 2,
+    "CardColor": "GREY",
+    "resource": {
+        "LOOM": 1
+    },
+    "name": "loom",
+    "players": [
+        3,
+        6,
+        3,
+        5
+    ]
+}

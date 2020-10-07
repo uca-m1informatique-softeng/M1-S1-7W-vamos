@@ -1,0 +1,11 @@
+{
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+        "ORE": 2,
+        "STONE": 1,
+        "LOOM": 1
+    },
+    "name": "strategists guild",
+    "StrategistsGuildEffect": "strategistsGuildEffect"
+}

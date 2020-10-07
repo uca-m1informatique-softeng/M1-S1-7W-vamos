@@ -25,9 +25,9 @@ public class BuildersGuildEffectTest {
     @Test
     public void applyEffect(){
         try{
-            Wonder wonder = new Wonder("gizah") ;
-            Wonder wonder2 = new Wonder("alexandria") ;
-            Wonder wonder3 = new Wonder("babylon") ;
+            Wonder wonder = new Wonder("gizahA") ;
+            Wonder wonder2 = new Wonder("alexandriaA") ;
+            Wonder wonder3 = new Wonder("babylonA") ;
             dumbPlayer.setWonder(wonder);
             dumbPlayer2.setWonder(wonder2);
             dumbPlayer3.setWonder(wonder3);

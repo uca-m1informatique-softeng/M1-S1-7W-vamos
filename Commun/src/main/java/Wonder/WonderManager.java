@@ -1,12 +1,14 @@
 package Wonder;
 
+import Card.Card;
 import Core.Game;
 import Exceptions.WondersException;
 import Utility.Writer;
 
-import java.io.File;
-import java.io.FileFilter;
+import java.io.*;
 import java.util.ArrayList;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * This class will handle wonders loading client side when the game starts.
@@ -18,7 +20,24 @@ public class WonderManager {
 
         ArrayList<Wonder> wondersList = new ArrayList<>();
 
-        File folder = new File("Commun/src/assets/wonders");
+        InputStream is = WonderManager.class.getClassLoader().getResourceAsStream("wonders");
+        InputStreamReader isr = new InputStreamReader(is, UTF_8);
+        BufferedReader br = new BufferedReader(isr);
+
+        ArrayList<String> files = new ArrayList<>();
+        try {
+            while (br.ready()) {
+                files.add(br.readLine());
+            }
+            for (String fileName : files) {
+                wondersList.add(new Wonder(fileName.replace(".json", "")));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        File folder = new File("resources/wonders");
 
         File[] listOfFiles = folder.listFiles(new FileFilter() {
             @Override
@@ -57,7 +76,7 @@ public class WonderManager {
                     Writer.write(fileName + " could not be read.");
                 }
             }
-        }
+        }*/
         return wondersList;
     }
 }

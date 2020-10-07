@@ -1,0 +1,15 @@
+{
+    "age": 2,
+    "CardColor": "RED",
+    "cardPoints": {
+        "MILITARY": 2
+    },
+    "cost": {
+        "STONE": 3
+    },
+    "name": "walls",
+    "players": [
+        3,
+        4
+    ]
+}

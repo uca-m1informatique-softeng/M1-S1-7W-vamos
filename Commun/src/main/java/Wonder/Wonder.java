@@ -12,13 +12,16 @@ import Utility.Writer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import static Utility.Constante.*;
-import java.io.IOException;
+
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of Wonders in the game.
@@ -66,7 +69,10 @@ public class Wonder {
      * @throws IOException if wonder's file could not be accessed
      */
     public Wonder(String name) throws IOException {
-        String content = Files.readString(Paths.get("Commun", "src", "assets", "wonders", name + ".json"));
+        //String content = Files.readString(Paths.get("resources", "wonders", name + ".json"));
+        InputStream is = Card.class.getClassLoader().getResourceAsStream("wonders/"+name+".json");
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        String content = br.lines().collect(Collectors.joining());
         JSONObject card = new JSONObject(content);
         ArrayList<String> stages = new ArrayList<>();
         for (String key : card.keySet()) {
