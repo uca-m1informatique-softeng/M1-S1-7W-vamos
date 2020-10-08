@@ -1,5 +1,8 @@
-package Card;
+package Effects;
 
+import Card.Card;
+import Card.CardColor ;
+import Card.CardPoints;
 import Player.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

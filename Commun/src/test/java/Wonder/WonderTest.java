@@ -1,4 +1,4 @@
-package Core;
+package Wonder;
 import Card.*;
 import Effects.ResourceChoiceEffect;
 import Effects.ScienceChoiceEffect;

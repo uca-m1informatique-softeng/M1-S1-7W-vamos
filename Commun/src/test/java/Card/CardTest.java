@@ -1,4 +1,4 @@
-package Core;
+package Card;
 
 import Card.*;
 import Effects.ScienceChoiceEffect;

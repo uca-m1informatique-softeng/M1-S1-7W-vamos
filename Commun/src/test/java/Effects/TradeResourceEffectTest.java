@@ -1,6 +1,7 @@
-package Card;
+package Effects;
 
-import Effects.TradeResourceEffect;
+import Card.Card;
+import Card.Resource ;
 import Player.*;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;

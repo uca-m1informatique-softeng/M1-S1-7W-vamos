@@ -1,6 +1,8 @@
-package Card;
+package Effects;
 
-import Effects.ResourceChoiceEffect;
+import Card.Card;
+import Card.Resource ;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -16,8 +18,8 @@ class ResourceChoiceEffectTest {
 
         try {
             Card card = new Card("treefarm", 6);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.WOOD);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.CLAY);
+            Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.WOOD);
+            Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.CLAY);
         } catch (IOException e) {
             e.printStackTrace();
             fail();
@@ -31,8 +33,8 @@ class ResourceChoiceEffectTest {
 
         try {
             Card card = new Card("mine", 6);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.ORE);
-            assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.STONE);
+            Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.ORE);
+            Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.STONE);
         } catch (IOException e) {
             e.printStackTrace();
             fail();

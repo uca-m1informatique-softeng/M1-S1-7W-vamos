@@ -1,5 +1,6 @@
-package Card;
+package Effects;
 
+import Card.Card;
 import Player.*;
 import Effects.CoinCardEffect;
 import org.junit.Test;

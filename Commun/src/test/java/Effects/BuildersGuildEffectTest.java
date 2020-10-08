@@ -1,5 +1,6 @@
-package Card;
+package Effects;
 
+import Card.CardPoints;
 import Wonder.Wonder;
 import Player.*;
 import org.junit.jupiter.api.BeforeEach;
