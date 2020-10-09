@@ -260,7 +260,7 @@ public class Player {
             return true;
 
             //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
-        } else if (this.wonder.getAppliedEffects() != null) {
+        } else if (this.wonder.getAppliedEffects() != null && this.freeCardPerAge.get(this.hand.get(0)) != null) {
             if (this.freeCardPerAge.get(this.hand.get(0).getAge()) == false) {
                 Effect effect;
                 for (int i = 0; i < this.wonder.getEffects().size(); i++) {

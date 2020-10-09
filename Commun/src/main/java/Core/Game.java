@@ -309,13 +309,15 @@ public class Game {
     private void checkEffect(Class effectClass) {
         for (Player player : Game.playersArray) {
             for (int i = 0; i < player.getWonder().effects.size(); i++) {
-                if ((player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
-                    if (effectClass == PlaySeventhCardEffect.class) {
-                        player.getWonder().getEffects().get(i).applyEffect(player, null, null, null);
-                        Writer.write("Player was able to play seventh card");
-                    } else if (effectClass == CopyOneGuildEffect.class) {
-                        player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null);
-                        Writer.write("Player was able to copy a guild");
+                if (player.getWonder().getEffects().get(i) != null) {
+                    if ((player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
+                        if (effectClass == PlaySeventhCardEffect.class) {
+                            player.getWonder().getEffects().get(i).applyEffect(player, null, null, null);
+                            Writer.write("Player was able to play seventh card");
+                        } else if (effectClass == CopyOneGuildEffect.class) {
+                            player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null);
+                            Writer.write("Player was able to copy a guild");
+                        }
                     }
                 }
             }
