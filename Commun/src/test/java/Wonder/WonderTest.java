@@ -1,5 +1,6 @@
 package Wonder;
 import Card.*;
+import Effects.FreeCardPerAgeEffect;
 import Effects.ResourceChoiceEffect;
 import Effects.ScienceChoiceEffect;
 import Wonder.Wonder;
@@ -77,6 +78,7 @@ public class WonderTest {
 
         //Display the good effect.
         assertTrue(w.getEffects().get(2) instanceof ResourceChoiceEffect);
+        assertTrue(w11.getEffects().get(2) instanceof FreeCardPerAgeEffect);
 
     }
 }
