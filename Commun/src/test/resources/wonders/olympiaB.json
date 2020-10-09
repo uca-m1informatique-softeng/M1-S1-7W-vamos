@@ -1,0 +1,29 @@
+{
+  "producedRes": "WOOD" ,
+  "name" : "OLYMPIA" ,
+  "stage1" : {
+    "reward" : {
+      "ResourceChoiceFromBoardEffect" : null
+    },
+    "cost" : {
+      "WOOD" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "VICTORY" : 5
+    },
+    "cost" : {
+      "STONE" : 2
+    }
+  },
+  "stage3" : {
+    "reward" : {
+      "CopyOneGuildEffect" : null
+    },
+    "cost" : {
+      "ORE" : 2 ,
+      "LOOM" : 1
+    }
+  }
+}
