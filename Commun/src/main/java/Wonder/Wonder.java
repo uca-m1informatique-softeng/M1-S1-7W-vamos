@@ -115,7 +115,7 @@ public class Wonder {
                         } else if (stage.getJSONObject(STR_REWARD).has("CopyOneGuildEffect")) {
                             this.effects.put(i + 1, new CopyOneGuildEffect());
                         } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
-                            //this.effects.put(i + 1, new FreeCardPerAgeEffect());
+                            this.effects.put(i + 1, new FreeCardPerAgeEffect());
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceFromBoardEffect")){
                             //TODO Implement ResourceChoiceFromBoardEffect this.effects.put(i + 1, new ResourceChoiceFromBoardEffect());
