@@ -10,7 +10,7 @@
 ## Notre projet
 Réalisation, en équipe ,d'un développement Java , du jeu Seven Wonders .
 
-##Usage
+## Usage
 Pour lancer le jeu : (edit configurations de la class Game)
 - En mode jeu : program arguments : nombre de joueurs game 
 Exemple : 3 game
