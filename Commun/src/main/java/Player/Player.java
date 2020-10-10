@@ -26,6 +26,8 @@ public class Player {
 
     protected Wonder wonder;
 
+    protected ArrayList<Effect> wonderEffect;
+
     protected Player prevNeighbor;
 
     protected Player nextNeighbor;
@@ -60,6 +62,7 @@ public class Player {
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
+        this.wonderEffect = new ArrayList<>();
 
         this.freeCardPerAge=new HashMap<>() ;
 
@@ -414,6 +417,7 @@ public class Player {
             //adding the stage Effect(if any) to the appliedEffects
             if (this.wonder.getEffects().get(this.wonder.getState()) != null){
                 this.wonder.getAppliedEffects().add(this.wonder.getEffects().get(this.wonder.getState())) ;
+                this.wonderEffect.add(this.wonder.getEffects().get(this.wonder.getState()));
             }
 
             return true;
@@ -539,9 +543,31 @@ public class Player {
      * Apply the effect to the player if he have it.
      */
     protected void endApplyEffect() {
-        ScienceChoiceEffect o = new ScienceChoiceEffect();
-        if (this.getBuiltCards().contains(o)) {
-            o.applyEffect(this, null, null, null);
+        boolean wonder_science_effect = false;
+        boolean card_science_effect = false;
+        for(Card c : this.getBuiltCards()){
+            if(c.getEffect() instanceof ScienceChoiceEffect){
+                card_science_effect = true;
+                for(Effect e : this.wonderEffect){
+                    if(e instanceof ScienceChoiceEffect){
+                        wonder_science_effect = true;
+                        ((ScienceChoiceEffect) e).applyCumulativeEffect(this);
+                        break;
+                    }
+                }
+                if(wonder_science_effect == false){ //we are still in the condition when c is a ScienceChoiceEffect
+                    c.getEffect().applyEffect(this, null, null, null);
+                }
+                break;
+            }
+        }
+        if(!card_science_effect){
+            for(Effect e : this.wonderEffect){
+                if(e instanceof ScienceChoiceEffect){
+                    e.applyEffect(this, null, null, null);
+                    break;
+                }
+            }
         }
     }
 

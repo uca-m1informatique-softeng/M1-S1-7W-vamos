@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import Card.*;
 import Effects.Effect;
 import Effects.FreeCardPerAgeEffect;
+import Effects.ScienceChoiceEffect;
 import Wonder.Wonder;
 import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
@@ -356,4 +357,28 @@ public class PlayerTest {
         }
     }
 
+
+    @Test
+    void endApplyEffect() throws IOException {
+        //Test if the ScienceChoiceEffect is applied
+        player.getBuiltCards().add(new Card("scientistsguild", 7));
+        assertEquals(0, player.getSciencePoint());
+        player.endApplyEffect();
+        assertEquals(1, player.getSciencePoint());
+        player.endApplyEffect();
+        assertEquals(4, player.getSciencePoint());
+        player.endApplyEffect();
+        assertEquals(9, player.getSciencePoint());
+
+        //Test if the cumulative effect is applied.
+        player.wonderEffect.add(new ScienceChoiceEffect());
+        player.endApplyEffect();
+        assertEquals(25, player.getSciencePoint());
+
+        //Test if ScienceCHoiceEffect is applied when there are no card effect
+        player.getBuiltCards().remove(0);
+        for(Card c : player.getBuiltCards()){ assertFalse(c.getEffect() instanceof ScienceChoiceEffect); }
+        player.endApplyEffect();
+        assertEquals(36, player.getSciencePoint());
+    }
 }
