@@ -27,24 +27,26 @@ public class MilitaryStrategyTest {
         player.setNextNeighbor(nextNeighbor);
         player.hand = new ArrayList<>();
         try {
-            player.hand.add(new Card("stockade", 6));
-            player.hand.add(new Card("barracks", 6));
-            player.hand.add(new Card("guardtower", 6));
+            player.hand.add(new Card("stockade", 6)); //military might
+            player.hand.add(new Card("barracks", 6)); //military might
+            player.hand.add(new Card("guardtower", 6)); //military might
             player.hand.add(new Card("orevein", 6));
-            player.hand.add(new Card("pawnshop", 6));
-            player.wonder = new Wonder("alexandriaA");
+            player.hand.add(new Card("pawnshop", 6)); //no military might
+            player.wonder = new Wonder("rhodosA");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-//TODO
-    @Ignore
+    @Test
     public void chooseAction1() {
         player.getResources().put(Resource.ORE, 1);
+        player.getResources().put(Resource.CLAY, 1);
+        player.getResources().put(Resource.WOOD, 1);
         Action action = strategy.chooseAction(player);
         try {
-            assertEquals(action.getCard().getName(), new Card("barracks", 6).getName());
+            //in chooseAction in MilitaryStrategy last card checked is guardtower so mostMilitary=guardtower
+            assertEquals(action.getCard().getName(), new Card("guardtower", 6).getName());
             assertEquals(action.getAction(), Action.BUILD);
         } catch (IOException e) {
             fail();
