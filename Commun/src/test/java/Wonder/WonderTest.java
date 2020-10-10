@@ -20,9 +20,7 @@ public class WonderTest {
     void setUp() throws IOException {
         wonder = new Wonder("babylonA");
     }
-
-
-
+    
     @Test
     void testGetName() {
         String str = "babylonA";
@@ -41,11 +39,10 @@ public class WonderTest {
         assertEquals(state,wonder.getMaxstate());
     }
 
-   //TODO
-    @Ignore
+    @Test
     void getCurrentRewardsFromUpgrade() {
         EnumMap<CardPoints,Integer> test = new EnumMap<CardPoints, Integer>(CardPoints.class);
-        test.put(CardPoints.VICTORY,5);
+        test.put(CardPoints.VICTORY,7);
         assertEquals(test,wonder.getCurrentRewardsFromUpgrade());
     }
 
