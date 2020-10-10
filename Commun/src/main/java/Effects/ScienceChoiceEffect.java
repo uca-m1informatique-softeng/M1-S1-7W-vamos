@@ -4,7 +4,6 @@ import Card.CardColor;
 import Card.CardPoints;
 import Card.Resource;
 import Player.Player;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 

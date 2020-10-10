@@ -2,7 +2,6 @@ package Effects;
 
 import Card.*;
 import Player.*;
-
 import java.util.EnumMap;
 
 public class PlaySeventhCardEffect extends Effect{

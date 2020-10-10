@@ -3,7 +3,6 @@ package Utility;
 import Card.CardPoints;
 import Card.Resource;
 import Exceptions.ParserException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

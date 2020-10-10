@@ -1,6 +1,7 @@
 package Exceptions;
 
-public class ParserException extends RuntimeException
-{
-    public ParserException(String msg) { super(msg);}
+public class ParserException extends RuntimeException {
+    public ParserException(String msg) {
+        super(msg);
+    }
 }

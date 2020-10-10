@@ -3,7 +3,6 @@ package Effects;
 import Card.*;
 import Player.Player;
 import Utility.Writer;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 

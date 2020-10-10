@@ -6,9 +6,7 @@ import Exceptions.WondersException;
 import Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-
 import static Utility.Constante.MAX_HAND;
 import static org.junit.jupiter.api.Assertions.*;
 

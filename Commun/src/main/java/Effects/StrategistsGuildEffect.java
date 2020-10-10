@@ -5,7 +5,6 @@ import Card.CardPoints;
 import Card.Resource;
 import Player.Player;
 import Utility.Writer;
-
 import java.util.EnumMap;
 
 public class StrategistsGuildEffect extends Effect{

@@ -3,17 +3,12 @@ package Wonder;
 import Card.*;
 import Core.Game;
 import Effects.*;
-import Utility.Constante;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import static Utility.Constante.*;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -161,24 +156,12 @@ public class Wonder {
         return maxState;
     }
 
-    public void setMaxstate(int maxStage) {
-        this.maxState = maxStage;
-    }
-
     public ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> getProp() {
         return prop;
     }
 
-    public void setProp(ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> prop) {
-        this.prop = prop;
-    }
-
     public Resource getProducedResource() {
         return producedResource;
-    }
-
-    public void setProducedResource(Resource producedResource) {
-        this.producedResource = producedResource;
     }
 
     public EnumMap<Resource, Integer> getCurrentUpgradeCost() {

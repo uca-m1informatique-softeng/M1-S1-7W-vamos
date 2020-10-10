@@ -1,10 +1,8 @@
 package Wonder;
+
 import Card.*;
 import Effects.FreeCardPerAgeEffect;
 import Effects.ResourceChoiceEffect;
-import Effects.ScienceChoiceEffect;
-import Wonder.Wonder;
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +18,7 @@ public class WonderTest {
     void setUp() throws IOException {
         wonder = new Wonder("babylonA");
     }
-    
+
     @Test
     void testGetName() {
         String str = "babylonA";

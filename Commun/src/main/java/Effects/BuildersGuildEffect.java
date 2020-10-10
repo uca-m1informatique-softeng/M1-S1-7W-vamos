@@ -6,7 +6,6 @@ import Card.Resource;
 import Wonder.Wonder;
 import Player.Player;
 import Utility.Writer;
-
 import java.util.EnumMap;
 
 public class BuildersGuildEffect extends Effect{

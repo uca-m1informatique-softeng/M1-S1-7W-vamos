@@ -3,7 +3,6 @@ package Effects;
 import Card.CardColor;
 import Card.Resource;
 import Player.Player;
-
 import java.util.EnumMap;
 
 /**

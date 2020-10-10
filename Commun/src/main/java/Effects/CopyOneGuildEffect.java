@@ -4,7 +4,6 @@ import Card.Card;
 import Card.CardColor;
 import Card.Resource;
 import Player.Player;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Random;

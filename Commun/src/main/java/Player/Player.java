@@ -4,7 +4,6 @@ import Effects.*;
 import Card.*;
 import Wonder.Wonder;
 import Utility.Writer;
-
 import java.security.SecureRandom;
 import java.util.*;
 
@@ -199,7 +198,7 @@ public class Player {
     /**
      * buildCard() ajoute la carte à l'inventaire builtCards, ainsi que les points et ressources SEULEMENT
      * si il à assez de ressource, sinon elle renvoie faux.
-     * Seul le cout en or est supprimmer.
+     * Seul le cout en or est supprimer.
      */
     public boolean buildCard() {
         boolean enoughResources = true;
@@ -244,7 +243,7 @@ public class Player {
             }
         }
 
-        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
+        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildCurrentCard
         for (Resource resource : costAfterEffects.keySet()) {
             if (costAfterEffects.get(resource) > this.resources.get(resource)) {
 
@@ -391,7 +390,7 @@ public class Player {
             }
         }
 
-        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildcurrentCard
+        // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildCurrentCard
         for (Resource resource : costAfterEffects.keySet()) {
             if (costAfterEffects.get(resource) > this.resources.get(resource)) {
 
@@ -427,7 +426,7 @@ public class Player {
             }
 
             return true;
-        } else { //if the player don't have enough resources to buy a stage rechoose action
+        } else { //if the player don't have enough resources to buy a stage re-choose action
             Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");
             return false;
         }

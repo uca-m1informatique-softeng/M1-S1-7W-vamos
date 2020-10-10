@@ -4,7 +4,6 @@ import Card.CardColor;
 import Card.Resource;
 import Player.Player;
 import Player.Action;
-
 import java.util.EnumMap;
 
 /**

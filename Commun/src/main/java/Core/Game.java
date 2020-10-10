@@ -3,7 +3,6 @@ package Core;
 import Card.*;
 import Effects.CoinCardEffect;
 import Effects.CopyOneGuildEffect;
-import Effects.Effect;
 import Effects.PlaySeventhCardEffect;
 import Exceptions.WondersException;
 import Network.Connexion;
@@ -13,7 +12,6 @@ import Utility.Utilities;
 import Utility.Writer;
 import Wonder.Wonder;
 import Wonder.WonderManager;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
