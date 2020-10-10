@@ -3,6 +3,7 @@ package Player;
 import Card.Card;
 import Card.Resource;
 import Card.CardColor;
+import Effects.ScienceChoiceEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,20 +35,25 @@ public class ScienceStrategyTest {
         player.setHand(tmp);
     }
 
-    /*
+
     @Test
     void chooseCard() {
         player.getResources().put(Resource.WOOD, 2);
         player.getResources().put(Resource.ORE, 2);
         player.getResources().put(Resource.PAPYRUS, 1);
-        assertTrue(player.strategy.chooseCard(player, CardColor.PURPLE));
-        assertEquals(c1, player.getChosenCard());
-        assertTrue(player.strategy.chooseCard(player, CardColor.BLUE));
-        assertEquals(c2, player.getChosenCard());
-        assertTrue(player.strategy.chooseCard(player, CardColor.PURPLE));
-        //TODO correct bug on chooseCard(Effect e)
-        //assertTrue(player.chooseCard(new ScienceChoiceEffect()));
+        ScienceStrategy ss = (ScienceStrategy) player.strategy;
+        //choose the purple card
+        assertTrue(ss.chooseCard(player, CardColor.PURPLE));
+        assertEquals(c1, ss.chosenCard);
+        //choose the blue card
+        assertTrue(ss.chooseCard(player, CardColor.BLUE));
+        assertEquals(c2, ss.chosenCard);
+        //choose card by this effect
+        assertTrue(ss.chooseCard(player, ScienceChoiceEffect.class));
+        assertTrue(ss.chooseCard(player, CardColor.PURPLE));
+        //Test when the choosen card don't have effect
+        player.hand.remove(c1);
+        assertFalse(ss.chooseCard(player, ScienceChoiceEffect.class));
     }
-     */
 
 }

@@ -11,7 +11,7 @@ public class ScienceStrategy extends Strategy {
     public Action chooseAction(Player player) {
 
         this.chosenCard = player.hand.get(0);
-        if(!chooseCard(player, new ScienceChoiceEffect())) {
+        if(!chooseCard(player, ScienceChoiceEffect.class)) {
             if (!chooseCard(player, CardColor.GREY)) {
                 if (!chooseCard(player, CardColor.BROWN)) {
                     chooseCard(player, CardColor.GREEN);
@@ -31,7 +31,7 @@ public class ScienceStrategy extends Strategy {
      * @param c
      * @return true if he find the card and set the choosenCard, otherwise he return false and set to a default card.
      */
-    private boolean chooseCard(Player player, CardColor c) {
+    protected boolean chooseCard(Player player, CardColor c) {
         this.chosenCard = player.hand.get(0); // default choice
         for(int i = 0; i < player.getHand().size(); i++){
             if(player.getHand().get(i).getColor() == c){
@@ -49,10 +49,10 @@ public class ScienceStrategy extends Strategy {
      * @param e
      * @return true/false find/don't find the wished card.
      */
-    private boolean chooseCard(Player player, Effect e){
+    protected boolean chooseCard(Player player, Class e){
         this.chosenCard = player.hand.get(0); // default choice
         for(int i = 0; i < player.getHand().size(); i++) {
-            if (player.getHand().get(i).getEffect() == e) {
+            if (player.getHand().get(i).getEffect() != null &&(player.getHand().get(i).getEffect()).getClass().equals(e)) {
                 if (player.isBuildable(player.getHand().get(i))) {
                     this.chosenCard = player.getHand().get(i);
                     return true;
