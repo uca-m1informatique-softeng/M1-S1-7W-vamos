@@ -65,6 +65,9 @@ public class Player {
         this.wonderEffect = new ArrayList<>();
 
         this.freeCardPerAge=new HashMap<>() ;
+        freeCardPerAge.put(1, false);
+        freeCardPerAge.put(2, false);
+        freeCardPerAge.put(3, false);
 
         Writer.write("Player " + name + " joined the game!");
     }
@@ -159,7 +162,7 @@ public class Player {
         this.defeatToken += n;
     }
 
-    protected Strategy getStrategy() {
+    public Strategy getStrategy() {
         return strategy;
     }
 
@@ -200,6 +203,10 @@ public class Player {
      */
     public boolean buildCard() {
         boolean enoughResources = true;
+        boolean haveFreeCardEffect = false;
+        for(Effect e : this.wonderEffect){
+            if (e instanceof FreeCardPerAgeEffect)
+                haveFreeCardEffect= true; }
 
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
@@ -263,8 +270,7 @@ public class Player {
             return true;
 
             //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
-        } else if (this.wonder.getAppliedEffects() != null && this.freeCardPerAge.get(this.hand.get(0)) != null) {
-            if (this.freeCardPerAge.get(this.hand.get(0).getAge()) == false) {
+        } else if (haveFreeCardEffect && this.freeCardPerAge.get(this.hand.get(0).getAge()) == false) {
                 Effect effect;
                 for (int i = 0; i < this.wonder.getEffects().size(); i++) {
                     effect = this.wonder.getEffects().get(i);
@@ -276,8 +282,8 @@ public class Player {
                         this.freeCardPerAge.put(this.hand.get(0).getAge(), true);
                     }
                 }
-            }
                 return true;
+
         } else{ //not a free card sow check if the player have enough resources to build the card
             if (enoughResources) {
                 this.builtCards.add(this.chosenCard);
