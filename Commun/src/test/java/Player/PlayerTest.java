@@ -5,6 +5,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import Card.*;
+import Wonder.Wonder;
 import Effects.Effect;
 import Effects.FreeCardPerAgeEffect;
 import Effects.ScienceChoiceEffect;
@@ -34,7 +35,7 @@ public class PlayerTest {
     SecureRandom rand;
 
     @BeforeEach
-    void setUp(){
+    void setUp() throws IOException {
         coins=0;
         militaryPoints=0 ;
         hand = new ArrayList<>(7);
@@ -49,6 +50,7 @@ public class PlayerTest {
         for (CardPoints p : CardPoints.values()) {
             this.points.put(p, 0);
         }
+        player.wonder = new Wonder("babylonA");
     }
 
     @Test
@@ -149,8 +151,7 @@ public class PlayerTest {
         assertEquals(hand,player.getHand());
     }
 
-    //TODO
-    @Ignore
+    @Test
     public void addPointsAndResources() {
         try {
             chosenCard0 = new Card("sawmill", 3);
@@ -172,14 +173,10 @@ public class PlayerTest {
         player.setChosenCard(chosenCard0);
         player.setCoins(1);
 
-        Effect effect = new FreeCardPerAgeEffect() ;
-        player.getWonder().getAppliedEffects().add(effect) ;
 
         player.buildCard();
-        System.out.println(this.chosenCard0.getCost().get(Resource.COIN));
-        System.out.println(player.getCoins());
-        assertEquals(1, player.getCoins());
-        assertEquals(0, player.getResources().get(Resource.WOOD));
+        assertEquals(0, player.getCoins());
+        assertEquals(2, player.getResources().get(Resource.WOOD));
 
         hand.add(chosenCard);
         player.setHand(hand);
@@ -337,8 +334,7 @@ public class PlayerTest {
         assertEquals(emptyMap, player.getBoughtResources());
     }
 
-    //TODO
-    @Ignore
+    @Test
     public void buildCardWithTradedResource() {
         try {
             Card baths = new Card("baths", 6);
@@ -349,6 +345,10 @@ public class PlayerTest {
             player.buildCard();
             assertTrue(player.getBoughtResources().containsKey(Resource.STONE));
             assertTrue(player.getBuiltCards().contains(baths));
+            //Try to buy 2 same card
+            assertTrue(player.getBuiltCards().contains(baths));
+            assertTrue(player.getChosenCard() == baths);
+            assertFalse(player.buildCard());
         } catch (IOException e) {
             e.printStackTrace();
             fail();
@@ -378,5 +378,15 @@ public class PlayerTest {
         for(Card c : player.getBuiltCards()){ assertFalse(c.getEffect() instanceof ScienceChoiceEffect); }
         player.endApplyEffect();
         assertEquals(36, player.getSciencePoint());
+    }
+
+    @Test
+    void alreadyBuilt() throws IOException {
+        Card card1 = new Card("baths", 3);
+        Card card2 = new Card("baths", 3);
+        Card card3 = new Card("academy", 3);
+        player.getBuiltCards().add(card1);
+        assertTrue(player.alreadyBuilt(card2));
+        assertFalse(player.alreadyBuilt(card3));
     }
 }

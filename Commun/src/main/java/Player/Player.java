@@ -201,6 +201,9 @@ public class Player {
      * Seul le cout en or est supprimer.
      */
     public boolean buildCard() {
+        //Player can't build twice the same card
+        if (alreadyBuilt(getChosenCard())) { return false;}
+
         boolean enoughResources = true;
         boolean haveFreeCardEffect = false;
         for(Effect e : this.wonderEffect){
@@ -600,6 +603,13 @@ public class Player {
                 this.name += " (Science)";
             }
         }
+    }
+
+    protected boolean alreadyBuilt (Card c){
+        for(Card card : this.getBuiltCards()){
+            if(card.getName() == c.getName()){ return true; }
+        }
+        return false;
     }
 
 }
