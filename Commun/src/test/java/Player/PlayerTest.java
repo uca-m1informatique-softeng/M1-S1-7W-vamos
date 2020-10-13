@@ -373,10 +373,16 @@ public class PlayerTest {
         player.endApplyEffect();
         assertEquals(25, player.getSciencePoint());
 
-        //Test if ScienceCHoiceEffect is applied when there are no card effect
+        //Test if ScienceCHoiceEffect is applied when there are just wonder effect
         player.getBuiltCards().remove(0);
         for(Card c : player.getBuiltCards()){ assertFalse(c.getEffect() instanceof ScienceChoiceEffect); }
         player.endApplyEffect();
+        assertEquals(36, player.getSciencePoint());
+
+        //Test with no ScienceEffect
+        player.wonderEffect.remove(0);
+        player.endApplyEffect();
+        //Points don't change because there are no science effect to apply.
         assertEquals(36, player.getSciencePoint());
     }
 
