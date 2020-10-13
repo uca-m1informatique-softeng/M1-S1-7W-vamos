@@ -15,7 +15,7 @@ public abstract class Effect {
 
     @Override
     public boolean equals(Object effect){
-        if (effect.getClass() != null) {
+        if (effect.getClass() != null && this.getClass() != null) {
             return this.getClass() == effect.getClass();
         } else {
             return false;
