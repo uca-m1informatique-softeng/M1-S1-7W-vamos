@@ -16,39 +16,6 @@
         <module>report</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>5.6.0</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20200518</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>3.0.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-java</artifactId>
-            <version>6.7.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>6.7.0</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- éventuellement à changer : encodage de vos fichiers -->
         <compiler.source>11</compiler.source> <!-- éventuellement à changer : version de java (sdk) utilisée pour le développement -->
@@ -60,26 +27,6 @@
     <build>
 
         <plugins>
-
-            <!-- pour que maven lance les tests junit 5 -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-            </plugin>
-
-
-            <!-- la génération de la  javadoc s'utilise avec "mvn site" -->
-
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>12</source> <!-- éventuellement à changer : version de java -->
-                    <target>12</target> <!-- éventuellement à changer : version de java -->
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
@@ -107,7 +54,6 @@
                     </execution>
                 </executions>
             </plugin>
-
 
         </plugins>
     </build>
