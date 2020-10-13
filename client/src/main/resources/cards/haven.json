@@ -1,0 +1,15 @@
+{
+    "age": 3,
+    "CardColor": "YELLOW",
+    "cost": {
+        "LOOM": 1,
+        "ORE": 1,
+        "WOOD": 1
+    },
+    "name": "haven",
+    "players": [
+        3,
+        4
+    ],
+    "coinCardEffect": "BROWN"
+}
