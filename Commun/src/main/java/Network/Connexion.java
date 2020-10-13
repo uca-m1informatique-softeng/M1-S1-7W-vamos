@@ -16,7 +16,7 @@ public enum Connexion {
             System.out.println("try");
             socket = IO.socket("http://127.0.0.1:10101");
         } catch (URISyntaxException ex) {
-            Writer.write("Couldn't connect to server !");
+            Writer.write("Couldn't connect to the server !");
         }
     }
 

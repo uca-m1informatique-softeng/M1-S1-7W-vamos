@@ -4,6 +4,7 @@ import Card.Card;
 import Card.CardPoints;
 import Card.Resource;
 import java.io.IOException;
+import Utility.Writer;
 import java.util.EnumMap;
 
 public class MilitaryStrategy extends Strategy {
@@ -44,7 +45,7 @@ public class MilitaryStrategy extends Strategy {
                 return new Action(mostMilitary, Action.DUMP);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Writer.write("Couldn't read cards altar and apothecary !");
         }
         return null;
     }
