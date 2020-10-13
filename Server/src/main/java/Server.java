@@ -1,9 +1,7 @@
 import com.corundumstudio.socketio.Configuration;
-import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.ConnectListener;
 
-import static Utility.Constante.* ;
+import static utility.Constante.* ;
 
 public class Server {
     public static void main(String[] args) {
