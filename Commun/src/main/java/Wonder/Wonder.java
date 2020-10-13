@@ -113,8 +113,17 @@ public class Wonder {
                         } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
                             this.effects.put(i + 1, new FreeCardPerAgeEffect());
                         }
-                        else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceFromBoardEffect")){
-                            //TODO Implement ResourceChoiceFromBoardEffect this.effects.put(i + 1, new ResourceChoiceFromBoardEffect());
+                        else if (stage.getJSONObject(STR_REWARD).has("TradeResourceEffect")){
+                            JSONObject tradeResourceEffect = stage.getJSONObject(STR_REWARD).getJSONObject("TradeResourceEffect");
+                            ArrayList<Resource> resList = new ArrayList<>();
+
+                            for (int j = 0; j < tradeResourceEffect.length(); j++) {
+                                resList.add(Resource.valueOf(tradeResourceEffect.getJSONArray("resourcesModified").getString(k)));  }
+                            Effect effect = new TradeResourceEffect(
+                                    tradeResourceEffect.getBoolean("prevPlayerAllowed"),
+                                    tradeResourceEffect.getBoolean("nextPlayerAllowed"),
+                                    resList);
+                            this.effects.put(i + 1, effect);
                         }
 
 

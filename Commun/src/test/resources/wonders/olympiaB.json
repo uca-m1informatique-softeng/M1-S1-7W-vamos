@@ -3,7 +3,16 @@
   "name" : "OLYMPIA" ,
   "stage1" : {
     "reward" : {
-      "ResourceChoiceFromBoardEffect" : null
+      "TradeResourceEffect": {
+        "nextPlayerAllowed": true,
+        "prevPlayerAllowed": true,
+        "resourcesModified": [
+          "CLAY",
+          "STONE",
+          "WOOD",
+          "ORE"
+        ]
+      }
     },
     "cost" : {
       "WOOD" : 2
