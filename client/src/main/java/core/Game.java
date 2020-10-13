@@ -134,7 +134,7 @@ public class Game {
      * Load the cards of the current age in the game engine
      */
     public void initDeck() throws IOException {
-        ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
+        ArrayList<Card> stack = (ArrayList<Card>) CardManager.getAgeNDeck(this.currentAge);
         this.deck = stack;
     }
 

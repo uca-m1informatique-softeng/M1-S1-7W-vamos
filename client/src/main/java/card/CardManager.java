@@ -2,13 +2,22 @@ package card;
 
 import java.io.*;
 import utility.Writer;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class CardManager {
 
-    private static ArrayList<Card> parseCardFiles(int players) throws IOException {
+    /**
+     * DON'T CALL ME !!
+     * I'm only here to override the default java implicit public constructor.
+     */
+    private CardManager() {
+        throw new IllegalStateException("Don't call this constructor !");
+    }
+
+    private static List<Card> parseCardFiles(int players) throws IOException {
 
         ArrayList<Card> cards = new ArrayList<>();
 
@@ -33,11 +42,11 @@ public class CardManager {
 
     }
 
-    public static ArrayList<Card> getAgeNDeck(int age) throws IOException {
+    public static List<Card> getAgeNDeck(int age) throws IOException {
 
         // Maximum amount of players since number of players isn't implemented yet
-        ArrayList<Card> cards = CardManager.parseCardFiles(7);
-        ArrayList<Card> res = new ArrayList<>();
+        List<Card> cards = CardManager.parseCardFiles(7);
+        List<Card> res = new ArrayList<>();
 
         for (Card c : cards) {
             if (c.getAge() == age) {
