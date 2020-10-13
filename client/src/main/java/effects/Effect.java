@@ -1,8 +1,11 @@
 package effects;
 
+import card.Card;
 import card.CardColor;
 import card.Resource;
 import player.Player;
+
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 /**
@@ -11,5 +14,5 @@ import java.util.EnumMap;
  * resources with your neighbors.
  */
 public abstract class Effect {
-    public abstract void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost);
+    public abstract void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards);
 }

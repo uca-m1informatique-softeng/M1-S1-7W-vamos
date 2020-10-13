@@ -368,7 +368,7 @@ public class PlayerTest {
         assertEquals(9, player.getSciencePoint());
 
         //Test if the cumulative effect is applied.
-        player.wonderEffect.add(new ScienceChoiceEffect());
+        player.wonderEffectNotApply.add(new ScienceChoiceEffect());
         player.endApplyEffect();
         assertEquals(25, player.getSciencePoint());
 
@@ -379,7 +379,7 @@ public class PlayerTest {
         assertEquals(36, player.getSciencePoint());
 
         //Test with no ScienceEffect
-        player.wonderEffect.remove(0);
+        player.wonderEffectNotApply.remove(0);
         player.endApplyEffect();
         //Points don't change because there are no science effect to apply.
         assertEquals(36, player.getSciencePoint());

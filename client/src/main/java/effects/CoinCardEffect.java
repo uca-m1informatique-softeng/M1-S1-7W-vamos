@@ -27,7 +27,7 @@ public class CoinCardEffect extends Effect {
         this.age = age;
     }
     @Override
-    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
         if (color != null) {
             ArrayList<Card> builtCards = new ArrayList<Card>();
             builtCards.addAll(player.getBuiltCards());

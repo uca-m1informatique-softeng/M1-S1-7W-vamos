@@ -112,6 +112,8 @@ public class Wonder {
                             this.effects.put(i + 1, new CopyOneGuildEffect());
                         } else if (stage.getJSONObject(STR_REWARD).has("FreeCardPerAgeEffect")){
                             this.effects.put(i + 1, new FreeCardPerAgeEffect());
+                        } else if (stage.getJSONObject(STR_REWARD).has("TookDiscardCardEffect")){
+                            this.effects.put(i + 1, new TookDiscardCardEffect());
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("TradeResourceEffect")){
                             JSONObject tradeResourceEffect = stage.getJSONObject(STR_REWARD).getJSONObject("TradeResourceEffect");

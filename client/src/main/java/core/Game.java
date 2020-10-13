@@ -1,9 +1,7 @@
 package core;
 
 import card.*;
-import effects.CoinCardEffect;
-import effects.CopyOneGuildEffect;
-import effects.PlaySeventhCardEffect;
+import effects.*;
 import network.Connexion;
 import player.*;
 import utility.RecapScore;
@@ -62,6 +60,11 @@ public class Game {
     public static Boolean debug = false;
 
     private static SecureRandom rand = new SecureRandom();
+
+    /**
+     * The field that contains the discard pile. It is used during the effect : TookDiscardedCardEffect.
+     */
+    private ArrayList<Card> discardCards = new ArrayList<Card>();
 
 
     public static void main(String[] args) throws IOException {
@@ -247,7 +250,16 @@ public class Game {
      */
     private void processTurn() {
         for (Player player : Game.playersArray) {
+            for(Effect e : player.getWonderEffectNotApply()){
+                if(e instanceof TookDiscardCardEffect){
+                    e.applyEffect(player, null, null, null, discardCards);
+                    player.getWonderEffectNotApply().remove(e);
+                    if(discardCards.contains(player.getChosenCard())) { discardCards.remove(player.getChosenCard()); }
+                    break;
+                }
+            }
             player.play();
+            if(player.getDumpCard() != null) { discardCards.add(player.getDumpCard()); }
         }
         this.swapHands(this.currentAge);
     }
@@ -300,10 +312,10 @@ public class Game {
                 if (player.getWonder().getEffects().get(i) != null) {
                     if ((player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
                         if (effectClass == PlaySeventhCardEffect.class) {
-                            player.getWonder().getEffects().get(i).applyEffect(player, null, null, null);
+                            player.getWonder().getEffects().get(i).applyEffect(player, null, null, null, null);
                             Writer.write("player was able to play seventh card");
                         } else if (effectClass == CopyOneGuildEffect.class) {
-                            player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null);
+                            player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null, null);
                             Writer.write("player was able to copy a guild");
                         }
                     }

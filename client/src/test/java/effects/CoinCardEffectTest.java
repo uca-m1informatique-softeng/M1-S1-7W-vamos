@@ -54,7 +54,7 @@ public class CoinCardEffectTest {
     public void testEffects(Player player, Card card){
 
         System.out.println("before " + player.getCoins());
-        ((CoinCardEffect) card.getEffect()).applyEffect(player, card.getCoinCardEffect(), card.getAge(), null);
+        ((CoinCardEffect) card.getEffect()).applyEffect(player, card.getCoinCardEffect(), card.getAge(), null, null);
         System.out.println("after " + player.getCoins());
 
     }

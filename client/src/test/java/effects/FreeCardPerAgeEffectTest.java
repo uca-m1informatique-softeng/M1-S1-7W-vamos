@@ -37,11 +37,11 @@ class FreeCardPerAgeEffectTest {
         //Test if he can build a card with a cost without resource.
         for(Card c : player.getHand()) { assertFalse(c.isFree()); }
         assertTrue(player.getBuiltCards().isEmpty());
-        freeCard.applyEffect(player, null, null, null);
+        freeCard.applyEffect(player, null, null, null, null);
         assertEquals(1, player.getBuiltCards().size());
 
         //Test if the chosen card is duplicate.
-        freeCard.applyEffect(player, null, null, null);
+        freeCard.applyEffect(player, null, null, null, null);
         assertNotEquals(player.getBuiltCards().get(0), player.getBuiltCards().get(1));
 
     }
