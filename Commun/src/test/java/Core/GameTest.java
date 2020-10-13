@@ -24,7 +24,7 @@ class GameTest {
 
 
     @BeforeEach
-    void setUp() throws WondersException {
+    void setUp() throws IOException {
         game = new Game(3);
 
         players = 3;

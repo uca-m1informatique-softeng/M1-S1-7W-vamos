@@ -135,7 +135,7 @@ public class Game {
         }
     }
 
-    public Game(int players) throws WondersException {
+    public Game(int players) throws IOException {
         if (players < MIN_PLAYER || players > MAX_PLAYER)
             throw new RuntimeException("You must launch the game with 3 or 4 players");
         Game.players = players;
