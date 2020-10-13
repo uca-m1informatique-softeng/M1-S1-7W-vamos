@@ -67,7 +67,7 @@ public class Game {
     private static SecureRandom rand = new SecureRandom();
 
 
-    public static void main(String[] args) throws WondersException, IOException {
+    public static void main(String[] args) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
 
         int nbPlayers = Integer.parseInt(args[0]);
