@@ -1,4 +1,5 @@
 package utility;
+
 import player.*;
 
 /**
@@ -29,7 +30,6 @@ public class RecapScore {
         sciencePoints = player.getSciencePoint();
         coins = player.getCoins();
         this.strategy = player.getStrategy().toString();
-        System.out.println(this.strategy);
     }
 
     public RecapScore(String victory, String totalPoint, String militaryPoints, String sciencePoints, String coins) {
@@ -42,9 +42,8 @@ public class RecapScore {
 
     /**
      * This method will add a recapScore object to the instantiated object.
-     * Thi instantiated object will then hold the data of every object which were added to it
-     *
-     * @param recapScore
+     * This instantiated object will then hold the data of every object which were added to it
+     * @param recapScore RecapScore instance to add data from
      */
     public void addRecap(RecapScore recapScore) {
         if (recapScore.victory)
