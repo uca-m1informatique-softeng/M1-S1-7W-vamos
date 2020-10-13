@@ -24,11 +24,10 @@ public class Card {
     private EnumMap<Resource, Integer> cost;
 
 
-    public Card(String name, int players) throws IOException {
+    public Card(String name, int players) {
         InputStream is = Card.class.getClassLoader().getResourceAsStream("cards/"+name+".json");
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String content = br.lines().collect(Collectors.joining());
-        //String content = Files.readString(Paths.get("Commun","src", "main", "assets", "cards", name + ".json"));
         JSONObject card = new JSONObject(content);
 
         this.name = name;
@@ -47,7 +46,7 @@ public class Card {
             this.cost.put(r, 0);
         }
 
-        Boolean validPlayerNb = false;
+        boolean validPlayerNb = false;
         if (card.has(STR_PLAYERS)) {
             for (int i = 0; i < card.getJSONArray(STR_PLAYERS).length(); i++) {
                 if (card.getJSONArray("players").getInt(i) <= players) {
@@ -139,13 +138,15 @@ public class Card {
                 this.effect = new ScienceChoiceEffect();
             }
 
-            if (card.has("coinCardEffect")) {
-                if (card.get("coinCardEffect").equals("PYRAMID")) {
+            String coinCardEffect = "coinCardEffect";
+
+            if (card.has(coinCardEffect)) {
+                if (card.get(coinCardEffect).equals("PYRAMID")) {
                     this.coinCardEffect = null;
                     this.effect = new CoinCardEffect(null, card.getInt("age"));
                 } else {
-                    this.coinCardEffect = CardColor.valueOf(card.getString("coinCardEffect"));
-                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString("coinCardEffect")), card.getInt("age"));
+                    this.coinCardEffect = CardColor.valueOf(card.getString(coinCardEffect));
+                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(coinCardEffect)), card.getInt("age"));
                 }
             }
         }
