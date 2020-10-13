@@ -1,8 +1,8 @@
 package stepdefs;
 
-import Card.Resource;
-import Player.Player;
-import Wonder.Wonder;
+import card.Resource;
+import player.Player;
+import wonder.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
