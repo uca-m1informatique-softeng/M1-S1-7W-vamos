@@ -27,15 +27,11 @@ public class DumbStrategyTest {
     void setup() {
         player = new Player("Billy Joe Bob");
         player.strategy = new DumbStrategy();
-        try {
-            oracle = new Card("academy", 6);
-            player.hand.add(new Card("altar", 6));
-            player.hand.add(new Card("claypit", 6));
-            player.hand.add(oracle);
-            player.hand.add(new Card("baths", 6));
-        } catch (IOException e) {
-            Writer.write("Card IOException") ;
-        }
+        oracle = new Card("academy", 6);
+        player.hand.add(new Card("altar", 6));
+        player.hand.add(new Card("claypit", 6));
+        player.hand.add(oracle);
+        player.hand.add(new Card("baths", 6));
         player.getStrategy().rand = rand ;
     }
 
