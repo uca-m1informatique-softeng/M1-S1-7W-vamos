@@ -207,8 +207,11 @@ public class Player {
         boolean enoughResources = true;
         boolean haveFreeCardEffect = false;
         for(Effect e : this.wonderEffect){
-            if (e instanceof FreeCardPerAgeEffect)
-                haveFreeCardEffect= true; }
+            if (e instanceof FreeCardPerAgeEffect) {
+                haveFreeCardEffect = true;
+                break;
+            }
+        }
 
         // Here, the resourceChoiceEffects are applied, in order to smartly choose the resources every card should produce in order to build currentCard
         EnumMap<Resource, Integer> costAfterEffects = this.chosenCard.getCost();
@@ -216,22 +219,22 @@ public class Player {
         for (Card card : this.builtCards) {
             if (card.getEffect() != null) {
                 if (card.getEffect() instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) (card.getEffect())).applyEffect(null, null, null, costAfterEffects);
+                    card.getEffect().applyEffect(null, null, null, costAfterEffects);
                 }
                 if (card.getEffect() instanceof ColoredCardResourceEffect) {
-                    ((ColoredCardResourceEffect) card.getEffect()).applyEffect(this, card.getColor(), null, null);
+                    card.getEffect().applyEffect(this, card.getColor(), null, null);
                 }
                 if (card.getEffect() instanceof ShipOwnersGuildEffect) { //Ship Owners Guild Effect
-                    ((ShipOwnersGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null);
                 }
                 if (card.getEffect() instanceof BuildersGuildEffect) { //Builders Guild Card Effect
-                    ((BuildersGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null);
                 }
                 if (card.getEffect() instanceof StrategistsGuildEffect) { //Strategist Guild Card Effect
-                    ((StrategistsGuildEffect) card.getEffect()).applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null);
                 }
                 if (card.getEffect() instanceof CoinCardEffect) {
-                    ((CoinCardEffect) card.getEffect()).applyEffect(this, card.getCoinCardEffect(), card.getAge(), null);
+                    card.getEffect().applyEffect(this, card.getCoinCardEffect(), card.getAge(), null);
                 }
             }
             //The ScienceChoiceEffect is only apply at the end of the game.
@@ -241,7 +244,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) effect).applyEffect(null, null, null, costAfterEffects);
+                    effect.applyEffect(null, null, null, costAfterEffects);
                 }
             }
         }
@@ -272,12 +275,12 @@ public class Player {
             return true;
 
             //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
-        } else if (haveFreeCardEffect && this.freeCardPerAge.get(this.hand.get(0).getAge()) == false) {
+        } else if (haveFreeCardEffect && !this.freeCardPerAge.get(this.hand.get(0).getAge())) {
                 Effect effect;
                 for (int i = 0; i < this.wonder.getEffects().size(); i++) {
                     effect = this.wonder.getEffects().get(i);
                     if (effect instanceof FreeCardPerAgeEffect) {
-                        ((FreeCardPerAgeEffect) effect).applyEffect(this, null, null, null);
+                        effect.applyEffect(this, null, null, null);
                         //adding the effect to the appliedEffects
                         this.wonder.getAppliedEffects().add(effect);
                         //saying that the effect is used for the current age
@@ -380,7 +383,7 @@ public class Player {
 
         for (Card card : this.builtCards) {
             if (card.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) (card.getEffect())).applyEffect(null, null, null, costAfterEffects);
+                card.getEffect().applyEffect(null, null, null, costAfterEffects);
             }
         }
 
@@ -388,7 +391,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    ((ResourceChoiceEffect) effect).applyEffect(null, null, null, costAfterEffects);
+                    effect.applyEffect(null, null, null, costAfterEffects);
                 }
             }
         }
@@ -534,7 +537,7 @@ public class Player {
 
         for (Card c : this.builtCards) {
             if (c.getEffect() instanceof ResourceChoiceEffect) {
-                ((ResourceChoiceEffect) c.getEffect()).applyEffect(null, null, null, cardCost);
+                c.getEffect().applyEffect(null, null, null, cardCost);
             }
         }
 
@@ -563,7 +566,7 @@ public class Player {
                         break;
                     }
                 }
-                if(wonder_science_effect == false){ //we are still in the condition when c is a ScienceChoiceEffect
+                if(!wonder_science_effect){ //we are still in the condition when c is a ScienceChoiceEffect
                     c.getEffect().applyEffect(this, null, null, null);
                 }
                 break;
@@ -584,10 +587,10 @@ public class Player {
      * In most cases, this method chooses a random strategy because few wonders are helpful in regards of strategy.
      */
     public void chooseStrategy() {
-        if (this.wonder.getName() == "rhodesA" || this.wonder.getName() == "rhodesB") {
+        if (this.wonder.getName().equals("rhodesA") || this.wonder.getName().equals("rhodesB")) {
             this.strategy = new MilitaryStrategy();
             this.name += " (Military)";
-        } else if (this.wonder.getName() == "babylonA") {
+        } else if (this.wonder.getName().equals("babylonA")) {
             this.strategy = new ScienceStrategy();
             this.name += " (Science)";
         } else {
@@ -607,7 +610,7 @@ public class Player {
 
     protected boolean alreadyBuilt (Card c){
         for(Card card : this.getBuiltCards()){
-            if(card.getName() == c.getName()){ return true; }
+            if(card.getName().equals(c.getName())) { return true; }
         }
         return false;
     }
