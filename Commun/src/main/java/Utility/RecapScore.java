@@ -29,7 +29,6 @@ public class RecapScore {
         sciencePoints = player.getSciencePoint();
         coins = player.getCoins();
         this.strategy = player.getStrategy().toString();
-        System.out.println(this.strategy);
     }
 
     public RecapScore(String victory, String totalPoint, String militaryPoints, String sciencePoints, String coins) {
