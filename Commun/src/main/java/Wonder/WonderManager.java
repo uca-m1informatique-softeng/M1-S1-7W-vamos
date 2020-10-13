@@ -1,6 +1,8 @@
 package Wonder;
 
 import Exceptions.WondersException;
+import Utility.Writer;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -12,11 +14,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class WonderManager {
 
-    public static ArrayList<Wonder> parseWonders() throws WondersException {
+    public static ArrayList<Wonder> parseWonders() throws IOException {
 
         ArrayList<Wonder> wondersList = new ArrayList<>();
 
         InputStream is = WonderManager.class.getClassLoader().getResourceAsStream("wonders");
+        if (is == null) throw new IOException();
         InputStreamReader isr = new InputStreamReader(is, UTF_8);
         BufferedReader br = new BufferedReader(isr);
 
@@ -29,7 +32,7 @@ public class WonderManager {
                 wondersList.add(new Wonder(fileName.replace(".json", "")));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Writer.write("Couldn't read wonders directory !");
         }
 
         /*
