@@ -7,7 +7,7 @@ Server/Commun,Player,DumbStrategy,0,32,0,0,0,5,0,2,0,2
 Server/Commun,Player,Player,549,1238,74,94,94,214,52,73,3,37
 Server/Commun,Utility,RecapScore,101,0,2,0,25,0,13,0,12,0
 Server/Commun,Utility,Tuple,0,9,0,0,0,4,0,1,0,1
-Server/Commun,Utility,Writer,45,4,7,1,20,3,8,1,4,1
+Server/Commun,Utility,Writer,50,4,9,1,21,3,9,1,4,1
 Server/Commun,Utility,Utilities,35,48,4,10,13,22,5,10,2,2
 Server/Commun,Network,Connexion,68,0,0,0,20,0,6,0,6,0
 Server/Commun,Exceptions,WondersException,4,0,0,0,2,0,1,0,1,0
@@ -18,7 +18,7 @@ Server/Commun,Effects,TradeResourceEffect,1,21,0,0,1,8,1,4,1,4
 Server/Commun,Effects,ColoredCardResourceEffect,83,6,12,0,18,3,8,1,2,1
 Server/Commun,Effects,CoinCardEffect,145,21,20,0,28,7,12,1,1,1
 Server/Commun,Effects,CopyOneGuildEffect,50,8,4,0,10,2,4,1,2,1
-Server/Commun,Effects,Effect,7,13,2,2,2,3,3,2,1,2
+Server/Commun,Effects,Effect,0,3,0,0,0,1,0,1,0,1
 Server/Commun,Effects,ShipOwnersGuildEffect,52,3,8,0,10,1,5,1,1,1
 Server/Commun,Effects,ScienceChoiceEffect,2,371,1,25,1,59,1,15,0,3
 Server/Commun,Effects,StrategistsGuildEffect,25,3,0,0,6,1,1,1,1,1
@@ -31,5 +31,5 @@ Server/Commun,Card,Resource,0,84,0,0,0,2,0,1,0,1
 Server/Commun,Card,CardColor,0,74,0,0,0,2,0,1,0,1
 Server/Commun,Card,CardPoints,0,54,0,0,0,2,0,1,0,1
 Server/Commun,Card,Card,6,491,1,51,2,83,3,36,2,11
-Server/Commun,Core,Game,992,246,111,13,194,50,74,15,12,11
+Server/Commun,Core,Game,996,246,111,13,197,50,74,15,12,11
 Server/Commun,Core,GameState,0,44,0,0,0,2,0,1,0,1

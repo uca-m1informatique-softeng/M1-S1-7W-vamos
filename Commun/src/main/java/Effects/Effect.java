@@ -12,18 +12,4 @@ import java.util.EnumMap;
  */
 public abstract class Effect {
     public abstract void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost);
-
-    @Override
-    public boolean equals(Object effect){
-        if (effect.getClass() != null && this.getClass() != null) {
-            return this.getClass() == effect.getClass();
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }

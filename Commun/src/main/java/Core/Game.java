@@ -12,6 +12,9 @@ import Utility.Utilities;
 import Utility.Writer;
 import Wonder.Wonder;
 import Wonder.WonderManager;
+
+import javax.imageio.IIOException;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -64,7 +67,7 @@ public class Game {
     private static SecureRandom rand = new SecureRandom();
 
 
-    public static void main(String[] args) throws WondersException {
+    public static void main(String[] args) throws WondersException, IOException {
         StringBuilder stringBuilder = new StringBuilder();
 
         int nbPlayers = Integer.parseInt(args[0]);
@@ -81,7 +84,11 @@ public class Game {
                 game.process();
             Writer.close();
             Utilities.displayGameOutput();
-            Writer.deleteFile();
+            try {
+                Writer.deleteFile();
+            } catch (IOException e) {
+                Writer.write("Could not delete file !");
+            }
         }
         /**
          *  Stats mode, no game output is displayed, only end game stats.
@@ -143,7 +150,7 @@ public class Game {
     /**
      * Load the cards of the current age in the game engine
      */
-    public void initDeck() {
+    public void initDeck() throws IOException {
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         this.deck = stack;
     }
@@ -177,7 +184,7 @@ public class Game {
     /**
      * Main function of the game, process based on Game's current state
      */
-    private void process() {
+    private void process() throws IOException {
         switch (this.state) {
             case START:
                 Writer.write("The game started with " + Game.players + "players on the board");
@@ -297,7 +304,7 @@ public class Game {
         }
     }
 
-    private void processNewAge() {
+    private void processNewAge() throws IOException {
         initDeck();
         initPlayersHand();
         Writer.write("\n" + BLUE_UNDERLINED + "---- CURRENT AGE : " + currentAge + " ----" + RESET + "\n");
@@ -323,7 +330,7 @@ public class Game {
         }
     }
 
-    private void processEndAge() {
+    private void processEndAge() throws IOException {
         if (this.round == MAX_ROUNDS) {
             this.checkEffect(PlaySeventhCardEffect.class);
         }

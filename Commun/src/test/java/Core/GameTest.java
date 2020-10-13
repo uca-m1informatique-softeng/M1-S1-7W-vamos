@@ -6,6 +6,8 @@ import Exceptions.WondersException;
 import Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import static Utility.Constante.MAX_HAND;
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,7 +70,7 @@ class GameTest {
 
 
     @Test
-    public void initDeck(){
+    public void initDeck() throws IOException {
         ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
