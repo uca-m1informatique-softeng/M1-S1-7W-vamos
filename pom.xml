@@ -11,8 +11,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>Server</module>
-        <module>Commun</module>
+        <module>server</module>
+        <module>client</module>
         <module>report</module>
     </modules>
 
