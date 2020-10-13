@@ -1,9 +1,12 @@
 package network;
 
 import utility.Writer;
+import utility.RecapScore;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
 public enum Connexion {
@@ -35,6 +38,11 @@ public enum Connexion {
         socket.emit(tag , msg);
     }
 
+    public void sendStats(String tag, RecapScore score)
+    {
+        System.out.println("sending player score...");
+        socket.emit(tag , new JSONObject(score));
+    }
     public void receiveMessage(String event, Emitter.Listener fn) {
         socket.on(event, fn);
     }

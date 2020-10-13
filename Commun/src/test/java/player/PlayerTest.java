@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import card.*;
 import wonder.Wonder;
-import effects.ScienceChoiceEffect;
+import wonder.Wonder;
+import effects.*;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -391,5 +393,23 @@ public class PlayerTest {
         player.getBuiltCards().add(card1);
         assertTrue(player.alreadyBuilt(card2));
         assertFalse(player.alreadyBuilt(card3));
+    }
+
+    @Test
+    void buyStageWonderWithEffect() throws IOException {
+        player.wonder = new Wonder("olympiaB");
+        for(Resource resource : player.getResources().keySet()){
+            player.getResources().put(resource, 10);
+        }
+        assertTrue(player.buildStageWonder());
+        assertTrue(player.buildStageWonder());
+        assertTrue(player.buildStageWonder());
+        boolean check = false;
+        for(Effect e : player.wonder.getAppliedEffects()){
+            if(e instanceof TradeResourceEffect){
+                check = true;
+            }
+        }
+        assertTrue(check);
     }
 }

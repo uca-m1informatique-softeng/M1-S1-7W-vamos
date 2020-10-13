@@ -12,4 +12,8 @@ public abstract class Strategy {
      */
     public abstract Action chooseAction(Player player);
 
+    @Override
+    public String toString() {
+       return getClass().getName();
+    }
 }

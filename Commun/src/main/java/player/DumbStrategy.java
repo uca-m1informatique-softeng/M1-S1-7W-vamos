@@ -27,4 +27,5 @@ public class DumbStrategy extends Strategy {
 
         return new Action(player.getHand().get(index), action);
     }
+
 }

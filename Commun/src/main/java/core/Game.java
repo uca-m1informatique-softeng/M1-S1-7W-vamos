@@ -13,6 +13,7 @@ import wonder.Wonder;
 import wonder.WonderManager;
 
 import java.io.IOException;
+import org.json.JSONObject;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -108,25 +109,11 @@ public class Game {
             }
 
             System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
+            Connexion.CONNEXION.startListening();
             for (int i = 0; i < playersArray.size(); i++) {
-                recapScores[i].processAvgScore(NB_GAMES_STATS_MODE);
-                double victoires = (recapScores[i].getNbVictory() / (double) NB_GAMES_STATS_MODE) * 100;
-                String joueur = playersArray.get(i).toString();
-                System.out.println(joueur + " gets an average score of  " + recapScores[i].getAvgScore());
-                System.out.println(joueur + " has a  " + victoires + "% winrate");
-                System.out.println(joueur + " gets " + recapScores[i].getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
-                System.out.println(joueur + " gets   " + recapScores[i].getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
-                System.out.println(joueur + " gets " + recapScores[i].getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
-
-                stringBuilder.append(joueur + " gets an average score of  " + recapScores[i].getAvgScore() + "\n");
-                stringBuilder.append(joueur + " has a  " + victoires + "% winrate \n");
-                stringBuilder.append(joueur + " gets " + recapScores[i].getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game \n");
-                stringBuilder.append(joueur + " gets   " + recapScores[i].getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game \n");
-                stringBuilder.append(joueur + " gets " + recapScores[i].getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game \n");
+                Connexion.CONNEXION.sendStats(STATS,recapScores[i]);
             }
             //Stats sent to the server
-            Connexion.CONNEXION.startListening();
-            Connexion.CONNEXION.sendMessage(STATS, stringBuilder);
             //Connexion.CONNEXION.stopListening();
         } else {
             throw new RuntimeException("Mode inexistant.");
@@ -200,7 +187,7 @@ public class Game {
             case END:
                 this.addVictoryPoints();
                 this.displayPlayersRanking();
-                Writer.write("core.Game has ended .. exiting");
+                Writer.write("Game has ended .. exiting");
                 this.state = GameState.EXIT;
                 break;
             default:
