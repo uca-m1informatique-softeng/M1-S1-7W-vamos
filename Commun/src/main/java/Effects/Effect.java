@@ -15,6 +15,15 @@ public abstract class Effect {
 
     @Override
     public boolean equals(Object effect){
-        return this.getClass() == effect.getClass();
+        if (effect.getClass() != null) {
+            return this.getClass() == effect.getClass();
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }

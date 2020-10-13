@@ -24,12 +24,12 @@ Server/Commun,Effects,ScienceChoiceEffect,2,371,1,25,1,59,1,15,0,3
 Server/Commun,Effects,StrategistsGuildEffect,25,3,0,0,6,1,1,1,1,1
 Server/Commun,Effects,ResourceChoiceEffect,4,67,1,11,1,15,2,8,1,3
 Server/Commun,Effects,FreeCardPerAgeEffect,0,27,0,0,0,7,0,2,0,2
-Server/Commun,Wonder,Wonder,90,373,14,32,14,66,13,25,3,12
+Server/Commun,Wonder,Wonder,94,375,15,33,14,67,14,25,3,12
 Server/Commun,Wonder,WonderManager,6,57,0,4,3,12,1,3,1,1
 Server/Commun,Card,CardManager,6,88,0,8,3,20,1,6,1,2
 Server/Commun,Card,Resource,0,84,0,0,0,2,0,1,0,1
 Server/Commun,Card,CardColor,0,74,0,0,0,2,0,1,0,1
 Server/Commun,Card,CardPoints,0,54,0,0,0,2,0,1,0,1
 Server/Commun,Card,Card,6,491,1,51,2,83,3,36,2,11
-Server/Commun,Core,Game,992,246,111,13,194,50,74,15,12,11
+Server/Commun,Core,Game,982,256,110,14,192,52,73,16,12,11
 Server/Commun,Core,GameState,0,44,0,0,0,2,0,1,0,1
