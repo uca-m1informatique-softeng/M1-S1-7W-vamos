@@ -1,5 +1,6 @@
 package Network;
 
+import Utility.Writer;
 import Utility.RecapScore;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -18,7 +19,7 @@ public enum Connexion {
             System.out.println("try");
             socket = IO.socket("http://127.0.0.1:10101");
         } catch (URISyntaxException ex) {
-            ex.printStackTrace();
+            Writer.write("Couldn't connect to the server !");
         }
     }
 

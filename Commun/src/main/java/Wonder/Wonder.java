@@ -3,6 +3,7 @@ package Wonder;
 import Card.*;
 import Core.Game;
 import Effects.*;
+import Utility.Tuple;
 import Utility.Utilities;
 import Utility.Writer;
 import org.json.JSONArray;
@@ -35,7 +36,7 @@ public class Wonder {
      * Basically the list is
      * {  [{COST : REWARD }] , .... , N }
      */
-    private ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> prop;
+    private ArrayList<Tuple<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> prop;
 
     /**
      * The resource that the wonder produces, player will be given one after the choose their wonders.
@@ -61,8 +62,8 @@ public class Wonder {
      * @throws IOException if wonder's file could not be accessed
      */
     public Wonder(String name) throws IOException {
-        //String content = Files.readString(Paths.get("resources", "wonders", name + ".json"));
         InputStream is = Card.class.getClassLoader().getResourceAsStream("wonders/"+name+".json");
+        if (is == null) throw new IOException();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String content = br.lines().collect(Collectors.joining());
         JSONObject card = new JSONObject(content);
@@ -133,8 +134,7 @@ public class Wonder {
                         }
                     }
                 }
-                HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> tmpPropMap = new HashMap<>();
-                tmpPropMap.put(tmpMap, tmpMap2);
+                Tuple<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> tmpPropMap = new Tuple<>(tmpMap, tmpMap2);
                 prop.add(tmpPropMap);
             }
         }
@@ -165,7 +165,7 @@ public class Wonder {
         return maxState;
     }
 
-    public ArrayList<HashMap<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> getProp() {
+    public ArrayList<Tuple<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>>> getProp() {
         return prop;
     }
 
@@ -174,17 +174,11 @@ public class Wonder {
     }
 
     public EnumMap<Resource, Integer> getCurrentUpgradeCost() {
-        for (Map.Entry<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> test : prop.get(state).entrySet())
-            return test.getKey();
-
-        return null;
+        return prop.get(state).x;
     }
 
     public EnumMap<CardPoints, Integer> getCurrentRewardsFromUpgrade() {
-        for (Map.Entry<EnumMap<Resource, Integer>, EnumMap<CardPoints, Integer>> test : prop.get(state).entrySet())
-            return test.getValue();
-        return null;
-
+        return  prop.get(state).y;
     }
 
     public boolean isWonderFinished() {

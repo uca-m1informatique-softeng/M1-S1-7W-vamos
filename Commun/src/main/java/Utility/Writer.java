@@ -2,6 +2,8 @@ package Utility;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Gestion d'écriture des fichiers sorties
  * On a 2 fichiers sorties qui enregistrent :
@@ -49,10 +51,12 @@ public final class Writer
             e.getStackTrace();
         }
     }
-    public static void deleteFile()
-    {
-        if(mode) new File(NOM_FICHIER).delete();
+    public static void deleteFile() throws IOException {
+        if (mode) {
+            if (!new File(NOM_FICHIER).delete()) throw new IOException("Could not delete File !");
+        }
     }
+
     public static void write(String str)
     {
         try

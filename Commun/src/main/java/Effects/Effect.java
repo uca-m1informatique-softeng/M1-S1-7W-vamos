@@ -12,11 +12,4 @@ import java.util.EnumMap;
  */
 public abstract class Effect {
     public abstract void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost);
-    public boolean equals(Effect effect){
-        if(this == effect){
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
