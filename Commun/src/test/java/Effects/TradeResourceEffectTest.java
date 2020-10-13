@@ -52,4 +52,17 @@ class TradeResourceEffectTest {
         }
     }
 
+    @Test
+    void wonderTradeResourceEffect() {
+        ArrayList<Resource> resList = new ArrayList<>();
+        resList.add(Resource.CLAY);
+        resList.add(Resource.STONE);
+        resList.add(Resource.WOOD);
+        resList.add(Resource.ORE);
+        TradeResourceEffect effect =new TradeResourceEffect(true, true, resList);
+        assertTrue(effect.isPrevPlayerAllowed());
+        assertTrue(effect.isNextPlayerAllowed());
+        assertEquals(resList, effect.resourcesModified);
+
+    }
 }

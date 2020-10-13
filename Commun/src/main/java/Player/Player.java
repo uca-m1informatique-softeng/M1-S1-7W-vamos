@@ -414,10 +414,13 @@ public class Player {
         }
 
         if (enoughResources) { //enoughResources so the player construct the stage of the wonder
+            int coinCost =  0;
+            if(this.wonder.getCurrentUpgradeCost().containsKey(Resource.COIN)) {
+                coinCost = this.wonder.getCurrentUpgradeCost().get(Resource.COIN); }
             this.addWonderReward();
             this.wonder.setState(wonder.getState() + 1);
             //removing the cost in coin of the wonder
-            this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - this.chosenCard.getCost().get(Resource.COIN));
+            this.resources.put(Resource.COIN, this.resources.get(Resource.COIN) - coinCost);
             Writer.write(this.name + " builds a stage of wonder.");
             this.hand.remove(this.chosenCard);
             this.clearBoughtResources();
