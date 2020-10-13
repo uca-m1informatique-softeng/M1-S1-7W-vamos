@@ -7,13 +7,6 @@ import java.security.SecureRandom;
  * DumbStrategy is a random strategy implementation, that should represent a "dumb" player.
  */
 public class DumbStrategy extends Strategy {
-
-    /**
-     * Random values generator
-     */
-    SecureRandom rand = new SecureRandom();
-
-
     /**
      * Implementation of Strategy::chooseAction(Player player).
      * This implementation chooses a random card and a random action available from its hand.

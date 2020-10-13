@@ -3,34 +3,53 @@ package Player;
 import Card.Card;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+
+import static org.mockito.ArgumentMatchers.anyInt;
+import Utility.Writer;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
+import java.security.SecureRandom;
 
+@ExtendWith(MockitoExtension.class)
 public class DumbStrategyTest {
 
-    private Player player;
+    Player player;
+    Card oracle ;
+
+    @Mock
+    SecureRandom rand;
 
     @BeforeEach
     void setup() {
         player = new Player("Billy Joe Bob");
         player.strategy = new DumbStrategy();
         try {
+            oracle = new Card("academy", 6);
             player.hand.add(new Card("altar", 6));
             player.hand.add(new Card("claypit", 6));
+            player.hand.add(oracle);
+            player.hand.add(new Card("baths", 6));
         } catch (IOException e) {
-
+            Writer.write("Card IOException") ;
         }
+        player.getStrategy().rand = rand ;
     }
 
     @Test
     public void chooseAction() {
-        Action action = player.getStrategy().chooseAction(player);
-        String cardName = action.getCard().getName();
+        when(rand.nextInt(player.hand.size())) .thenReturn(2) ;
+        when(rand.nextInt(3) ) .thenReturn(1) ;
 
-        assertTrue(cardName == "altar" || cardName == "claypit");
-        assertTrue( action.getAction() == Action.BUILD ||
-                            action.getAction() == Action.WONDER ||
-                            action.getAction() == Action.DUMP);
+        Action action = player.getStrategy().chooseAction(player);
+
+        assertEquals(Action.WONDER, action.getAction());
+        assertEquals(oracle, action.getCard());
+
     }
 
 }
