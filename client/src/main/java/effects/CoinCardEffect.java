@@ -1,6 +1,7 @@
 package effects;
 
 import card.*;
+import org.json.JSONObject;
 import player.Player;
 import utility.Writer;
 import java.util.ArrayList;
@@ -28,41 +29,35 @@ public class CoinCardEffect extends Effect {
     }
     @Override
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
+        JSONObject cards = new JSONObject();
+        cards.put("brownCards", 0);
+        cards.put("greyCards", 0);
+        cards.put("yellowCards", 0);
         if (color != null) {
             ArrayList<Card> builtCards = new ArrayList<Card>();
             builtCards.addAll(player.getBuiltCards());
-            //get neighbors built cards for age 2 card
+            /**
+             *  get neighbors built cards for age 2 card
+             */
             if (age == 2) {
                 builtCards.addAll(player.getPrevNeighbor().getBuiltCards());
                 builtCards.addAll(player.getNextNeighbor().getBuiltCards());
             }
-            //iterate through all built cards and distinguish effects of brown and grey cards
-            for (Card card : builtCards) {
-                switch (card.getColor()) {
-                    case BROWN:
-                        brownCards += 1;
-                        break;
-                    case GREY:
-                        greyCards += 1;
-                        break;
-                    case YELLOW:
-                        yellowCards += 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
+            /**
+             * iterate through all built cards and distinguish effects of brown and grey cards
+             */
+            cards = Card.countCards(cards, builtCards);
         }
         Integer oldCoins = player.getCoins();
         if (color == CardColor.BROWN) {
-            player.setCoins(player.getCoins() + brownCards);
+            player.setCoins(player.getCoins() + cards.getInt("brownCards"));
         } else if (color == CardColor.GREY) {
             if (age == 3) {
-                greyCards *= 2;
+                cards.put("greyCards", cards.getInt("greyCards") * 2);
             }
-            player.setCoins(player.getCoins() + greyCards);
+            player.setCoins(player.getCoins() + cards.getInt("greyCards"));
         } else if (color == CardColor.YELLOW) {
-            player.setCoins(player.getCoins() + yellowCards);
+            player.setCoins(player.getCoins() + cards.getInt("yellowCards"));
         } else if (color == null) {
             player.setCoins(player.getCoins() + (player.getWonder().getState() * 3));
         }

@@ -3,12 +3,14 @@ package core;
 import card.*;
 import effects.*;
 import network.Connexion;
+import org.json.JSONObject;
 import player.*;
 import utility.RecapScore;
 import utility.Utilities;
 import utility.Writer;
 import wonder.Wonder;
 import wonder.WonderManager;
+
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -71,7 +73,7 @@ public class Game {
         StringBuilder stringBuilder = new StringBuilder();
 
         int nbPlayers = Integer.parseInt(args[0]);
-        String typePartie  = args[1];
+        String typePartie = args[1];
         /**
          String typePartie  = GAME_MODE;
          /*
@@ -112,7 +114,7 @@ public class Game {
             System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
             Connexion.CONNEXION.startListening();
             for (int i = 0; i < playersArray.size(); i++) {
-                Connexion.CONNEXION.sendStats(STATS,recapScores[i]);
+                Connexion.CONNEXION.sendStats(STATS, recapScores[i]);
             }
             //Stats sent to the server
             //Connexion.CONNEXION.stopListening();
@@ -201,44 +203,37 @@ public class Game {
      * This function adds victory points to the player based on the card he built
      */
     private void addVictoryPoints() {
+        JSONObject cardCount = new JSONObject();
+        cardCount.put("brownCards", 0);
+        cardCount.put("greyCards", 0);
+        cardCount.put("yellowCards", 0);
+
         for (Player player : this.playersArray) {
-            Integer brownCards = 0;
-            Integer greyCards = 0;
-            Integer yellowCards = 0;
             ArrayList<Card> builtCards = player.getBuiltCards();
-            for (Card card : builtCards) {
-                switch (card.getColor()) {
-                    case BROWN:
-                        brownCards += 1;
-                        break;
-                    case GREY:
-                        greyCards += 1;
-                        break;
-                    case YELLOW:
-                        yellowCards += 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
+            cardCount = Card.countCards(cardCount, builtCards);
             for (Card card : player.getBuiltCards()) {
                 if (card.getEffect() instanceof CoinCardEffect) {
+                    /**
+                     * coincardeffect is null when it is applied on a wonder (e.g. "PYRAMID" for card "arena)
+                     * otherwise it is assigned a color
+                     */
                     if (card.getCoinCardEffect() == null) {
                         player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
                         continue;
-                    }
-                    switch (card.getCoinCardEffect()) {
-                        case BROWN:
-                            player.getPoints().put(CardPoints.VICTORY, brownCards);
-                            break;
-                        case GREY:
-                            player.getPoints().put(CardPoints.VICTORY, greyCards);
-                            break;
-                        case YELLOW:
-                            player.getPoints().put(CardPoints.VICTORY, yellowCards);
-                            break;
-                        default:
-                            break;
+                    } else {
+                        switch (card.getCoinCardEffect()) {
+                            case BROWN:
+                                player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("brownCards"));
+                                break;
+                            case GREY:
+                                player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("greyCards"));
+                                break;
+                            case YELLOW:
+                                player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("yellowCards"));
+                                break;
+                            default:
+                        }
+                        break;
                     }
                 }
             }
@@ -250,16 +245,20 @@ public class Game {
      */
     private void processTurn() {
         for (Player player : Game.playersArray) {
-            for(Effect e : player.getWonderEffectNotApply()){
-                if(e instanceof TookDiscardCardEffect){
+            for (Effect e : player.getWonderEffectNotApply()) {
+                if (e instanceof TookDiscardCardEffect) {
                     e.applyEffect(player, null, null, null, discardCards);
                     player.getWonderEffectNotApply().remove(e);
-                    if(discardCards.contains(player.getChosenCard())) { discardCards.remove(player.getChosenCard()); }
+                    if (discardCards.contains(player.getChosenCard())) {
+                        discardCards.remove(player.getChosenCard());
+                    }
                     break;
                 }
             }
             player.play();
-            if(player.getDumpCard() != null) { discardCards.add(player.getDumpCard()); }
+            if (player.getDumpCard() != null) {
+                discardCards.add(player.getDumpCard());
+            }
         }
         this.swapHands(this.currentAge);
     }

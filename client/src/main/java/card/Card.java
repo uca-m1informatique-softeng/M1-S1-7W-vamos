@@ -151,6 +151,25 @@ public class Card {
         }
     }
 
+    public static JSONObject countCards(JSONObject cardCount, ArrayList<Card> builtCards){
+        for (Card card : builtCards) {
+            switch (card.getColor()) {
+                case BROWN:
+                    cardCount.put("brownCards", cardCount.getInt("brownCards") + 1);
+                    break;
+                case GREY:
+                    cardCount.put("greyCards", cardCount.getInt("greyCards") + 1);
+                    break;
+                case YELLOW:
+                    cardCount.put("yellowCards", cardCount.getInt("yellowCards") + 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cardCount;
+    }
+
     public String getName() {
         return name;
     }
