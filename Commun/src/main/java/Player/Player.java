@@ -332,7 +332,7 @@ public class Player {
                 }
             }
         }
-
+        //check if neighbor has requested resources in stock
         for (Resource r : neighbor.getResources().keySet()) {
             if (resourceToBuy.equals(r) && neighbor.getResources().get(r) >= quantity) {
 
@@ -429,7 +429,7 @@ public class Player {
             }
 
             return true;
-        } else { //if the player don't have enough resources to buy a stage re-choose action
+        } else { //if the player doesn't have enough resources to buy a stage re-choose action
             Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");
             return false;
         }

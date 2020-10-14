@@ -209,7 +209,6 @@ public class Wonder {
             Resource res1 = entry1.getKey();
             int nbRes1 = entry1.getValue();
             if (playerResources.get(res1) == null) return false;
-
             else if (playerResources.get(res1) < nbRes1) return false;
         }
 
