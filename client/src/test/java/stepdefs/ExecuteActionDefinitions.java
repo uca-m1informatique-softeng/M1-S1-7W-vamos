@@ -1,19 +1,18 @@
 package stepdefs;
 
-import Card.*;
-import Player.*;
-import Core.*;
-import Exceptions.WondersException;
-import Wonder.Wonder;
+import card.*;
+import player.*;
+import core.*;
+import exceptions.WondersException;
+import wonder.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-
-import static Utility.Constante.MAX_HAND;
 import static org.junit.Assert.*;
+import static utility.Constante.MAX_HAND;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -25,7 +24,7 @@ public class ExecuteActionDefinitions {
     ArrayList<Card> availableCards = new ArrayList<Card>();
     Game game = new Game(3);
 
-    public ExecuteActionDefinitions() throws WondersException {
+    public ExecuteActionDefinitions() throws WondersException, IOException {
         player.setPrevNeighbor(neighbor_prev);
         player.setNextNeighbor(neighbor_next);
     }
