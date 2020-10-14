@@ -1,0 +1,16 @@
+{
+    "age": 3,
+    "CardColor": "GREEN",
+    "cardPoints": {
+        "SCIENCE_COMPASS": 1
+    },
+    "cost": {
+        "STONE": 3,
+        "GLASS": 1
+    },
+    "name": "academy",
+    "players": [
+        3,
+        7
+    ]
+}

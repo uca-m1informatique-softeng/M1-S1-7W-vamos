@@ -1,0 +1,28 @@
+{
+  "producedRes": "LOOM" ,
+  "name" : "HALIKARNASSOS" ,
+  "stage1" : {
+    "reward" : {
+      "VICTORY": 3
+    },
+    "cost" : {
+      "CLAY" : 2
+    }
+  },
+  "stage2" : {
+    "reward" : {
+      "TookDiscardCardEffect" : null
+    },
+    "cost" : {
+      "ORE" : 3
+    }
+  },
+  "stage3" : {
+    "reward" : {
+      "VICTORY" : 7
+    },
+    "cost" : {
+      "LOOM" : 2
+    }
+  }
+}

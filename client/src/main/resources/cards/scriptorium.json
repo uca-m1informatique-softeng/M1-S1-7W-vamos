@@ -1,0 +1,15 @@
+{
+    "age": 1,
+    "CardColor": "GREEN",
+    "cardPoints": {
+        "SCIENCE_TABLET": 1
+    },
+    "cost": {
+        "PAPYRUS": 1
+    },
+    "name": "scriptorium",
+    "players": [
+        3,
+        4
+    ]
+}

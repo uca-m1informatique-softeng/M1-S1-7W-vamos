@@ -1,0 +1,15 @@
+{
+    "age": 1,
+    "CardColor": "BLUE",
+    "cardPoints": {
+        "VICTORY": 3
+    },
+    "cost": {
+        "STONE": 1
+    },
+    "name": "baths",
+    "players": [
+        3,
+        7
+    ]
+}

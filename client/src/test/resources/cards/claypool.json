@@ -1,0 +1,12 @@
+{
+    "age": 1,
+    "CardColor": "BROWN",
+    "resource": {
+        "CLAY": 1
+    },
+    "name": "clay pool",
+    "players": [
+        3,
+        5
+    ]
+}

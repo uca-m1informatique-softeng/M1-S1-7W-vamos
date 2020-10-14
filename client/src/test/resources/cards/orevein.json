@@ -1,0 +1,12 @@
+{
+    "age": 1,
+    "CardColor": "BROWN",
+    "resource": {
+        "ORE": 1
+    },
+    "name": "ore vein",
+    "players": [
+        3,
+        5
+    ]
+}

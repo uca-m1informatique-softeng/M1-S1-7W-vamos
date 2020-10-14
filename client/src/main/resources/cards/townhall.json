@@ -1,0 +1,18 @@
+{
+    "age": 3,
+    "CardColor": "BLUE",
+    "cardPoints": {
+        "VICTORY": 6
+    },
+    "cost": {
+        "STONE": 2,
+        "ORE": 1,
+        "GLASS": 1
+    },
+    "name": "townhall",
+    "players": [
+        3,
+        5,
+        6
+    ]
+}

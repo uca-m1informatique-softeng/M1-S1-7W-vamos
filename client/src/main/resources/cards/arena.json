@@ -1,0 +1,15 @@
+{
+    "age": 3,
+    "CardColor": "YELLOW",
+    "cost": {
+        "ORE": 1,
+        "STONE": 2
+    },
+    "name": "arena",
+    "players": [
+        3,
+        5,
+        7
+    ],
+    "coinCardEffect": "PYRAMID"
+}

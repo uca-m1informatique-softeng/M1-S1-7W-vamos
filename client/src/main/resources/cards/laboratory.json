@@ -1,0 +1,16 @@
+{
+    "age": 2,
+    "CardColor": "GREEN",
+    "cardPoints": {
+        "SCIENCE_WHEEL": 1
+    },
+    "cost": {
+        "CLAY": 2,
+        "PAPYRUS": 1
+    },
+    "name": "laboratory",
+    "players": [
+        3,
+        5
+    ]
+}

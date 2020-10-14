@@ -1,0 +1,11 @@
+{
+    "age": 3,
+    "CardColor": "PURPLE",
+    "cost": {
+        "LOOM": 1,
+        "PAPYRUS": 1,
+        "CLAY": 3
+    },
+    "name": "philosophers guild",
+    "coloredCardResourceEffect": "GREEN"
+}
