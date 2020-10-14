@@ -12,6 +12,10 @@ import java.util.EnumMap;
 
 import static org.junit.Assert.*;
 
+/**
+ * currently the success of the tests is a little bit arbitrary because it depends on the
+ * strategy a player will chose and also the cards he has on his hands
+ */
 public class CommerceDefinitions {
     Resource resource;
     Player player = new Player("main");
