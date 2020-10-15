@@ -19,6 +19,7 @@ public class Card {
     private int age;
     private int players;
     private Effect effect;
+    private ArrayList<String> freeCards;
     private EnumMap<CardPoints, Integer> cardPoints;
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
@@ -26,6 +27,7 @@ public class Card {
 
     public Card(String name, int players) throws IOException {
         InputStream is = Card.class.getClassLoader().getResourceAsStream("cards/"+name+".json");
+        if (is == null) throw new IOException();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String content = br.lines().collect(Collectors.joining());
         //String content = Files.readString(Paths.get("Commun","src", "main", "assets", "cards", name + ".json"));
@@ -47,7 +49,7 @@ public class Card {
             this.cost.put(r, 0);
         }
 
-        Boolean validPlayerNb = false;
+        boolean validPlayerNb = false;
         if (card.has(STR_PLAYERS)) {
             for (int i = 0; i < card.getJSONArray(STR_PLAYERS).length(); i++) {
                 if (card.getJSONArray("players").getInt(i) <= players) {
@@ -208,6 +210,10 @@ public class Card {
 
     public EnumMap<Resource, Integer> getCost() {
         return cost;
+    }
+
+    public ArrayList<String> getFreeCards() {
+        return freeCards;
     }
 
     public Boolean isFree() {
