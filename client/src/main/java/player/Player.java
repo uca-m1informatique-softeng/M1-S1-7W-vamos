@@ -25,7 +25,7 @@ public class Player {
 
     protected Wonder wonder;
 
-    protected ArrayList<Effect> wonderEffect;
+    protected ArrayList<Effect> wonderEffectNotApply;
 
     protected Player prevNeighbor;
 
@@ -38,6 +38,8 @@ public class Player {
     protected Strategy strategy;
 
     protected HashMap<Integer , Boolean> freeCardPerAge ; //{1:true or false ...} true if the effect was used in the age(the key) and false if not
+
+    protected Card dumpCard;
 
 
     public Player(String name) {
@@ -61,7 +63,7 @@ public class Player {
 
         this.builtCards = new ArrayList<>();
         this.hand = new ArrayList<>();
-        this.wonderEffect = new ArrayList<>();
+        this.wonderEffectNotApply = new ArrayList<>();
 
         this.freeCardPerAge=new HashMap<>() ;
         freeCardPerAge.put(1, false);
@@ -169,7 +171,14 @@ public class Player {
         this.strategy = strategy;
     }
 
+    public Card getDumpCard() { return dumpCard; }
+
+    public void setDumpCard(Card dumpCard) { this.dumpCard = dumpCard; }
+
+    public ArrayList<Effect> getWonderEffectNotApply() { return wonderEffectNotApply; }
+
     public void play() {
+        this.setDumpCard(null);
         Action action = this.strategy.chooseAction(this);
         this.chosenCard = action.getCard();
 
@@ -191,6 +200,7 @@ public class Player {
      */
     public void dumpCard() {
         this.hand.remove(this.chosenCard);
+        this.setDumpCard(this.chosenCard);
         Writer.write(this.name + " has obtained 3 coins for tossing");
         this.setCoins(this.getCoins() + 3);
     }
@@ -202,11 +212,11 @@ public class Player {
      */
     public boolean buildCard() {
         //player can't build twice the same card
-        if (alreadyBuilt(getChosenCard())) { return false;}
+        if (alreadyBuilt(getChosenCard())) return false;
 
         boolean enoughResources = true;
         boolean haveFreeCardEffect = false;
-        for(Effect e : this.wonderEffect){
+        for(Effect e : this.wonderEffectNotApply){
             if (e instanceof FreeCardPerAgeEffect) {
                 haveFreeCardEffect = true;
                 break;
@@ -219,22 +229,22 @@ public class Player {
         for (Card card : this.builtCards) {
             if (card.getEffect() != null) {
                 if (card.getEffect() instanceof ResourceChoiceEffect) {
-                    card.getEffect().applyEffect(null, null, null, costAfterEffects);
+                    card.getEffect().applyEffect(null, null, null, costAfterEffects, null);
                 }
                 if (card.getEffect() instanceof ColoredCardResourceEffect) {
-                    card.getEffect().applyEffect(this, card.getColor(), null, null);
+                    card.getEffect().applyEffect(this, card.getColor(), null, null, null);
                 }
                 if (card.getEffect() instanceof ShipOwnersGuildEffect) { //Ship Owners Guild Effect
-                    card.getEffect().applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null, null);
                 }
                 if (card.getEffect() instanceof BuildersGuildEffect) { //Builders Guild card Effect
-                    card.getEffect().applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null, null);
                 }
                 if (card.getEffect() instanceof StrategistsGuildEffect) { //Strategist Guild card Effect
-                    card.getEffect().applyEffect(this, null, null, null);
+                    card.getEffect().applyEffect(this, null, null, null, null);
                 }
                 if (card.getEffect() instanceof CoinCardEffect) {
-                    card.getEffect().applyEffect(this, card.getCoinCardEffect(), card.getAge(), null);
+                    card.getEffect().applyEffect(this, card.getCoinCardEffect(), card.getAge(), null, null);
                 }
             }
             //The ScienceChoiceEffect is only apply at the end of the game.
@@ -244,7 +254,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    effect.applyEffect(null, null, null, costAfterEffects);
+                    effect.applyEffect(null, null, null, costAfterEffects, null);
                 }
             }
         }
@@ -268,6 +278,17 @@ public class Player {
                 enoughResources = false;
             }
         }
+
+        // Checks if player has a built a card that would allow him to build this card for free
+        for (Card card : this.builtCards) {
+            if (card.getFreeCards() != null && card.getFreeCards().contains(this.name)) {
+                this.builtCards.add(this.chosenCard);
+                addPointsAndResources();
+                this.hand.remove(this.chosenCard);
+                return true;
+            }
+        }
+
         if (chosenCard.isFree()) {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
@@ -280,7 +301,7 @@ public class Player {
                 for (int i = 0; i < this.wonder.getEffects().size(); i++) {
                     effect = this.wonder.getEffects().get(i);
                     if (effect instanceof FreeCardPerAgeEffect) {
-                        effect.applyEffect(this, null, null, null);
+                        effect.applyEffect(this, null, null, null, null);
                         //adding the effect to the appliedEffects
                         this.wonder.getAppliedEffects().add(effect);
                         //saying that the effect is used for the current age
@@ -335,7 +356,7 @@ public class Player {
                 }
             }
         }
-
+        //check if neighbor has requested resources in stock
         for (Resource r : neighbor.getResources().keySet()) {
             if (resourceToBuy.equals(r) && neighbor.getResources().get(r) >= quantity) {
 
@@ -383,7 +404,7 @@ public class Player {
 
         for (Card card : this.builtCards) {
             if (card.getEffect() instanceof ResourceChoiceEffect) {
-                card.getEffect().applyEffect(null, null, null, costAfterEffects);
+                card.getEffect().applyEffect(null, null, null, costAfterEffects, null);
             }
         }
 
@@ -391,7 +412,7 @@ public class Player {
         if (this.wonder.getAppliedEffects() != null) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
-                    effect.applyEffect(null, null, null, costAfterEffects);
+                    effect.applyEffect(null, null, null, costAfterEffects, null);
                 }
             }
         }
@@ -431,11 +452,11 @@ public class Player {
             //adding the stage Effect(if any) to the appliedEffects
             if (this.wonder.getEffects().get(this.wonder.getState()) != null){
                 this.wonder.getAppliedEffects().add(this.wonder.getEffects().get(this.wonder.getState())) ;
-                this.wonderEffect.add(this.wonder.getEffects().get(this.wonder.getState()));
+                this.wonderEffectNotApply.add(this.wonder.getEffects().get(this.wonder.getState()));
             }
 
             return true;
-        } else { //if the player don't have enough resources to buy a stage re-choose action
+        } else { //if the player doesn't have enough resources to buy a stage re-choose action
             Writer.write(this.name + " tries to build stage of wonder, but he doesn't have enough resources.");
             return false;
         }
@@ -540,7 +561,7 @@ public class Player {
 
         for (Card c : this.builtCards) {
             if (c.getEffect() instanceof ResourceChoiceEffect) {
-                c.getEffect().applyEffect(null, null, null, cardCost);
+                c.getEffect().applyEffect(null, null, null, cardCost, null);
             }
         }
 
@@ -562,7 +583,7 @@ public class Player {
         for(Card c : this.getBuiltCards()){
             if(c.getEffect() instanceof ScienceChoiceEffect){
                 card_science_effect = true;
-                for(Effect e : this.wonderEffect){
+                for(Effect e : this.wonderEffectNotApply){
                     if(e instanceof ScienceChoiceEffect){
                         wonder_science_effect = true;
                         ((ScienceChoiceEffect) e).applyCumulativeEffect(this);
@@ -570,15 +591,15 @@ public class Player {
                     }
                 }
                 if(!wonder_science_effect){ //we are still in the condition when c is a ScienceChoiceEffect
-                    c.getEffect().applyEffect(this, null, null, null);
+                    c.getEffect().applyEffect(this, null, null, null, null);
                 }
                 break;
             }
         }
         if(!card_science_effect){
-            for(Effect e : this.wonderEffect){
+            for(Effect e : this.wonderEffectNotApply){
                 if(e instanceof ScienceChoiceEffect){
-                    e.applyEffect(this, null, null, null);
+                    e.applyEffect(this, null, null, null, null);
                     break;
                 }
             }

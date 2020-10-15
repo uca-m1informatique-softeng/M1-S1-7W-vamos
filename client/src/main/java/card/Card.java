@@ -19,6 +19,7 @@ public class Card {
     private int age;
     private int players;
     private Effect effect;
+    private ArrayList<String> freeCards;
     private EnumMap<CardPoints, Integer> cardPoints;
     private EnumMap<Resource, Integer> resource;
     private EnumMap<Resource, Integer> cost;
@@ -26,6 +27,7 @@ public class Card {
 
     public Card(String name, int players) {
         InputStream is = Card.class.getClassLoader().getResourceAsStream("cards/"+name+".json");
+        if (is == null) throw new IOException();
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String content = br.lines().collect(Collectors.joining());
         JSONObject card = new JSONObject(content);
@@ -152,6 +154,25 @@ public class Card {
         }
     }
 
+    public static JSONObject countCards(JSONObject cardCount, ArrayList<Card> builtCards){
+        for (Card card : builtCards) {
+            switch (card.getColor()) {
+                case BROWN:
+                    cardCount.put("brownCards", cardCount.getInt("brownCards") + 1);
+                    break;
+                case GREY:
+                    cardCount.put("greyCards", cardCount.getInt("greyCards") + 1);
+                    break;
+                case YELLOW:
+                    cardCount.put("yellowCards", cardCount.getInt("yellowCards") + 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cardCount;
+    }
+
     public String getName() {
         return name;
     }
@@ -190,6 +211,10 @@ public class Card {
 
     public EnumMap<Resource, Integer> getCost() {
         return cost;
+    }
+
+    public ArrayList<String> getFreeCards() {
+        return freeCards;
     }
 
     public Boolean isFree() {

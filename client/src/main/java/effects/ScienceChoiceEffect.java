@@ -1,5 +1,6 @@
 package effects;
 
+import card.Card;
 import card.CardColor;
 import card.CardPoints;
 import card.Resource;
@@ -17,7 +18,7 @@ public class ScienceChoiceEffect extends Effect {
      * Warning this method do side effect on the EnumMap player.points.
      * @param player
      */
-    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
         CardPoints best = CardPoints.SCIENCE_COMPASS;
         science_points = player.getPoints(); //side effect on the attribute player's
 

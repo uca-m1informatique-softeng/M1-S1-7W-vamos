@@ -14,7 +14,7 @@ public class CopyOneGuildEffect extends Effect {
     private SecureRandom random = new SecureRandom();
 
     @Override
-    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
         ArrayList<Card> builtCards = new ArrayList<>();
         Player neighbor1 = player.getNextNeighbor();
         Player neighbor2 = player.getPrevNeighbor();

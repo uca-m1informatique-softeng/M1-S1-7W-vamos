@@ -52,7 +52,6 @@ class ResourceChoiceEffectTest {
 
         assertEquals(costAfterEffect, oracle);
 
-
     }
 
 }

@@ -13,7 +13,7 @@ public class ShipOwnersGuildEffect extends Effect{
      * @param player
      */
     @Override
-    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost){
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards){
         ArrayList<Card> playerBuiltCards = new ArrayList<Card>();
         playerBuiltCards = player.getBuiltCards() ;
 

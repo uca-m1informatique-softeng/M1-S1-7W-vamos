@@ -8,9 +8,9 @@ import card.Card;
  */
 public class Action {
 
-    protected static final int BUILD = 1;
-    protected static final int WONDER = 2;
-    protected static final int DUMP = 3;
+    public static final int BUILD = 1;
+    public static final int WONDER = 2;
+    public static final int DUMP = 3;
 
     /**
      * The card with which to realize the action

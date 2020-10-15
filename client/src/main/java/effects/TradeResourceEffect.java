@@ -1,5 +1,6 @@
 package effects;
 
+import card.Card;
 import card.CardColor;
 import card.Resource;
 import player.Player;
@@ -42,7 +43,7 @@ public class TradeResourceEffect extends Effect {
     }
 
     @Override
-    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost) {
+    public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
 
     }
 

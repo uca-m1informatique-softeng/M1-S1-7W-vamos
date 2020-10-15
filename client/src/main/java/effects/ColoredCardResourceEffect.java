@@ -21,7 +21,7 @@ public class ColoredCardResourceEffect extends Effect{
         return cardColor;
     }
 
-    public void applyEffect(Player player , CardColor cardColor, Integer age, EnumMap<Resource, Integer> cost){
+    public void applyEffect(Player player , CardColor cardColor, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards){
         ArrayList<Card> previousPlayerBuiltCards = player.getPrevNeighbor().getBuiltCards();
         ArrayList<Card> NextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
 
