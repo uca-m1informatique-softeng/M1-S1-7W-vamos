@@ -21,4 +21,4 @@ jobs:
       with:
         java-version: 11
     - name: Build with Maven
-      run: mvn -B clean install sonar:sonar -Dsonar.projectKey=Vamos -Dsonar.host.url=http://fpout.re:9000 -Dsonar.login=65a420ac03ad03c5bf893df759cb3f9c56c6ab74
+      run: mvn -B clean install site sonar:sonar -Dsonar.projectKey=Vamos -Dsonar.host.url=http://fpout.re:9000 -Dsonar.login=65a420ac03ad03c5bf893df759cb3f9c56c6ab74
