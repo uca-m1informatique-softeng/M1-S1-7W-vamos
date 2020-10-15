@@ -212,7 +212,7 @@ public class Player {
      */
     public boolean buildCard() {
         //player can't build twice the same card
-        if (alreadyBuilt(getChosenCard())) { return false;}
+        if (alreadyBuilt(getChosenCard())) return false;
 
         boolean enoughResources = true;
         boolean haveFreeCardEffect = false;
@@ -278,6 +278,17 @@ public class Player {
                 enoughResources = false;
             }
         }
+
+        // Checks if player has a built a card that would allow him to build this card for free
+        for (Card card : this.builtCards) {
+            if (card.getFreeCards() != null && card.getFreeCards().contains(this.name)) {
+                this.builtCards.add(this.chosenCard);
+                addPointsAndResources();
+                this.hand.remove(this.chosenCard);
+                return true;
+            }
+        }
+
         if (chosenCard.isFree()) {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
