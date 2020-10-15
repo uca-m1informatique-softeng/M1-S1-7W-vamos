@@ -10,7 +10,7 @@
         <version>1.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Commun</artifactId>
+    <artifactId>client</artifactId>
     <version>1.2-SNAPSHOT</version>
 
     <dependencies>
@@ -122,6 +122,31 @@
                             <arguments>game</arguments>
                         </arguments>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <archive>
+                                <manifest>
+                                    <mainClass>
+                                        core.Game
+                                    </mainClass>
+                                </manifest>
+                            </archive>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>

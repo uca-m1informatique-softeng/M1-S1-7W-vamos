@@ -70,7 +70,7 @@ class GameTest {
 
     @Test
     public void initDeck() throws IOException {
-        ArrayList<Card> stack = CardManager.getAgeNDeck(this.currentAge);
+        ArrayList<Card> stack = (ArrayList<Card>) CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
         deck = stack;

@@ -22,18 +22,13 @@ public class ShipOwnersGuildTest {
 
     @Test
     public void applyEffect(){
-        try {
-            Card card = new Card("spiesguild" ,7); //purple card
-            Card card2 = new Card("mine" ,7); //brown card
-            Card card3 = new Card("glassworks" ,7); //grey card
+        Card card = new Card("spiesguild" ,7); //purple card
+        Card card2 = new Card("mine" ,7); //brown card
+        Card card3 = new Card("glassworks" ,7); //grey card
 
-            player.getBuiltCards().add(card) ;
-            player.getBuiltCards().add(card2) ;
-            player.getBuiltCards().add(card3) ;
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        player.getBuiltCards().add(card) ;
+        player.getBuiltCards().add(card2) ;
+        player.getBuiltCards().add(card3) ;
 
         ArrayList<Card> playerBuiltCards = player.getBuiltCards() ;
 

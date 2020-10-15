@@ -92,13 +92,9 @@ public class PlayerTest {
 
     @Test
     public void setChosenCard(){
-        try {
-            Card card = new Card("altar", 3);
-            player.setChosenCard(card);
-            assertEquals(card,player.getChosenCard());
-        } catch (IOException e) {
-            fail();
-        }
+        Card card = new Card("altar", 3);
+        player.setChosenCard(card);
+        assertEquals(card,player.getChosenCard());
     }
 
     @Test
@@ -152,15 +148,11 @@ public class PlayerTest {
 
     @Test
     public void addPointsAndResources() {
-        try {
-            chosenCard0 = new Card("sawmill", 3);
-            chosenCard = new Card("altar", 3);
-            chosenCard2 = new Card("laboratory", 3);//SCIENCE_WHEEL
-            chosenCard3 = new Card("observatory", 3);//SCIENCE_TABLET
-            chosenCard4 = new Card("academy", 3);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        chosenCard0 = new Card("sawmill", 3);
+        chosenCard = new Card("altar", 3);
+        chosenCard2 = new Card("laboratory", 3);//SCIENCE_WHEEL
+        chosenCard3 = new Card("observatory", 3);//SCIENCE_TABLET
+        chosenCard4 = new Card("academy", 3);
 
         //checking the points added when the card gives VICTORY points
         int oldVP = player.getPoints().get(CardPoints.VICTORY);
@@ -335,28 +327,23 @@ public class PlayerTest {
 
     @Test
     public void buildCardWithTradedResource() {
-        try {
-            Card baths = new Card("baths", 6);
-            player.setCoins(1);
-            player.getBuiltCards().add(new Card("eastTradingPost", 6));
-            player.getNextNeighbor().getResources().put(Resource.STONE, 3);
-            player.setChosenCard(baths);
-            player.buildCard();
-            assertTrue(player.getBoughtResources().containsKey(Resource.STONE));
-            assertTrue(player.getBuiltCards().contains(baths));
-            //Try to buy 2 same card
-            assertTrue(player.getBuiltCards().contains(baths));
-            assertTrue(player.getChosenCard() == baths);
-            assertFalse(player.buildCard());
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail();
-        }
+        Card baths = new Card("baths", 6);
+        player.setCoins(1);
+        player.getBuiltCards().add(new Card("eastTradingPost", 6));
+        player.getNextNeighbor().getResources().put(Resource.STONE, 3);
+        player.setChosenCard(baths);
+        player.buildCard();
+        assertTrue(player.getBoughtResources().containsKey(Resource.STONE));
+        assertTrue(player.getBuiltCards().contains(baths));
+        //Try to buy 2 same card
+        assertTrue(player.getBuiltCards().contains(baths));
+        assertSame(player.getChosenCard(), baths);
+        assertFalse(player.buildCard());
     }
 
 
     @Test
-    void endApplyEffect() throws IOException {
+    void endApplyEffect() {
         //Test if the ScienceChoiceEffect is applied
         player.getBuiltCards().add(new Card("scientistsguild", 7));
         assertEquals(0, player.getSciencePoint());
@@ -386,7 +373,7 @@ public class PlayerTest {
     }
 
     @Test
-    void alreadyBuilt() throws IOException {
+    void alreadyBuilt() {
         Card card1 = new Card("baths", 3);
         Card card2 = new Card("baths", 3);
         Card card3 = new Card("academy", 3);
@@ -406,8 +393,9 @@ public class PlayerTest {
         assertTrue(player.buildStageWonder());
         boolean check = false;
         for(Effect e : player.wonder.getAppliedEffects()){
-            if(e instanceof TradeResourceEffect){
+            if (e instanceof TradeResourceEffect){
                 check = true;
+                break;
             }
         }
         assertTrue(check);

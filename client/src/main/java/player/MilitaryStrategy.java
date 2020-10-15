@@ -20,33 +20,28 @@ public class MilitaryStrategy extends Strategy {
     public Action chooseAction(Player player) {
         Card mostMilitary;
         Card mostResources;
-        try {
-            mostMilitary = new Card("altar", 3); // Altar gives no military might
-            mostResources = new Card("apothecary", 6); // Apothecary gives no resources
+        mostMilitary = new Card("altar", 3); // Altar gives no military might
+        mostResources = new Card("apothecary", 6); // Apothecary gives no resources
 
-            for (Card card : player.getHand()) {
-                if (card.getCardPoints().get(CardPoints.MILITARY) >= mostMilitary.getCardPoints().get(CardPoints.MILITARY)) {
-                    mostMilitary = card;
-                }
-                if (resourceSum(card.getResource()) >= resourceSum(mostResources.getResource())) {
-                    mostResources = card;
-                }
+        for (Card card : player.getHand()) {
+            if (card.getCardPoints().get(CardPoints.MILITARY) >= mostMilitary.getCardPoints().get(CardPoints.MILITARY)) {
+                mostMilitary = card;
             }
-
-            if (player.wonder.getProp().get(player.wonder.getState()+1).y.get(CardPoints.MILITARY) > mostMilitary.getCardPoints().get(CardPoints.MILITARY) &&
-                player.wonder.canUpgrade(player.resources)) {
-                return new Action(mostMilitary, Action.WONDER);
-            } else if (player.isBuildable(mostMilitary)) {
-                return new Action(mostMilitary, Action.BUILD);
-            } else if (player.isBuildable(mostResources)) {
-                return new Action(mostResources, Action.BUILD);
-            } else {
-                return new Action(mostMilitary, Action.DUMP);
+            if (resourceSum(card.getResource()) >= resourceSum(mostResources.getResource())) {
+                mostResources = card;
             }
-        } catch (IOException e) {
-            Writer.write("Couldn't read cards altar and apothecary !");
         }
-        return null;
+
+        if (player.wonder.getProp().get(player.wonder.getState()+1).y.get(CardPoints.MILITARY) > mostMilitary.getCardPoints().get(CardPoints.MILITARY) &&
+            player.wonder.canUpgrade(player.resources)) {
+            return new Action(mostMilitary, Action.WONDER);
+        } else if (player.isBuildable(mostMilitary)) {
+            return new Action(mostMilitary, Action.BUILD);
+        } else if (player.isBuildable(mostResources)) {
+            return new Action(mostResources, Action.BUILD);
+        } else {
+            return new Action(mostMilitary, Action.DUMP);
+        }
     }
 
     /**

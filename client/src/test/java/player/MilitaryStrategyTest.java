@@ -43,24 +43,16 @@ public class MilitaryStrategyTest {
         player.getResources().put(Resource.CLAY, 1);
         player.getResources().put(Resource.WOOD, 1);
         Action action = strategy.chooseAction(player);
-        try {
-            //in chooseAction in MilitaryStrategy last card checked is guardtower so mostMilitary=guardtower
-            assertEquals(action.getCard().getName(), new Card("guardtower", 6).getName());
-            assertEquals(action.getAction(), Action.BUILD);
-        } catch (IOException e) {
-            fail();
-        }
+        //in chooseAction in MilitaryStrategy last card checked is guardtower so mostMilitary=guardtower
+        assertEquals(action.getCard().getName(), new Card("guardtower", 6).getName());
+        assertEquals(action.getAction(), Action.BUILD);
     }
 
     @Test
     public void chooseAction2() {
         Action action = strategy.chooseAction(player);
-        try {
-            assertEquals(action.getCard().getName(), new Card("orevein", 6).getName());
-            assertEquals(action.getAction(), Action.BUILD);
-        } catch (IOException e) {
-            fail();
-        }
+        assertEquals(action.getCard().getName(), new Card("orevein", 6).getName());
+        assertEquals(action.getAction(), Action.BUILD);
     }
 
 }

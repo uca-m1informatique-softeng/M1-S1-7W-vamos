@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Server</artifactId>
+    <artifactId>server</artifactId>
     <version>1.2-SNAPSHOT</version>
 
     <properties>
@@ -44,8 +44,8 @@
 
 
     <build>
-        <sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
-        <testSourceDirectory>src/test/java</testSourceDirectory> <!-- éventuellement à changer : localisation des fichiers sources des tests -->
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <!--<testSourceDirectory>src/test/java</testSourceDirectory>-->
         <plugins>
 
             <plugin>

@@ -23,12 +23,8 @@ public class ScienceStrategyTest {
         pright = new Player("Scientist");
         player.setNextNeighbor(pright);
         player.setPrevNeighbor(pright);
-        try {
-            c1 = new Card("scientistsguild", 3);
-            c2 = new Card("altar", 3);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        c1 = new Card("scientistsguild", 3);
+        c2 = new Card("altar", 3);
         ArrayList<Card> tmp = new ArrayList<>(2);
         tmp.add(c1);
         tmp.add(c2);
