@@ -48,7 +48,7 @@ class ResourceChoiceEffectTest {
         oracle.put(Resource.COIN, 0);
 
         EnumMap<Resource, Integer> costAfterEffect = card2.getCost();
-        card1.getEffect().applyEffect(null, null, null, costAfterEffect);
+        card1.getEffect().applyEffect(null, null, null, costAfterEffect, null);
 
         assertEquals(costAfterEffect, oracle);
 
