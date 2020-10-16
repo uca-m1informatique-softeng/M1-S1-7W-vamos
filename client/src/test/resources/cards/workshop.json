@@ -11,5 +11,9 @@
     "players": [
         3,
         7
+    ],
+    "freeCards": [
+        "archeryrange",
+        "laboratory"
     ]
 }

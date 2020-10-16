@@ -281,7 +281,7 @@ public class Player {
 
         // Checks if player has a built a card that would allow him to build this card for free
         for (Card card : this.builtCards) {
-            if (card.getFreeCards() != null && card.getFreeCards().contains(this.name)) {
+            if (card.getFreeCards() != null && card.getFreeCards().contains(this.chosenCard.getName())) {
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
                 this.hand.remove(this.chosenCard);
