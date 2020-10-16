@@ -79,7 +79,7 @@ public class Wonder {
         if (stages.size() > 0) {
             maxState = stages.size();
             prop = new ArrayList<>(stages.size());
-            for (int i = 0; i < stages.size(); i++) {
+            for (int i = maxState-1; i >= 0; i--) {
                 EnumMap<Resource, Integer> tmpMap = new EnumMap<>(Resource.class);
                 EnumMap<CardPoints, Integer> tmpMap2 = new EnumMap<>(CardPoints.class);
                 JSONObject stage = card.getJSONObject(stages.get(i));

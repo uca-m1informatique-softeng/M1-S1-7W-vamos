@@ -38,13 +38,14 @@ public class WonderTest {
         assertEquals(state,wonder.getMaxstate());
     }
 
-    @Ignore //TODO this method return the reward in the reverse order state
+    @Test
     void getCurrentRewardsFromUpgrade() {
         //setup wonder = babyloneA
         // the key is fix at CardPoints so it can't never return Ressoure.COIN
         EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
         oracle.put(CardPoints.VICTORY, 3);
         assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); //index/state  = 0, cost stage 1
+        assertEquals(oracle, this.wonder.getProp().get(this.wonder.getState()).y); //index/state  = 0, cost stage 1
 
         wonder.setState(wonder.getState() + 1); // stage one is build
         oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
@@ -103,7 +104,7 @@ public class WonderTest {
 
     }
 
-    @Ignore //TODO this method return the cost in the reverse order state
+    @Test
     void getCurrentUpgradeCost() {
         //setup wonder = babyloneA
         EnumMap<Resource,Integer> oracle = new EnumMap<Resource, Integer>(Resource.class);
