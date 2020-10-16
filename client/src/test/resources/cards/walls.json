@@ -11,5 +11,8 @@
     "players": [
         3,
         4
+    ],
+    "freeCards": [
+        "fortifications"
     ]
 }

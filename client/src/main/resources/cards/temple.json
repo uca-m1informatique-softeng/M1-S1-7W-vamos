@@ -13,5 +13,8 @@
     "players": [
         3,
         6
+    ],
+    "freeCards": [
+        "pantheon"
     ]
 }

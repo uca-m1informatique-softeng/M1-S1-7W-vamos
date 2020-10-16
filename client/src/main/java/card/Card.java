@@ -150,6 +150,14 @@ public class Card {
                     this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(coinCardEffect)), card.getInt("age"));
                 }
             }
+
+            //free cards
+            if (card.has("freeCards")) {
+                freeCards = new ArrayList<String>();
+                for (int k = 0; k < card.getJSONArray("freeCards").length(); k++) {
+                    freeCards.add(card.getJSONArray("freeCards").getString(k));
+                }
+            }
         }
     }
 

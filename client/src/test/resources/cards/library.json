@@ -12,5 +12,9 @@
     "players": [
         3,
         6
+    ],
+    "freeCards": [
+        "senate",
+        "university"
     ]
 }
