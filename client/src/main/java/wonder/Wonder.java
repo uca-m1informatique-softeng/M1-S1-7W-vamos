@@ -96,7 +96,7 @@ public class Wonder {
                             this.effects.put(i + 1 , new ScienceChoiceEffect());
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("TookOneDiscardedCard")) {
-                            //TODO Nicolas will implemente this effect soon.
+                            this.effects.put(i + 1, new TookDiscardCardEffect());
                         }
                         else if (stage.getJSONObject(STR_REWARD).has("ResourceChoiceEffect")) {
                             JSONArray effectW = stage.getJSONObject(STR_REWARD).getJSONArray("ResourceChoiceEffect");
