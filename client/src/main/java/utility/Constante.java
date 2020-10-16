@@ -6,6 +6,7 @@ package utility;
 public final class Constante {
     //Server constants
     public static final String STATS = "Sending stats to the server" ;
+    public static final String ENDCONNEXION = "Disconnecting the socket" ;
 
     private Constante(){}
 
