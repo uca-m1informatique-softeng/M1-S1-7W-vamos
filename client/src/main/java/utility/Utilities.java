@@ -72,6 +72,9 @@ public class Utilities {
             case "SCIENCE_COMPASS":
                 key = CardPoints.SCIENCE_COMPASS;
                 break;
+            case "COIN":
+                key = CardPoints.relayCOIN;
+                break;
             default:
                 key = CardPoints.SCIENCE_TABLET;
                 break;

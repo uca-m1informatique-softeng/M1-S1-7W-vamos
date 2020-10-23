@@ -39,9 +39,8 @@ public class WonderTest {
     }
 
     @Test
-    void getCurrentRewardsFromUpgrade() {
+    void getCurrentRewardsFromUpgradeTest() {
         //setup wonder = babyloneA
-        // the key is fix at CardPoints so it can't never return Ressoure.COIN
         EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
         oracle.put(CardPoints.VICTORY, 3);
         assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); //index/state  = 0, cost stage 1
@@ -49,7 +48,7 @@ public class WonderTest {
 
         wonder.setState(wonder.getState() + 1); // stage one is build
         oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
-        //oracle.put(Resource.WOOD, 3);
+        //reward is an effect, so no cardpoints
         assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); // index/state = 1, cost stage 2
 
         wonder.setState(wonder.getState() + 1); // 2 stage build
@@ -123,5 +122,15 @@ public class WonderTest {
         wonder.setState(wonder.getState() + 1); // Build the last stage
 
         //return an outIndexError when we call this method
+    }
+
+    @Test
+    void wonderGiveCoin() throws IOException {
+        Wonder w = new Wonder("rhodosB");
+        EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
+        oracle.put(CardPoints.MILITARY, 1);
+        oracle.put(CardPoints.VICTORY, 3);
+        oracle.put(CardPoints.relayCOIN, 3);
+        assertEquals(oracle, w.getCurrentRewardsFromUpgrade());
     }
 }
