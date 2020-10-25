@@ -77,25 +77,7 @@ class GameTest {
     }
 
     @Test
-    public void getRound(){
-        assertEquals(round,game.getRound());
-    }
-
-    @Test
-    public void getPlayers(){
-        assertEquals(players,game.getPlayers());
-    }
-    @Test
-    public void getCurrentAge(){
-        assertEquals(currentAge,game.getCurrentAge());
-    }
-    @Test
-    public void getState(){
-        assertEquals(state,game.getState());
-    }
-
-    @Test
-    public void initDeck() throws IOException {
+    void initDeck() throws IOException {
         ArrayList<Card> stack = (ArrayList<Card>) CardManager.getAgeNDeck(this.currentAge);
         for(int i = stack.size(); i < MAX_HAND * players;i++ )
             stack.add(stack.get(0));
@@ -110,7 +92,7 @@ class GameTest {
     }
 
      @Test
-     public void initPlayers(){
+     void initPlayers(){
          for(int i = 0; i < players; i++) {
              playersArray.add(new Player("Bot" + i));
          }
@@ -124,7 +106,7 @@ class GameTest {
      }
 
      @Test
-    public void fight() throws AgeException {
+     void fight() throws AgeException {
         player = game.getPlayersArray().get(0) ;
         player2 = game.getPlayersArray().get(1) ;
 
@@ -132,15 +114,15 @@ class GameTest {
         player.getPoints().put(CardPoints.MILITARY , 7);
         player2.getPoints().put(CardPoints.MILITARY , 5);
         game.fight(player , player2);
-        assertEquals(player.getMilitaryPoints() , 8); // it's age 1 : player win the fight against player2 and earns 1 military might
+        assertEquals(8 , player.getMilitaryPoints() ); // it's age 1 : player win the fight against player2 and earns 1 military might
 
          game.setCurrentAge(2);
          game.fight(player , player2);
-         assertEquals(player.getMilitaryPoints() , 11); // it's age 2 : player win the fight against player2 and earns 3 military might
+         assertEquals(11 , player.getMilitaryPoints() ); // it's age 2 : player win the fight against player2 and earns 3 military might
 
          game.setCurrentAge(3);
          game.fight(player , player2);
-         assertEquals(player.getMilitaryPoints() , 16);
+         assertEquals(16 , player.getMilitaryPoints() );
 
          //if we get inside the else
          player.getPoints().replace(CardPoints.MILITARY , 5) ;
@@ -148,13 +130,13 @@ class GameTest {
 
          game.fight(player , player2);
 
-         assertEquals(player.getMilitaryPoints() , 4);
-         assertEquals(player.getDefeatToken() , 1);
+         assertEquals(4 , player.getMilitaryPoints() );
+         assertEquals(1 , player.getDefeatToken() );
 
      }
 
      @Test
-     public void swapHands(){
+      void swapHands(){
          ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
          for (Player player : playersArray) {
              tmpList.add(new ArrayList<>(player.getHand()));
@@ -182,13 +164,13 @@ class GameTest {
          assertEquals(playersArray.size() , game.getPlayersArray().size());
 
          for (int i = 0; i < playersArray.size(); i++) {
-             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+             assertEquals(playersArray.get(i).getHand() , game.getPlayersArray().get(i).getHand());
          }
 
          game.swapHands(3);
 
          for (int i = 0; i < playersArray.size(); i++) {
-             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+             assertEquals(playersArray.get(i).getHand() , game.getPlayersArray().get(i).getHand());
          }
 
          //if we get inside the else
@@ -196,12 +178,12 @@ class GameTest {
          game.swapHands(3);
 
          for (int i = 0; i < playersArray.size(); i++) {
-             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+             assertEquals(playersArray.get(i).getHand() , game.getPlayersArray().get(i).getHand());
          }
      }
 
      @Test
-     public void initPlayersHand() throws IOException {
+      void initPlayersHand() throws IOException {
          game.initDeck();
          deck.addAll(game.getDeck()) ;
 
@@ -218,7 +200,7 @@ class GameTest {
      }
 
     @Ignore
-    public void addVictoryPoints(){
+     void addVictoryPoints(){
         player = game.getPlayersArray().get(0) ;
 
         player.setWonder(wonder);
@@ -236,7 +218,7 @@ class GameTest {
         game.addVictoryPoints();
 
 
-        assertEquals(player.getPoints().get(CardPoints.VICTORY) , 2);
+        assertEquals(2 , player.getPoints().get(CardPoints.VICTORY) );
 
     }
 
