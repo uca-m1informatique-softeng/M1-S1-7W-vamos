@@ -47,7 +47,6 @@ public class Wonder {
      * If the state of the wonder doesn't give a reward ( fixed ressources or points) it will give an effect (choice between a list of resources ).
      * These effects will be stored in that list.
      */
-    //private ArrayList<Effect> effects;
     public HashMap<Integer , Effect> effects;
 
     /**
@@ -213,8 +212,7 @@ public class Wonder {
         for (Map.Entry<Resource, Integer> entry1 : getCurrentUpgradeCost().entrySet()) {
             Resource res1 = entry1.getKey();
             int nbRes1 = entry1.getValue();
-            if (playerResources.get(res1) == null) return false;
-            else if (playerResources.get(res1) < nbRes1) return false;
+            if (playerResources.get(res1) == null || playerResources.get(res1) < nbRes1) return false;
         }
 
         return true;
