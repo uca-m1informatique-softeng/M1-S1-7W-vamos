@@ -27,6 +27,6 @@ public class StrategistsGuildEffectTest {
 
         dumbPlayer.getPoints().put(CardPoints.VICTORY , dumbPlayer2.getDefeatToken() + dumbPlayer3.getDefeatToken()) ;
 
-        assertEquals(dumbPlayer.getPoints().get(CardPoints.VICTORY) , 12);
+        assertEquals(12, dumbPlayer.getPoints().get(CardPoints.VICTORY));
     }
 }
