@@ -10,7 +10,7 @@ import java.util.EnumMap;
 
 public class ScienceChoiceEffect extends Effect {
 
-    private EnumMap<CardPoints, Integer> science_points;
+    private EnumMap<CardPoints, Integer> sciencePoints;
     private ArrayList<CardPoints> iterScience = new ArrayList<CardPoints>();
 
     /**
@@ -20,27 +20,27 @@ public class ScienceChoiceEffect extends Effect {
      */
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
         CardPoints best = CardPoints.SCIENCE_COMPASS;
-        science_points = player.getPoints(); //side effect on the attribute player's
+        sciencePoints = player.getPoints(); //side effect on the attribute player's
 
-        science_points.put(CardPoints.SCIENCE_COMPASS, science_points.get(CardPoints.SCIENCE_COMPASS) + 1);
-        int science_score = player.getSciencePoint();
-        science_points.put(CardPoints.SCIENCE_COMPASS, science_points.get(CardPoints.SCIENCE_COMPASS) - 1);
+        sciencePoints.put(CardPoints.SCIENCE_COMPASS, sciencePoints.get(CardPoints.SCIENCE_COMPASS) + 1);
+        int scienceScore = player.getSciencePoint();
+        sciencePoints.put(CardPoints.SCIENCE_COMPASS, sciencePoints.get(CardPoints.SCIENCE_COMPASS) - 1);
 
-        science_points.put(CardPoints.SCIENCE_TABLET, science_points.get(CardPoints.SCIENCE_TABLET) + 1);
-        if (science_score < player.getSciencePoint()) {
+        sciencePoints.put(CardPoints.SCIENCE_TABLET, sciencePoints.get(CardPoints.SCIENCE_TABLET) + 1);
+        if (scienceScore < player.getSciencePoint()) {
             best = CardPoints.SCIENCE_TABLET;
-            science_score = player.getSciencePoint();
+            scienceScore = player.getSciencePoint();
         }
-        science_points.put(CardPoints.SCIENCE_TABLET, science_points.get(CardPoints.SCIENCE_TABLET) - 1);
+        sciencePoints.put(CardPoints.SCIENCE_TABLET, sciencePoints.get(CardPoints.SCIENCE_TABLET) - 1);
 
-        science_points.put(CardPoints.SCIENCE_WHEEL, science_points.get(CardPoints.SCIENCE_WHEEL) + 1);
-        if (science_score < player.getSciencePoint()) {
+        sciencePoints.put(CardPoints.SCIENCE_WHEEL, sciencePoints.get(CardPoints.SCIENCE_WHEEL) + 1);
+        if (scienceScore < player.getSciencePoint()) {
             best = CardPoints.SCIENCE_WHEEL;
         }
-        science_points.put(CardPoints.SCIENCE_WHEEL, science_points.get(CardPoints.SCIENCE_WHEEL) - 1);
+        sciencePoints.put(CardPoints.SCIENCE_WHEEL, sciencePoints.get(CardPoints.SCIENCE_WHEEL) - 1);
 
         //Add the best symbol for the player
-        player.getPoints().put(best, science_points.get(best) + 1);
+        player.getPoints().put(best, sciencePoints.get(best) + 1);
         //change player.getPoints() to science_points don't remove the side effect(effet de bord).
     }
 
@@ -48,14 +48,14 @@ public class ScienceChoiceEffect extends Effect {
         iterScience.add(CardPoints.SCIENCE_COMPASS);
         iterScience.add(CardPoints.SCIENCE_TABLET);
         iterScience.add(CardPoints.SCIENCE_WHEEL);
-        science_points = player.getPoints(); //side effect on the attribute player's
-        int science_score = player.getSciencePoint();
+        sciencePoints = player.getPoints(); //side effect on the attribute player's
+        int scienceScore = player.getSciencePoint();
         int compass = 0;
         int tablet = 0;
         int wheel = 0;
-        int best_compass = 0;
-        int best_tablet = 0;
-        int best_wheel = 0;
+        int bestCompass = 0;
+        int bestTablet = 0;
+        int bestWheel = 0;
         for(CardPoints symbole : iterScience){
             if(symbole == CardPoints.SCIENCE_COMPASS) {compass++;}
             else if (symbole == CardPoints.SCIENCE_TABLET) {tablet++;}
@@ -64,20 +64,20 @@ public class ScienceChoiceEffect extends Effect {
                 if (symbole2 == CardPoints.SCIENCE_COMPASS) { compass++; }
                 else if (symbole2 == CardPoints.SCIENCE_TABLET) { tablet++; }
                 else { wheel++; }
-                science_points.put(CardPoints.SCIENCE_COMPASS, science_points.get(CardPoints.SCIENCE_COMPASS) + compass);
-                science_points.put(CardPoints.SCIENCE_TABLET, science_points.get(CardPoints.SCIENCE_TABLET) + tablet);
-                science_points.put(CardPoints.SCIENCE_WHEEL, science_points.get(CardPoints.SCIENCE_WHEEL) + wheel);
+                sciencePoints.put(CardPoints.SCIENCE_COMPASS, sciencePoints.get(CardPoints.SCIENCE_COMPASS) + compass);
+                sciencePoints.put(CardPoints.SCIENCE_TABLET, sciencePoints.get(CardPoints.SCIENCE_TABLET) + tablet);
+                sciencePoints.put(CardPoints.SCIENCE_WHEEL, sciencePoints.get(CardPoints.SCIENCE_WHEEL) + wheel);
 
-                if(science_score < player.getSciencePoint()){
-                    science_score = player.getSciencePoint();
-                    best_compass = compass;
-                    best_tablet = tablet;
-                    best_wheel = wheel;
+                if(scienceScore < player.getSciencePoint()){
+                    scienceScore = player.getSciencePoint();
+                    bestCompass = compass;
+                    bestTablet = tablet;
+                    bestWheel = wheel;
 
                 }
-                science_points.put(CardPoints.SCIENCE_COMPASS, science_points.get(CardPoints.SCIENCE_COMPASS) - compass);
-                science_points.put(CardPoints.SCIENCE_TABLET, science_points.get(CardPoints.SCIENCE_TABLET) - tablet);
-                science_points.put(CardPoints.SCIENCE_WHEEL, science_points.get(CardPoints.SCIENCE_WHEEL) - wheel);
+                sciencePoints.put(CardPoints.SCIENCE_COMPASS, sciencePoints.get(CardPoints.SCIENCE_COMPASS) - compass);
+                sciencePoints.put(CardPoints.SCIENCE_TABLET, sciencePoints.get(CardPoints.SCIENCE_TABLET) - tablet);
+                sciencePoints.put(CardPoints.SCIENCE_WHEEL, sciencePoints.get(CardPoints.SCIENCE_WHEEL) - wheel);
                 if (symbole2 == CardPoints.SCIENCE_COMPASS) { compass--; }
                 else if (symbole2 == CardPoints.SCIENCE_TABLET) { tablet--; }
                 else { wheel--; }
@@ -87,8 +87,8 @@ public class ScienceChoiceEffect extends Effect {
             else if (symbole == CardPoints.SCIENCE_TABLET) { tablet--; }
             else { wheel--; }
         }
-        player.getPoints().put(CardPoints.SCIENCE_COMPASS, science_points.get(CardPoints.SCIENCE_COMPASS) + best_compass);
-        player.getPoints().put(CardPoints.SCIENCE_TABLET, science_points.get(CardPoints.SCIENCE_TABLET) + best_tablet);
-        player.getPoints().put(CardPoints.SCIENCE_WHEEL, science_points.get(CardPoints.SCIENCE_WHEEL) + best_wheel);
+        player.getPoints().put(CardPoints.SCIENCE_COMPASS, sciencePoints.get(CardPoints.SCIENCE_COMPASS) + bestCompass);
+        player.getPoints().put(CardPoints.SCIENCE_TABLET, sciencePoints.get(CardPoints.SCIENCE_TABLET) + bestTablet);
+        player.getPoints().put(CardPoints.SCIENCE_WHEEL, sciencePoints.get(CardPoints.SCIENCE_WHEEL) + bestWheel);
     }
 }
