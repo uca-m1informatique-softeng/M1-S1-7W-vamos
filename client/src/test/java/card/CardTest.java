@@ -106,7 +106,7 @@ class CardTest {
     }
 
     @Test
-    public void countCards(){
+    void countCards(){
         JSONObject cardCount2 = new JSONObject() ;
         cardCount2.put("brownCards" ,2);
         cardCount2.put("greyCards" ,2);
