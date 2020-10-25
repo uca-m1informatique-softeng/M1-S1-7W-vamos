@@ -20,7 +20,7 @@ public class ColoredCardResourceEffectTest {
     }
 
     @Test
-    public void applyColor() throws IOException {
+    public void applyColor() {
         Player player2 = new Player("Maestro2");
         Player player3 = new Player("Maestro3");
 
@@ -51,32 +51,26 @@ public class ColoredCardResourceEffectTest {
         player.setNextNeighbor(player3);
 
         ArrayList<Card> previousPlayerBuiltCards = player.getPrevNeighbor().getBuiltCards();
-        ArrayList<Card> NextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
+        ArrayList<Card> nextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
 
         int nbOfCards = 0 ; //number of cards who have the color cardColor
 
-        for (int i = 0; i < previousPlayerBuiltCards.size(); i++) {
-            if (previousPlayerBuiltCards.get(i).getColoredCardResourceEffect() == CardColor.GREY ) {
-                nbOfCards = nbOfCards + 2; //only grey cards will give 2 victory points per grey card in the neighbors cards
-            }else{
-                    nbOfCards ++ ;
-                }
-        }
-
-        for (int i = 0; i < NextPlayerBuiltCards.size(); i++) {
-            if (NextPlayerBuiltCards.get(i).getColoredCardResourceEffect() == CardColor.GREY ) {
-                nbOfCards = nbOfCards + 2; //only grey cards will give 2 victory points per grey card in the neighbors cards
-            }else{
-                    nbOfCards ++ ;
-                }
+        for (Card c : previousPlayerBuiltCards) {
+            if (c.getColoredCardResourceEffect() == CardColor.GREY) {
+                nbOfCards += 2;
+            } else {
+                nbOfCards++;
             }
+        }
 
         int currentVictoryPoints = player.getPoints().get(CardPoints.VICTORY);
         player.getPoints().put(CardPoints.VICTORY, currentVictoryPoints + nbOfCards   );
         System.out.println(nbOfCards);
 
-        assertEquals(player.getPoints().get(CardPoints.VICTORY) , 16);
+        assertEquals(16, player.getPoints().get(CardPoints.VICTORY));
 
         }
+
+
 
 }
