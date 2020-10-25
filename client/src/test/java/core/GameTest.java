@@ -54,9 +54,9 @@ class GameTest {
         card = new Card("chamberOfCommerce" , 6) ;
         card2 = new Card("caravansery" , 6) ; //card.getCoinCardEffect() == null
         card3 = new Card("vineyard" , 6) ;
-        player = new Player("Bot0") ;
-        player2 = new Player("Bot1") ;
-        player3 = new Player("Bot2") ;
+        player = new Player("Bot1") ;
+        player2 = new Player("Bot2") ;
+        player3 = new Player("Bot3") ;
         player.getBuiltCards().add(card);
         player.getBuiltCards().add(card2);
         player.getBuiltCards().add(card3);
@@ -151,23 +151,63 @@ class GameTest {
 
      }
 
-    @Ignore
+     @Test
+     public void swapHands(){
+         ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
+         for (Player player : playersArray) {
+             tmpList.add(new ArrayList<>(player.getHand()));
+         }
+
+         //if we get inside the if
+         currentAge = 3 ;
+         for (int i = 0; i < playersArray.size(); i++) {
+             if (currentAge % 2 == 1) {
+                 //Clockwise trade
+                 if (i != 0) {
+                     playersArray.get(i).setHand(tmpList.get(i - 1));
+                 }
+                 else {
+                     playersArray.get(i).setHand(tmpList.get(playersArray.size() - 1));
+                 }
+             } else {
+                 //Counter clockwise
+                 if (i == 0)
+                     playersArray.get(playersArray.size() - 1).setHand(tmpList.get(i));
+                 else
+                     playersArray.get(i - 1).setHand(tmpList.get(i));
+             }
+         }
+         assertEquals(playersArray.size() , game.getPlayersArray().size());
+
+         for (int i = 0; i < playersArray.size(); i++) {
+             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+         }
+
+         game.swapHands(3);
+
+         for (int i = 0; i < playersArray.size(); i++) {
+             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+         }
+
+         //if we get inside the else
+         currentAge = 2 ;
+         game.swapHands(3);
+
+         for (int i = 0; i < playersArray.size(); i++) {
+             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+         }
+     }
+
+    @Test
     public void addVictoryPoints(){
         player = game.getPlayersArray().get(0) ;
-
-        JSONObject cardCount = new JSONObject();
-        cardCount.put("brownCards", 0);
-        cardCount.put("greyCards", 0);
-        cardCount.put("yellowCards", 0);
 
         player.setWonder(wonder);
         player.getWonder().setState(2);
 
-
         player.getBuiltCards().add(card);
         player.getBuiltCards().add(card2);
         player.getBuiltCards().add(card3);
-
 
         System.out.println(card.getCoinCardEffect());
         System.out.println(card2.getCoinCardEffect());

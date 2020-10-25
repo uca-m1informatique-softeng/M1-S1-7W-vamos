@@ -256,7 +256,7 @@ public class Game {
         this.swapHands(this.currentAge);
     }
 
-    private void swapHands(int currentAge) {
+    public void swapHands(int currentAge) {
         ArrayList<ArrayList<Card>> tmpList = new ArrayList<>();
         for (Player player : playersArray)
             tmpList.add(new ArrayList<>(player.getHand()));
