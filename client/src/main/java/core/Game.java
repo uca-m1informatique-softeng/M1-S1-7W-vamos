@@ -75,7 +75,7 @@ public class Game {
 
         int nbPlayers = Integer.parseInt(args[0]);
         String typePartie = args[1];
-        /**
+        /*
          String typePartie  = GAME_MODE;
          /*
          *  Game mode, normal game, game output is displayed
@@ -93,7 +93,7 @@ public class Game {
                 Writer.write("Could not delete file !");
             }
         }
-        /**
+        /*
          *  Stats mode, no game output is displayed, only end game stats.
          */
         else if (typePartie.equals(STATS_MODE)) {
@@ -220,7 +220,7 @@ public class Game {
             cardCount = Card.countCards(cardCount, builtCards);
             for (Card card : player.getBuiltCards()) {
                 if (card.getEffect() instanceof CoinCardEffect) {
-                    /**
+                    /*
                      * coincardeffect is null when it is applied on a wonder (e.g. "PYRAMID" for card "arena)
                      * otherwise it is assigned a color
                      */
