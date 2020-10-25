@@ -402,15 +402,19 @@ public class Game {
         ArrayList<Player> players = this.getPlayersArray();
         Player tmpWinner = players.get(0);
         RecapScore[] playerScores = new RecapScore[players.size()];
+
         Writer.write("\n" + BLUE_UNDERLINED + "----SCORES----");
         Writer.write(YELLOW_BRIGHT);
         for (Player p : players) {
-            Writer.write(p.getName() + " :  " + p.getCoins() + " coins");
-            Writer.write(p.getName() + " :  " + p.getSciencePoint() + " science points");
-            Writer.write(p.getName() + " :  " + p.getMilitaryPoints() + " military points");
-            Writer.write(p.getName() + " :  " + p.getPoints().get(CardPoints.VICTORY) + " victory points");
-            if (p.computeScore() > tmpWinner.computeScore() ||
-                    (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
+            Writer.write(p + " : ");
+            Writer.write("\t" + p.getCoins() + " coins");
+            Writer.write("\t" + p.getSciencePoint() + " science points");
+            Writer.write("\t" + p.getMilitaryPoints() + " military points");
+            Writer.write("\t" + p.getPoints().get(CardPoints.VICTORY) + " victory points");
+            Writer.write("\t" + p.computeScore() + " score points");
+
+            if  (p.computeScore() > tmpWinner.computeScore() ||
+                (p.computeScore() == tmpWinner.computeScore() && p.getCoins() > tmpWinner.getCoins())) {
                 tmpWinner = p;
             }
         }
