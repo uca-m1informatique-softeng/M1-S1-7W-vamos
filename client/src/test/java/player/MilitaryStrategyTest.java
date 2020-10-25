@@ -45,14 +45,14 @@ public class MilitaryStrategyTest {
         Action action = strategy.chooseAction(player);
         //in chooseAction in MilitaryStrategy last card checked is guardtower so mostMilitary=guardtower
         assertEquals(action.getCard().getName(), new Card("guardtower", 6).getName());
-        assertEquals(action.getAction(), Action.BUILD);
+        assertEquals(Action.BUILD, action.getAction());
     }
 
     @Test
     public void chooseAction2() {
         Action action = strategy.chooseAction(player);
         assertEquals(action.getCard().getName(), new Card("orevein", 6).getName());
-        assertEquals(action.getAction(), Action.BUILD);
+        assertEquals(Action.BUILD, action.getAction());
     }
 
 }
