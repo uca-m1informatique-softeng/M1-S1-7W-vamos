@@ -44,7 +44,6 @@ public final class Writer
             if (mode)
             {
                 fileWriter.close();
-               // boolean b = new File(NOM_FICHIER).delete();
             }
         } catch (java.io.IOException e)
         {
@@ -52,9 +51,7 @@ public final class Writer
         }
     }
     public static void deleteFile() throws IOException {
-        if (mode) {
-            if (!new File(NOM_FICHIER).delete()) throw new IOException("Could not delete File !");
-        }
+        if (mode && !new File(NOM_FICHIER).delete()) throw new IOException("Could not delete File !");
     }
 
     public static void write(String str)
@@ -63,7 +60,6 @@ public final class Writer
         {
             if (mode)
             {
-               // System.out.println(str);
                 fileWriter.write(str + "\n");
 
             }
