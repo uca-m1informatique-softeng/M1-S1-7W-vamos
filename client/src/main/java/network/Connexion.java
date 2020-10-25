@@ -16,36 +16,38 @@ public enum Connexion {
 
     Connexion() {
         try {
-            System.out.println("try");
+            Writer.write("Trying to connect to server ...");
             socket = IO.socket("http://127.0.0.1:10101");
+            Writer.write("Success !");
         } catch (URISyntaxException ex) {
             Writer.write("Couldn't connect to the server !");
         }
     }
 
     public void startListening() {
-        System.out.println("Listening");
         socket.connect() ;
+        Writer.write("Listening on port 10101 ...");
     }
 
     public void stopListening() {
         socket.disconnect();
-        System.out.println("Socket disconnected");
+        Writer.write("Socket disconnected.");
     }
 
     public void sendMessage(String tag,StringBuilder msg) {
-        System.out.println("Emit");
+        Writer.write("Sending message ...");
         socket.emit(tag , msg);
+        Writer.write("Message sent !");
     }
 
     public void sendStats(String tag, RecapScore score)
     {
-        System.out.println("sending player score...");
+        Writer.write("Sending players' scores ...");
         socket.emit(tag , new JSONObject(score));
+        Writer.write("Players' scores sent !");
     }
     public void receiveMessage(String event, Emitter.Listener fn) {
         socket.on(event, fn);
     }
-
 
 }
