@@ -11,12 +11,12 @@ public class Utilities {
 
     private Utilities() {}
 
-    public static void displayGameOutput(){
+    public static void displayGameOutput() {
         Scanner sc;
         try {
             sc = new Scanner(new File(Writer.NOM_FICHIER));
             while (sc.hasNextLine()) {
-                Writer.write(sc.nextLine());
+                System.out.println(sc.nextLine());
             }
             sc.close();
         } catch (FileNotFoundException e) {
@@ -25,7 +25,9 @@ public class Utilities {
     }
 
     public static Resource getResourceByString(String parser) {
+
         Resource key;
+
         switch (parser) {
             case "WOOD":
                 key = Resource.WOOD;
@@ -49,10 +51,11 @@ public class Utilities {
                 key = Resource.STONE;
                 break;
         }
+
         return key;
     }
 
-    public static CardPoints getCardPointByString(String parser){
+    public static CardPoints getCardPointByString(String parser) {
 
         CardPoints key;
 
