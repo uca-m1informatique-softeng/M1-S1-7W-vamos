@@ -9,26 +9,22 @@ import java.util.Scanner;
 
 public class Utilities {
 
+    private Utilities() {}
+
     public static void displayGameOutput(){
         Scanner sc;
-        try
-        {
+        try {
             sc = new Scanner(new File(Writer.NOM_FICHIER));
-            while (sc.hasNextLine())
-            {
-                System.out.println(sc.nextLine());
+            while (sc.hasNextLine()) {
+                Writer.write(sc.nextLine());
             }
-
             sc.close();
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new ParserException("Game state couldn't correctly be displayed - File not found");
         }
     }
 
-    public static Resource getResourceByString(String parser)
-    {
-
+    public static Resource getResourceByString(String parser) {
         Resource key;
         switch (parser) {
             case "WOOD":
@@ -59,6 +55,7 @@ public class Utilities {
     public static CardPoints getCardPointByString(String parser){
 
         CardPoints key;
+
         switch (parser){
             case "VICTORY":
                 key = CardPoints.VICTORY;
@@ -78,9 +75,8 @@ public class Utilities {
             default:
                 key = CardPoints.SCIENCE_TABLET;
                 break;
-
-
         }
+
         return key;
     }
 }
