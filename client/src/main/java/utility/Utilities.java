@@ -73,7 +73,7 @@ public class Utilities {
                 key = CardPoints.SCIENCE_COMPASS;
                 break;
             case "COIN":
-                key = CardPoints.relayCOIN;
+                key = CardPoints.RELAY_COIN;
                 break;
             default:
                 key = CardPoints.SCIENCE_TABLET;

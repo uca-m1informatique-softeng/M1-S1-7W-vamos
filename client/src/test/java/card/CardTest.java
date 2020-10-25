@@ -57,7 +57,7 @@ class CardTest {
         oracle.put(CardPoints.SCIENCE_WHEEL, 0);
         oracle.put(CardPoints.SCIENCE_TABLET, 0);
         oracle.put(CardPoints.SCIENCE_COMPASS, 1);
-        oracle.put(CardPoints.relayCOIN, 0);
+        oracle.put(CardPoints.RELAY_COIN, 0);
         assertEquals(oracle, card.getCardPoints());
 
     }

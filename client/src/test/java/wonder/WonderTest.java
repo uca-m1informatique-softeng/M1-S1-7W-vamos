@@ -130,7 +130,7 @@ public class WonderTest {
         EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
         oracle.put(CardPoints.MILITARY, 1);
         oracle.put(CardPoints.VICTORY, 3);
-        oracle.put(CardPoints.relayCOIN, 3);
+        oracle.put(CardPoints.RELAY_COIN, 3);
         assertEquals(oracle, w.getCurrentRewardsFromUpgrade());
     }
 }

@@ -518,9 +518,9 @@ public class Player {
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
         this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
-        if (reward.containsKey(CardPoints.relayCOIN)) {
+        if (reward.containsKey(CardPoints.RELAY_COIN)) {
             currentC = this.getCoins(); //from Ressource.COIN
-            wonderC = reward.get(CardPoints.relayCOIN);
+            wonderC = reward.get(CardPoints.RELAY_COIN);
         }
         this.setCoins(currentC + wonderC);
 
