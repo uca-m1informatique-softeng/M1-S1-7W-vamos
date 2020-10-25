@@ -189,7 +189,7 @@ public class Player {
             case Action.WONDER:
                 this.buildStageWonder();
                 break;
-            case Action.DUMP:
+            default:
                 this.dumpCard();
                 break;
         }
