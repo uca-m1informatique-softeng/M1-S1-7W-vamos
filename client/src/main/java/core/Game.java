@@ -216,11 +216,9 @@ public class Game {
                     } else {
                         switch (card.getCoinCardEffect()) {
                             case BROWN:
-                                System.out.println("aqui brown");
                                 player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("brownCards"));
                                 break;
                             case GREY:
-                                System.out.println("aqui grey");
                                 player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("greyCards"));
                                 break;
                             case YELLOW:
