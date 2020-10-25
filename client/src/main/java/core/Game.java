@@ -196,7 +196,7 @@ public class Game {
     /**
      * This function adds victory points to the player based on the card he built
      */
-    private void addVictoryPoints() {
+    public void addVictoryPoints() {
         JSONObject cardCount = new JSONObject();
         cardCount.put("brownCards", 0);
         cardCount.put("greyCards", 0);
@@ -208,7 +208,7 @@ public class Game {
             for (Card card : player.getBuiltCards()) {
                 if (card.getEffect() instanceof CoinCardEffect) {
                     /*
-                     * coincardeffect is null when it is applied on a wonder (e.g. "PYRAMID" for card "arena)
+                     * coinCardEffect is null when it is applied on a wonder (e.g. "PYRAMID" for card "arena)
                      * otherwise it is assigned a color
                      */
                     if (card.getCoinCardEffect() == null) {
@@ -216,9 +216,11 @@ public class Game {
                     } else {
                         switch (card.getCoinCardEffect()) {
                             case BROWN:
+                                System.out.println("aqui brown");
                                 player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("brownCards"));
                                 break;
                             case GREY:
+                                System.out.println("aqui grey");
                                 player.getPoints().put(CardPoints.VICTORY, cardCount.getInt("greyCards"));
                                 break;
                             case YELLOW:
@@ -297,8 +299,7 @@ public class Game {
     private void checkEffect(Class effectClass) {
         for (Player player : this.playersArray) {
             for (int i = 0; i < player.getWonder().effects.size(); i++) {
-                if  (player.getWonder().getEffects().get(i) != null &&
-                    (player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
+                if  (player.getWonder().getEffects().get(i) != null && (player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
                     if (effectClass == PlaySeventhCardEffect.class) {
                         player.getWonder().getEffects().get(i).applyEffect(player, null, null, null, null);
                         Writer.write("player was able to play seventh card");
@@ -353,7 +354,7 @@ public class Game {
      * @param p1 first player
      * @param p2 second one
      */
-    private void fight(Player p1, Player p2) throws AgeException {
+    public void fight(Player p1, Player p2) throws AgeException {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
             switch (this.currentAge) {
                 case 1:
@@ -461,6 +462,10 @@ public class Game {
 
     public int getCurrentAge() {
         return currentAge;
+    }
+
+    public void setCurrentAge(int currentAge) {
+        this.currentAge = currentAge;
     }
 
     public ArrayList<Player> getPlayersArray() {

@@ -2,11 +2,16 @@ package core;
 
 import card.Card;
 import card.CardManager;
+import card.CardPoints;
+import exceptions.AgeException;
 import exceptions.PlayerNumberException;
+import org.json.JSONObject;
+import org.junit.Ignore;
 import player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utility.Writer;
+import wonder.Wonder;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +28,13 @@ class GameTest {
     private static ArrayList<Player> playersArray;
     private static GameState state;
     private ArrayList<Card> deck;
+    Player player ;
+    Player player2 ;
+    Player player3 ;
+    Card card ;
+    Card card2 ;
+    Card card3 ;
+    Wonder wonder ;
 
 
     @BeforeEach
@@ -37,8 +49,23 @@ class GameTest {
         round = 1;
         currentAge = 1;
 
+        wonder = new Wonder("gizahA") ;
+
+        card = new Card("chamberOfCommerce" , 6) ;
+        card2 = new Card("caravansery" , 6) ; //card.getCoinCardEffect() == null
+        card3 = new Card("vineyard" , 6) ;
+        player = new Player("Bot0") ;
+        player2 = new Player("Bot1") ;
+        player3 = new Player("Bot2") ;
+        player.getBuiltCards().add(card);
+        player.getBuiltCards().add(card2);
+        player.getBuiltCards().add(card3);
+
+        player.setWonder(wonder);
+        player.getWonder().setState(2);
+
         playersArray=new ArrayList<>(players);
-        playersArray.add(new Player("Bot0"));
+        playersArray.add(player);
         playersArray.add(new Player("Bot1"));
         playersArray.add(new Player("Bot2"));
 
@@ -56,24 +83,14 @@ class GameTest {
     public void getPlayers(){
         assertEquals(players,game.getPlayers());
     }
-
     @Test
     public void getCurrentAge(){
         assertEquals(currentAge,game.getCurrentAge());
     }
-
-    /*@Test
-    public void getPlayersArray(){
-        assertEquals(playersArray,game.getPlayersArray());
-    }
-
-     */
-
     @Test
     public void getState(){
         assertEquals(state,game.getState());
     }
-
 
     @Test
     public void initDeck() throws IOException {
@@ -104,4 +121,73 @@ class GameTest {
          }
      }
 
+     @Test
+    public void fight() throws AgeException {
+        player = game.getPlayersArray().get(0) ;
+        player2 = game.getPlayersArray().get(1) ;
+
+        //if we get inside the if
+        player.getPoints().put(CardPoints.MILITARY , 7);
+        player2.getPoints().put(CardPoints.MILITARY , 5);
+        game.fight(player , player2);
+        assertEquals(player.getMilitaryPoints() , 8); // it's age 1 : player win the fight against player2 and earns 1 military might
+
+         game.setCurrentAge(2);
+         game.fight(player , player2);
+         assertEquals(player.getMilitaryPoints() , 11); // it's age 2 : player win the fight against player2 and earns 3 military might
+
+         game.setCurrentAge(3);
+         game.fight(player , player2);
+         assertEquals(player.getMilitaryPoints() , 16);
+
+         //if we get inside the else
+         player.getPoints().replace(CardPoints.MILITARY , 5) ;
+         player2.getPoints().replace(CardPoints.MILITARY , 7) ;
+
+         game.fight(player , player2);
+
+         assertEquals(player.getMilitaryPoints() , 4);
+         assertEquals(player.getDefeatToken() , 1);
+
+     }
+
+    @Ignore
+    public void addVictoryPoints(){
+        player = game.getPlayersArray().get(0) ;
+
+        JSONObject cardCount = new JSONObject();
+        cardCount.put("brownCards", 0);
+        cardCount.put("greyCards", 0);
+        cardCount.put("yellowCards", 0);
+
+        player.setWonder(wonder);
+        player.getWonder().setState(2);
+
+
+        player.getBuiltCards().add(card);
+        player.getBuiltCards().add(card2);
+        player.getBuiltCards().add(card3);
+
+
+        System.out.println(card.getCoinCardEffect());
+        System.out.println(card2.getCoinCardEffect());
+        System.out.println(card3.getCoinCardEffect());
+        System.out.println(player.getPoints().get(CardPoints.VICTORY));
+        System.out.println(player.getBuiltCards());
+        game.addVictoryPoints();
+
+
+        assertEquals(player.getPoints().get(CardPoints.VICTORY) , 2);
+
+    }
+
 }
+
+/*
+game.getPlayersArray().get(1).getBuiltCards().add(card);
+        game.getPlayersArray().get(1).getBuiltCards().add(card2);
+        game.getPlayersArray().get(1).getBuiltCards().add(card3);
+        game.getPlayersArray().get(2).getBuiltCards().add(card);
+        game.getPlayersArray().get(2).getBuiltCards().add(card2);
+        game.getPlayersArray().get(2).getBuiltCards().add(card3);
+ */
