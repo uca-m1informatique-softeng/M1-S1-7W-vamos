@@ -71,7 +71,9 @@ class GameTest {
 
 
         state=GameState.START;
-        deck = new ArrayList<>();
+
+        game.initDeck();
+        deck = new ArrayList<>() ;
     }
 
     @Test
@@ -198,7 +200,24 @@ class GameTest {
          }
      }
 
-    @Test
+     @Test
+     public void initPlayersHand() throws IOException {
+         game.initDeck();
+         deck.addAll(game.getDeck()) ;
+
+         for (Player player : this.playersArray) {
+             for (int i = 0; i < MAX_HAND; i++) {
+                 player.getHand().add(this.deck.remove(0));
+             }
+         }
+
+         game.initPlayersHand() ;
+         for (int i = 0; i < playersArray.size(); i++) {
+             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+         }
+     }
+
+    @Ignore
     public void addVictoryPoints(){
         player = game.getPlayersArray().get(0) ;
 
@@ -222,12 +241,3 @@ class GameTest {
     }
 
 }
-
-/*
-game.getPlayersArray().get(1).getBuiltCards().add(card);
-        game.getPlayersArray().get(1).getBuiltCards().add(card2);
-        game.getPlayersArray().get(1).getBuiltCards().add(card3);
-        game.getPlayersArray().get(2).getBuiltCards().add(card);
-        game.getPlayersArray().get(2).getBuiltCards().add(card2);
-        game.getPlayersArray().get(2).getBuiltCards().add(card3);
- */

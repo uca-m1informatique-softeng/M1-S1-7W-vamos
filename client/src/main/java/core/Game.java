@@ -445,7 +445,7 @@ public class Game {
 
     }
 
-    private void initPlayersHand() {
+    public void initPlayersHand() {
         for (Player player : this.playersArray)
             for (int i = 0; i < MAX_HAND; i++)
                 player.getHand().add(this.deck.remove(0));
