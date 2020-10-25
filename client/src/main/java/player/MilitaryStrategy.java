@@ -3,8 +3,6 @@ package player;
 import card.Card;
 import card.CardPoints;
 import card.Resource;
-import java.io.IOException;
-import utility.Writer;
 import java.util.EnumMap;
 
 public class MilitaryStrategy extends Strategy {
