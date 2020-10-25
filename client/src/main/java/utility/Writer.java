@@ -9,9 +9,8 @@ import java.io.IOException;
  * On a 2 fichiers sorties qui enregistrent :
  * - le déroulement de la partie : DeroulementPartie.txt
  */
-public final class Writer
-{
-    final static String NOM_FICHIER = "DeroulementPartie.txt";
+public final class Writer {
+    static final String NOM_FICHIER = "DeroulementPartie.txt";
     private static FileWriter fileWriter;
     private static boolean mode;
 
