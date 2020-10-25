@@ -195,7 +195,7 @@ class GameTest {
 
          game.initPlayersHand() ;
          for (int i = 0; i < playersArray.size(); i++) {
-             assertTrue(playersArray.get(i).getHand().equals(game.getPlayersArray().get(i).getHand()));
+             assertEquals(playersArray.get(i).getHand(), game.getPlayersArray().get(i).getHand());
          }
      }
 

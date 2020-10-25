@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BuildersGuildEffectTest {
+class BuildersGuildEffectTest {
     Player dumbPlayer;
     Player dumbPlayer2;
     Player dumbPlayer3;
@@ -23,7 +23,7 @@ public class BuildersGuildEffectTest {
     }
 
     @Test
-    public void applyEffect(){
+     void applyEffect(){
         try{
             Wonder wonder = new Wonder("gizahA") ;
             Wonder wonder2 = new Wonder("alexandriaA") ;

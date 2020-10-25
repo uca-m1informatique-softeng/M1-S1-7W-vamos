@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ShipOwnersGuildTest {
+class ShipOwnersGuildTest {
     Player player ;
 
     @BeforeEach
@@ -21,7 +21,7 @@ public class ShipOwnersGuildTest {
     }
 
     @Test
-    public void applyEffect(){
+    void applyEffect(){
         Card card = new Card("spiesguild" ,7); //purple card
         Card card2 = new Card("mine" ,7); //brown card
         Card card3 = new Card("glassworks" ,7); //grey card

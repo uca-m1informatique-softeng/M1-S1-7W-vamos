@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MilitaryStrategyTest {
+class MilitaryStrategyTest {
 
     private Player player;
     private Player prevNeighbor;
@@ -38,7 +38,7 @@ public class MilitaryStrategyTest {
     }
 
     @Test
-    public void chooseAction1() {
+    void chooseAction1() {
         player.getResources().put(Resource.ORE, 1);
         player.getResources().put(Resource.CLAY, 1);
         player.getResources().put(Resource.WOOD, 1);
@@ -49,7 +49,7 @@ public class MilitaryStrategyTest {
     }
 
     @Test
-    public void chooseAction2() {
+    void chooseAction2() {
         Action action = strategy.chooseAction(player);
         assertEquals(action.getCard().getName(), new Card("orevein", 6).getName());
         assertEquals(Action.BUILD, action.getAction());

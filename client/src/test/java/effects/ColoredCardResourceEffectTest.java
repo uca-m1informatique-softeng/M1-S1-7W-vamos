@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ColoredCardResourceEffectTest {
+class ColoredCardResourceEffectTest {
     private Player player;
 
     @BeforeEach
@@ -20,7 +20,7 @@ public class ColoredCardResourceEffectTest {
     }
 
     @Test
-    public void applyColor() {
+    void applyColor() {
         Player player2 = new Player("Maestro2");
         Player player3 = new Player("Maestro3");
 

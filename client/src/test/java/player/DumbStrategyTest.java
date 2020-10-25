@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.security.SecureRandom;
 
 @ExtendWith(MockitoExtension.class)
-public class DumbStrategyTest {
+class DumbStrategyTest {
 
     Player player;
     Card oracle ;
@@ -36,7 +36,7 @@ public class DumbStrategyTest {
     }
 
     @Test
-    public void chooseAction() {
+    void chooseAction() {
         when(rand.nextInt(player.hand.size())) .thenReturn(2) ;
         when(rand.nextInt(3) ) .thenReturn(1) ;
 

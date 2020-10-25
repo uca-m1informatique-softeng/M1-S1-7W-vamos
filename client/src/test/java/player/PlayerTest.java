@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class PlayerTest {
+class PlayerTest {
     private Card chosenCard0;
     private Card chosenCard;
     private Card chosenCard2;
@@ -53,18 +53,18 @@ public class PlayerTest {
     }
 
     @Test
-    public void getName(){
+    void getName(){
         assertEquals("Robot",player.getName());
     }
 
     @Test
-    public void setName(){
+    void setName(){
         player.setName("SmartPlayer");
         assertEquals("SmartPlayer",player.getName());
     }
 
     @Test
-    public void getCoins(){
+    void getCoins(){
         assertEquals(0,player.getCoins());
     }
 
@@ -75,52 +75,52 @@ public class PlayerTest {
     }
 
     @Test
-    public void getPoints(){
+    void getPoints(){
         assertEquals(0,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
-    public void setPoints(){
+    void setPoints(){
         player.getPoints().put(CardPoints.VICTORY, 7);
         assertEquals(7,player.getPoints().get(CardPoints.VICTORY));
     }
 
     @Test
-    public void getChosenCard(){
+    void getChosenCard(){
         assertEquals(player.getChosenCard(),chosenCard);
     }
 
     @Test
-    public void setChosenCard(){
+    void setChosenCard(){
         Card card = new Card("altar", 3);
         player.setChosenCard(card);
         assertEquals(card,player.getChosenCard());
     }
 
     @Test
-    public void getHand(){
+    void getHand(){
         assertEquals(hand,player.getHand());
     }
 
     @Test
-    public void setHand(){
+    void setHand(){
         ArrayList<Card> hand2=new ArrayList<>(7);
         player.setHand(hand2);
         assertEquals(hand2,player.getHand());
     }
 
     @Test
-    public void chooseCard(){
+    void chooseCard(){
         assertEquals(player.getChosenCard(),chosenCard);
     }
 
     @Test
-    public void getMilitaryPoints(){
+    void getMilitaryPoints(){
         assertEquals(militaryPoints,player.getMilitaryPoints());
     }
 
     @Test
-    public void addMilitaryPoints(){
+    void addMilitaryPoints(){
         //before addition
         assertEquals(militaryPoints,player.getMilitaryPoints());
         //after addition
@@ -129,7 +129,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void dumpCard(){
+    void dumpCard(){
         //before method call
         assertEquals(coins,player.getCoins());
         assertEquals(hand,player.getHand());
@@ -147,7 +147,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void addPointsAndResources() {
+    void addPointsAndResources() {
         chosenCard0 = new Card("sawmill", 3);
         chosenCard = new Card("altar", 3);
         chosenCard2 = new Card("laboratory", 3);//SCIENCE_WHEEL
@@ -224,7 +224,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void computeScore(){
+    void computeScore(){
         int res = 0;
 
         // Military points
@@ -272,7 +272,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void buyResource1() {
+    void buyResource1() {
         Resource resourceToBuy = Resource.CLAY;
         Player neighbor = new Player("Neighbor");
 
@@ -286,7 +286,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void buyResource2() {
+    void buyResource2() {
         Resource resourceToBuy = Resource.CLAY;
         Player neighbor = new Player("Neighbor");
 
@@ -297,7 +297,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void buyResource3() {
+    void buyResource3() {
         Resource resourceToBuy = Resource.CLAY;
         Player neighbor = new Player("Neighbor");
 
@@ -307,7 +307,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void clearBoughtResources() {
+    void clearBoughtResources() {
         Resource resourceToBuy = Resource.CLAY;
         Player neighbor = player.getNextNeighbor();
 
@@ -326,7 +326,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void buildCardWithTradedResource() {
+    void buildCardWithTradedResource() {
         Card baths = new Card("baths", 6);
         player.setCoins(1);
         player.getBuiltCards().add(new Card("eastTradingPost", 6));

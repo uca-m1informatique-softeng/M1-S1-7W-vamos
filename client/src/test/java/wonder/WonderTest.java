@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
-public class WonderTest {
+class WonderTest {
 
     Wonder wonder;
 

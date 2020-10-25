@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StrategistsGuildEffectTest {
+class StrategistsGuildEffectTest {
     Player dumbPlayer ;
     Player dumbPlayer2 ;
     Player dumbPlayer3 ;
@@ -21,7 +21,7 @@ public class StrategistsGuildEffectTest {
     }
 
     @Test
-    public void applyEffect(){
+    void applyEffect(){
         dumbPlayer2.addDefeatToken(2);
         dumbPlayer3.addDefeatToken(10);
 
