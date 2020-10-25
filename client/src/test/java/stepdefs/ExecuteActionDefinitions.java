@@ -39,7 +39,8 @@ public class ExecuteActionDefinitions {
 
     @Given("a next round has started$")
     public void aNextRoundHasStarted() {
-        assertTrue(game.getState()== GameState.PLAY || game.getState() == GameState.START);
+        assertEquals(GameState.PLAY, game.getState());
+        assertEquals(GameState.START, game.getState());
     }
 
     @And("the player has (\\d+) cards on his hand$")
@@ -48,7 +49,7 @@ public class ExecuteActionDefinitions {
         game.initPlayers();
         for (int i = 0; i < MAX_HAND; i++)
             player.getHand().add(game.getDeck().remove(0));
-        assertEquals(player.getHand().size(), 7);
+        assertEquals(7, player.getHand().size());
     }
     //Szenario1
     @When("the player has selected a building card$")
@@ -56,7 +57,7 @@ public class ExecuteActionDefinitions {
         player.setStrategy(new MilitaryStrategy());
         Action action = player.getStrategy().chooseAction(player);
         player.setChosenCard(action.getCard());
-        assertEquals(action.getAction(), Action.BUILD);
+        assertEquals(Action.BUILD, action.getAction());
     }
 
     @And("the player has not yet built the structure$")
@@ -150,12 +151,13 @@ public class ExecuteActionDefinitions {
             }
         }
         player.getResources().put(neededResource, neededAmount-1);
-        assertFalse(player.getResources().containsKey(neededResource) && player.getResources().get(neededResource) >= neededAmount);
+        assertFalse(player.getResources().containsKey(neededResource));
+        assertFalse(player.getResources().get(neededResource) >= neededAmount);
     }
 
     @And("the player doesn’t want to pass the card on to his neighbor")
     public void thePlayerDoesnTWantToPassTheCardOnToHisNeighbor() {
-        assertEquals(player.getStrategy().chooseAction(player).getAction(), Action.DUMP);
+        assertEquals(Action.DUMP, player.getStrategy().chooseAction(player).getAction());
     }
 
     @Then("the card will be placed on the discarded pile")
