@@ -585,25 +585,25 @@ public class Player {
      * Apply the effect to the player if he have it.
      */
     protected void endApplyEffect() {
-        boolean wonder_science_effect = false;
-        boolean card_science_effect = false;
+        boolean wonderScienceEffect = false;
+        boolean cardScienceEffect = false;
         for(Card c : this.getBuiltCards()){
             if(c.getEffect() instanceof ScienceChoiceEffect){
-                card_science_effect = true;
+                cardScienceEffect = true;
                 for(Effect e : this.wonderEffectNotApply){
                     if(e instanceof ScienceChoiceEffect){
-                        wonder_science_effect = true;
+                        wonderScienceEffect = true;
                         ((ScienceChoiceEffect) e).applyCumulativeEffect(this);
                         break;
                     }
                 }
-                if(!wonder_science_effect){ //we are still in the condition when c is a ScienceChoiceEffect
+                if(!wonderScienceEffect){ //we are still in the condition when c is a ScienceChoiceEffect
                     c.getEffect().applyEffect(this, null, null, null, null);
                 }
                 break;
             }
         }
-        if(!card_science_effect){
+        if(!cardScienceEffect){
             for(Effect e : this.wonderEffectNotApply){
                 if(e instanceof ScienceChoiceEffect){
                     e.applyEffect(this, null, null, null, null);
