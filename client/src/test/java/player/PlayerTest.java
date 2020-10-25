@@ -281,8 +281,8 @@ public class PlayerTest {
         neighbor.getResources().put(resourceToBuy, 2);
 
         assertTrue(player.buyResource(resourceToBuy, 1, neighbor));
-        assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
-        assertEquals(player.getCoins(), oldCoins);
+        assertEquals(1, player.getBoughtResources().get(Resource.CLAY));
+        assertEquals(oldCoins, player.getCoins());
     }
 
     @Test

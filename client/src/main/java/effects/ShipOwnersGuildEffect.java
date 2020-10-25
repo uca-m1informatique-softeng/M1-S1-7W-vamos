@@ -10,19 +10,20 @@ public class ShipOwnersGuildEffect extends Effect{
 
     /**
      * Give one victory point for each card of color purple, brown and grey build.
-     * @param player
+     * @param player Player to apply the effect to
      */
     @Override
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards){
-        ArrayList<Card> playerBuiltCards = new ArrayList<Card>();
+        ArrayList<Card> playerBuiltCards;
         playerBuiltCards = player.getBuiltCards() ;
 
         int nbOfBrownGreyPurpleCards = 0 ;
 
-        for (int i = 0; i < playerBuiltCards.size(); i++) {
-            if(playerBuiltCards.get(i).getColor() == CardColor.BROWN || playerBuiltCards.get(i).getColor() == CardColor.GREY
-            || playerBuiltCards.get(i).getColor() == CardColor.PURPLE ){
-                nbOfBrownGreyPurpleCards ++ ;
+        for (Card builtCard : playerBuiltCards) {
+            if (builtCard.getColor() == CardColor.BROWN ||
+                builtCard.getColor() == CardColor.GREY ||
+                builtCard.getColor() == CardColor.PURPLE) {
+                nbOfBrownGreyPurpleCards++;
             }
         }
 

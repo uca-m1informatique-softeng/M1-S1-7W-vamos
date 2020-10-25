@@ -1,9 +1,11 @@
 package stepdefs;
 
 import card.*;
+import exceptions.PlayerNumberException;
 import player.*;
 import core.*;
 import exceptions.WondersException;
+import utility.Writer;
 import wonder.Wonder;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
@@ -17,21 +19,28 @@ import java.io.IOException;
 import java.util.*;
 
 public class ExecuteActionDefinitions {
-    Resource resource;
     Player player = new Player("main");
     Player neighbor_next  = new Player("nextNeighbor");
     Player neighbor_prev = new Player("prevNeighbor");
-    ArrayList<Card> availableCards = new ArrayList<Card>();
-    Game game = new Game(3);
+    Game game;
 
-    public ExecuteActionDefinitions() throws WondersException, IOException {
+    {
+        try {
+            game = new Game(3);
+        } catch (PlayerNumberException e) {
+            Writer.write("Could not launch Game ! " + e);
+        }
+    }
+
+    public ExecuteActionDefinitions() throws IOException {
         player.setPrevNeighbor(neighbor_prev);
         player.setNextNeighbor(neighbor_next);
     }
 
     @Given("a next round has started$")
     public void aNextRoundHasStarted() {
-        assertTrue(game.getState()== GameState.PLAY || game.getState() == GameState.START);
+        assertEquals(GameState.PLAY, game.getState());
+        assertEquals(GameState.START, game.getState());
     }
 
     @And("the player has (\\d+) cards on his hand$")
@@ -40,7 +49,7 @@ public class ExecuteActionDefinitions {
         game.initPlayers();
         for (int i = 0; i < MAX_HAND; i++)
             player.getHand().add(game.getDeck().remove(0));
-        assertTrue(player.getHand().size() == 7);
+        assertEquals(7, player.getHand().size());
     }
     //Szenario1
     @When("the player has selected a building card$")
@@ -48,7 +57,7 @@ public class ExecuteActionDefinitions {
         player.setStrategy(new MilitaryStrategy());
         Action action = player.getStrategy().chooseAction(player);
         player.setChosenCard(action.getCard());
-        assertEquals(action.getAction(), Action.BUILD);
+        assertEquals(Action.BUILD, action.getAction());
     }
 
     @And("the player has not yet built the structure$")
@@ -87,12 +96,11 @@ public class ExecuteActionDefinitions {
 
     //Szenario2
     @When("the player has selected a card to build a new stage wonder")
-    public void thePlayerHasSelectedACardToBuildANewStageWonder() throws IOException {
+    public void thePlayerHasSelectedACardToBuildANewStageWonder() {
         player.setStrategy(new MilitaryStrategy());
         Action action = player.getStrategy().chooseAction(player);
         player.setChosenCard(action.getCard());
         //assertEquals(action.getAction(), Action.WONDER);
-
     }
 
     @And("the player has all the resources to build a new stage on his wonder board")
@@ -143,12 +151,13 @@ public class ExecuteActionDefinitions {
             }
         }
         player.getResources().put(neededResource, neededAmount-1);
-        assertFalse(player.getResources().containsKey(neededResource) && player.getResources().get(neededResource) >= neededAmount);
+        assertFalse(player.getResources().containsKey(neededResource));
+        assertFalse(player.getResources().get(neededResource) >= neededAmount);
     }
 
     @And("the player doesn’t want to pass the card on to his neighbor")
     public void thePlayerDoesnTWantToPassTheCardOnToHisNeighbor() {
-        assertEquals(player.getStrategy().chooseAction(player).getAction(), Action.DUMP);
+        assertEquals(Action.DUMP, player.getStrategy().chooseAction(player).getAction());
     }
 
     @Then("the card will be placed on the discarded pile")
@@ -159,9 +168,9 @@ public class ExecuteActionDefinitions {
 
     @And("^the player’s treasury is stocked up with (\\d+) coins from the bank\\.$")
     public void thePlayersTreasuryIsStockedUpWithXCoinsFromTheBank(Integer coins) {
-        Integer coinsBefore = player.getCoins();
+        int coinsBefore = player.getCoins();
         player.setCoins(player.getCoins() + coins);
-        assertTrue(player.getCoins() - coinsBefore == 3);
+        assertEquals(player.getCoins() - coinsBefore, 3);
     }
 
 }

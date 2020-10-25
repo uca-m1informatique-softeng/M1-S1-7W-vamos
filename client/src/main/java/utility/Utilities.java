@@ -9,27 +9,25 @@ import java.util.Scanner;
 
 public class Utilities {
 
-    public static void displayGameOutput(){
+    private Utilities() {}
+
+    public static void displayGameOutput() {
         Scanner sc;
-        try
-        {
+        try {
             sc = new Scanner(new File(Writer.NOM_FICHIER));
-            while (sc.hasNextLine())
-            {
+            while (sc.hasNextLine()) {
                 System.out.println(sc.nextLine());
             }
-
             sc.close();
-        } catch (FileNotFoundException e)
-        {
+        } catch (FileNotFoundException e) {
             throw new ParserException("Game state couldn't correctly be displayed - File not found");
         }
     }
 
-    public static Resource getResourceByString(String parser)
-    {
+    public static Resource getResourceByString(String parser) {
 
         Resource key;
+
         switch (parser) {
             case "WOOD":
                 key = Resource.WOOD;
@@ -53,12 +51,14 @@ public class Utilities {
                 key = Resource.STONE;
                 break;
         }
+
         return key;
     }
 
-    public static CardPoints getCardPointByString(String parser){
+    public static CardPoints getCardPointByString(String parser) {
 
         CardPoints key;
+
         switch (parser){
             case "VICTORY":
                 key = CardPoints.VICTORY;
@@ -73,14 +73,13 @@ public class Utilities {
                 key = CardPoints.SCIENCE_COMPASS;
                 break;
             case "COIN":
-                key = CardPoints.relayCOIN;
+                key = CardPoints.RELAY_COIN;
                 break;
             default:
                 key = CardPoints.SCIENCE_TABLET;
                 break;
-
-
         }
+
         return key;
     }
 }

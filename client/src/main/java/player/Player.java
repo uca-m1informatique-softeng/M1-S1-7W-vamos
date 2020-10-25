@@ -189,7 +189,7 @@ public class Player {
             case Action.WONDER:
                 this.buildStageWonder();
                 break;
-            case Action.DUMP:
+            default:
                 this.dumpCard();
                 break;
         }
@@ -260,21 +260,21 @@ public class Player {
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildCurrentCard
-        for (Resource resource : costAfterEffects.keySet()) {
-            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
+        for (Map.Entry<Resource, Integer> resource : costAfterEffects.entrySet()) {
+            if (resource.getValue() > this.resources.get(resource.getKey())) {
 
-                int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
-                this.buyResource(resource, missingResources, this.prevNeighbor);
+                int missingResources = resource.getValue() - this.resources.get(resource.getKey()) - this.boughtResources.get(resource.getKey());
+                this.buyResource(resource.getKey(), missingResources, this.prevNeighbor);
 
-                missingResources -= this.boughtResources.get(resource);
-                if (missingResources > 0) {
-                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
+                missingResources -= this.boughtResources.get(resource.getKey());
+                if (missingResources > 0 && !this.buyResource(resource.getKey(), missingResources, this.nextNeighbor)) {
+                    break;
                 }
             }
         }
 
-        for (Resource resource : costAfterEffects.keySet()) {
-            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)) {
+        for (Map.Entry<Resource, Integer> resource : costAfterEffects.entrySet()) {
+            if (resource.getValue() > this.resources.get(resource.getKey()) + this.boughtResources.get(resource.getKey())) {
                 enoughResources = false;
             }
         }
@@ -418,21 +418,21 @@ public class Player {
         }
 
         // Here the player will try to buy resources from its neighbors if he doesn't have enough in order to buildCurrentCard
-        for (Resource resource : costAfterEffects.keySet()) {
-            if (costAfterEffects.get(resource) > this.resources.get(resource)) {
+        for (Map.Entry<Resource, Integer> resource : costAfterEffects.entrySet()) {
+            if (resource.getValue() > this.resources.get(resource.getKey())) {
 
-                int missingResources = costAfterEffects.get(resource) - this.resources.get(resource) - this.boughtResources.get(resource);
-                this.buyResource(resource, missingResources, this.prevNeighbor);
+                int missingResources = resource.getValue() - this.resources.get(resource.getKey()) - this.boughtResources.get(resource.getKey());
+                this.buyResource(resource.getKey(), missingResources, this.prevNeighbor);
 
-                missingResources -= this.boughtResources.get(resource);
-                if (missingResources > 0) {
-                    if (!this.buyResource(resource, missingResources, this.nextNeighbor)) break;
+                missingResources -= this.boughtResources.get(resource.getKey());
+                if (missingResources > 0 && !this.buyResource(resource.getKey(), missingResources, this.nextNeighbor)) {
+                    break;
                 }
             }
         }
 
-        for (Resource resource : costAfterEffects.keySet()) {
-            if (costAfterEffects.get(resource) > this.resources.get(resource) + this.boughtResources.get(resource)) {
+        for (Map.Entry<Resource, Integer> resource : costAfterEffects.entrySet()) {
+            if (resource.getValue() > this.resources.get(resource.getKey()) + this.boughtResources.get(resource.getKey())) {
                 enoughResources = false;
             }
         }
@@ -518,9 +518,9 @@ public class Player {
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
         this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
-        if (reward.containsKey(CardPoints.relayCOIN)) {
+        if (reward.containsKey(CardPoints.RELAY_COIN)) {
             currentC = this.getCoins(); //from Ressource.COIN
-            wonderC = reward.get(CardPoints.relayCOIN);
+            wonderC = reward.get(CardPoints.RELAY_COIN);
         }
         this.setCoins(currentC + wonderC);
 

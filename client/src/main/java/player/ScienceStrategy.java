@@ -11,12 +11,10 @@ public class ScienceStrategy extends Strategy {
     public Action chooseAction(Player player) {
 
         this.chosenCard = player.hand.get(0);
-        if(!chooseCard(player, ScienceChoiceEffect.class)) {
-            if (!chooseCard(player, CardColor.GREY)) {
-                if (!chooseCard(player, CardColor.BROWN)) {
-                    chooseCard(player, CardColor.GREEN);
-                }
-            }
+        if (!chooseCard(player, ScienceChoiceEffect.class) &&
+            !chooseCard(player, CardColor.GREY) &&
+            !chooseCard(player, CardColor.BROWN)) {
+            chooseCard(player, CardColor.GREEN);
         }
 
         if (player.isBuildable(this.chosenCard)) {
@@ -52,11 +50,11 @@ public class ScienceStrategy extends Strategy {
     protected boolean chooseCard(Player player, Class e){
         this.chosenCard = player.hand.get(0); // default choice
         for(int i = 0; i < player.getHand().size(); i++) {
-            if (player.getHand().get(i).getEffect() != null &&(player.getHand().get(i).getEffect()).getClass().equals(e)) {
-                if (player.isBuildable(player.getHand().get(i))) {
-                    this.chosenCard = player.getHand().get(i);
-                    return true;
-                }
+            if (player.getHand().get(i).getEffect() != null &&
+                player.getHand().get(i).getEffect().getClass().equals(e) &&
+                player.isBuildable(player.getHand().get(i))) {
+                this.chosenCard = player.getHand().get(i);
+                return true;
             }
         }
         return false;

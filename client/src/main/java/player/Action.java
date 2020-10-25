@@ -22,17 +22,17 @@ public class Action {
      * Action.BUILD if card should be built, Action.WONDER if card should be used to build a wonder, and Action.DUMP
      * if card should be dumped.
      */
-    private int action;
+    private int choice;
 
 
     /**
      * Dumb constructor. Should only be used from within Strategy children.
      * @param card The card on which the action should be executed.
-     * @param action The action that should be done with the card.
+     * @param choice The action that should be done with the card.
      */
-    protected Action(Card card, int action) {
+    protected Action(Card card, int choice) {
         this.card = card;
-        this.action = action;
+        this.choice = choice;
     }
 
 
@@ -41,6 +41,6 @@ public class Action {
     }
 
     public int getAction() {
-        return this.action;
+        return this.choice;
     }
 }

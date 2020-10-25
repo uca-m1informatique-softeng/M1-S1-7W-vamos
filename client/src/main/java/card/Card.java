@@ -139,23 +139,25 @@ public class Card {
                 this.effect = new ScienceChoiceEffect();
             }
 
-            String coinCardEffect = "coinCardEffect";
+            String str_coinCardEffect = "coinCardEffect";
 
-            if (card.has(coinCardEffect)) {
-                if (card.get(coinCardEffect).equals("PYRAMID")) {
+            if (card.has(str_coinCardEffect)) {
+                if (card.get(str_coinCardEffect).equals("PYRAMID")) {
                     this.coinCardEffect = null;
                     this.effect = new CoinCardEffect(null, card.getInt("age"));
                 } else {
-                    this.coinCardEffect = CardColor.valueOf(card.getString(coinCardEffect));
-                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(coinCardEffect)), card.getInt("age"));
+                    this.coinCardEffect = CardColor.valueOf(card.getString(str_coinCardEffect));
+                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(str_coinCardEffect)), card.getInt("age"));
                 }
             }
 
+            String str_freeCards = "freeCards";
+
             //free cards
-            if (card.has("freeCards")) {
-                freeCards = new ArrayList<String>();
-                for (int k = 0; k < card.getJSONArray("freeCards").length(); k++) {
-                    freeCards.add(card.getJSONArray("freeCards").getString(k));
+            if (card.has(str_freeCards)) {
+                freeCards = new ArrayList<>();
+                for (int k = 0; k < card.getJSONArray(str_freeCards).length(); k++) {
+                    freeCards.add(card.getJSONArray(str_freeCards).getString(k));
                 }
             }
         }

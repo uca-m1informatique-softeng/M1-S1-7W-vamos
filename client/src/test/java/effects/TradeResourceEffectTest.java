@@ -37,8 +37,8 @@ class TradeResourceEffectTest {
         neighbor.getResources().put(Resource.CLAY, 2);
         player.getBuiltCards().add(new Card("eastTradingPost", 6));
         player.buyResource(Resource.CLAY, 1, player.getNextNeighbor());
-        assertEquals(player.getBoughtResources().get(Resource.CLAY), 1);
-        assertEquals(player.getCoins(), 1);
+        assertEquals(1, player.getBoughtResources().get(Resource.CLAY));
+        assertEquals(1, player.getCoins());
     }
 
     @Test

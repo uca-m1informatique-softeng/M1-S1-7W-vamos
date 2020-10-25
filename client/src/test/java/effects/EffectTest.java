@@ -9,6 +9,6 @@ class EffectTest {
     void testEquals() {
         CopyOneGuildEffect effect = new CopyOneGuildEffect();
         PlaySeventhCardEffect effect2 = new PlaySeventhCardEffect();
-        assertFalse(effect.equals(effect2));
+        assertNotEquals(effect, effect2);
     }
 }

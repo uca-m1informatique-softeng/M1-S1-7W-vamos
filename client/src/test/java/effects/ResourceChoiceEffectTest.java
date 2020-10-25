@@ -16,8 +16,8 @@ class ResourceChoiceEffectTest {
     void resourceChoiceEffect1() {
 
         Card card = new Card("treefarm", 6);
-        Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.WOOD);
-        Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.CLAY);
+        Assertions.assertEquals(Resource.WOOD, ((ResourceChoiceEffect) (card.getEffect())).getRes().get(0));
+        Assertions.assertEquals(Resource.CLAY, ((ResourceChoiceEffect) (card.getEffect())).getRes().get(1));
 
 
     }
@@ -26,8 +26,8 @@ class ResourceChoiceEffectTest {
     void resourceChoiceEffect2() {
 
         Card card = new Card("mine", 6);
-        Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(0), Resource.ORE);
-        Assertions.assertEquals(((ResourceChoiceEffect) (card.getEffect())).getRes().get(1), Resource.STONE);
+        Assertions.assertEquals(Resource.ORE, ((ResourceChoiceEffect) (card.getEffect())).getRes().get(0));
+        Assertions.assertEquals(Resource.STONE, ((ResourceChoiceEffect) (card.getEffect())).getRes().get(1));
 
     }
 
