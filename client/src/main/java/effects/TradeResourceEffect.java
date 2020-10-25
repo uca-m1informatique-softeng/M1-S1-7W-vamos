@@ -42,6 +42,9 @@ public class TradeResourceEffect extends Effect {
         this.resourcesModified = resourcesModified;
     }
 
+    /**
+     * This effect isn't applied.
+     */
     @Override
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
 
