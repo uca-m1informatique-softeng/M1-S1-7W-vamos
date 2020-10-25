@@ -151,13 +151,13 @@ public class Card {
                 }
             }
 
-            String str_freeCards = "freeCards";
+            String strFreeCards = "freeCards";
 
             //free cards
-            if (card.has(str_freeCards)) {
+            if (card.has(strFreeCards)) {
                 freeCards = new ArrayList<>();
-                for (int k = 0; k < card.getJSONArray(str_freeCards).length(); k++) {
-                    freeCards.add(card.getJSONArray(str_freeCards).getString(k));
+                for (int k = 0; k < card.getJSONArray(strFreeCards).length(); k++) {
+                    freeCards.add(card.getJSONArray(strFreeCards).getString(k));
                 }
             }
         }
