@@ -73,7 +73,6 @@ public class ColoredCardResourceEffectTest {
 
         int currentVictoryPoints = player.getPoints().get(CardPoints.VICTORY);
         player.getPoints().put(CardPoints.VICTORY, currentVictoryPoints + nbOfCards   );
-        System.out.println(nbOfCards);
 
         assertEquals(16, player.getPoints().get(CardPoints.VICTORY));
 
