@@ -2,6 +2,9 @@ package core;
 
 import card.*;
 import effects.*;
+import exceptions.AgeException;
+import exceptions.ModeException;
+import exceptions.PlayerNumberException;
 import io.socket.emitter.Emitter;
 import network.Connexion;
 import org.json.JSONObject;
@@ -31,20 +34,19 @@ public class Game {
     private int round = 1;
 
     /**
-     * Number of players in the game
-     */
-
-    private static int players;
-
-    /**
      * Current age, once this hits 3 and last round is played, the game is finished
      */
     private int currentAge = 1;
 
     /**
+     * Number of players in the game
+     */
+    private int players;
+
+    /**
      * container of the players
      */
-    private static ArrayList<Player> playersArray;
+    private ArrayList<Player> playersArray;
 
     /**
      * Current state of the game
@@ -62,24 +64,17 @@ public class Game {
 
     public static Boolean debug = false;
 
-    private static SecureRandom rand = new SecureRandom();
-
     /**
      * The field that contains the discard pile. It is used during the effect : TookDiscardedCardEffect.
      */
-    private ArrayList<Card> discardCards = new ArrayList<Card>();
+    private ArrayList<Card> discardCards = new ArrayList<>();
 
 
-    public static void main(String[] args) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
+    public static void main(String[] args) throws IOException, ModeException, PlayerNumberException {
 
         int nbPlayers = Integer.parseInt(args[0]);
         String typePartie = args[1];
-        /*
-         String typePartie  = GAME_MODE;
-         /*
-         *  Game mode, normal game, game output is displayed
-         */
+
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
             Writer.init(true);
@@ -92,11 +87,7 @@ public class Game {
             } catch (IOException e) {
                 Writer.write("Could not delete file !");
             }
-        }
-        /*
-         *  Stats mode, no game output is displayed, only end game stats.
-         */
-        else if (typePartie.equals(STATS_MODE)) {
+        } else if (typePartie.equals(STATS_MODE)) {
             Writer.init(false);
             RecapScore[] recapScores = new RecapScore[nbPlayers];
             for (int i = 0; i < recapScores.length; i++) {
@@ -112,29 +103,26 @@ public class Game {
                 }
             }
 
-            System.out.println(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
+            Writer.write(BLUE_UNDERLINED + " ---- Analyzed games : " + NB_GAMES_STATS_MODE + "----\n" + RESET);
             Connexion.CONNEXION.startListening();
-            for (int i = 0; i < playersArray.size(); i++) {
+            for (int i = 0; i < nbPlayers; i++) {
                 Connexion.CONNEXION.sendStats(STATS, recapScores[i]);
             }
             //disconnecting the socket once the event ENDCONNEXION is received
-            Connexion.CONNEXION.receiveMessage(ENDCONNEXION, new Emitter.Listener() {
-                @Override
-                public void call(Object... objects) {
-                    Connexion.CONNEXION.stopListening();
-                    System.exit(0);
-                }
+            Connexion.CONNEXION.receiveMessage(ENDCONNEXION, objects -> {
+                Connexion.CONNEXION.stopListening();
+                System.exit(0);
             });
         } else {
-            throw new RuntimeException("Mode inexistant.");
+            throw new ModeException("Mode inexistant.");
         }
     }
 
-    public Game(int players) throws IOException {
+    public Game(int players) throws IOException, PlayerNumberException {
         if (players < MIN_PLAYER || players > MAX_PLAYER)
-            throw new RuntimeException("You must launch the game with 3 or 4 players");
-        Game.players = players;
-        Game.playersArray = new ArrayList<>(players);
+            throw new PlayerNumberException("You must launch the game with 3 or 4 players");
+        this.players = players;
+        this.playersArray = new ArrayList<>(players);
         this.initPlayers();
         this.state = GameState.START;
         this.deck = new ArrayList<>();
@@ -146,8 +134,7 @@ public class Game {
      * Load the cards of the current age in the game engine
      */
     public void initDeck() throws IOException {
-        ArrayList<Card> stack = (ArrayList<Card>) CardManager.getAgeNDeck(this.currentAge);
-        this.deck = stack;
+        this.deck = (ArrayList<Card>) CardManager.getAgeNDeck(this.currentAge);
     }
 
     /**
@@ -162,17 +149,17 @@ public class Game {
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
-                prevPlayer = Game.playersArray.get(i - 1);
+                prevPlayer = this.playersArray.get(i - 1);
             } else {
-                prevPlayer = Game.playersArray.get(Game.playersArray.size() - 1);
+                prevPlayer = this.playersArray.get(this.playersArray.size() - 1);
             }
-            if (i < Game.playersArray.size() - 1) {
-                nextPlayer = Game.playersArray.get(i + 1);
+            if (i < this.playersArray.size() - 1) {
+                nextPlayer = this.playersArray.get(i + 1);
             } else {
-                nextPlayer = Game.playersArray.get(0);
+                nextPlayer = this.playersArray.get(0);
             }
-            Game.playersArray.get(i).setPrevNeighbor(prevPlayer);
-            Game.playersArray.get(i).setNextNeighbor(nextPlayer);
+            this.playersArray.get(i).setPrevNeighbor(prevPlayer);
+            this.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
     }
 
@@ -182,7 +169,7 @@ public class Game {
     private void process() throws IOException {
         switch (this.state) {
             case START:
-                Writer.write("The game started with " + Game.players + "players on the board");
+                Writer.write("The game started with " + this.players + "players on the board");
                 this.processNewAge();
                 this.state = GameState.PLAY;
                 break;
@@ -217,7 +204,7 @@ public class Game {
 
         for (Player player : this.playersArray) {
             ArrayList<Card> builtCards = player.getBuiltCards();
-            cardCount = Card.countCards(cardCount, builtCards);
+            Card.countCards(cardCount, builtCards);
             for (Card card : player.getBuiltCards()) {
                 if (card.getEffect() instanceof CoinCardEffect) {
                     /*
@@ -226,7 +213,6 @@ public class Game {
                      */
                     if (card.getCoinCardEffect() == null) {
                         player.getPoints().put(CardPoints.VICTORY, player.getWonder().getState() * 3);
-                        continue;
                     } else {
                         switch (card.getCoinCardEffect()) {
                             case BROWN:
@@ -251,14 +237,12 @@ public class Game {
      * Function to process one round during the game
      */
     private void processTurn() {
-        for (Player player : Game.playersArray) {
+        for (Player player : this.playersArray) {
             for (Effect e : player.getWonderEffectNotApply()) {
                 if (e instanceof TookDiscardCardEffect) {
                     e.applyEffect(player, null, null, null, discardCards);
                     player.getWonderEffectNotApply().remove(e);
-                    if (discardCards.contains(player.getChosenCard())) {
-                        discardCards.remove(player.getChosenCard());
-                    }
+                    discardCards.remove(player.getChosenCard());
                     break;
                 }
             }
@@ -280,8 +264,6 @@ public class Game {
                 Writer.write("Hand before swapping  : " + player.getHand().toString());
         }
         for (int i = 0; i < playersArray.size(); i++) {
-            ArrayList<Card> tmpMain = new ArrayList<>(playersArray.get(i).getHand());
-
             if (currentAge % 2 == 1) {
                 //Clockwise trade
 
@@ -313,17 +295,16 @@ public class Game {
     }
 
     private void checkEffect(Class effectClass) {
-        for (Player player : Game.playersArray) {
+        for (Player player : this.playersArray) {
             for (int i = 0; i < player.getWonder().effects.size(); i++) {
-                if (player.getWonder().getEffects().get(i) != null) {
-                    if ((player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
-                        if (effectClass == PlaySeventhCardEffect.class) {
-                            player.getWonder().getEffects().get(i).applyEffect(player, null, null, null, null);
-                            Writer.write("player was able to play seventh card");
-                        } else if (effectClass == CopyOneGuildEffect.class) {
-                            player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null, null);
-                            Writer.write("player was able to copy a guild");
-                        }
+                if  (player.getWonder().getEffects().get(i) != null &&
+                    (player.getWonder().getEffects().get(i).getClass()).equals(effectClass)) {
+                    if (effectClass == PlaySeventhCardEffect.class) {
+                        player.getWonder().getEffects().get(i).applyEffect(player, null, null, null, null);
+                        Writer.write("player was able to play seventh card");
+                    } else if (effectClass == CopyOneGuildEffect.class) {
+                        player.getWonder().getEffects().get(i).applyEffect(player, CardColor.PURPLE, null, null, null);
+                        Writer.write("player was able to copy a guild");
                     }
                 }
             }
@@ -334,27 +315,33 @@ public class Game {
     private void processEndAge() throws IOException {
         if (this.round == MAX_ROUNDS) {
             this.checkEffect(PlaySeventhCardEffect.class);
-        }
-        if (this.round == MAX_ROUNDS && this.currentAge < MAX_AGE) {
-            for (Player player : Game.playersArray)
+
+            for (Player player : this.playersArray)
                 player.getHand().clear();
-            this.battle();
+            try {
+                this.battle();
+            } catch (AgeException e) {
+                Writer.write(e.getMessage());
+            }
             Writer.write("Age has ended! ");
-            this.currentAge++;
-            this.processNewAge();
-            this.round = 1;
-        } else if (this.round == MAX_ROUNDS && this.currentAge == MAX_AGE) {
-            this.checkEffect(CopyOneGuildEffect.class);
-            this.state = GameState.END;
+
+            if (this.currentAge < MAX_AGE) {
+                this.currentAge++;
+                this.processNewAge();
+                this.round = 1;
+            } else {
+                this.checkEffect(CopyOneGuildEffect.class);
+                this.state = GameState.END;
+            }
         }
     }
 
     /**
      * Launches fights between all players in playersArray
      */
-    private void battle() {
+    private void battle() throws AgeException {
         Writer.write(BLUE_BOLD + "\nPlayers start fighting !" + RESET);
-        for (Player p : Game.playersArray) {
+        for (Player p : this.playersArray) {
             this.fight(p, p.getPrevNeighbor());
             this.fight(p, p.getNextNeighbor());
         }
@@ -366,7 +353,7 @@ public class Game {
      * @param p1 first player
      * @param p2 second one
      */
-    private void fight(Player p1, Player p2) {
+    private void fight(Player p1, Player p2) throws AgeException {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
             switch (this.currentAge) {
                 case 1:
@@ -382,7 +369,7 @@ public class Game {
                     Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 5));
                     break;
                 default:
-                    throw new RuntimeException("Age cannot be superior to 3 or inferior to 1!");
+                    throw new AgeException("Age cannot be superior to 3 or inferior to 1!");
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
             p1.addMilitaryPoints(-1);
@@ -399,13 +386,13 @@ public class Game {
      * @return a recap score for stats mode
      */
     private RecapScore[] displayPlayersRanking() {
-        ArrayList<Player> players = this.getPlayersArray();
-        Player tmpWinner = players.get(0);
-        RecapScore[] playerScores = new RecapScore[players.size()];
+        ArrayList<Player> playersCopy = this.getPlayersArray();
+        Player tmpWinner = playersCopy.get(0);
+        RecapScore[] playerScores = new RecapScore[playersCopy.size()];
 
         Writer.write("\n" + BLUE_UNDERLINED + "----SCORES----");
         Writer.write(YELLOW_BRIGHT);
-        for (Player p : players) {
+        for (Player p : playersCopy) {
             Writer.write(p + " : ");
             Writer.write("\t" + p.getCoins() + " coins");
             Writer.write("\t" + p.getSciencePoint() + " science points");
@@ -419,8 +406,8 @@ public class Game {
             }
         }
 
-        for (int i = 0; i < players.size(); i++)
-            playerScores[i] = new RecapScore(players.get(i), players.get(i).equals(tmpWinner));
+        for (int i = 0; i < playersCopy.size(); i++)
+            playerScores[i] = new RecapScore(playersCopy.get(i), playersCopy.get(i).equals(tmpWinner));
 
         Writer.write(WHITE_BOLD + tmpWinner.getName() + " won the game with " + tmpWinner.computeScore() + " points !" + RESET);
 
@@ -436,7 +423,7 @@ public class Game {
 
         if (debug)
             Writer.write("wonderList size before init : " + wonderArrayList.size());
-        for (Player player : Game.playersArray) {
+        for (Player player : this.playersArray) {
             Collections.shuffle(wonderArrayList);
             Wonder tmpWonder = wonderArrayList.get(0);
 
@@ -458,7 +445,7 @@ public class Game {
     }
 
     private void initPlayersHand() {
-        for (Player player : Game.playersArray)
+        for (Player player : this.playersArray)
             for (int i = 0; i < MAX_HAND; i++)
                 player.getHand().add(this.deck.remove(0));
     }
@@ -468,8 +455,8 @@ public class Game {
         return round;
     }
 
-    public static int getPlayers() {
-        return players;
+    public int getPlayers() {
+        return this.players;
     }
 
     public int getCurrentAge() {

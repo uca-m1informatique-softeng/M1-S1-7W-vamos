@@ -2,14 +2,17 @@ package core;
 
 import card.Card;
 import card.CardManager;
+import exceptions.PlayerNumberException;
 import player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utility.Writer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import static utility.Constante.MAX_HAND;
 import static org.junit.jupiter.api.Assertions.*;
+import static utility.Constante.RED_BOLD;
 
 class GameTest {
 
@@ -24,7 +27,11 @@ class GameTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        game = new Game(3);
+        try {
+            game = new Game(3);
+        } catch (PlayerNumberException e) {
+            Writer.write(RED_BOLD + "Could not launch game ! " + e);
+        }
 
         players = 3;
         round = 1;
