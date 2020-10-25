@@ -6,6 +6,7 @@ import card.Resource;
 import player.Player;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Extension of class Effect.
@@ -48,10 +49,10 @@ public class ResourceChoiceEffect extends Effect {
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
         boolean applied = false;
 
-        for (Resource neededResource : cost.keySet()) {
+        for (Map.Entry<Resource, Integer> entry : cost.entrySet()) {
             for (Resource effectResource : this.res) {
-                if (neededResource.equals(effectResource) && cost.get(neededResource) > 1) {
-                    cost.put(neededResource, cost.get(neededResource) - 1);
+                if (entry.getKey().equals(effectResource) && entry.getValue() > 1) {
+                    entry.setValue(entry.getValue() - 1);
                     applied = true;
                 }
                 if (applied) break;
