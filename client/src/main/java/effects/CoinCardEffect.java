@@ -29,33 +29,34 @@ public class CoinCardEffect extends Effect {
     }
     @Override
     public void applyEffect(Player player, CardColor color, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards) {
+        String str_greyCards = "greyCards";
         JSONObject cards = new JSONObject();
         cards.put("brownCards", 0);
-        cards.put("greyCards", 0);
+        cards.put(str_greyCards, 0);
         cards.put("yellowCards", 0);
         if (color != null) {
-            ArrayList<Card> builtCards = new ArrayList<Card>();
+            ArrayList<Card> builtCards = new ArrayList<>();
             builtCards.addAll(player.getBuiltCards());
-            /**
+            /*
              *  get neighbors built cards for age 2 card
              */
             if (age == 2) {
                 builtCards.addAll(player.getPrevNeighbor().getBuiltCards());
                 builtCards.addAll(player.getNextNeighbor().getBuiltCards());
             }
-            /**
+            /*
              * iterate through all built cards and distinguish effects of brown and grey cards
              */
             cards = Card.countCards(cards, builtCards);
         }
-        Integer oldCoins = player.getCoins();
+        int oldCoins = player.getCoins();
         if (color == CardColor.BROWN) {
             player.setCoins(player.getCoins() + cards.getInt("brownCards"));
         } else if (color == CardColor.GREY) {
             if (age == 3) {
-                cards.put("greyCards", cards.getInt("greyCards") * 2);
+                cards.put(str_greyCards, cards.getInt(str_greyCards) * 2);
             }
-            player.setCoins(player.getCoins() + cards.getInt("greyCards"));
+            player.setCoins(player.getCoins() + cards.getInt(str_greyCards));
         } else if (color == CardColor.YELLOW) {
             player.setCoins(player.getCoins() + cards.getInt("yellowCards"));
         } else if (color == null) {
