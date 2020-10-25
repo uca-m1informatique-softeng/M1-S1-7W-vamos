@@ -34,15 +34,16 @@ public class ShipOwnersGuildTest {
 
         int nbOfBrownGreyPurpleCards = 0 ;
 
-        for (int i = 0; i < playerBuiltCards.size(); i++) {
-            if(playerBuiltCards.get(i).getColor() == CardColor.BROWN || playerBuiltCards.get(i).getColor() == CardColor.GREY
-                    || playerBuiltCards.get(i).getColor() == CardColor.PURPLE ){
-                nbOfBrownGreyPurpleCards ++ ;
+        for (Card c : playerBuiltCards) {
+            if (c.getColor() == CardColor.BROWN ||
+                c.getColor() == CardColor.GREY ||
+                c.getColor() == CardColor.PURPLE) {
+                nbOfBrownGreyPurpleCards++;
             }
         }
 
         player.getPoints().put(CardPoints.VICTORY , nbOfBrownGreyPurpleCards) ;
 
-        assertEquals(player.getPoints().get(CardPoints.VICTORY) , 3);
+        assertEquals(3, player.getPoints().get(CardPoints.VICTORY));
     }
 }
