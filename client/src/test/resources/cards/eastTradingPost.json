@@ -15,5 +15,8 @@
             "WOOD",
             "ORE"
         ]
-    }
+    },
+    "freeCards": [
+        "forum"
+    ]
 }

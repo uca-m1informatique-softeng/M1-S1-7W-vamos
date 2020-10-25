@@ -2,6 +2,7 @@ package core;
 
 import card.*;
 import effects.*;
+import io.socket.emitter.Emitter;
 import network.Connexion;
 import org.json.JSONObject;
 import player.*;
@@ -74,7 +75,7 @@ public class Game {
 
         int nbPlayers = Integer.parseInt(args[0]);
         String typePartie = args[1];
-        /**
+        /*
          String typePartie  = GAME_MODE;
          /*
          *  Game mode, normal game, game output is displayed
@@ -92,7 +93,7 @@ public class Game {
                 Writer.write("Could not delete file !");
             }
         }
-        /**
+        /*
          *  Stats mode, no game output is displayed, only end game stats.
          */
         else if (typePartie.equals(STATS_MODE)) {
@@ -116,8 +117,14 @@ public class Game {
             for (int i = 0; i < playersArray.size(); i++) {
                 Connexion.CONNEXION.sendStats(STATS, recapScores[i]);
             }
-            //Stats sent to the server
-            //Connexion.CONNEXION.stopListening();
+            //disconnecting the socket once the event ENDCONNEXION is received
+            Connexion.CONNEXION.receiveMessage(ENDCONNEXION, new Emitter.Listener() {
+                @Override
+                public void call(Object... objects) {
+                    Connexion.CONNEXION.stopListening();
+                    System.exit(0);
+                }
+            });
         } else {
             throw new RuntimeException("Mode inexistant.");
         }
@@ -213,7 +220,7 @@ public class Game {
             cardCount = Card.countCards(cardCount, builtCards);
             for (Card card : player.getBuiltCards()) {
                 if (card.getEffect() instanceof CoinCardEffect) {
-                    /**
+                    /*
                      * coincardeffect is null when it is applied on a wonder (e.g. "PYRAMID" for card "arena)
                      * otherwise it is assigned a color
                      */

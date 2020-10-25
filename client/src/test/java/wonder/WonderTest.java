@@ -3,6 +3,7 @@ package wonder;
 import card.*;
 import effects.FreeCardPerAgeEffect;
 import effects.ResourceChoiceEffect;
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,15 +39,40 @@ public class WonderTest {
     }
 
     @Test
-    void getCurrentRewardsFromUpgrade() {
-        EnumMap<CardPoints,Integer> test = new EnumMap<CardPoints, Integer>(CardPoints.class);
-        test.put(CardPoints.VICTORY,7);
-        assertEquals(test,wonder.getCurrentRewardsFromUpgrade());
+    void getCurrentRewardsFromUpgradeTest() {
+        //setup wonder = babyloneA
+        EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
+        oracle.put(CardPoints.VICTORY, 3);
+        assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); //index/state  = 0, cost stage 1
+        assertEquals(oracle, this.wonder.getProp().get(this.wonder.getState()).y); //index/state  = 0, cost stage 1
+
+        wonder.setState(wonder.getState() + 1); // stage one is build
+        oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
+        //reward is an effect, so no cardpoints
+        assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); // index/state = 1, cost stage 2
+
+        wonder.setState(wonder.getState() + 1); // 2 stage build
+        oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
+        oracle.put(CardPoints.VICTORY, 7);
+        assertEquals(oracle, this.wonder.getCurrentRewardsFromUpgrade()); // index/state = 2, cost stage 3
+        wonder.setState(wonder.getState() + 1); // Build the last stage
+
+        //return an outIndexError when we call this method
     }
 
     @Test
     void isWonderFinished() {
-        assertFalse(wonder.isWonderFinished());
+        assertFalse(wonder.isWonderFinished()); //No stage built
+
+        wonder.setState(wonder.getState() + 1); //Build stage One
+        assertFalse(wonder.isWonderFinished()); // 2 build more can be build
+
+        wonder.setState(wonder.getState() + 1); // 2 stage build
+        assertFalse(wonder.isWonderFinished()); // One more for finish the wonder
+
+        wonder.setState(wonder.getState() + 1); // Build the last stage
+        assertTrue(wonder.isWonderFinished()); // Finish
+
     }
 
     @Test
@@ -75,5 +101,36 @@ public class WonderTest {
         assertTrue(w.getEffects().get(2) instanceof ResourceChoiceEffect);
         assertTrue(w11.getEffects().get(2) instanceof FreeCardPerAgeEffect);
 
+    }
+
+    @Test
+    void getCurrentUpgradeCost() {
+        //setup wonder = babyloneA
+        EnumMap<Resource,Integer> oracle = new EnumMap<Resource, Integer>(Resource.class);
+        oracle.put(Resource.CLAY, 2);
+        assertEquals(oracle, this.wonder.getCurrentUpgradeCost()); //index/state  = 0, cost stage 1
+
+        wonder.setState(wonder.getState() + 1); // stage one is build
+        oracle = new EnumMap<Resource, Integer>(Resource.class);
+        oracle.put(Resource.WOOD, 3);
+        assertEquals(oracle, this.wonder.getCurrentUpgradeCost()); // index/state = 1, cost stage 2
+
+        wonder.setState(wonder.getState() + 1); // 2 stage build
+        oracle = new EnumMap<Resource, Integer>(Resource.class);
+        oracle.put(Resource.CLAY, 4);
+        assertEquals(oracle, this.wonder.getCurrentUpgradeCost()); // index/state = 2, cost stage 3
+        wonder.setState(wonder.getState() + 1); // Build the last stage
+
+        //return an outIndexError when we call this method
+    }
+
+    @Test
+    void wonderGiveCoin() throws IOException {
+        Wonder w = new Wonder("rhodosB");
+        EnumMap<CardPoints,Integer> oracle = new EnumMap<CardPoints, Integer>(CardPoints.class);
+        oracle.put(CardPoints.MILITARY, 1);
+        oracle.put(CardPoints.VICTORY, 3);
+        oracle.put(CardPoints.relayCOIN, 3);
+        assertEquals(oracle, w.getCurrentRewardsFromUpgrade());
     }
 }

@@ -1,9 +1,11 @@
 package card;
 
 import effects.ScienceChoiceEffect;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,10 +13,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class CardTest {
 
     Card card;
+    JSONObject cardCount = new JSONObject() ;
 
     @BeforeEach
     void setUp() throws IOException {
         card = new Card("academy", 3);
+
+        cardCount.put("brownCards" ,1);
+        cardCount.put("greyCards" ,1);
+        cardCount.put("yellowCards" ,1);
     }
 
     @Test
@@ -50,6 +57,7 @@ class CardTest {
         oracle.put(CardPoints.SCIENCE_WHEEL, 0);
         oracle.put(CardPoints.SCIENCE_TABLET, 0);
         oracle.put(CardPoints.SCIENCE_COMPASS, 1);
+        oracle.put(CardPoints.relayCOIN, 0);
         assertEquals(oracle, card.getCardPoints());
 
     }
@@ -95,5 +103,22 @@ class CardTest {
         Card c = new Card("scientistsguild", 3);
         assertTrue(c.getEffect() instanceof ScienceChoiceEffect);
 
+    }
+
+    @Test
+    public void countCards(){
+        JSONObject cardCount2 = new JSONObject() ;
+        cardCount2.put("brownCards" ,2);
+        cardCount2.put("greyCards" ,2);
+        cardCount2.put("yellowCards" ,2);
+        ArrayList<Card> builtCards = new ArrayList<>() ;
+        builtCards.add(new Card("timberyard" , 6));
+        builtCards.add(new Card("glassworks" , 6));
+        builtCards.add(new Card("marketplace" , 6));
+
+        JSONObject cardCountResult = Card.countCards(cardCount , builtCards) ;
+        assertEquals(cardCount2.get("brownCards") , cardCountResult.get("brownCards"));
+        assertEquals(cardCount2.get("greyCards") , cardCountResult.get("greyCards"));
+        assertEquals(cardCount2.get("yellowCards") , cardCountResult.get("yellowCards"));
     }
 }

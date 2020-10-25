@@ -8,13 +8,13 @@ import com.corundumstudio.socketio.listener.DataListener;
 import static utility.Constante.* ;
 
 public class Server {
-    public static void main(String[] args) {
+    /**
+     *   Variable socketIOServer, le serveur.
+     */
+    private SocketIOServer server;
 
-        Configuration config = new Configuration();
-        config.setHostname("127.0.0.1");
-        config.setPort(10101);
-        SocketIOServer server = new SocketIOServer(config);
-        server.start();
+    public Server(SocketIOServer server){
+        this.server = server ;
 
         server.addConnectListener(socketIOClient -> System.out.println("Server and Socket are connected..."));
 
@@ -31,8 +31,23 @@ public class Server {
                 System.out.println(joueur + " gets   " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
                 System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
 
+                disconnectSocket(socketIOClient) ;
             }
         } );
+    }
 
+    /**
+     * Method who sends an event ENDCONNEXION with a socket to disconnect the client's socket
+     * @param socketIOClient the socket who sends the event
+     */
+    public void disconnectSocket(SocketIOClient socketIOClient){
+        socketIOClient.sendEvent(ENDCONNEXION , "Disconnecting the socket");
+    }
+
+    /**
+     * Method to launch the server
+     */
+    public void startServer() {
+            server.start();
     }
 }

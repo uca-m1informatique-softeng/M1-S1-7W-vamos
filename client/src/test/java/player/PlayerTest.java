@@ -400,4 +400,19 @@ public class PlayerTest {
         }
         assertTrue(check);
     }
+
+
+    @Test
+    void addWonderRewardTest() throws IOException {
+        player.wonder = new Wonder("rhodosB");
+        player.addWonderReward();
+        assertEquals(1, player.getMilitaryPoints());
+        assertEquals(3, player.getPoints().get(CardPoints.VICTORY));
+        assertEquals(3, player.getCoins());
+        player.wonder.setState(player.wonder.getState() + 1);
+        player.addWonderReward();
+        assertEquals(2, player.getMilitaryPoints());
+        assertEquals(7, player.getPoints().get(CardPoints.VICTORY));
+        assertEquals(7, player.getCoins());
+    }
 }

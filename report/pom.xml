@@ -23,12 +23,12 @@
     <dependencies>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>Commun</artifactId>
+            <artifactId>client</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.example</groupId>
-            <artifactId>Server</artifactId>
+            <artifactId>server</artifactId>
             <version>1.2-SNAPSHOT</version>
         </dependency>
     </dependencies>

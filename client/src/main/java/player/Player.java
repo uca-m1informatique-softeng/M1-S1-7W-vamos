@@ -281,7 +281,7 @@ public class Player {
 
         // Checks if player has a built a card that would allow him to build this card for free
         for (Card card : this.builtCards) {
-            if (card.getFreeCards() != null && card.getFreeCards().contains(this.name)) {
+            if (card.getFreeCards() != null && card.getFreeCards().contains(this.chosenCard.getName())) {
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
                 this.hand.remove(this.chosenCard);
@@ -506,6 +506,8 @@ public class Player {
         int wonderVP = 0;
         int currentMP = 0;
         int wonderMP = 0;
+        int currentC = 0;
+        int wonderC = 0;
         if (reward.containsKey(CardPoints.VICTORY)) {
             currentVP = this.points.get(CardPoints.VICTORY);
             wonderVP = reward.get(CardPoints.VICTORY);
@@ -516,8 +518,13 @@ public class Player {
             wonderMP = this.wonder.getCurrentRewardsFromUpgrade().get(CardPoints.MILITARY);
         }
         this.points.put(CardPoints.MILITARY, currentMP + wonderMP);
+        if (reward.containsKey(CardPoints.relayCOIN)) {
+            currentC = this.getCoins(); //from Ressource.COIN
+            wonderC = reward.get(CardPoints.relayCOIN);
+        }
+        this.setCoins(currentC + wonderC);
 
-        Writer.write(this.name + " build stage wonder " + this.wonder.getName() + " and got " + wonderVP + " victory points.");
+        Writer.write(this.name + " build stage wonder " + this.wonder.getName() + " and got " + wonderVP + " victory points, " + wonderMP + " military points, " + wonderC + " coin.");
     }
 
     public int computeScore() {

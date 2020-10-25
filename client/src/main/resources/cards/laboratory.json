@@ -12,5 +12,9 @@
     "players": [
         3,
         5
+    ],
+    "freeCards": [
+        "siegeworkshop",
+        "observatory"
     ]
 }
