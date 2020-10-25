@@ -139,15 +139,15 @@ public class Card {
                 this.effect = new ScienceChoiceEffect();
             }
 
-            String str_coinCardEffect = "coinCardEffect";
+            String strCoinCardEffect = "coinCardEffect";
 
-            if (card.has(str_coinCardEffect)) {
-                if (card.get(str_coinCardEffect).equals("PYRAMID")) {
+            if (card.has(strCoinCardEffect)) {
+                if (card.get(strCoinCardEffect).equals("PYRAMID")) {
                     this.coinCardEffect = null;
                     this.effect = new CoinCardEffect(null, card.getInt("age"));
                 } else {
-                    this.coinCardEffect = CardColor.valueOf(card.getString(str_coinCardEffect));
-                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(str_coinCardEffect)), card.getInt("age"));
+                    this.coinCardEffect = CardColor.valueOf(card.getString(strCoinCardEffect));
+                    this.effect = new CoinCardEffect(CardColor.valueOf(card.getString(strCoinCardEffect)), card.getInt("age"));
                 }
             }
 
