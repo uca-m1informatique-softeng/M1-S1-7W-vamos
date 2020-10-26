@@ -231,21 +231,6 @@ public class Player {
                 if (card.getEffect() instanceof ResourceChoiceEffect) {
                     card.getEffect().applyEffect(null, null, null, costAfterEffects, null);
                 }
-                if (card.getEffect() instanceof ColoredCardResourceEffect) {
-                    card.getEffect().applyEffect(this, card.getColor(), null, null, null);
-                }
-                if (card.getEffect() instanceof ShipOwnersGuildEffect) { //Ship Owners Guild Effect
-                    card.getEffect().applyEffect(this, null, null, null, null);
-                }
-                if (card.getEffect() instanceof BuildersGuildEffect) { //Builders Guild card Effect
-                    card.getEffect().applyEffect(this, null, null, null, null);
-                }
-                if (card.getEffect() instanceof StrategistsGuildEffect) { //Strategist Guild card Effect
-                    card.getEffect().applyEffect(this, null, null, null, null);
-                }
-                if (card.getEffect() instanceof CoinCardEffect) {
-                    card.getEffect().applyEffect(this, card.getCoinCardEffect(), card.getAge(), null, null);
-                }
             }
             //The ScienceChoiceEffect is only apply at the end of the game.
         }
@@ -285,6 +270,9 @@ public class Player {
                 this.builtCards.add(this.chosenCard);
                 addPointsAndResources();
                 this.hand.remove(this.chosenCard);
+                if (this.chosenCard.getEffect() instanceof CoinCardEffect) {
+                    this.chosenCard.getEffect().applyEffect(this, this.chosenCard.getCoinCardEffect(), this.chosenCard.getAge(), null, null);
+                }
                 return true;
             }
         }
@@ -293,6 +281,9 @@ public class Player {
             this.builtCards.add(this.chosenCard);
             addPointsAndResources();
             this.hand.remove(this.chosenCard);
+            if (this.chosenCard.getEffect() instanceof CoinCardEffect) {
+                this.chosenCard.getEffect().applyEffect(this, this.chosenCard.getCoinCardEffect(), this.chosenCard.getAge(), null, null);
+            }
             return true;
 
             //Once per age,a player can construct a building from his or her hand for free (if he built the stage2 of olympiaA)
@@ -529,7 +520,6 @@ public class Player {
 
     public int computeScore() {
         int res = 0;
-        endApplyEffect();
         // Military points
         res += this.getMilitaryPoints();
         // Treasury Contents
@@ -582,9 +572,9 @@ public class Player {
     }
 
     /**
-     * Apply the effect to the player if he have it.
+     * Apply the effect who need to be apply at the end to the player if he have it.
      */
-    protected void endApplyEffect() {
+    public void endApplyEffect() {
         boolean wonderScienceEffect = false;
         boolean cardScienceEffect = false;
         for(Card c : this.getBuiltCards()){
@@ -609,6 +599,24 @@ public class Player {
                     e.applyEffect(this, null, null, null, null);
                     break;
                 }
+            }
+        }
+        endApplyGuildEffect();
+    }
+
+    protected void endApplyGuildEffect() {
+        for (Card card : this.getBuiltCards()) {
+            if (card.getEffect() instanceof ColoredCardResourceEffect) {
+                card.getEffect().applyEffect(this, card.getColor(), null, null, null);
+            }
+            if (card.getEffect() instanceof ShipOwnersGuildEffect) { //Ship Owners Guild Effect
+                card.getEffect().applyEffect(this, null, null, null, null);
+            }
+            if (card.getEffect() instanceof BuildersGuildEffect) { //Builders Guild card Effect
+                card.getEffect().applyEffect(this, null, null, null, null);
+            }
+            if (card.getEffect() instanceof StrategistsGuildEffect) { //Strategist Guild card Effect
+                card.getEffect().applyEffect(this, null, null, null, null);
             }
         }
     }

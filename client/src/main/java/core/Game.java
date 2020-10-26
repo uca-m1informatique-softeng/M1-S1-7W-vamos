@@ -182,7 +182,7 @@ public class Game {
                 break;
 
             case END:
-                this.addVictoryPoints();
+                applyAllEndEffect();
                 this.displayPlayersRanking();
                 Writer.write("core.Game has ended .. exiting");
                 this.state = GameState.EXIT;
@@ -447,6 +447,14 @@ public class Game {
         for (Player player : this.playersArray)
             for (int i = 0; i < MAX_HAND; i++)
                 player.getHand().add(this.deck.remove(0));
+    }
+
+    public void applyAllEndEffect() {
+        Writer.write("\n Apply end game effect. ");
+        for (int i = 0; i < players; i++) {
+            playersArray.get(i).endApplyEffect();
+        }
+        this.addVictoryPoints();
     }
 
     //Getter pour les tests
