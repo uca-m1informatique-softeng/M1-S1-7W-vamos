@@ -62,6 +62,8 @@ class ColoredCardResourceEffectTest {
             }
         }
 
+        assertEquals(9 , nbOfCards);
+
         for (Card c : nextPlayerBuiltCards) {
             if (c.getColoredCardResourceEffect() == CardColor.GREY) {
                 nbOfCards += 2;

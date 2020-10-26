@@ -32,6 +32,7 @@ public enum Connexion {
      */
     public void startListening() {
         socket.connect() ;
+        System.out.println("Stats are sent to the server via port 10101 ...");
         Writer.write("Listening on port 10101 ...");
     }
 
