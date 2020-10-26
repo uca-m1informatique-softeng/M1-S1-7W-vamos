@@ -6,7 +6,7 @@ import org.mockito.Mockito;
 
 import static utility.Constante.ENDCONNEXION;
 
-public class ServerTest {
+class ServerTest {
 
     private Server server;
     private SocketIOClient socketIOClient;
@@ -19,7 +19,7 @@ public class ServerTest {
     }
 
     @Test
-    public void disconnectSocket(){
+    void disconnectSocket(){
         server.disconnectSocket(socketIOClient);
         Mockito.verify(socketIOClient).sendEvent(Mockito.eq(ENDCONNEXION) , Mockito.anyString());
     }

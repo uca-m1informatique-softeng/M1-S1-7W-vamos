@@ -90,25 +90,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>Server</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
-                    <!-- argument de la commande java (en plus du nom de la classe et du classpath -->
-
-                    <!-- arguments récupérés dans le main -->
-                    <!--
-                        <arguments>
-                                <argument>argument1</argument>
-                        </arguments>
-                    -->
-
-                    <!-- arguments de configuration système -->
-                    <!--
-                        <systemProperties>
-                                <systemProperty>
-                                    <key>myproperty</key>
-                                    <value>myvalue</value>
-                                </systemProperty>
-                        </systemProperties>
-                     -->
+                    <mainClass>Main</mainClass>
                 </configuration>
             </plugin>
 

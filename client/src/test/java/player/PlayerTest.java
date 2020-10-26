@@ -69,7 +69,7 @@ class PlayerTest {
     }
 
     @Test
-    public void setCoins(){
+    void setCoins(){
         player.setCoins(10);
         assertEquals(10,player.getCoins());
     }

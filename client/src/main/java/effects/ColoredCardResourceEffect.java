@@ -23,7 +23,7 @@ public class ColoredCardResourceEffect extends Effect{
 
     public void applyEffect(Player player , CardColor cardColor, Integer age, EnumMap<Resource, Integer> cost, ArrayList<Card> discardCards){
         ArrayList<Card> previousPlayerBuiltCards = player.getPrevNeighbor().getBuiltCards();
-        ArrayList<Card> NextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
+        ArrayList<Card> nextPlayerBuiltCards = player.getNextNeighbor().getBuiltCards();
 
         int nbOfCards = 0 ; //number of cards who have the color cardColor
 
@@ -38,8 +38,8 @@ public class ColoredCardResourceEffect extends Effect{
             }
         }
 
-        for (int i = 0; i < NextPlayerBuiltCards.size(); i++) {
-            if (NextPlayerBuiltCards.get(i).getColor() == cardColor ){
+        for (int i = 0; i < nextPlayerBuiltCards.size(); i++) {
+            if (nextPlayerBuiltCards.get(i).getColor() == cardColor ){
                 if (cardColor == CardColor.GREY){
                     nbOfCards = nbOfCards + 2; //only grey cards will give 2 victory points per grey card in the neighbors cards
                 }

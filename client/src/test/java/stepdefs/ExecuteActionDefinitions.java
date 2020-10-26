@@ -170,7 +170,7 @@ public class ExecuteActionDefinitions {
     public void thePlayersTreasuryIsStockedUpWithXCoinsFromTheBank(Integer coins) {
         int coinsBefore = player.getCoins();
         player.setCoins(player.getCoins() + coins);
-        assertEquals(player.getCoins() - coinsBefore, 3);
+        assertEquals(3 , player.getCoins() - coinsBefore);
     }
 
 }
