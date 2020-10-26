@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CoinCardEffectTest {
+class CoinCardEffectTest {
     Player player1 ;
     Player player2 ;
     Player player3 ;
@@ -58,7 +58,7 @@ public class CoinCardEffectTest {
     }
 
     @Test
-     public void applyEffect(){
+     void applyEffect(){
         String strGreyCards = "greyCards";
         JSONObject cards = new JSONObject();
         cards.put("brownCards", 0);
@@ -74,7 +74,7 @@ public class CoinCardEffectTest {
             builtCards.addAll(player1.getBuiltCards());
 
 
-            assertTrue(player1.getBuiltCards().equals(builtCards));
+            assertEquals(player1.getBuiltCards(),builtCards);
             /*
              *  get neighbors built cards for age 2 card
              */
@@ -85,13 +85,13 @@ public class CoinCardEffectTest {
 
                 builtCards.addAll(player1.getPrevNeighbor().getBuiltCards());
 
-                assertTrue(builtCards.equals(total));
+                assertEquals(builtCards,total);
 
                 total.addAll(player1.getNextNeighbor().getBuiltCards()) ;
 
                 builtCards.addAll(player1.getNextNeighbor().getBuiltCards());
 
-                assertTrue(builtCards.equals(total));
+                assertEquals(builtCards,total);
             }
             /*
              * iterate through all built cards and distinguish effects of brown and grey cards

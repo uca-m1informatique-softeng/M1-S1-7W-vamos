@@ -32,11 +32,9 @@ public class ScienceStrategy extends Strategy {
     protected boolean chooseCard(Player player, CardColor c) {
         this.chosenCard = player.hand.get(0); // default choice
         for(int i = 0; i < player.getHand().size(); i++){
-            if(player.getHand().get(i).getColor() == c){
-                if(player.isBuildable(player.getHand().get(i))) {
+            if(player.getHand().get(i).getColor() == c  && player.isBuildable(player.getHand().get(i))){
                     this.chosenCard = player.getHand().get(i);
                     return true;
-                }
             }
         }
         return false;
