@@ -9,6 +9,9 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
+/**
+ * Enum Connexion with a unique element CONNEXION to connect the socket to the server
+ */
 public enum Connexion {
     CONNEXION;
 
@@ -24,11 +27,17 @@ public enum Connexion {
         }
     }
 
+    /**
+     * Method to start listening
+     */
     public void startListening() {
         socket.connect() ;
         Writer.write("Listening on port 10101 ...");
     }
 
+    /**
+     * Method to stop listening
+     */
     public void stopListening() {
         socket.disconnect();
         Writer.write("Socket disconnected.");
@@ -40,12 +49,17 @@ public enum Connexion {
         Writer.write("Message sent !");
     }
 
-    public void sendStats(String tag, RecapScore score)
-    {
+    public void sendStats(String tag, RecapScore score) {
         Writer.write("Sending players' scores ...");
         socket.emit(tag , new JSONObject(score));
         Writer.write("Players' scores sent !");
     }
+
+    /**
+     * Method to receive a message from the server
+     * @param event the message the socket listens for
+     * @param fn
+     */
     public void receiveMessage(String event, Emitter.Listener fn) {
         socket.on(event, fn);
     }
