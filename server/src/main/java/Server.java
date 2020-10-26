@@ -1,10 +1,11 @@
 import utility.RecapScore;
-import com.corundumstudio.socketio.AckRequest;
-import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.DataListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 
+import java.io.File;
 import static utility.Constante.* ;
 
 public class Server {
@@ -18,22 +19,61 @@ public class Server {
 
         server.addConnectListener(socketIOClient -> System.out.println("Server and Socket are connected..."));
 
-        server.addEventListener(STATS, RecapScore.class, new DataListener<RecapScore>() {
-            @Override
-            public void onData(SocketIOClient socketIOClient, RecapScore recapScore, AckRequest ackRequest) throws Exception {
-                System.out.println("Stats received by the Server...");
-                recapScore.processAvgScore(NB_GAMES_STATS_MODE);
-                double victoires = recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE) * 100;
-                String joueur = recapScore.getStrategy();
-                System.out.println(joueur + " gets an average score of  " + recapScore.getAvgScore());
-                System.out.println(joueur + " has a  " + victoires + "% winrate");
-                System.out.println(joueur + " gets " + recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
-                System.out.println(joueur + " gets   " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
-                System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
+        server.addEventListener(STATS, RecapScore.class, (socketIOClient, recapScore, ackRequest) -> {
+            System.out.println("Stats received by the Server...");
+            recapScore.processAvgScore(NB_GAMES_STATS_MODE);
 
-                disconnectSocket(socketIOClient) ;
+            double victoires = recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE) * 100;
+            String joueur = recapScore.getStrategy();
+            System.out.println(joueur + " gets an average score of  " + recapScore.getAvgScore());
+            System.out.println(joueur + " has a  " + victoires + "% winrate");
+            System.out.println(joueur + " gets " + recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
+            System.out.println(joueur + " gets   " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
+            System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
+
+            File f = new File(DATA_TABLE);
+            boolean file = false;
+            if(f.exists() && !f.isDirectory()) {
+               file = true;
             }
-        } );
+
+            try (PrintWriter writer = new PrintWriter(new FileOutputStream(new File("data.csv"),true))) {
+
+                StringBuilder sb = new StringBuilder();
+                if(!file) {
+                    sb.append("Strategie");
+                    sb.append(',');
+                    sb.append("AvgScore");
+                    sb.append(',');
+                    sb.append("MP");
+                    sb.append(',');
+                    sb.append("SP");
+                    sb.append(',');
+                    sb.append("Coin");
+                    sb.append('\n');
+                }
+                sb.append(joueur);
+                sb.append(',');
+                sb.append(recapScore.getAvgScore());
+                sb.append(',');
+                sb.append( recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE);
+                sb.append(',');
+
+                sb.append( recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE);
+                sb.append(',');
+                sb.append( recapScore.getCoins() / (double) NB_GAMES_STATS_MODE);
+                sb.append('\n');
+
+                writer.write(sb.toString());
+                writer.close();
+
+                System.out.println("Done writing data to csv file!");
+
+            } catch (FileNotFoundException e) {
+                System.out.println(e.getMessage());
+            }
+
+        });
     }
 
     /**

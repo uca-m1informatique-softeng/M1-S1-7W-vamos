@@ -98,5 +98,7 @@ public final class Constante {
     public static final String GAME_MODE ="game";
     public static final String STATS_MODE ="stats";
     public static final int NB_GAMES_STATS_MODE = 2000;
+
+    public static final String DATA_TABLE = "data.csv";
 }
 
