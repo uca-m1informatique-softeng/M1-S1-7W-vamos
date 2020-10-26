@@ -604,6 +604,9 @@ public class Player {
         endApplyGuildEffect();
     }
 
+    /**
+     * Apply purple card effect, if the player have it.
+     */
     protected void endApplyGuildEffect() {
         for (Card card : this.getBuiltCards()) {
             if (card.getEffect() instanceof ColoredCardResourceEffect) {
@@ -647,6 +650,11 @@ public class Player {
         }
     }
 
+    /**
+     * Check if the card is already build. In other words if card is in getBuildCards
+     * @param c the card we want check if we had already build.
+     * @return true if is already built, false if not.
+     */
     protected boolean alreadyBuilt (Card c){
         for(Card card : this.getBuiltCards()){
             if(card.getName().equals(c.getName())) { return true; }

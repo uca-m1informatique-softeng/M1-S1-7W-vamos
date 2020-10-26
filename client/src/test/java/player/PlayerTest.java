@@ -12,6 +12,8 @@ import effects.ScienceChoiceEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doReturn;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +34,9 @@ class PlayerTest {
 
     @Mock
     SecureRandom rand;
+
+    @Mock
+    Card card;
 
     @BeforeEach
     void setUp() throws IOException {
@@ -217,10 +222,6 @@ class PlayerTest {
 
         assertEquals(player.getPoints().get(CardPoints.SCIENCE_COMPASS) , oldSC + newSC);
 
-        //@TODO
-        /*
-        check if resources given by a card are given to the player (currently no card who gives resources is implemented)
-         */
     }
 
     @Test
@@ -415,4 +416,32 @@ class PlayerTest {
         assertEquals(7, player.getPoints().get(CardPoints.VICTORY));
         assertEquals(7, player.getCoins());
     }
+
+    @Test
+    void isBuildable() {
+        EnumMap<Resource, Integer> cost = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            cost.put(r, 0);
+        }
+        doReturn(cost).when(card).getCost();
+        //The cost need had all key initialized.
+        //try with a free card
+        assertTrue(player.isBuildable(card));
+
+        //try with a cost
+        assertTrue(player.getCoins() == 0);
+        cost.put(Resource.COIN, 1);
+        assertFalse(player.isBuildable(card));
+        player.setCoins(1);
+        assertTrue(player.isBuildable(card));
+        //try with a big cost
+        for (Resource r : Resource.values()) {
+            cost.put(r, 1);
+            player.resources.put(r, 1);
+        }
+        assertTrue(player.isBuildable(card));
+        player.setCoins(0);
+        assertFalse(player.isBuildable(card));
+    }
+
 }
