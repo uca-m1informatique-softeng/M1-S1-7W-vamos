@@ -7,22 +7,21 @@ import effects.ScienceChoiceEffect;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 class ScienceStrategyTest {
 
     Player player;
     Card c1, c2;
-    Player pright;
+    Player pRight;
 
     @BeforeEach
     void setUp() {
         player = new Player("Scientist");
         player.setStrategy(new ScienceStrategy());
-        pright = new Player("Scientist");
-        player.setNextNeighbor(pright);
-        player.setPrevNeighbor(pright);
+        pRight = new Player("Scientist");
+        player.setNextNeighbor(pRight);
+        player.setPrevNeighbor(pRight);
         c1 = new Card("scientistsguild", 3);
         c2 = new Card("altar", 3);
         ArrayList<Card> tmp = new ArrayList<>(2);
@@ -47,7 +46,7 @@ class ScienceStrategyTest {
         //choose card by this effect
         assertTrue(ss.chooseCard(player, ScienceChoiceEffect.class));
         assertTrue(ss.chooseCard(player, CardColor.PURPLE));
-        //Test when the choosen card don't have effect
+        //Test when the chosen card don't have effect
         player.hand.remove(c1);
         assertFalse(ss.chooseCard(player, ScienceChoiceEffect.class));
     }

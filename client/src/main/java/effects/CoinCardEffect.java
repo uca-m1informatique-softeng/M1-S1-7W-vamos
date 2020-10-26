@@ -62,7 +62,7 @@ public class CoinCardEffect extends Effect {
         } else if (color == null) {
             player.setCoins(player.getCoins() + (player.getWonder().getState() * 3));
         }
-        Writer.write(player.getName() + " got " + (player.getCoins() - oldCoins) + " coins because of cardcoinpoints");
+        Writer.write(player.getName() + " got " + (player.getCoins() - oldCoins) + " coins because of cardCoinPoints");
 
     }
 }
