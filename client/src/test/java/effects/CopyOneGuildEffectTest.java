@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CopyOneGuildEffectTest {
+class CopyOneGuildEffectTest {
     Player player ;
     Player player2 ;
     Player player3 ;
@@ -23,7 +23,7 @@ public class CopyOneGuildEffectTest {
     }
 
     @Test
-    public void applyEffect(){
+    void applyEffect(){
         ArrayList<Card> builtCards = new ArrayList<>();
         Player neighbor1 = player.getNextNeighbor();
         Player neighbor2 = player.getPrevNeighbor();
@@ -32,9 +32,9 @@ public class CopyOneGuildEffectTest {
         assertEquals(player.getPrevNeighbor() , neighbor2);
 
         builtCards.addAll(neighbor1.getBuiltCards());
-        assertTrue(builtCards.equals(neighbor1.getBuiltCards()));
+        assertEquals(builtCards , neighbor1.getBuiltCards());
 
         builtCards.addAll(neighbor2.getBuiltCards());
-        assertTrue(builtCards.equals(neighbor2.getBuiltCards()));
+        assertEquals(builtCards , neighbor2.getBuiltCards());
     }
 }
