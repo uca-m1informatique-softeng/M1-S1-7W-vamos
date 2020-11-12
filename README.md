@@ -6,16 +6,6 @@
 - Sonja Deissenboeck
 - Kevin Levy
 - Nicolas Zimmer
-
-## Notre projet
-Réalisation en équipe du jeu 7 Wonders, en Java.
-
-## Usage
-Pour lancer le jeu : (edit configurations de la class Game)
-- En mode jeu : program arguments : nombre de joueurs game 
-Exemple : 3 game
-- En mode statistique (2000 parties) : program arguments : nombre de joueurs stats  
-Exemple : 3 stats
  
 # Cahier des Charges TER
 ## Implemented Rules
