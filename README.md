@@ -16,3 +16,5 @@ Pour lancer le jeu : (edit configurations de la class Game)
 Exemple : 3 game
 - En mode statistique (2000 parties) : program arguments : nombre de joueurs stats  
 Exemple : 3 stats
+ 
+ 
