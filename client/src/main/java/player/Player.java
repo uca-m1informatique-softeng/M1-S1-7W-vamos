@@ -177,6 +177,8 @@ public class Player {
 
     public ArrayList<Effect> getWonderEffectNotApply() { return wonderEffectNotApply; }
 
+    public int getVictoryPoint() { return getPoints().get(CardPoints.VICTORY); }
+
     public void play() {
         this.setDumpCard(null);
         Action action = this.strategy.chooseAction(this);

@@ -13,26 +13,28 @@ public class RecapScore {
     private int militaryPoints;
     private int sciencePoints;
     private int coins;
+    private int civilianPoints;
     public String strategy;
 
     double moyenne;
-    int nbVictory;
-    boolean victory;
+    int nbWin;
+    boolean win;
 
     public RecapScore() {
     }
 
     public RecapScore(Player player, boolean victory) {
-        this.victory = victory;
+        this.win = victory;
         totalPoints = player.computeScore();
         militaryPoints = player.getMilitaryPoints();
         sciencePoints = player.getSciencePoint();
         coins = player.getCoins();
+        civilianPoints = player.getVictoryPoint();
         this.strategy = player.getStrategy().toString();
     }
 
     public RecapScore(String victory, String totalPoint, String militaryPoints, String sciencePoints, String coins) {
-        this.nbVictory = Integer.parseInt(victory);
+        this.nbWin = Integer.parseInt(victory);
         this.totalPoints = Integer.parseInt(totalPoint);
         this.militaryPoints = Integer.parseInt(militaryPoints);
         this.sciencePoints = Integer.parseInt(sciencePoints);
@@ -46,12 +48,13 @@ public class RecapScore {
      * @param recapScore
      */
     public void addRecap(RecapScore recapScore) {
-        if (recapScore.victory)
-            nbVictory++;
+        if (recapScore.win)
+            nbWin++;
         totalPoints += recapScore.getScore();
         militaryPoints += recapScore.getMilitaryPoints();
         sciencePoints += recapScore.getSciencePoints();
         coins += recapScore.getCoins();
+        civilianPoints += recapScore.civilianPoints;
         this.strategy = recapScore.getStrategy();
     }
 
@@ -85,12 +88,12 @@ public class RecapScore {
     }
 
     public int getNbVictory() {
-        return nbVictory;
+        return nbWin;
     }
 
     @Override
     public String toString() {
-        return strategy + nbVictory + militaryPoints + sciencePoints + totalPoints + coins;
+        return strategy + nbWin + militaryPoints + sciencePoints + totalPoints + coins;
     }
 
 
@@ -101,4 +104,6 @@ public class RecapScore {
     public void setStrategy(String strategy) {
         this.strategy = strategy;
     }
+
+    public int getCivilianPoints() { return civilianPoints; }
 }

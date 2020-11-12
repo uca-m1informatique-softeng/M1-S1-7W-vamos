@@ -30,6 +30,7 @@ public class Server {
             System.out.println(joueur + " gets " + recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
             System.out.println(joueur + " gets   " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
             System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
+            System.out.println(joueur + " gets " + recapScore.getCivilianPoints() / (double) NB_GAMES_STATS_MODE + "civilian point per game");
 
             File f = new File(DATA_TABLE);
             boolean file = false;
@@ -37,7 +38,7 @@ public class Server {
                file = true;
             }
 
-            try (PrintWriter writer = new PrintWriter(new FileOutputStream(new File("data.csv"),true))) {
+            try (PrintWriter writer = new PrintWriter(new FileOutputStream(new File(DATA_TABLE),true))) {
 
                 StringBuilder sb = new StringBuilder();
                 if(!file) {
@@ -50,6 +51,8 @@ public class Server {
                     sb.append("SP");
                     sb.append(',');
                     sb.append("Coin");
+                    sb.append(',');
+                    sb.append("CivilianP");
                     sb.append('\n');
                 }
                 sb.append(joueur);
@@ -62,6 +65,8 @@ public class Server {
                 sb.append( recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append(',');
                 sb.append( recapScore.getCoins() / (double) NB_GAMES_STATS_MODE);
+                sb.append(',');
+                sb.append(recapScore.getCivilianPoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append('\n');
 
                 writer.write(sb.toString());
