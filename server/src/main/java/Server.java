@@ -61,7 +61,6 @@ public class Server {
                 sb.append(',');
                 sb.append( recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append(',');
-
                 sb.append( recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append(',');
                 sb.append( recapScore.getCoins() / (double) NB_GAMES_STATS_MODE);
