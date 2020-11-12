@@ -78,7 +78,7 @@ Exemple : 3 stats
   - Age 3: green -> red
 
 ### Ambitious AI 
-Selected method : algorithm Monte-Carlo, algorithm genetics, other algorithm\
+Selected method : algorithm Monte-Carlo, algorithm genetics\
 Monte-Carlo and Genetics needs to manipulate AI with her parameters.\
 To facilitate the training phase we add the functionality to pass a turn in the train phase.
 #### Functionality
