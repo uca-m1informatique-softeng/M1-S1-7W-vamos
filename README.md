@@ -62,3 +62,18 @@ Exemple : 3 stats
 - The player can play the last card of each age instead of discarding it. This card can be played by paying its cost, discarded to gain 3 coins or used in the construction of his or her Wonder
 - The player can look at all cards discarded since the beginning of the game, pick one and build it for free.
 - The player can, at the end of the game, “copy” a Guild of his or her choice (purple card), built by one of his or her two neighboring cities.
+
+## AI Levels
+### Guaranteed AI
+- If player gets 1 specific science point: whenever he again has the choice between science points, he should go for the same science point as before .
+- If a player has the chance to build marketplace card he should do it .
+- Focus on military cards especially in age 3 and towards the ends of each age .
+- Be aware of military cards of neighbors and weigh out whether it would be important to win a battle or not.
+- Analyze neighbor's strategies & try to block them:
+  - Build cards that would give them a disadvantage or dump it in order to get coins .     
+  - Focus on same colored cards
+- Prioritize color of cards: depending on age
+  - Age 1: green -> grey
+  - Age 2: green -> brown -> grey
+  - Age 3: green -> red
+
