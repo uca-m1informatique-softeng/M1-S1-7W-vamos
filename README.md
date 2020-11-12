@@ -48,30 +48,19 @@
   - Age 3: green -> red
 
 ### Ambitious AI 
-Selected method : algorithm Monte-Carlo, algorithm genetics\
-Monte-Carlo and Genetics needs to manipulate AI with her parameters.\
-To facilitate the training phase we add the functionality to pass a turn in the train phase.
-#### Functionality
-Choose the best action who is deducted through the best set of priority parameters : color, effect, best vp, ...\
-For the card with the same priority, he refines the choice. Ex: Military +3 last turn and VP +8. He chooses the action who gives the choice that gives the best place in the ranking.
+For this AI, we will use the Monte-Carlo algorithm.\
+The algorithm will need to be quick enough to simulate a real player. It shouldn't take more than 20-30 seconds to make a decision.\
+In order to do this, we will need to limit the depth of the algorithm's recursivity, thus we will need to use a heuristic.
 
-#### AI Parameters
-##### Simple parameters
-- Choice action(Build card, dumb card, Build wonder stage).
-- Choice card color.
-- Choice civilian card with the number of victory points given on parameter.
-##### Advanced parameters
-- The order of priority between action.
-- The order of priority of the cards color(EnumList<CardColor>).
-- The order of priority between cards of the same color.
-- The order of priority of the card/wonder effect.
-- The order of priority between a card with no effect and some card with effect.
-- If some cards have the same priority, a method with no parameter choose the best action.
- 
-#### Parameters of Game
-- Number of AIs.
-- Type of AIs. (AI with moving strategy, AI DumbStrategy, AI Guaranteed…)
-- The content of the card game.
-- The order of the cards in the deck. (==> currently it’s random)
-#### Data needed
-- Classement with the details of the points.
+#### Heuristic Features
+The heuristic will need to take into account the following :
+- The players' rankings
+- The ability to block the other players
+- The potential for science points combinations (depending on the cards currently played)
+- The free cards the player can get with his currently built cards
+- The players' military might, depending on the current age, and turn
+More features could be added in the future, if possible.
+
+#### IA Evaluation
+In order to choose the best recursivity depth, number of Monte-Carlo simulations, and the best heuristics, we will need to make statistics on these parameters.\
+The best set of parameters will then be chosen, tested against our Guaranteed AI, and finally on other AIs if possible.
