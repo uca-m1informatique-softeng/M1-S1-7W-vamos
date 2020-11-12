@@ -80,10 +80,10 @@ Exemple : 3 stats
 ### Ambitious AI 
 Selected method : algorithm Monte-Carlo, algorithm genetics, other algorithm\
 Monte-Carlo and Genetics needs to manipulate AI with her parameters.\
-To facilitate the training phase we add the functionality to pass a turn in the train phase.\
+To facilitate the training phase we add the functionality to pass a turn in the train phase.
 #### Functionality
 Choose the best action who is deducted through the best set of priority parameters : color, effect, best vp, ...\
-For the card with the same priority, he refines the choice. Ex: Military +3 last turn and VP +8. He chooses the action who gives the choice that gives the best place in the ranking.\
+For the card with the same priority, he refines the choice. Ex: Military +3 last turn and VP +8. He chooses the action who gives the choice that gives the best place in the ranking.
 
 #### AI Parameters
 ##### Simple parameters
