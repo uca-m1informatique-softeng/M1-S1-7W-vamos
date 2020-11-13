@@ -28,11 +28,19 @@ public class GuarantedStrategy extends Strategy{
         this.priorityColor.add(age3);
     }
 
-    @Override
-    public Action chooseAction(Player player) {
+    /**
+     * Facilitate access to the player's hand, current age, and the current player.
+     * @param player
+     */
+    protected void init(Player player){
         this.age = player.getHand().get(0).getAge();
         this.player = player;
         this.hand = player.getHand();
+    }
+
+    @Override
+    public Action chooseAction(Player player) {
+        init(player);
         ArrayList<Integer>[] colorIndexSet = reduceChoice();
         int indexChosen = 0;
         for (ArrayList<Integer> Lindex : colorIndexSet) {
@@ -53,6 +61,17 @@ public class GuarantedStrategy extends Strategy{
     }
 
     /**
+     * Initialize the array and this elements like list of integer.
+     * @param size correpond to the number of priority
+     * @return the initialize empty array.
+     */
+    protected ArrayList<Integer>[] initArray(int size){
+        ArrayList<Integer>[] res =  new ArrayList[size];
+        for(int k = 0; k < size; k++) { res[k] = new ArrayList<Integer>(); }
+        return res;
+    }
+
+    /**
      * Browse the list only once for create un array. The array represent
      * the new set of elements we will choose on it.
      * Ex : GREEN -> GREY <==> array[0] -> array[1]
@@ -62,12 +81,12 @@ public class GuarantedStrategy extends Strategy{
      * Each list design the position of one color.
      */
     protected ArrayList<Integer>[] reduceChoice(){
-        ArrayList<Integer>[] indexL = new ArrayList[priorityColor.size()];
+        ArrayList<Integer>[] indexL =initArray(priorityColor.get(age-1).size());
         Card card;
         for(int i = 0; i < hand.size(); i++) {
             card = hand.get(i);
-            for (int j = 0; j < priorityColor.get(age).size(); j++) {
-                CardColor color = priorityColor.get(age).get(j);
+            for (int j = 0; j < priorityColor.get(age-1).size(); j++) {
+                CardColor color = priorityColor.get(age-1).get(j);
                 if(color.equals(card.getColor())){
                     if(!player.alreadyBuilt(card) && player.isBuildable(card)){
                         indexL[j].add(i);
