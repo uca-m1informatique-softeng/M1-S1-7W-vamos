@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * This AI can manage the order of color priority.
  */
-public class GuarantedStrategy extends Strategy{
+public class GuaranteedStrategy extends Strategy{
 
     private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList();
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
@@ -16,7 +16,7 @@ public class GuarantedStrategy extends Strategy{
     private Player player;
     private ArrayList<Card> hand;
 
-    public GuarantedStrategy() {
+    public GuaranteedStrategy() {
         //Fix color priority.
         ArrayList<CardColor> age1 = quickList(CardColor.GREEN, CardColor.GREY);
         ArrayList<CardColor> age2 = quickList(CardColor.GREEN, CardColor.BROWN, CardColor.GREY);
@@ -44,7 +44,10 @@ public class GuarantedStrategy extends Strategy{
         ArrayList<Integer>[] colorIndexSet = reduceChoice();
         int indexChosen = 0;
         for (ArrayList<Integer> Lindex : colorIndexSet) {
-            if (!Lindex.isEmpty()) { indexChosen = Lindex.get(0); }
+            if (!Lindex.isEmpty()) {
+                indexChosen = Lindex.get(0);
+                break;
+            }
         }
         return new Action(this.hand.get(indexChosen), 3);
         }
@@ -81,7 +84,7 @@ public class GuarantedStrategy extends Strategy{
      * Each list design the position of one color.
      */
     protected ArrayList<Integer>[] reduceChoice(){
-        ArrayList<Integer>[] indexL =initArray(priorityColor.get(age-1).size());
+        ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
         Card card;
         for(int i = 0; i < hand.size(); i++) {
             card = hand.get(i);
