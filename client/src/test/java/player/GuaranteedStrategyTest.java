@@ -42,7 +42,7 @@ class GuaranteedStrategyTest {
     }
 
     @Test
-    void testReduceChoice() {
+    void testcardGroupedByPriorityColor() {
         //Init hand and card mock object
         ArrayList<Card> test_hand = new ArrayList<>(2);
         test_hand.add(c1);
@@ -57,7 +57,7 @@ class GuaranteedStrategyTest {
         ((GuaranteedStrategy) player.getStrategy()).init(player);
         int size = 2;
         ArrayList<Integer>[] oracle = new ArrayList[size];
-        ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).reduceChoice();
+        ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).cardGroupedByPriorityColor();
         //GREEN -> GREY we verify the array have the good size.
         assertEquals(size, res.length);
         //Create oracle
@@ -65,7 +65,7 @@ class GuaranteedStrategyTest {
         oracle[1] = new ArrayList<>();
         oracle[0].add(0);
         oracle[1].add(1);
-        //Test if the result of reduceChoice() do what is expected.
+        //Test if the result of cardGroupedByPriorityColor() do what is expected.
         assertArrayEquals(oracle, res);
     }
 
@@ -87,7 +87,7 @@ class GuaranteedStrategyTest {
         //Age 1 Fixed at priority GREEN -> GREY Card c1 is a GREEN card, so we expect this one.
         Action res = g.chooseAction(player);
         assertEquals(c1, res.getCard());
-        assertEquals(3, res.getAction()); //chooseAction already choose 3 : build card
+        assertEquals(Action.BUILD, res.getAction()); //chooseAction already choose 3 : build card
         //Test if there are no green card
         test_hand.remove(c1);
         res = g.chooseAction(player);

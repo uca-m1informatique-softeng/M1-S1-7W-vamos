@@ -639,15 +639,19 @@ public class Player {
             this.name += " (Science)";
         } else {
             int randomInt = this.rand.nextInt(100);
-            if (randomInt < 33) {
+            if (randomInt < 25) {
                 this.strategy = new DumbStrategy();
                 this.name += " (Dumb)";
-            } else if (randomInt < 66) {
+            } else if (randomInt < 50) {
                 this.strategy = new MilitaryStrategy();
                 this.name += " (Military)";
-            } else {
+            } else if (randomInt < 75){
                 this.strategy = new ScienceStrategy();
                 this.name += " (Science)";
+            }
+            else {
+                this.strategy = new GuaranteedStrategy();
+                this.name += " (GuaranteedStrategy)";
             }
         }
     }

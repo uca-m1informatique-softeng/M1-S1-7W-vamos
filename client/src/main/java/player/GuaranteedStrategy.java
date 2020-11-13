@@ -41,7 +41,7 @@ public class GuaranteedStrategy extends Strategy{
     @Override
     public Action chooseAction(Player player) {
         init(player);
-        ArrayList<Integer>[] colorIndexSet = reduceChoice();
+        ArrayList<Integer>[] colorIndexSet = cardGroupedByPriorityColor();
         int indexChosen = 0;
         for (ArrayList<Integer> Lindex : colorIndexSet) {
             if (!Lindex.isEmpty()) {
@@ -49,7 +49,7 @@ public class GuaranteedStrategy extends Strategy{
                 break;
             }
         }
-        return new Action(this.hand.get(indexChosen), 3);
+        return new Action(this.hand.get(indexChosen), Action.BUILD);
         }
 
     /**
@@ -83,7 +83,7 @@ public class GuaranteedStrategy extends Strategy{
      * @return a table containing a list of the positions in the player's hand.
      * Each list design the position of one color.
      */
-    protected ArrayList<Integer>[] reduceChoice(){
+    protected ArrayList<Integer>[] cardGroupedByPriorityColor(){
         ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
         Card card;
         for(int i = 0; i < hand.size(); i++) {
