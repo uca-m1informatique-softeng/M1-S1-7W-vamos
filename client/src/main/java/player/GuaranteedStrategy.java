@@ -18,7 +18,6 @@ public class GuaranteedStrategy extends Strategy{
     private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList();
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
     private Player player;
-    private ArrayList<Card> hand;
 
     public GuaranteedStrategy(Player player) {
         //Fix color priority.
@@ -32,7 +31,6 @@ public class GuaranteedStrategy extends Strategy{
         this.priorityColor.add(age3);
 
         this.player = player;
-        this.hand = this.player.getHand();
         this.rand = new SecureRandom();
     }
 
@@ -41,10 +39,10 @@ public class GuaranteedStrategy extends Strategy{
         //If the player has the marketPlace card in his hand he builds it (marketPlace is a free Card)
         if (this.marketPlaceInHand()){
             int marketPlaceIndex = this.marketPlaceIndex();
-            return new Action(this.hand.get(marketPlaceIndex) , Action.BUILD);
+            return new Action(this.player.getHand().get(marketPlaceIndex) , Action.BUILD);
         }
 
-        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.hand.get(0).getAge());
+        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge());
 
         for (CardColor color : currentColorPriority) {
             switch (color) {
@@ -66,7 +64,7 @@ public class GuaranteedStrategy extends Strategy{
             }
         }
 
-        return new Action(this.hand.get(0), Action.DUMP);
+        return new Action(this.player.getHand().get(0), Action.DUMP);
     }
 
     /**
@@ -101,12 +99,12 @@ public class GuaranteedStrategy extends Strategy{
      * Each list design the position of one color.
      */
     protected ArrayList<Integer>[] cardGroupedByPriorityColor(){
-        int age = this.hand.get(0).getAge();
+        int age = this.player.getHand().get(0).getAge();
 
         ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
         Card card;
-        for(int i = 0; i < hand.size(); i++) {
-            card = hand.get(i);
+        for(int i = 0; i < this.player.getHand().size(); i++) {
+            card = this.player.getHand().get(i);
             for (int j = 0; j < priorityColor.get(age-1).size(); j++) {
                 CardColor color = priorityColor.get(age-1).get(j);
                 if(color.equals(card.getColor())){
@@ -134,25 +132,15 @@ public class GuaranteedStrategy extends Strategy{
         sciencePoints.add(compassPoints);
         sciencePoints.add(tabletPoints);
 
-        try {
-            switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
-                case 0 :
-                    return CardPoints.SCIENCE_WHEEL;
-                case 1 :
-                    return CardPoints.SCIENCE_COMPASS;
-                default :
-                    return CardPoints.SCIENCE_TABLET;
-            }
-        } catch (NoSuchElementException e) {
-            switch (this.rand.nextInt(3)) {
-                case 0 :
-                    return CardPoints.SCIENCE_WHEEL;
-                case 1 :
-                    return CardPoints.SCIENCE_COMPASS;
-                default :
-                    return CardPoints.SCIENCE_TABLET;
-            }
+        switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
+            case 0 :
+                return CardPoints.SCIENCE_WHEEL;
+            case 1 :
+                return CardPoints.SCIENCE_COMPASS;
+            default :
+                return CardPoints.SCIENCE_TABLET;
         }
+
     }
 
     /**
@@ -165,7 +153,7 @@ public class GuaranteedStrategy extends Strategy{
         CardPoints bestSciencePoint = this.getSciencePriority();
         ArrayList<Card> bestCandidates = new ArrayList<>();
 
-        for (Card card : this.hand) {
+        for (Card card : this.player.getHand()) {
             if (card.getCardPoints().get(bestSciencePoint) > 0 &&
                 this.player.isBuildable(card)) {
                 bestCandidates.add(card);
@@ -184,8 +172,8 @@ public class GuaranteedStrategy extends Strategy{
      * @return true if the player has the marketPlace card , false otherwise
      */
     private boolean marketPlaceInHand(){
-        for (int i = 0; i < this.hand.size(); i++) {
-            if (this.hand.get(i).getName().equals("marketplace")){
+        for (int i = 0; i < this.player.getHand().size(); i++) {
+            if (this.player.getHand().get(i).getName().equals("marketplace")){
                 return true;
             }
         }
@@ -198,8 +186,8 @@ public class GuaranteedStrategy extends Strategy{
      */
     private int marketPlaceIndex(){
         if(this.marketPlaceInHand()){
-            for (int i = 0; i < this.hand.size(); i++) {
-                if (this.hand.get(i).getName().equals("marketplace")){
+            for (int i = 0; i < this.player.getHand().size(); i++) {
+                if (this.player.getHand().get(i).getName().equals("marketplace")){
                     return i ;
                 }
             }

@@ -3,6 +3,7 @@ package player;
 import card.Card;
 import card.CardColor;
 import card.CardPoints;
+import card.Resource;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,8 +36,10 @@ class GuaranteedStrategyTest {
     void setUp() {
         this.player = new Player("bob");
         this.g = new GuaranteedStrategy(player);
+        player.setPrevNeighbor(new Player("jean"));
+        player.setNextNeighbor(new Player("jacques"));
         player.setStrategy(g);
-        g.rand = this.rand;
+        player.getStrategy().rand = this.rand;
     }
 
     @Test
@@ -137,13 +140,46 @@ class GuaranteedStrategyTest {
         this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
         this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 0);
 
-        when(this.rand.nextInt(3)).thenReturn(0);
-
         assertEquals(CardPoints.SCIENCE_WHEEL, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
     }
 
     @Test
     void getBestScienceCard1() {
+        this.player.getHand().add(new Card("dispensary", 3));
+        this.player.getHand().add(new Card("laboratory", 3));
+        this.player.getHand().add(new Card("school", 3));
 
+        this.player.getResources().put(Resource.ORE, 2);
+        this.player.getResources().put(Resource.CLAY, 2);
+        this.player.getResources().put(Resource.STONE, 2);
+        this.player.getResources().put(Resource.WOOD, 1);
+        this.player.getResources().put(Resource.GLASS, 1);
+        this.player.getResources().put(Resource.PAPYRUS, 1);
+        this.player.getResources().put(Resource.LOOM, 1);
+
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 2);
+
+        assertEquals(this.player.getHand().get(2), this.player.getStrategy().chooseAction(this.player).getCard());
+        assertEquals(Action.BUILD, this.player.getStrategy().chooseAction(this.player).getAction());
+    }
+
+    @Test
+    void getBestScienceCard2() {
+        this.player.getHand().add(new Card("laboratory", 3));
+        this.player.getHand().add(new Card("library", 3));
+        this.player.getHand().add(new Card("school", 3));
+
+        this.player.getResources().put(Resource.CLAY, 2);
+        this.player.getResources().put(Resource.WOOD, 1);
+        this.player.getResources().put(Resource.PAPYRUS, 1);
+
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 2);
+
+        assertEquals(this.player.getHand().get(2), this.player.getStrategy().chooseAction(this.player).getCard());
+        assertEquals(Action.BUILD, this.player.getStrategy().chooseAction(this.player).getAction());
     }
 }
