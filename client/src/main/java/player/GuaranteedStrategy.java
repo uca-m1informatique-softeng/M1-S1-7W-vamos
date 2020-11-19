@@ -15,7 +15,6 @@ public class GuaranteedStrategy extends Strategy{
 
     private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList();
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
-    private int age; //Redefine at each call of chooseAction
     private Player player;
     private ArrayList<Card> hand;
     private SecureRandom rand;
@@ -33,22 +32,35 @@ public class GuaranteedStrategy extends Strategy{
 
         this.player = player;
         this.hand = this.player.getHand();
-        this.age = this.hand.get(0).getAge();
         this.rand = new SecureRandom();
     }
 
     @Override
     public Action chooseAction(Player player) {
-        ArrayList<Integer>[] colorIndexSet = cardGroupedByPriorityColor();
-        int indexChosen = 0;
-        for (ArrayList<Integer> Lindex : colorIndexSet) {
-            if (!Lindex.isEmpty()) {
-                indexChosen = Lindex.get(0);
-                break;
+        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.hand.get(0).getAge());
+
+        for (CardColor color : currentColorPriority) {
+            switch (color) {
+                case GREEN:
+                    Card bestScienceCard = this.getBestScienceCard();
+                    if (bestScienceCard != null) return new Action(bestScienceCard, Action.BUILD);
+                    break;
+                case GREY:
+                    // TODO
+                    break;
+                case BROWN:
+                    // TODO
+                    break;
+                case RED:
+                    // TODO
+                    break;
+                default :
+                    break;
             }
         }
-        return new Action(this.hand.get(indexChosen), Action.BUILD);
-        }
+
+        return new Action(this.hand.get(0), Action.DUMP);
+    }
 
     /**
      * Can rapidly set a list in order we enter the elements.
@@ -82,6 +94,8 @@ public class GuaranteedStrategy extends Strategy{
      * Each list design the position of one color.
      */
     protected ArrayList<Integer>[] cardGroupedByPriorityColor(){
+        int age = this.hand.get(0).getAge();
+
         ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
         Card card;
         for(int i = 0; i < hand.size(); i++) {
@@ -108,11 +122,11 @@ public class GuaranteedStrategy extends Strategy{
         int compassPoints = this.player.getPoints().get(CardPoints.SCIENCE_COMPASS);
         int tabletPoints = this.player.getPoints().get(CardPoints.SCIENCE_TABLET);
 
-        if (wheelPoints >= compassPoints && wheelPoints >= tabletPoints) {
+        if (wheelPoints > compassPoints && wheelPoints > tabletPoints) {
             return CardPoints.SCIENCE_WHEEL;
-        } else if (compassPoints >= wheelPoints && compassPoints >= tabletPoints) {
+        } else if (compassPoints > wheelPoints && compassPoints > tabletPoints) {
             return CardPoints.SCIENCE_COMPASS;
-        } else if (tabletPoints >= wheelPoints && tabletPoints >= compassPoints) {
+        } else if (tabletPoints > wheelPoints && tabletPoints > compassPoints) {
             return CardPoints.SCIENCE_TABLET;
         } else {
             switch (this.rand.nextInt(3)) {
@@ -123,6 +137,30 @@ public class GuaranteedStrategy extends Strategy{
                 default :
                     return CardPoints.SCIENCE_TABLET;
             }
+        }
+    }
+
+    /**
+     * Checks the player's hand for the best green card to choose, depending on the current player's
+     * science points, resources, and the tradable resources.
+     * If several cards match the description, a random card is chosen.
+     * @return The best science card to build.
+     */
+    private Card getBestScienceCard() {
+        CardPoints bestSciencePoint = this.getSciencePriority();
+        ArrayList<Card> bestCandidates = new ArrayList<>();
+
+        for (Card card : this.hand) {
+            if (card.getCardPoints().get(bestSciencePoint) > 0 &&
+                this.player.isBuildable(card)) {
+                bestCandidates.add(card);
+            }
+        }
+
+        if (bestCandidates.size() == 0) {
+            return null;
+        } else {
+            return bestCandidates.get(this.rand.nextInt(bestCandidates.size()));
         }
     }
 }
