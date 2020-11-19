@@ -12,17 +12,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GuaranteedStrategyTest {
 
-    GuaranteedStrategy g;
+    GuaranteedStrategy guaranteedStrategy;
     Player player;
 
     @Mock
@@ -35,10 +33,10 @@ class GuaranteedStrategyTest {
     @BeforeEach
     void setUp() {
         this.player = new Player("bob");
-        this.g = new GuaranteedStrategy(player);
+        this.guaranteedStrategy = new GuaranteedStrategy(player);
         player.setPrevNeighbor(new Player("jean"));
         player.setNextNeighbor(new Player("jacques"));
-        player.setStrategy(g);
+        player.setStrategy(guaranteedStrategy);
         player.getStrategy().rand = this.rand;
     }
 
@@ -184,5 +182,38 @@ class GuaranteedStrategyTest {
 
         assertEquals(this.player.getHand().get(2), this.player.getStrategy().chooseAction(this.player).getCard());
         assertEquals(Action.BUILD, this.player.getStrategy().chooseAction(this.player).getAction());
+    }
+
+    @Test
+    void marketPlaceInHand(){
+        // MarketPlace card is not in the player's hand
+        assertEquals(false , this.guaranteedStrategy.marketPlaceInHand());
+
+        // We add MarketPlace card to the player's hand
+        this.player.getHand().add(new Card("marketplace" , 3));
+
+        assertEquals(true , this.guaranteedStrategy.marketPlaceInHand());
+    }
+
+    @Test
+    void marketPlaceIndex(){
+        // We add MarketPlace card to the player's hand
+        Card card = new Card("marketplace" , 3) ;
+        this.player.getHand().add(card);
+
+        int marketPlaceIndex = 0 ;
+        if(this.guaranteedStrategy.marketPlaceInHand()){
+            for (int i = 0; i < this.player.getHand().size(); i++) {
+                if (this.player.getHand().get(i).getName().equals("marketplace")){
+                    marketPlaceIndex = i ;
+                }
+            }
+            assertEquals(marketPlaceIndex , this.player.getHand().indexOf(card)) ;
+        }
+        else{ // MarketPlace card is not in the player's hand
+            marketPlaceIndex = -1 ;
+            assertEquals(marketPlaceIndex , this.guaranteedStrategy.marketPlaceIndex());
+        }
+
     }
 }

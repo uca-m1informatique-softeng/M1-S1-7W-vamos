@@ -171,7 +171,7 @@ public class GuaranteedStrategy extends Strategy{
      * Checks if the marketPlace card is in the player's hand
      * @return true if the player has the marketPlace card , false otherwise
      */
-    private boolean marketPlaceInHand(){
+    public boolean marketPlaceInHand(){
         for (int i = 0; i < this.player.getHand().size(); i++) {
             if (this.player.getHand().get(i).getName().equals("marketplace")){
                 return true;
@@ -184,7 +184,7 @@ public class GuaranteedStrategy extends Strategy{
      * If the player has the marketPlace card , this method returns it's index in the players hand
      * @return the index of the marketPlace card in the player's hand .If the player don't have the marketPlace card in his hand it returns -1
      */
-    private int marketPlaceIndex(){
+    public int marketPlaceIndex(){
         if(this.marketPlaceInHand()){
             for (int i = 0; i < this.player.getHand().size(); i++) {
                 if (this.player.getHand().get(i).getName().equals("marketplace")){
