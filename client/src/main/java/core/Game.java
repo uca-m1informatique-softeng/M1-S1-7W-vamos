@@ -96,7 +96,6 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
-                game.forceStrategy(new MilitaryStrategy(), new DumbStrategy(), new GuaranteedStrategy());
                 while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
@@ -486,18 +485,5 @@ public class Game {
 
     public ArrayList<Card> getDeck() {
         return deck;
-    }
-
-    /**
-     * Force the attribution of the strategy.
-     * @param strat assign all the strategies he can able to do.
-     */
-    protected void forceStrategy(Strategy ... strat){
-        for(int i = 0; i < playersArray.size(); i++) {
-            if (i < strat.length) {
-                this.playersArray.get(i).setStrategy(strat[i]);
-                this.playersArray.get(i).setName(strat[i].toString());
-            }
-        }
     }
 }

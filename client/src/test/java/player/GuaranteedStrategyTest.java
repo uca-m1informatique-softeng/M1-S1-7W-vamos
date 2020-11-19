@@ -2,34 +2,41 @@ package player;
 
 import card.Card;
 import card.CardColor;
+import card.CardPoints;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GuaranteedStrategyTest {
 
     GuaranteedStrategy g;
-
-    @Mock
     Player player;
+
     @Mock
     Card c1;
     @Mock
     Card c2;
+    @Mock
+    SecureRandom rand;
 
     @BeforeEach
     void setUp() {
-        g = new GuaranteedStrategy(player);
-        doReturn((Strategy) g).when(player).getStrategy();
+        this.player = new Player("bob");
+        this.g = new GuaranteedStrategy(player);
+        player.setStrategy(g);
+        g.rand = this.rand;
     }
 
     @Test
@@ -104,5 +111,39 @@ class GuaranteedStrategyTest {
         ArrayList<Integer>[] arr = ((GuaranteedStrategy) player.getStrategy()).initArray(size);
         assertEquals(size, arr.length);
         for (int i = 0; i < size; i++) { assertNotNull(arr[i]); }
+    }
+
+    @Test
+    void getSciencePriority1() {
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 2);
+        this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 0);
+
+        assertEquals(CardPoints.SCIENCE_COMPASS, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
+    }
+
+    @Test
+    void getSciencePriority2() {
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 1);
+        this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 0);
+
+        assertEquals(CardPoints.SCIENCE_WHEEL, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
+    }
+
+    @Test
+    void getSciencePriority3() {
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 0);
+        this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
+        this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 0);
+
+        when(this.rand.nextInt(3)).thenReturn(0);
+
+        assertEquals(CardPoints.SCIENCE_WHEEL, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
+    }
+
+    @Test
+    void getBestScienceCard1() {
+
     }
 }

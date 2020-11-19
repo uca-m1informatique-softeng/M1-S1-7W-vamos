@@ -6,7 +6,9 @@ import card.CardPoints;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumMap;
+import java.util.NoSuchElementException;
 
 /**
  * This AI can manage the order of color priority.
@@ -17,7 +19,6 @@ public class GuaranteedStrategy extends Strategy{
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
     private Player player;
     private ArrayList<Card> hand;
-    private SecureRandom rand;
 
     public GuaranteedStrategy(Player player) {
         //Fix color priority.
@@ -117,18 +118,26 @@ public class GuaranteedStrategy extends Strategy{
      * score.
      * @return the Science Point the player should prioritize
      */
-    private CardPoints getSciencePriority() {
+    public CardPoints getSciencePriority() {
         int wheelPoints = this.player.getPoints().get(CardPoints.SCIENCE_WHEEL);
         int compassPoints = this.player.getPoints().get(CardPoints.SCIENCE_COMPASS);
         int tabletPoints = this.player.getPoints().get(CardPoints.SCIENCE_TABLET);
 
-        if (wheelPoints > compassPoints && wheelPoints > tabletPoints) {
-            return CardPoints.SCIENCE_WHEEL;
-        } else if (compassPoints > wheelPoints && compassPoints > tabletPoints) {
-            return CardPoints.SCIENCE_COMPASS;
-        } else if (tabletPoints > wheelPoints && tabletPoints > compassPoints) {
-            return CardPoints.SCIENCE_TABLET;
-        } else {
+        ArrayList<Integer> sciencePoints = new ArrayList<>();
+        sciencePoints.add(wheelPoints);
+        sciencePoints.add(compassPoints);
+        sciencePoints.add(tabletPoints);
+
+        try {
+            switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
+                case 0 :
+                    return CardPoints.SCIENCE_WHEEL;
+                case 1 :
+                    return CardPoints.SCIENCE_COMPASS;
+                default :
+                    return CardPoints.SCIENCE_TABLET;
+            }
+        } catch (NoSuchElementException e) {
             switch (this.rand.nextInt(3)) {
                 case 0 :
                     return CardPoints.SCIENCE_WHEEL;
@@ -146,7 +155,7 @@ public class GuaranteedStrategy extends Strategy{
      * If several cards match the description, a random card is chosen.
      * @return The best science card to build.
      */
-    private Card getBestScienceCard() {
+    public Card getBestScienceCard() {
         CardPoints bestSciencePoint = this.getSciencePriority();
         ArrayList<Card> bestCandidates = new ArrayList<>();
 
