@@ -19,7 +19,7 @@
 #.idea/vcs.xml
 
 **/*/target/*.jar
-
+**/*.uml
 #pour Eclipse
 **/.project
 **/.classpath
