@@ -650,7 +650,7 @@ public class Player {
                 this.name += " (Science)";
             }
             else {
-                this.strategy = new GuaranteedStrategy();
+                this.strategy = new GuaranteedStrategy(this);
                 this.name += " (GuaranteedStrategy)";
             }
         }

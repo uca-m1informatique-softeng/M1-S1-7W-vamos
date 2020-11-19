@@ -2,8 +2,11 @@ package player;
 
 import card.Card;
 import card.CardColor;
+import card.CardPoints;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 /**
  * This AI can manage the order of color priority.
@@ -15,8 +18,9 @@ public class GuaranteedStrategy extends Strategy{
     private int age; //Redefine at each call of chooseAction
     private Player player;
     private ArrayList<Card> hand;
+    private SecureRandom rand;
 
-    public GuaranteedStrategy() {
+    public GuaranteedStrategy(Player player) {
         //Fix color priority.
         ArrayList<CardColor> age1 = quickList(CardColor.GREEN, CardColor.GREY);
         ArrayList<CardColor> age2 = quickList(CardColor.GREEN, CardColor.BROWN, CardColor.GREY);
@@ -26,21 +30,15 @@ public class GuaranteedStrategy extends Strategy{
         this.priorityColor.add(age1);
         this.priorityColor.add(age2);
         this.priorityColor.add(age3);
-    }
 
-    /**
-     * Facilitate access to the player's hand, current age, and the current player.
-     * @param player
-     */
-    protected void init(Player player){
-        this.age = player.getHand().get(0).getAge();
         this.player = player;
-        this.hand = player.getHand();
+        this.hand = this.player.getHand();
+        this.age = this.hand.get(0).getAge();
+        this.rand = new SecureRandom();
     }
 
     @Override
     public Action chooseAction(Player player) {
-        init(player);
         ArrayList<Integer>[] colorIndexSet = cardGroupedByPriorityColor();
         int indexChosen = 0;
         for (ArrayList<Integer> Lindex : colorIndexSet) {
@@ -98,5 +96,33 @@ public class GuaranteedStrategy extends Strategy{
             }
         }
         return indexL;
+    }
+
+    /**
+     * Checks what Science Point the player has the most of, and returns it in order to maximize its
+     * score.
+     * @return the Science Point the player should prioritize
+     */
+    private CardPoints getSciencePriority() {
+        int wheelPoints = this.player.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        int compassPoints = this.player.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        int tabletPoints = this.player.getPoints().get(CardPoints.SCIENCE_TABLET);
+
+        if (wheelPoints >= compassPoints && wheelPoints >= tabletPoints) {
+            return CardPoints.SCIENCE_WHEEL;
+        } else if (compassPoints >= wheelPoints && compassPoints >= tabletPoints) {
+            return CardPoints.SCIENCE_COMPASS;
+        } else if (tabletPoints >= wheelPoints && tabletPoints >= compassPoints) {
+            return CardPoints.SCIENCE_TABLET;
+        } else {
+            switch (this.rand.nextInt(3)) {
+                case 0 :
+                    return CardPoints.SCIENCE_WHEEL;
+                case 1 :
+                    return CardPoints.SCIENCE_COMPASS;
+                default :
+                    return CardPoints.SCIENCE_TABLET;
+            }
+        }
     }
 }

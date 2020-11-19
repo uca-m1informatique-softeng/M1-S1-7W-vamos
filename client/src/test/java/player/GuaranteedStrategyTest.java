@@ -28,7 +28,7 @@ class GuaranteedStrategyTest {
 
     @BeforeEach
     void setUp() {
-        g = new GuaranteedStrategy();
+        g = new GuaranteedStrategy(player);
         doReturn((Strategy) g).when(player).getStrategy();
     }
 
@@ -54,7 +54,6 @@ class GuaranteedStrategyTest {
         //Test the case when the cond if is false, true
         doReturn(false).when(player).alreadyBuilt(any(Card.class));
         doReturn(true).when(player).isBuildable(any(Card.class));
-        ((GuaranteedStrategy) player.getStrategy()).init(player);
         int size = 2;
         ArrayList<Integer>[] oracle = new ArrayList[size];
         ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).cardGroupedByPriorityColor();
