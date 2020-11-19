@@ -37,6 +37,12 @@ public class GuaranteedStrategy extends Strategy{
 
     @Override
     public Action chooseAction(Player player) {
+        //If the player has the marketPlace card in his hand he builds it (marketPlace is a free Card)
+        if (this.marketPlaceInHand()){
+            int marketPlaceIndex = this.marketPlaceIndex();
+            return new Action(this.hand.get(marketPlaceIndex) , Action.BUILD);
+        }
+
         ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.hand.get(0).getAge());
 
         for (CardColor color : currentColorPriority) {
@@ -162,5 +168,33 @@ public class GuaranteedStrategy extends Strategy{
         } else {
             return bestCandidates.get(this.rand.nextInt(bestCandidates.size()));
         }
+    }
+
+    /**
+     * Checks if the marketPlace card is in the player's hand
+     * @return true if the player has the marketPlace card , false otherwise
+     */
+    private boolean marketPlaceInHand(){
+        for (int i = 0; i < this.hand.size(); i++) {
+            if (this.hand.get(i).getName().equals("marketplace")){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * If the player has the marketPlace card , this method returns it's index in the players hand
+     * @return the index of the marketPlace card in the player's hand .If the player don't have the marketPlace card in his hand it returns -1
+     */
+    private int marketPlaceIndex(){
+        if(this.marketPlaceInHand()){
+            for (int i = 0; i < this.hand.size(); i++) {
+                if (this.hand.get(i).getName().equals("marketplace")){
+                    return i ;
+                }
+            }
+        }
+        return -1;
     }
 }
