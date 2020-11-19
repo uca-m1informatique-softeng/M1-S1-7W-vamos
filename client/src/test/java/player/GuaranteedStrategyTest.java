@@ -137,9 +137,10 @@ class GuaranteedStrategyTest {
         this.player.getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
         this.player.getPoints().put(CardPoints.SCIENCE_TABLET, 0);
 
-        when(this.rand.nextInt(3)).thenReturn(0);
-
         assertEquals(CardPoints.SCIENCE_WHEEL, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
+
+        this.player.getPoints().put(CardPoints.SCIENCE_COMPASS, 7); // The player has more SCIENCE_COMPASS points
+        assertEquals(CardPoints.SCIENCE_COMPASS, ((GuaranteedStrategy) this.player.getStrategy()).getSciencePriority());
     }
 
     @Test

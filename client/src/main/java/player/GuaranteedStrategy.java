@@ -134,24 +134,13 @@ public class GuaranteedStrategy extends Strategy{
         sciencePoints.add(compassPoints);
         sciencePoints.add(tabletPoints);
 
-        try {
-            switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
-                case 0 :
-                    return CardPoints.SCIENCE_WHEEL;
-                case 1 :
-                    return CardPoints.SCIENCE_COMPASS;
-                default :
-                    return CardPoints.SCIENCE_TABLET;
-            }
-        } catch (NoSuchElementException e) {
-            switch (this.rand.nextInt(3)) {
-                case 0 :
-                    return CardPoints.SCIENCE_WHEEL;
-                case 1 :
-                    return CardPoints.SCIENCE_COMPASS;
-                default :
-                    return CardPoints.SCIENCE_TABLET;
-            }
+        switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
+            case 0 :
+                return CardPoints.SCIENCE_WHEEL;
+            case 1 :
+                return CardPoints.SCIENCE_COMPASS;
+            default :
+                return CardPoints.SCIENCE_TABLET;
         }
     }
 
