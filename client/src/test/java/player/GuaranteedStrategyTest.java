@@ -22,11 +22,9 @@ class GuaranteedStrategyTest {
 
     GuaranteedStrategy guaranteedStrategy;
     Player player;
-
-    @Mock
     Card c1;
-    @Mock
     Card c2;
+
     @Mock
     SecureRandom rand;
 
@@ -53,25 +51,26 @@ class GuaranteedStrategyTest {
     void testcardGroupedByPriorityColor() {
         //Init hand and card mock object
         ArrayList<Card> test_hand = new ArrayList<>(2);
+        c1 = new Card("apothecary", 3);
+        c2 = new Card("loom", 3);
         test_hand.add(c1);
         test_hand.add(c2);
-        doReturn(test_hand).when(player).getHand();
-        doReturn(CardColor.GREEN).when(c1).getColor();
-        doReturn(CardColor.GREY).when(c2).getColor();
-        doReturn(1).when(c1).getAge();
+        this.player.setHand(test_hand);
+
         //Test the case when the cond if is false, true
-        doReturn(false).when(player).alreadyBuilt(any(Card.class));
-        doReturn(true).when(player).isBuildable(any(Card.class));
         int size = 2;
         ArrayList<Integer>[] oracle = new ArrayList[size];
         ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).cardGroupedByPriorityColor();
+
         //GREEN -> GREY we verify the array have the good size.
         assertEquals(size, res.length);
+
         //Create oracle
         oracle[0] = new ArrayList<>();
         oracle[1] = new ArrayList<>();
         oracle[0].add(0);
         oracle[1].add(1);
+
         //Test if the result of cardGroupedByPriorityColor() do what is expected.
         assertArrayEquals(oracle, res);
     }
@@ -79,31 +78,27 @@ class GuaranteedStrategyTest {
     @Test
     void chooseAction() {
         //Init hand and card mock object
-        ArrayList<Card> test_hand = new ArrayList<>(2);
-        test_hand.add(c1);
-        test_hand.add(c2);
-        doReturn(test_hand).when(player).getHand();
-        doReturn(CardColor.GREEN).when(c1).getColor();
-        doReturn(CardColor.GREY).when(c2).getColor();
-        doReturn(1).when(c1).getAge();
-        doReturn(1).when(c2).getAge();
-        //Test the case when the cond if is false, true
-        doReturn(false).when(player).alreadyBuilt(any(Card.class));
-        doReturn(true).when(player).isBuildable(any(Card.class));
-        GuaranteedStrategy g = ((GuaranteedStrategy) player.getStrategy());
+        c1 = new Card("apothecary", 3);
+        c2 = new Card("loom", 3);
+        this.player.getHand().add(c1);
+        this.player.getHand().add(c2);
+        this.player.getResources().put(Resource.LOOM, 1);
+
         //Age 1 Fixed at priority GREEN -> GREY Card c1 is a GREEN card, so we expect this one.
-        Action res = g.chooseAction(player);
+        Action res = this.guaranteedStrategy.chooseAction(player);
         assertEquals(c1, res.getCard());
         assertEquals(Action.BUILD, res.getAction()); //chooseAction already choose 3 : build card
+
         //Test if there are no green card
-        test_hand.remove(c1);
-        res = g.chooseAction(player);
+        this.player.getHand().remove(c1);
+        res = this.guaranteedStrategy.chooseAction(player);
         assertEquals(c2, res.getCard());
+
         //Test if there are no color wanted
-        doReturn(CardColor.PURPLE).when(c2).getColor();
-        res = g.chooseAction(player);
+        /*doReturn(CardColor.PURPLE).when(c2).getColor();
+        res = this.guaranteedStrategy.chooseAction(player);
         assertFalse(CardColor.GREY == res.getCard().getColor() || CardColor.GREEN == res.getCard().getColor());
-        assertEquals(c2, res.getCard());
+        assertEquals(c2, res.getCard());*/
     }
 
     @Test

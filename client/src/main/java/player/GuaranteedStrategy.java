@@ -5,10 +5,7 @@ import card.CardColor;
 import card.CardPoints;
 
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 /**
  * This AI can manage the order of color priority.
@@ -31,7 +28,6 @@ public class GuaranteedStrategy extends Strategy{
         this.priorityColor.add(age3);
 
         this.player = player;
-        this.rand = new SecureRandom();
     }
 
     @Override
@@ -151,19 +147,32 @@ public class GuaranteedStrategy extends Strategy{
      */
     public Card getBestScienceCard() {
         CardPoints bestSciencePoint = this.getSciencePriority();
-        ArrayList<Card> bestCandidates = new ArrayList<>();
+        HashMap<Card, Integer> bestCandidates = new HashMap<>();
 
         for (Card card : this.player.getHand()) {
-            if (card.getCardPoints().get(bestSciencePoint) > 0 &&
-                this.player.isBuildable(card)) {
-                bestCandidates.add(card);
+            if (this.player.isBuildable(card)) {
+                if (card.getCardPoints().get(bestSciencePoint) > 0) {
+                    bestCandidates.put(card, 2*card.getCardPoints().get(bestSciencePoint));
+                } else {
+                    bestCandidates.put( card,
+                                        card.getCardPoints().get(CardPoints.SCIENCE_WHEEL) +
+                                        card.getCardPoints().get(CardPoints.SCIENCE_COMPASS) +
+                                        card.getCardPoints().get(CardPoints.SCIENCE_TABLET));
+                }
             }
         }
 
         if (bestCandidates.size() == 0) {
             return null;
         } else {
-            return bestCandidates.get(this.rand.nextInt(bestCandidates.size()));
+            Card res = null;
+            int bestScore = 0;
+            Iterator it = bestCandidates.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<Card, Integer> pair = (Map.Entry) it.next();
+                if (pair.getValue() > bestScore) res = pair.getKey();
+            }
+            return res;
         }
     }
 

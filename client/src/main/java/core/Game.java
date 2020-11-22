@@ -162,6 +162,9 @@ public class Game {
             this.playersArray.get(i).setPrevNeighbor(prevPlayer);
             this.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
+
+        this.playersArray.get(0).setStrategy(new GuaranteedStrategy(this.playersArray.get(0)));
+        for (int i = 1; i < players; i++) this.playersArray.get(i).setStrategy(new DumbStrategy());
     }
 
     /**
