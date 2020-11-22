@@ -168,9 +168,13 @@ public class GuaranteedStrategy extends Strategy{
             Card res = null;
             int bestScore = 0;
             Iterator it = bestCandidates.entrySet().iterator();
+
             while (it.hasNext()) {
                 Map.Entry<Card, Integer> pair = (Map.Entry) it.next();
-                if (pair.getValue() > bestScore) res = pair.getKey();
+                if (pair.getValue() > bestScore) {
+                    bestScore = pair.getValue();
+                    res = pair.getKey();
+                }
             }
             return res;
         }
