@@ -17,9 +17,9 @@ public class GuaranteedStrategy extends Strategy{
 
     public GuaranteedStrategy(Player player) {
         //Fix color priority.
-        ArrayList<CardColor> age1 = quickList(CardColor.GREEN, CardColor.GREY);
-        ArrayList<CardColor> age2 = quickList(CardColor.GREEN, CardColor.BROWN, CardColor.GREY);
-        ArrayList<CardColor> age3 = quickList(CardColor.GREEN, CardColor.RED);
+        ArrayList<CardColor> age1 = quickList(CardColor.GREEN, CardColor.GREY, CardColor.BLUE);
+        ArrayList<CardColor> age2 = quickList(CardColor.GREEN, CardColor.BROWN, CardColor.GREY, CardColor.BLUE);
+        ArrayList<CardColor> age3 = quickList(CardColor.GREEN, CardColor.BLUE);
 
         //Add Color
         this.priorityColor.add(age1);
@@ -56,8 +56,10 @@ public class GuaranteedStrategy extends Strategy{
 
         // Prioritize color of cards: depending on age
         ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge()-1);
+        ArrayList<Integer>[] setOfIndexByColor = cardGroupedByPriorityColor();
 
-        for (CardColor color : currentColorPriority) {
+        for (int i = 0; i < currentColorPriority.size(); i++) {
+            CardColor color = currentColorPriority.get(i);
             switch (color) {
                 case GREEN:
                     Card bestScienceCard = this.getBestScienceCard();
@@ -66,14 +68,22 @@ public class GuaranteedStrategy extends Strategy{
                     if (bestBlockingCard != null) return new Action(bestBlockingCard, Action.DUMP);
                     break;
                 case GREY:
-                    // TODO
+                    if(!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = setOfIndexByColor[i].get(0);
+                        return new Action(player.getHand().get(indexChoosen), Action.BUILD);
+                    }
                     break;
                 case BROWN:
-                    // TODO
+                    if(!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = setOfIndexByColor[i].get(0);
+                        return new Action(player.getHand().get(indexChoosen), Action.BUILD);
+                    }
                     break;
-                case RED:
-                    // TODO
-                    break;
+                case BLUE:
+                    if(!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = setOfIndexByColor[i].get(0);
+                        return new Action(player.getHand().get(indexChoosen), Action.BUILD);
+                    }
                 default :
                     break;
             }
@@ -115,6 +125,7 @@ public class GuaranteedStrategy extends Strategy{
      */
     protected ArrayList<Integer>[] cardGroupedByPriorityColor(){
         int age = this.player.getHand().get(0).getAge();
+
 
         ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
         Card card;
