@@ -77,7 +77,7 @@ public class Game {
 
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
-            //game.forceStrategy(new MilitaryStrategy(), new ScienceStrategy(), new GuaranteedStrategy());
+            game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
             Writer.init(true);
             while (game.state != GameState.EXIT)
                 game.process();
@@ -96,6 +96,7 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
+                game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
                 while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
