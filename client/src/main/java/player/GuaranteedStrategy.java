@@ -38,6 +38,24 @@ public class GuaranteedStrategy extends Strategy{
             return new Action(this.player.getHand().get(marketPlaceIndex) , Action.BUILD);
         }
 
+        // Focus on military cards towards the ends of each age
+        if(this.militaryCardInHand()){
+            if (this.player.getHand().size() == 2){ //when only 2 cards are on the player's hand = it's the round number 6 (last round)
+                ArrayList<Integer> militaryCardIndexes = this.militaryCardIndexes() ; //end of the age = it's round 6 = only 2 cards in the player's hand
+                Card cardToBuild = player.getHand().get(militaryCardIndexes.get(0)) ;
+                if (player.isBuildable(cardToBuild)){
+                    return new Action(cardToBuild , Action.BUILD) ;
+                }
+                else if (militaryCardIndexes.size()==2){
+                    cardToBuild = player.getHand().get(militaryCardIndexes.get(1)) ;
+                    if (player.isBuildable(cardToBuild)){
+                        return new Action(cardToBuild , Action.BUILD) ;
+                    }
+                }
+            }
+        }
+
+        // Prioritize color of cards: depending on age
         ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge()-1);
 
         for (CardColor color : currentColorPriority) {
@@ -206,5 +224,33 @@ public class GuaranteedStrategy extends Strategy{
             }
         }
         return -1;
+    }
+    /**
+     * Checks if the player have military cards in his hands
+     * @return true if the player has military cards in his hands , false otherwise
+     */
+    public boolean militaryCardInHand(){
+        for (int i = 0; i < this.player.getHand().size(); i++) {
+            if (this.player.getHand().get(i).getColor() == CardColor.RED){ // Military Cards are the Red Cards
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * If the player has military card in his hand , this method returns the indexes of the military cards on the player's hand
+     * @return the indexes of the military cards on the player's hand
+     */
+    public ArrayList<Integer> militaryCardIndexes(){
+        ArrayList<Integer> militaryCardIndexes = new ArrayList<>() ;
+        if(this.militaryCardInHand()){
+            for (int i = 0; i < this.player.getHand().size(); i++) {
+                if (this.player.getHand().get(i).getColor() == CardColor.RED){
+                    militaryCardIndexes.add(i);
+                }
+            }
+        }
+        return militaryCardIndexes ;
     }
 }
