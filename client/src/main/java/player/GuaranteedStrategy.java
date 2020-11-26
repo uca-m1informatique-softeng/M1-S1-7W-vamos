@@ -270,6 +270,35 @@ public class GuaranteedStrategy extends Strategy{
         return -1;
     }
 
+    /**
+     * Checks if the player have military cards in his hands
+     * @return true if the player has military cards in his hands , false otherwise
+     */
+    public boolean militaryCardInHand(){
+        for (int i = 0; i < this.player.getHand().size(); i++) {
+            if (this.player.getHand().get(i).getColor() == CardColor.RED){ // Military Cards are the Red Cards
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * This methods returns the indexes of military cards .
+     * @return the indexes of military cards . Empty if the player don't have any military cards ,
+     */
+    public ArrayList<Integer> militaryCardIndexes(){
+        ArrayList<Integer> militaryCardIndexes = new ArrayList<>() ;
+        if(this.militaryCardInHand()){
+            for (int i = 0; i < this.player.getHand().size(); i++) {
+                if (this.player.getHand().get(i).getColor() == CardColor.RED){
+                    militaryCardIndexes.add(i);
+                }
+            }
+        }
+        return militaryCardIndexes ;
+    }
+    
     @Override
     public String toString() {
         return "Guaranteed";
