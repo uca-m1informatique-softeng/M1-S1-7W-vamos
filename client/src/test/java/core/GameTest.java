@@ -5,7 +5,6 @@ import card.CardManager;
 import card.CardPoints;
 import exceptions.AgeException;
 import exceptions.PlayerNumberException;
-import org.json.JSONObject;
 import org.junit.Ignore;
 import player.Player;
 import org.junit.jupiter.api.BeforeEach;
@@ -114,15 +113,15 @@ class GameTest {
         player.getPoints().put(CardPoints.MILITARY , 7);
         player2.getPoints().put(CardPoints.MILITARY , 5);
         game.fight(player , player2);
-        assertEquals(8 , player.getMilitaryPoints() ); // it's age 1 : player win the fight against player2 and earns 1 military might
+        assertEquals(1 , player.getFightPoints() ); // it's age 1 : player win the fight against player2 and earns 1 military might
 
          game.setCurrentAge(2);
          game.fight(player , player2);
-         assertEquals(11 , player.getMilitaryPoints() ); // it's age 2 : player win the fight against player2 and earns 3 military might
+         assertEquals(4 , player.getFightPoints() ); // it's age 2 : player win the fight against player2 and earns 3 military might
 
          game.setCurrentAge(3);
          game.fight(player , player2);
-         assertEquals(16 , player.getMilitaryPoints() );
+         assertEquals(9 , player.getFightPoints() );
 
          //if we get inside the else
          player.getPoints().replace(CardPoints.MILITARY , 5) ;
@@ -130,7 +129,7 @@ class GameTest {
 
          game.fight(player , player2);
 
-         assertEquals(4 , player.getMilitaryPoints() );
+         assertEquals(8 , player.getFightPoints() );
          assertEquals(1 , player.getDefeatToken() );
 
      }

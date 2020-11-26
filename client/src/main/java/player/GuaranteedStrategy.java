@@ -251,4 +251,9 @@ public class GuaranteedStrategy extends Strategy{
         }
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "Guaranteed";
+    }
 }

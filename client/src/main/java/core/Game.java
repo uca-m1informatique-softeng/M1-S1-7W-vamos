@@ -5,7 +5,6 @@ import effects.*;
 import exceptions.AgeException;
 import exceptions.ModeException;
 import exceptions.PlayerNumberException;
-import io.socket.emitter.Emitter;
 import network.Connexion;
 import org.json.JSONObject;
 import player.*;
@@ -16,7 +15,6 @@ import wonder.Wonder;
 import wonder.WonderManager;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -358,26 +356,28 @@ public class Game {
         if (p1.getPoints().get(CardPoints.MILITARY) > p2.getPoints().get(CardPoints.MILITARY)) {
             switch (this.currentAge) {
                 case 1:
-                    p1.addMilitaryPoints(1);
-                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 1));
+                    p1.addFightPoints(1);
+                    Writer.write(p1 + " fought " + p2 + " and won 1 Military Point!");
                     break;
                 case 2:
-                    p1.addMilitaryPoints(3);
-                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 3));
+                    p1.addFightPoints(3);
+                    Writer.write(p1 + " fought " + p2 + " and won 3 Military Point!");
                     break;
                 case 3:
-                    p1.addMilitaryPoints(5);
-                    Writer.write(String.format(STR_BATTLE_FORMAT, p1, p2, 5));
+                    p1.addFightPoints(5);
+                    Writer.write(p1 + " fought " + p2 + " and won 5 Military Point!");
                     break;
                 default:
                     throw new AgeException("Age cannot be superior to 3 or inferior to 1!");
             }
         } else if (p1.getPoints().get(CardPoints.MILITARY) < p2.getPoints().get(CardPoints.MILITARY)) {
-            p1.addMilitaryPoints(-1);
+            p1.addFightPoints(-1);
 
             p1.addDefeatToken(1);
 
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
+        } else {
+            Writer.write(p1 + " fought " + p2 + " and is was a draw.");
         }
     }
 
@@ -397,7 +397,7 @@ public class Game {
             Writer.write(p + " : ");
             Writer.write("\t" + p.getCoins() + " coins");
             Writer.write("\t" + p.getSciencePoint() + " science points");
-            Writer.write("\t" + p.getMilitaryPoints() + " military points");
+            Writer.write("\t" + p.getFightPoints() + " military points");
             Writer.write("\t" + p.getPoints().get(CardPoints.VICTORY) + " victory points");
             Writer.write("\t" + p.computeScore() + " score points");
 
@@ -437,7 +437,7 @@ public class Game {
             tmpWonder.setName(tmpWonder.getName().substring(0, tmpWonder.getName().length() - 1));
             player.setWonder(wonderArrayList.remove(0));
             player.getResources().put(player.getWonder().getProducedResource(), player.getResources().get(player.getWonder().getProducedResource()) + 1);
-            player.chooseStrategy();
+            //player.chooseStrategy();
 
         }
         if (debug)
@@ -466,8 +466,9 @@ public class Game {
     protected void forceStrategy(Strategy ... strat){
         for(int i = 0; i < playersArray.size(); i++) {
             if (i < strat.length) {
-                this.playersArray.get(i).setStrategy(strat[i]);
-                this.playersArray.get(i).setName(strat[i].toString());
+                Player p = this.playersArray.get(i);
+                p.setStrategy(strat[i]);
+                p.setName(p.toString() + " (" + strat[i].toString() + ")");
             }
         }
     }

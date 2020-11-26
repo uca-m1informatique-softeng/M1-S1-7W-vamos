@@ -121,16 +121,16 @@ class PlayerTest {
 
     @Test
     void getMilitaryPoints(){
-        assertEquals(militaryPoints,player.getMilitaryPoints());
+        assertEquals(militaryPoints,player.getFightPoints());
     }
 
     @Test
     void addMilitaryPoints(){
         //before addition
-        assertEquals(militaryPoints,player.getMilitaryPoints());
+        assertEquals(militaryPoints,player.getFightPoints());
         //after addition
-        player.addMilitaryPoints(3);
-        assertEquals(3,player.getMilitaryPoints());
+        player.addFightPoints(3);
+        assertEquals(3,player.getFightPoints());
     }
 
     @Test
@@ -244,7 +244,7 @@ class PlayerTest {
         assertEquals(res,resPlayer);
 
         //checking with CardPoints incremented
-        player.addMilitaryPoints(1);
+        player.addFightPoints(1);
         player.getPoints().put(CardPoints.VICTORY,2);
         player.getPoints().put(CardPoints.SCIENCE_WHEEL,3);
         player.getPoints().put(CardPoints.SCIENCE_COMPASS,4);
@@ -407,12 +407,12 @@ class PlayerTest {
     void addWonderRewardTest() throws IOException {
         player.wonder = new Wonder("rhodosB");
         player.addWonderReward();
-        assertEquals(1, player.getMilitaryPoints());
+        assertEquals(1, player.getPoints().get(CardPoints.MILITARY));
         assertEquals(3, player.getPoints().get(CardPoints.VICTORY));
         assertEquals(3, player.getCoins());
         player.wonder.setState(player.wonder.getState() + 1);
         player.addWonderReward();
-        assertEquals(2, player.getMilitaryPoints());
+        assertEquals(2, player.getPoints().get(CardPoints.MILITARY));
         assertEquals(7, player.getPoints().get(CardPoints.VICTORY));
         assertEquals(7, player.getCoins());
     }

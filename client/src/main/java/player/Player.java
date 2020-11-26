@@ -33,6 +33,8 @@ public class Player {
 
     protected SecureRandom rand = new SecureRandom();
 
+    protected int fightPoints;
+
     protected int defeatToken ;
 
     protected Strategy strategy;
@@ -44,6 +46,7 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.fightPoints = 0;
         this.defeatToken = 0;
 
         this.points = new EnumMap<>(CardPoints.class);
@@ -114,13 +117,12 @@ public class Player {
         return builtCards;
     }
 
-    public int getMilitaryPoints() {
-        return getPoints().get(CardPoints.MILITARY);
+    public int getFightPoints() {
+        return this.fightPoints;
     }
 
-    public void addMilitaryPoints(int mp) {
-        mp = mp + getMilitaryPoints();
-        this.points.put(CardPoints.MILITARY, mp);
+    public void addFightPoints(int mp) {
+        this.fightPoints += mp;
     }
 
     public EnumMap<Resource, Integer> getResources() {
@@ -523,7 +525,7 @@ public class Player {
     public int computeScore() {
         int res = 0;
         // Military points
-        res += this.getMilitaryPoints();
+        res += this.getFightPoints();
         // Treasury Contents
         res += this.getCoins() / 3;
         // Civilian Structures and Wonders

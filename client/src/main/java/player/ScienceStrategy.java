@@ -57,4 +57,9 @@ public class ScienceStrategy extends Strategy {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Science";
+    }
 }

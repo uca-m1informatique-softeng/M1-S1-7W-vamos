@@ -26,7 +26,7 @@ public class RecapScore {
     public RecapScore(Player player, boolean victory) {
         this.win = victory;
         totalPoints = player.computeScore();
-        militaryPoints = player.getMilitaryPoints();
+        militaryPoints = player.getFightPoints();
         sciencePoints = player.getSciencePoint();
         coins = player.getCoins();
         civilianPoints = player.getVictoryPoint();

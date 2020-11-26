@@ -55,4 +55,9 @@ public class MilitaryStrategy extends Strategy {
         }
         return sum;
     }
+
+    @Override
+    public String toString() {
+        return "Military";
+    }
 }
