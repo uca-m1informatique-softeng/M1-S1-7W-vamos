@@ -77,7 +77,7 @@ public class Game {
 
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
-            //game.forceStrategy(new MilitaryStrategy(), new ScienceStrategy(), new GuaranteedStrategy());
+            game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
             Writer.init(true);
             while (game.state != GameState.EXIT)
                 game.process();
@@ -96,6 +96,7 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
+                game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
                 while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
@@ -162,9 +163,6 @@ public class Game {
             this.playersArray.get(i).setPrevNeighbor(prevPlayer);
             this.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
-
-        this.playersArray.get(0).setStrategy(new GuaranteedStrategy(this.playersArray.get(0)));
-        for (int i = 1; i < players; i++) this.playersArray.get(i).setStrategy(new DumbStrategy());
     }
 
     /**
@@ -459,6 +457,19 @@ public class Game {
             playersArray.get(i).endApplyEffect();
         }
         this.addVictoryPoints();
+    }
+
+    /**
+     * Force the attribution of the strategy.
+     * @param strat assign all the strategies he can able to do.
+     */
+    protected void forceStrategy(Strategy ... strat){
+        for(int i = 0; i < playersArray.size(); i++) {
+            if (i < strat.length) {
+                this.playersArray.get(i).setStrategy(strat[i]);
+                this.playersArray.get(i).setName(strat[i].toString());
+            }
+        }
     }
 
     //Getter pour les tests
