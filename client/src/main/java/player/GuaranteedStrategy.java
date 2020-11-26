@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class GuaranteedStrategy extends Strategy{
 
-    private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList();
+    private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList<>();
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
     private Player player;
 
@@ -38,7 +38,7 @@ public class GuaranteedStrategy extends Strategy{
             return new Action(this.player.getHand().get(marketPlaceIndex) , Action.BUILD);
         }
 
-        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge());
+        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge()-1);
 
         for (CardColor color : currentColorPriority) {
             switch (color) {
@@ -81,7 +81,7 @@ public class GuaranteedStrategy extends Strategy{
      */
     protected ArrayList<Integer>[] initArray(int size){
         ArrayList<Integer>[] res =  new ArrayList[size];
-        for(int k = 0; k < size; k++) { res[k] = new ArrayList<Integer>(); }
+        for(int k = 0; k < size; k++) { res[k] = new ArrayList<>(); }
         return res;
     }
 
