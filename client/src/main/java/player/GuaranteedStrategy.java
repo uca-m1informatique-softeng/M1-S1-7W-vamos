@@ -37,6 +37,24 @@ public class GuaranteedStrategy extends Strategy{
             return new Action(this.player.getHand().get(marketPlaceIndex) , Action.BUILD);
         }
 
+        // Focus on military cards towards the ends of each age
+        if(this.militaryCardInHand()){
+            if (this.player.getHand().size() == 2){ //when only 2 cards are on the player's hand = it's the round number 6 (last round)
+                ArrayList<Integer> militaryCardIndexes = this.militaryCardIndexes() ; //end of the age = it's round 6 = only 2 cards in the player's hand
+                Card cardToBuild = player.getHand().get(militaryCardIndexes.get(0)) ;
+                if (player.isBuildable(cardToBuild)){
+                    return new Action(cardToBuild , Action.BUILD) ;
+                }
+                else if (militaryCardIndexes.size()==2){
+                    cardToBuild = player.getHand().get(militaryCardIndexes.get(1)) ;
+                    if (player.isBuildable(cardToBuild)){
+                        return new Action(cardToBuild , Action.BUILD) ;
+                    }
+                }
+            }
+        }
+
+        // Prioritize color of cards: depending on age
         ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge()-1);
 
         for (CardColor color : currentColorPriority) {
