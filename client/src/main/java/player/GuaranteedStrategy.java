@@ -4,7 +4,6 @@ import card.Card;
 import card.CardColor;
 import card.CardPoints;
 
-import java.security.SecureRandom;
 import java.util.*;
 
 /**
@@ -44,7 +43,9 @@ public class GuaranteedStrategy extends Strategy{
             switch (color) {
                 case GREEN:
                     Card bestScienceCard = this.getBestScienceCard();
+                    Card bestBlockingCard = this.getBlockingScienceCard();
                     if (bestScienceCard != null) return new Action(bestScienceCard, Action.BUILD);
+                    if (bestBlockingCard != null) return new Action(bestBlockingCard, Action.DUMP);
                     break;
                 case GREY:
                     // TODO
@@ -177,6 +178,49 @@ public class GuaranteedStrategy extends Strategy{
                 }
             }
             return res;
+        }
+    }
+
+    /**
+     * If the player can't build a science card, he will try to dump a card in order to avoid its neighbors to win
+     * by scientific victory.
+     * @return the best card the player can block its neighbors with.
+     */
+    public Card getBlockingScienceCard() {
+        Player playerToBlock;
+        switch (this.player.getHand().get(0).getAge()) {
+            case 2:
+                playerToBlock = this.player.getNextNeighbor();
+                break;
+            default:
+                playerToBlock = this.player.getPrevNeighbor();
+                break;
+        }
+
+        int wheelPoints = playerToBlock.getPoints().get(CardPoints.SCIENCE_WHEEL);
+        int compassPoints = playerToBlock.getPoints().get(CardPoints.SCIENCE_COMPASS);
+        int tabletPoints = playerToBlock.getPoints().get(CardPoints.SCIENCE_TABLET);
+
+        ArrayList<CardPoints> pointsToBlock = new ArrayList<>();
+        if (wheelPoints >= compassPoints && wheelPoints >= tabletPoints) pointsToBlock.add(CardPoints.SCIENCE_WHEEL);
+        if (compassPoints >= wheelPoints && compassPoints >= tabletPoints) pointsToBlock.add(CardPoints.SCIENCE_COMPASS);
+        if (tabletPoints >= wheelPoints && tabletPoints >= compassPoints) pointsToBlock.add(CardPoints.SCIENCE_TABLET);
+
+        ArrayList<Card> blockingCards = new ArrayList<>();
+        for (Card c : this.player.getHand()) {
+            if (c.getColor() == CardColor.GREEN) {
+                for (CardPoints point : CardPoints.values()) {
+                    if (c.getCardPoints().get(point) > 0 && pointsToBlock.contains(point)) {
+                        blockingCards.add(c);
+                    }
+                }
+            }
+        }
+
+        if (blockingCards.size() > 0) {
+            return blockingCards.get(0);
+        } else {
+            return null;
         }
     }
 
