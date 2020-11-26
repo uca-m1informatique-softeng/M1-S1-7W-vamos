@@ -183,6 +183,30 @@ class GuaranteedStrategyTest {
     }
 
     @Test
+    void getBlockingScienceCard1() {
+        this.player.getHand().add(new Card("apothecary", 3));
+        this.player.getHand().add(new Card("workshop", 3));
+        this.player.getHand().add(new Card("scriptorium", 3));
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_COMPASS, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_TABLET, 2);
+
+        assertEquals(this.player.getHand().get(2), ((GuaranteedStrategy) this.player.getStrategy()).getBlockingScienceCard());
+    }
+
+    @Test
+    void getBlockingScienceCard2() {
+        this.player.getHand().add(new Card("dispensary", 3));
+        this.player.getHand().add(new Card("laboratory", 3));
+        this.player.getHand().add(new Card("library", 3));
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_WHEEL, 1);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_COMPASS, 1);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_TABLET, 0);
+
+        assertEquals(this.player.getHand().get(0), ((GuaranteedStrategy) this.player.getStrategy()).getBlockingScienceCard());
+    }
+
+    @Test
     void marketPlaceInHand(){
         // MarketPlace card is not in the player's hand
         assertEquals(false , this.guaranteedStrategy.marketPlaceInHand());
