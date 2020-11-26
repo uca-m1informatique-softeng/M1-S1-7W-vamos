@@ -58,10 +58,12 @@ class GuaranteedStrategyTest {
         this.player.setHand(test_hand);
 
         //Test the case when the cond if is false, true
-        int size = 2;
+        int size = 3;// c1 so Age 1 => CardColor.GREEN, CardColor.GREY, CardColor.BLUE
         ArrayList<Integer>[] oracle = new ArrayList[size];
         ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).cardGroupedByPriorityColor();
-
+        System.out.println(res[0]);
+        System.out.println(res[1]);
+        System.out.println(res[2]);
         //GREEN -> GREY we verify the array have the good size.
         assertEquals(size, res.length);
 
