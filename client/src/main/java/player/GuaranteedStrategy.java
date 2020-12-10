@@ -437,7 +437,7 @@ public class GuaranteedStrategy extends Strategy {
         for (int i : indexs) {
             for (Resource r : Resource.values()) {
                 if (player.getHand().get(i).getResource().get(r) > 0 && player.getHand().get(i).getResource().get(initialR) == 0) {
-                    return pos;
+                    return i;
                 }
             }
         }

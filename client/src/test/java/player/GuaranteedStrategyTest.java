@@ -273,4 +273,78 @@ class GuaranteedStrategyTest {
         assertTrue( this.player.getHand().get(1) == ((GuaranteedStrategy) this.player.getStrategy()).getBlockingDumpCard()
                 ||  this.player.getHand().get(3) == ((GuaranteedStrategy) this.player.getStrategy()).getBlockingDumpCard());
     }
+
+    @Test
+    void bestBrown() {
+        c1 = new Card("claypool", 3); // Bricks
+        c2 = new Card("treefarm", 6); // Wood OR Briks
+        Card c3 = new Card("foundry", 3); // 2Ore
+
+        this.player.getHand().add(c1);
+        this.player.getHand().add(c2);
+        this.player.getHand().add(c3);
+        ArrayList<Integer> indexs = new ArrayList<Integer>(3);
+        indexs.add(0);
+        indexs.add(1);
+        indexs.add(2);
+
+        // Test if we choose the card who give the most different resource we don't have.
+        int res = guaranteedStrategy.bestBrown(indexs);
+        int oracle = 1;
+        assertEquals(oracle, res);
+
+        // Test if we choose the card who give the most different resource we don't have.
+        indexs.remove(1);
+        res = guaranteedStrategy.bestBrown(indexs);
+        oracle = 2;
+        assertEquals(oracle, res);
+
+        // Test with only one resource
+        indexs.remove((Object) 2);
+        res = guaranteedStrategy.bestBrown(indexs);
+        oracle = 0;
+        assertEquals(oracle, res);
+    }
+
+    @Test
+    void bestBlueTest() {
+        c1 = new Card("altar", 3); //vp +3
+        c2 = new Card("pantheon", 3); //vp +7
+        this.player.getHand().add(c1);
+        this.player.getHand().add(c2);
+        ArrayList<Integer> indexs = new ArrayList<Integer>(2);
+        indexs.add(0);
+        indexs.add(1);
+        //Test if he return the index of the card with the higher victory points
+        int res = guaranteedStrategy.bestBlue(indexs);
+        int oracle = 1;
+        assertEquals(oracle, res);
+
+        Card c3 = new Card("senate", 3); //vp +6
+        this.player.getHand().add(c3);
+        indexs.add(2);
+        res = guaranteedStrategy.bestBlue(indexs);
+        oracle = 1;
+        assertEquals(oracle, res);
+    }
+
+    @Test
+    void bestGrey() {
+        c1 = new Card("glassworks", 3); //GLASS
+        c2 = new Card("press", 3); //PAPYRUS
+
+        this.player.getHand().add(c1);
+        ArrayList<Integer> indexs = new ArrayList<Integer>(2);
+        indexs.add(0);
+        //Test if he return the index of the card with the higher victory points
+        int res = guaranteedStrategy.bestGrey(indexs);
+        int oracle = 0;
+        assertEquals(oracle, res);
+
+        this.player.getHand().add(c2);
+        indexs.add(1);
+        res = guaranteedStrategy.bestGrey(indexs);
+        oracle = 1;
+        assertEquals(oracle, res);
+    }
 }
