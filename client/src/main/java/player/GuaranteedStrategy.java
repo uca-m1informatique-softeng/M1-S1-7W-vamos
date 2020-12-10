@@ -85,7 +85,12 @@ public class GuaranteedStrategy extends Strategy{
                         return new Action(player.getHand().get(indexChoosen), Action.BUILD);
                     }
                 default :
-                    break;
+                    Card cardToDump = this.getBlockingDumpCard();
+                    if (this.player.getWonder().canUpgrade(this.player.getResources())) {
+                        return new Action(cardToDump, Action.WONDER);
+                    } else {
+                        return new Action(cardToDump, Action.DUMP);
+                    }
             }
         }
 
@@ -284,13 +289,10 @@ public class GuaranteedStrategy extends Strategy{
      */
     private Player getPlayerToBlock() {
         Player playerToBlock;
-        switch (this.player.getHand().get(0).getAge()) {
-            case 2:
-                playerToBlock = this.player.getNextNeighbor();
-                break;
-            default:
-                playerToBlock = this.player.getPrevNeighbor();
-                break;
+        if (this.player.getHand().get(0).getAge() == 2) {
+            playerToBlock = this.player.getNextNeighbor();
+        } else {
+            playerToBlock = this.player.getPrevNeighbor();
         }
         return playerToBlock;
     }
