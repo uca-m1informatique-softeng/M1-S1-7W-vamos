@@ -64,3 +64,4 @@ In order to choose the best recursivity depth, number of Monte-Carlo simulations
 The best set of parameters will then be chosen, tested against our Guaranteed AI, and finally on other AIs if possible.
 
 ## Modifications
+### Guaranteed AI

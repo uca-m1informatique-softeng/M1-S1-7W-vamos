@@ -373,4 +373,31 @@ class GuaranteedStrategyTest {
         oracle = 1;
         assertEquals(oracle, res);
     }
+
+    @Test
+    void usefulBuildMilitary(){
+        this.player.setFightPoints(5);
+        this.player.getNextNeighbor().setFightPoints(7);
+        this.player.getPrevNeighbor().setFightPoints(8);
+        boolean nextNeighborGotMoreFightPoints = this.player.getNextNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        boolean prevNeighborGotMoreFightPoints = this.player.getPrevNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        boolean useful = nextNeighborGotMoreFightPoints || prevNeighborGotMoreFightPoints ;
+        assertEquals(useful , this.guaranteedStrategy.usefulBuildMilitary());
+
+
+        this.player.getNextNeighbor().setFightPoints(2);
+        this.player.getPrevNeighbor().setFightPoints(3);
+        nextNeighborGotMoreFightPoints = this.player.getNextNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        prevNeighborGotMoreFightPoints = this.player.getPrevNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        useful = nextNeighborGotMoreFightPoints || prevNeighborGotMoreFightPoints ;
+        assertEquals(useful , this.guaranteedStrategy.usefulBuildMilitary());
+
+
+        this.player.getNextNeighbor().setFightPoints(2);
+        this.player.getPrevNeighbor().setFightPoints(7);
+        nextNeighborGotMoreFightPoints = this.player.getNextNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        prevNeighborGotMoreFightPoints = this.player.getPrevNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        useful = nextNeighborGotMoreFightPoints || prevNeighborGotMoreFightPoints ;
+        assertEquals(useful , this.guaranteedStrategy.usefulBuildMilitary());
+    }
 }

@@ -181,6 +181,11 @@ public class Player {
 
     public int getVictoryPoint() { return getPoints().get(CardPoints.VICTORY); }
 
+    //Pour les tests
+    public void setFightPoints(int fightPoints) {
+        this.fightPoints = fightPoints;
+    }
+
     public void play() {
         this.setDumpCard(null);
         Action action = this.strategy.chooseAction(this);

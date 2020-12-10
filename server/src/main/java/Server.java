@@ -47,7 +47,7 @@ public class Server {
                 if(!file) {
                     sb.append("Date");
                     sb.append(",");
-                    sb.append("Strategie");
+                    sb.append("Stratégie");
                     sb.append(',');
                     sb.append("AvgScore");
                     sb.append(',');

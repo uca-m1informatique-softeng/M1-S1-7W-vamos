@@ -360,11 +360,6 @@ public class GuaranteedStrategy extends Strategy {
         return false ;
     }
 
-    @Override
-    public String toString() {
-        return "Guaranteed";
-    }
-
     /**
      * The best brown card to buy is the resource we don't yet have.
      * The priority order is two resource with choice effect, two resource, o
@@ -448,4 +443,8 @@ public class GuaranteedStrategy extends Strategy {
         return pos;
     }
 
+    @Override
+    public String toString() {
+        return "Guaranteed";
+    }
 }
