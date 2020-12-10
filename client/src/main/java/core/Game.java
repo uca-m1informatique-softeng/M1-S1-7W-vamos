@@ -94,6 +94,9 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
+                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new MilitaryStrategy(), new MilitaryStrategy());
+                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new ScienceStrategy(), new ScienceStrategy());
+                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new ScienceStrategy(), new MilitaryStrategy());
                 game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
                 while (game.state != GameState.EXIT)
                     game.process();

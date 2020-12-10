@@ -1,9 +1,9 @@
 # M1-S1-7W-vamos
 
 ## Notre équipe
-- Ossama ASHRAF
-- Kevin Levy
-- Nicolas Zimmer
+- OSSAMA ASHRAF
+- KEVIN LEVY
+- NICOLAS ZIMMER
  
 # Cahier des Charges TER
 ## Implemented Rules
@@ -14,7 +14,7 @@
  - Military battles at the end of each age
  - Players can trade resources with their neighbors for coins
  - Card Decks are dealt during an age according to their age number (e.g. no age II card during age I)
- - At the end of Age III, points are counted and the winner is printed
+ - At the end of Age III, points are counted, and the winner is printed
 
 ### Cards and Wonders :
  - Players can build cards
@@ -65,7 +65,7 @@ The best set of parameters will then be chosen, tested against our Guaranteed AI
 
 -----------------------------------------------------------------------------------------------
 ## Implemented
-### Guaranteed AI
+#### Guaranteed AI
 - If player gets 1 specific science point: whenever he again has the choice between science points, he should go for the same science point as before .
 - If a player has the chance to build marketplace card he should do it .
 - The player builds military cards if he has less military points than his neighbors and of course if he can afford them .
@@ -77,7 +77,7 @@ The best set of parameters will then be chosen, tested against our Guaranteed AI
   - Age 2: green -> brown -> grey -> blue
   - Age 3: green -> blue
 ## Modifications
-### Guaranteed AI
+#### Guaranteed AI
 - Focus on military cards especially in age 3 and towards the ends of each age .
 - Be aware of military cards of neighbors and weigh out whether it would be important to win a battle or not.
 - We remarked that the above two features were not as good as we thought, so we decided to combine them into 
