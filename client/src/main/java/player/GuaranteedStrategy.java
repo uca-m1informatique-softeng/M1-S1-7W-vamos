@@ -367,7 +367,7 @@ public class GuaranteedStrategy extends Strategy {
      *
      * @return Returns the index of the best brown card  to buy.
      */
-    protected Integer bestBrown(ArrayList<Integer> indexs) {
+    protected int bestBrown(ArrayList<Integer> indexs) {
         int pos = -1;
         //Two resource with choice effect
         for (int i : indexs) {
@@ -413,7 +413,7 @@ public class GuaranteedStrategy extends Strategy {
      * @param indexs
      * @return
      */
-    Integer bestBlue(ArrayList<Integer> indexs) {
+    int bestBlue(ArrayList<Integer> indexs) {
         int pos = indexs.get(0);
         int vict = player.getHand().get(indexs.get(0)).getCardPoints().get(CardPoints.VICTORY);
         for (int i : indexs) {
@@ -431,7 +431,7 @@ public class GuaranteedStrategy extends Strategy {
      * @param indexs
      * @return
      */
-    Integer bestGrey(ArrayList<Integer> indexs) {
+    int bestGrey(ArrayList<Integer> indexs) {
         int pos = indexs.get(0);
         Resource initialR = player.wonder.getProducedResource();
         for (int i : indexs) {
