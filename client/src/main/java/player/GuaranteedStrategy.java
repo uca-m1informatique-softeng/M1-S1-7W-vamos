@@ -34,7 +34,7 @@ public class GuaranteedStrategy extends Strategy {
     @Override
     public Action chooseAction(Player player) {
         // If the player has a military card and can afford it , he builds it
-        if(this.militaryCardInHand()){
+        if(this.militaryCardInHand() && this.usefulBuildMilitary()){
             ArrayList<Integer> militaryCardIndexes = this.militaryCardIndexes() ;
             for (int i = 0; i < militaryCardIndexes.size(); i++) {
                 Card cardToBuild = player.getHand().get(militaryCardIndexes.get(i));
@@ -352,8 +352,8 @@ public class GuaranteedStrategy extends Strategy {
      * @return
      */
     public boolean usefulBuildMilitary(){
-        boolean nextNeighborGotMoreFightPoints = player.getNextNeighbor().getFightPoints() > this.player.getFightPoints() ;
-        boolean prevNeighborGotMoreFightPoints = player.getPrevNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        boolean nextNeighborGotMoreFightPoints = player.getNextNeighbor().getFightPoints() >= this.player.getFightPoints() ;
+        boolean prevNeighborGotMoreFightPoints = player.getPrevNeighbor().getFightPoints() >= this.player.getFightPoints() ;
         if (nextNeighborGotMoreFightPoints || prevNeighborGotMoreFightPoints) {
             return true ;
         }
