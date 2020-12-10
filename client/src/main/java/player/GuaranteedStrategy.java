@@ -3,13 +3,15 @@ package player;
 import card.Card;
 import card.CardColor;
 import card.CardPoints;
+import card.Resource;
+import effects.ResourceChoiceEffect;
 
 import java.util.*;
 
 /**
  * This AI can manage the order of color priority.
  */
-public class GuaranteedStrategy extends Strategy{
+public class GuaranteedStrategy extends Strategy {
 
     private ArrayList<ArrayList<CardColor>> priorityColor = new ArrayList<>();
     //age/player/hand is defined in chooseAction(), this may cause bug if is not call.
@@ -32,9 +34,9 @@ public class GuaranteedStrategy extends Strategy{
     @Override
     public Action chooseAction(Player player) {
         //If the player has the marketPlace card in his hand he builds it (marketPlace is a free Card)
-        if (this.marketPlaceInHand()){
+        if (this.marketPlaceInHand()) {
             int marketPlaceIndex = this.marketPlaceIndex();
-            return new Action(this.player.getHand().get(marketPlaceIndex) , Action.BUILD);
+            return new Action(this.player.getHand().get(marketPlaceIndex), Action.BUILD);
         }
 
         // Focus on military cards towards the ends of each age
@@ -55,7 +57,7 @@ public class GuaranteedStrategy extends Strategy{
         }
 
         // Prioritize color of cards: depending on age
-        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge()-1);
+        ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge() - 1);
         ArrayList<Integer>[] setOfIndexByColor = cardGroupedByPriorityColor();
 
         for (int i = 0; i < currentColorPriority.size(); i++) {
@@ -68,23 +70,24 @@ public class GuaranteedStrategy extends Strategy{
                     if (bestBlockingCard != null) return new Action(bestBlockingCard, Action.DUMP);
                     break;
                 case GREY:
-                    if(!setOfIndexByColor[i].isEmpty()) {
-                        int indexChoosen = setOfIndexByColor[i].get(0);
+                    if (!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = bestGrey(setOfIndexByColor[i]);
                         return new Action(player.getHand().get(indexChoosen), Action.BUILD);
                     }
                     break;
                 case BROWN:
-                    if(!setOfIndexByColor[i].isEmpty()) {
-                        int indexChoosen = setOfIndexByColor[i].get(0);
+                    if (!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = bestBrown(setOfIndexByColor[i]);
                         return new Action(player.getHand().get(indexChoosen), Action.BUILD);
                     }
                     break;
                 case BLUE:
-                    if(!setOfIndexByColor[i].isEmpty()) {
-                        int indexChoosen = setOfIndexByColor[i].get(0);
+                    if (!setOfIndexByColor[i].isEmpty()) {
+                        int indexChoosen = bestBlue(setOfIndexByColor[i]);
                         return new Action(player.getHand().get(indexChoosen), Action.BUILD);
                     }
-                default :
+                    break;
+                default:
                     break;
             }
         }
@@ -97,7 +100,7 @@ public class GuaranteedStrategy extends Strategy{
      * @param colors is type CardColor
      * @return list with the CardColor put on parameters
      */
-    protected ArrayList<CardColor> quickList(CardColor ... colors){
+    protected ArrayList<CardColor> quickList(CardColor... colors) {
         ArrayList<CardColor> res = new ArrayList<>();
         for (CardColor elt : colors) { res.add(elt); }
         return res;
@@ -123,18 +126,18 @@ public class GuaranteedStrategy extends Strategy{
      * @return a table containing a list of the positions in the player's hand.
      * Each list design the position of one color.
      */
-    protected ArrayList<Integer>[] cardGroupedByPriorityColor(){
+    protected ArrayList<Integer>[] cardGroupedByPriorityColor() {
         int age = this.player.getHand().get(0).getAge();
 
 
-        ArrayList<Integer>[] indexL = initArray(priorityColor.get(age-1).size());
+        ArrayList<Integer>[] indexL = initArray(priorityColor.get(age - 1).size());
         Card card;
-        for(int i = 0; i < this.player.getHand().size(); i++) {
+        for (int i = 0; i < this.player.getHand().size(); i++) {
             card = this.player.getHand().get(i);
-            for (int j = 0; j < priorityColor.get(age-1).size(); j++) {
-                CardColor color = priorityColor.get(age-1).get(j);
-                if(color.equals(card.getColor())){
-                    if(!player.alreadyBuilt(card) && player.isBuildable(card)){
+            for (int j = 0; j < priorityColor.get(age - 1).size(); j++) {
+                CardColor color = priorityColor.get(age - 1).get(j);
+                if (color.equals(card.getColor())) {
+                    if (!player.alreadyBuilt(card) && player.isBuildable(card)) {
                         indexL[j].add(i);
                     }
                 }
@@ -159,11 +162,11 @@ public class GuaranteedStrategy extends Strategy{
         sciencePoints.add(tabletPoints);
 
         switch (sciencePoints.indexOf(Collections.max(sciencePoints))) {
-            case 0 :
+            case 0:
                 return CardPoints.SCIENCE_WHEEL;
-            case 1 :
+            case 1:
                 return CardPoints.SCIENCE_COMPASS;
-            default :
+            default:
                 return CardPoints.SCIENCE_TABLET;
         }
 
@@ -182,12 +185,12 @@ public class GuaranteedStrategy extends Strategy{
         for (Card card : this.player.getHand()) {
             if (this.player.isBuildable(card)) {
                 if (card.getCardPoints().get(bestSciencePoint) > 0) {
-                    bestCandidates.put(card, 2*card.getCardPoints().get(bestSciencePoint));
+                    bestCandidates.put(card, 2 * card.getCardPoints().get(bestSciencePoint));
                 } else {
-                    bestCandidates.put( card,
-                                        card.getCardPoints().get(CardPoints.SCIENCE_WHEEL) +
-                                        card.getCardPoints().get(CardPoints.SCIENCE_COMPASS) +
-                                        card.getCardPoints().get(CardPoints.SCIENCE_TABLET));
+                    bestCandidates.put(card,
+                            card.getCardPoints().get(CardPoints.SCIENCE_WHEEL) +
+                                    card.getCardPoints().get(CardPoints.SCIENCE_COMPASS) +
+                                    card.getCardPoints().get(CardPoints.SCIENCE_TABLET));
                 }
             }
         }
@@ -257,9 +260,9 @@ public class GuaranteedStrategy extends Strategy{
      * Checks if the marketPlace card is in the player's hand
      * @return true if the player has the marketPlace card , false otherwise
      */
-    public boolean marketPlaceInHand(){
+    public boolean marketPlaceInHand() {
         for (int i = 0; i < this.player.getHand().size(); i++) {
-            if (this.player.getHand().get(i).getName().equals("marketplace")){
+            if (this.player.getHand().get(i).getName().equals("marketplace")) {
                 return true;
             }
         }
@@ -270,11 +273,11 @@ public class GuaranteedStrategy extends Strategy{
      * If the player has the marketPlace card , this method returns it's index in the players hand
      * @return the index of the marketPlace card in the player's hand .If the player don't have the marketPlace card in his hand it returns -1
      */
-    public int marketPlaceIndex(){
-        if(this.marketPlaceInHand()){
+    public int marketPlaceIndex() {
+        if (this.marketPlaceInHand()) {
             for (int i = 0; i < this.player.getHand().size(); i++) {
-                if (this.player.getHand().get(i).getName().equals("marketplace")){
-                    return i ;
+                if (this.player.getHand().get(i).getName().equals("marketplace")) {
+                    return i;
                 }
             }
         }
@@ -285,9 +288,9 @@ public class GuaranteedStrategy extends Strategy{
      * Checks if the player have military cards in his hands
      * @return true if the player has military cards in his hands , false otherwise
      */
-    public boolean militaryCardInHand(){
+    public boolean militaryCardInHand() {
         for (int i = 0; i < this.player.getHand().size(); i++) {
-            if (this.player.getHand().get(i).getColor() == CardColor.RED){ // Military Cards are the Red Cards
+            if (this.player.getHand().get(i).getColor() == CardColor.RED) { // Military Cards are the Red Cards
                 return true;
             }
         }
@@ -298,20 +301,104 @@ public class GuaranteedStrategy extends Strategy{
      * This methods returns the indexes of military cards .
      * @return the indexes of military cards . Empty if the player don't have any military cards ,
      */
-    public ArrayList<Integer> militaryCardIndexes(){
-        ArrayList<Integer> militaryCardIndexes = new ArrayList<>() ;
-        if(this.militaryCardInHand()){
+    public ArrayList<Integer> militaryCardIndexes() {
+        ArrayList<Integer> militaryCardIndexes = new ArrayList<>();
+        if (this.militaryCardInHand()) {
             for (int i = 0; i < this.player.getHand().size(); i++) {
-                if (this.player.getHand().get(i).getColor() == CardColor.RED){
+                if (this.player.getHand().get(i).getColor() == CardColor.RED) {
                     militaryCardIndexes.add(i);
                 }
             }
         }
-        return militaryCardIndexes ;
+        return militaryCardIndexes;
     }
-    
+
     @Override
     public String toString() {
         return "Guaranteed";
     }
+
+    /**
+     * The best brown card to buy is the resource we don't yet have.
+     * The priority order is two resource with choice effect, two resource, o
+     *
+     * @return Returns the index of the best brown card  to buy.
+     */
+    protected Integer bestBrown(ArrayList<Integer> indexs) {
+        int pos = -1;
+        //Two resource with choice effect
+        for (int i : indexs) {
+            if (player.getHand().get(i).getEffect() instanceof ResourceChoiceEffect) {
+                ResourceChoiceEffect rce = (ResourceChoiceEffect) player.getHand().get(i).getEffect();
+                if (player.getResources().get(rce.getRes().get(0)) == 0 && player.getResources().get(rce.getRes().get(1)) == 0) {
+                    return i;
+                }
+                if (player.getResources().get(rce.getRes().get(0)) == 0 || player.getResources().get(rce.getRes().get(1)) == 0) {
+                    pos = i;
+                }
+            }
+        }
+        if (pos != -1) {
+            return pos;
+        }
+        for (int i : indexs) {
+            for (Resource r : Resource.values()) {
+                //Two resource
+                if (player.getHand().get(i).getResource().get(r) == 2) {
+                    if (player.getResources().get(r) == 0) {
+                        return i;
+                    }
+                    break;
+                }
+                //One resource
+                if (player.getHand().get(i).getResource().get(r) == 1) {
+                    if (player.getResources().get(r) == 0) {
+                        pos = i;
+                    }
+                    break;
+                }
+            }
+        }
+        if (pos != -1) {
+            return pos;
+        }
+        return indexs.get(0);
+    }
+
+    /**
+     * Return the index of the blue card with the higher victory points.
+     * @param indexs
+     * @return
+     */
+    Integer bestBlue(ArrayList<Integer> indexs) {
+        int pos = indexs.get(0);
+        int vict = player.getHand().get(indexs.get(0)).getCardPoints().get(CardPoints.VICTORY);
+        for (int i : indexs) {
+            int tmpVict = player.getHand().get(i).getCardPoints().get(CardPoints.VICTORY);
+            if (tmpVict > vict) {
+                pos = i;
+                vict = tmpVict;
+            }
+        }
+        return pos;
+    }
+
+    /**
+     * Return the grey card who give the ressource we don't have like starter resource.
+     * @param indexs
+     * @return
+     */
+    Integer bestGrey(ArrayList<Integer> indexs) {
+        int pos = indexs.get(0);
+        Resource initialR = player.wonder.getProducedResource();
+        for (int i : indexs) {
+            for (Resource r : Resource.values()) {
+                if (player.getHand().get(i).getResource().get(r) > 0 && player.getHand().get(i).getResource().get(initialR) == 0) {
+                    return pos;
+                }
+            }
+        }
+        return pos;
+    }
+
 }

@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import wonder.Wonder;
 
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 
@@ -24,18 +26,21 @@ class GuaranteedStrategyTest {
     Player player;
     Card c1;
     Card c2;
+    Wonder wonder;
 
     @Mock
     SecureRandom rand;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         this.player = new Player("bob");
         this.guaranteedStrategy = new GuaranteedStrategy(player);
         player.setPrevNeighbor(new Player("jean"));
         player.setNextNeighbor(new Player("jacques"));
         player.setStrategy(guaranteedStrategy);
         player.getStrategy().rand = this.rand;
+        wonder = new Wonder("alexandriaA");
+        player.setWonder(wonder);
     }
 
     @Test
@@ -61,9 +66,6 @@ class GuaranteedStrategyTest {
         int size = 3;// c1 so Age 1 => CardColor.GREEN, CardColor.GREY, CardColor.BLUE
         ArrayList<Integer>[] oracle = new ArrayList[size];
         ArrayList<Integer>[] res = ((GuaranteedStrategy) player.getStrategy()).cardGroupedByPriorityColor();
-        System.out.println(res[0]);
-        System.out.println(res[1]);
-        System.out.println(res[2]);
         //GREEN -> GREY we verify the array have the good size.
         assertEquals(size, res.length);
 
