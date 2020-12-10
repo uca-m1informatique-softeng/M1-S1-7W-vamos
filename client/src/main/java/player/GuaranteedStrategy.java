@@ -216,15 +216,7 @@ public class GuaranteedStrategy extends Strategy{
      * @return the best card the player can block its neighbors with.
      */
     public Card getBlockingScienceCard() {
-        Player playerToBlock;
-        switch (this.player.getHand().get(0).getAge()) {
-            case 2:
-                playerToBlock = this.player.getNextNeighbor();
-                break;
-            default:
-                playerToBlock = this.player.getPrevNeighbor();
-                break;
-        }
+        Player playerToBlock = this.getPlayerToBlock();
 
         int wheelPoints = playerToBlock.getPoints().get(CardPoints.SCIENCE_WHEEL);
         int compassPoints = playerToBlock.getPoints().get(CardPoints.SCIENCE_COMPASS);
@@ -251,6 +243,55 @@ public class GuaranteedStrategy extends Strategy{
         } else {
             return null;
         }
+    }
+
+    /**
+     * Checks the player's hand for the best card to either dump or build a next stage of wonder with,
+     * according to player's current resources, money that the player can trade resources with, current victory points
+     * of its neighbors, etc...
+     * @return The best card to either dump or build a next stage of wonder with.
+     */
+    public Card getBlockingDumpCard() {
+        Player playerToBlock = this.getPlayerToBlock();
+        int highestCardPointScore = 0;
+        CardPoints highestCardPoint = null;
+
+        for (CardPoints cp : CardPoints.values()) {
+            int cpScore = playerToBlock.getPoints().get(cp);
+            if (cpScore >= highestCardPointScore) {
+                highestCardPointScore = cpScore;
+                highestCardPoint = cp;
+            }
+        }
+
+        highestCardPointScore = 0;
+        Card bestBlockingCard = null;
+
+        for (Card card : this.player.getHand()) {
+            if (card.getCardPoints().get(highestCardPoint) >= highestCardPointScore) {
+                highestCardPointScore = card.getCardPoints().get(highestCardPoint);
+                bestBlockingCard = card;
+            }
+        }
+
+        return bestBlockingCard;
+    }
+
+    /**
+     * Gets the player to player to block according to current age
+     * @return Next player to pass the hand to.
+     */
+    private Player getPlayerToBlock() {
+        Player playerToBlock;
+        switch (this.player.getHand().get(0).getAge()) {
+            case 2:
+                playerToBlock = this.player.getNextNeighbor();
+                break;
+            default:
+                playerToBlock = this.player.getPrevNeighbor();
+                break;
+        }
+        return playerToBlock;
     }
 
     /**
