@@ -73,9 +73,9 @@ The best set of parameters will then be chosen, tested against our Guaranteed AI
   - Build cards that would give them a disadvantage or dump it in order to get coins .
   - Focus on same colored cards
 - Prioritize color of cards: depending on age
-  - Age 1: green -> grey
-  - Age 2: green -> brown -> grey
-  - Age 3: green -> red
+  - Age 1: green -> grey -> blue
+  - Age 2: green -> brown -> grey -> blue
+  - Age 3: green -> blue
 ## Modifications
 ### Guaranteed AI
 - Focus on military cards especially in age 3 and towards the ends of each age .
