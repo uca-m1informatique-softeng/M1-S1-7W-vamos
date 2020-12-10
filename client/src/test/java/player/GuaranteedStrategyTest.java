@@ -240,4 +240,35 @@ class GuaranteedStrategyTest {
         }
 
     }
+
+    @Test
+    void getBlockingDumpCard1() {
+        this.player.getHand().add(new Card("altar", 3));
+        this.player.getHand().add(new Card("apothecary", 3));
+        this.player.getHand().add(new Card("workshop", 3));
+        this.player.getHand().add(new Card("scriptorium", 3));
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.VICTORY, 4);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.MILITARY, 2);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_COMPASS, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_TABLET, 1);
+
+        assertEquals(this.player.getHand().get(0), ((GuaranteedStrategy) this.player.getStrategy()).getBlockingDumpCard());
+    }
+
+    @Test
+    void getBlockingDumpCard2() {
+        this.player.getHand().add(new Card("altar", 3));
+        this.player.getHand().add(new Card("apothecary", 3));
+        this.player.getHand().add(new Card("workshop", 3));
+        this.player.getHand().add(new Card("scriptorium", 3));
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.VICTORY, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.MILITARY, 1);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_WHEEL, 0);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_COMPASS, 2);
+        this.player.getPrevNeighbor().getPoints().put(CardPoints.SCIENCE_TABLET, 2);
+
+        assertTrue( this.player.getHand().get(1) == ((GuaranteedStrategy) this.player.getStrategy()).getBlockingDumpCard()
+                ||  this.player.getHand().get(3) == ((GuaranteedStrategy) this.player.getStrategy()).getBlockingDumpCard());
+    }
 }

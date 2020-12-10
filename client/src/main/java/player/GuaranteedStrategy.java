@@ -258,7 +258,7 @@ public class GuaranteedStrategy extends Strategy{
 
         for (CardPoints cp : CardPoints.values()) {
             int cpScore = playerToBlock.getPoints().get(cp);
-            if (cpScore >= highestCardPointScore) {
+            if (cpScore >= highestCardPointScore && cp != CardPoints.RELAY_COIN) {
                 highestCardPointScore = cpScore;
                 highestCardPoint = cp;
             }
@@ -268,8 +268,9 @@ public class GuaranteedStrategy extends Strategy{
         Card bestBlockingCard = null;
 
         for (Card card : this.player.getHand()) {
-            if (card.getCardPoints().get(highestCardPoint) >= highestCardPointScore) {
-                highestCardPointScore = card.getCardPoints().get(highestCardPoint);
+            int cardScore = card.getCardPoints().get(highestCardPoint);
+            if (cardScore >= highestCardPointScore) {
+                highestCardPointScore = cardScore;
                 bestBlockingCard = card;
             }
         }
