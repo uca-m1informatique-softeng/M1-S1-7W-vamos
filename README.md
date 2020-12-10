@@ -63,5 +63,33 @@ More features could be added in the future, if possible.
 In order to choose the best recursivity depth, number of Monte-Carlo simulations, and the best heuristics, we will need to make statistics on these parameters.\
 The best set of parameters will then be chosen, tested against our Guaranteed AI, and finally on other AIs if possible.
 
+-----------------------------------------------------------------------------------------------
+## Implemented
+### Guaranteed AI
+- If player gets 1 specific science point: whenever he again has the choice between science points, he should go for the same science point as before .
+- If a player has the chance to build marketplace card he should do it .
+- The player builds military cards if he has less military points than his neighbors and of course if he can afford them .
+- Analyze neighbor's strategies & try to block them:
+  - Build cards that would give them a disadvantage or dump it in order to get coins .
+  - Focus on same colored cards
+- Prioritize color of cards: depending on age
+  - Age 1: green -> grey
+  - Age 2: green -> brown -> grey
+  - Age 3: green -> red
 ## Modifications
 ### Guaranteed AI
+- Focus on military cards especially in age 3 and towards the ends of each age .
+- Be aware of military cards of neighbors and weigh out whether it would be important to win a battle or not.
+- We remarked that the above two features were not as good as we thought, so we decided to combine them into 
+one feature : the player builds military cards if he has less military points than his neighbors and of course if he can afford them .
+  
+- We modified the following features :
+  - Prioritize color of cards: depending on age
+    - Age 1: green -> grey
+    - Age 2: green -> brown -> grey
+    - Age 3: green -> red
+  - Into :
+    - Prioritize color of cards: depending on age
+      - Age 1: green -> grey -> blue
+      - Age 2: green -> brown -> grey -> blue
+      - Age 3: green -> blue
