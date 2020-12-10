@@ -62,3 +62,5 @@ More features could be added in the future, if possible.
 #### IA Evaluation
 In order to choose the best recursivity depth, number of Monte-Carlo simulations, and the best heuristics, we will need to make statistics on these parameters.\
 The best set of parameters will then be chosen, tested against our Guaranteed AI, and finally on other AIs if possible.
+
+## Modifications

@@ -33,33 +33,19 @@ public class GuaranteedStrategy extends Strategy {
 
     @Override
     public Action chooseAction(Player player) {
-        //If the player has the marketPlace card in his hand he builds it (marketPlace is a free Card)
-        if (this.marketPlaceInHand()) {
-            int marketPlaceIndex = this.marketPlaceIndex();
-            return new Action(this.player.getHand().get(marketPlaceIndex), Action.BUILD);
-        }
-
-        // Focus on military cards towards the ends of each age
+        // If the player has a military card and can afford it , he builds it
         if(this.militaryCardInHand()){
-            if (this.player.getHand().size() == 2){ //when only 2 cards are on the player's hand = it's the round number 6 (last round)
-                ArrayList<Integer> militaryCardIndexes = this.militaryCardIndexes() ; //end of the age = it's round 6 = only 2 cards in the player's hand
-                Card cardToBuild = player.getHand().get(militaryCardIndexes.get(0)) ;
+            ArrayList<Integer> militaryCardIndexes = this.militaryCardIndexes() ;
+            for (int i = 0; i < militaryCardIndexes.size(); i++) {
+                Card cardToBuild = player.getHand().get(militaryCardIndexes.get(i));
                 if (player.isBuildable(cardToBuild)){
                     return new Action(cardToBuild , Action.BUILD) ;
                 }
-                else if (militaryCardIndexes.size()==2){
-                    cardToBuild = player.getHand().get(militaryCardIndexes.get(1)) ;
-                    if (player.isBuildable(cardToBuild)){
-                        return new Action(cardToBuild , Action.BUILD) ;
-                    }
-                }
             }
         }
-
         // Prioritize color of cards: depending on age
         ArrayList<CardColor> currentColorPriority = this.priorityColor.get(this.player.getHand().get(0).getAge() - 1);
         ArrayList<Integer>[] setOfIndexByColor = cardGroupedByPriorityColor();
-
         for (int i = 0; i < currentColorPriority.size(); i++) {
             CardColor color = currentColorPriority.get(i);
             switch (color) {
@@ -95,7 +81,12 @@ public class GuaranteedStrategy extends Strategy {
                     }
             }
         }
-
+        //If the player has the marketPlace card in his hand he builds it (marketPlace is a free Card , so there is no need to check if it's buildable)
+        if (this.marketPlaceInHand()) {
+            int marketPlaceIndex = this.marketPlaceIndex();
+            return new Action(this.player.getHand().get(marketPlaceIndex), Action.BUILD);
+        }
+        // If the player can't build any card , he tosses the first card in his hand
         return new Action(this.player.getHand().get(0), Action.DUMP);
     }
 
@@ -341,7 +332,7 @@ public class GuaranteedStrategy extends Strategy {
     }
 
     /**
-     * This methods returns the indexes of military cards .
+     * This method returns the indexes of military cards .
      * @return the indexes of military cards . Empty if the player don't have any military cards ,
      */
     public ArrayList<Integer> militaryCardIndexes() {
@@ -354,6 +345,19 @@ public class GuaranteedStrategy extends Strategy {
             }
         }
         return militaryCardIndexes;
+    }
+
+    /**
+     * This method tells if by building military cards the player will win the fights against his neighbors or not
+     * @return
+     */
+    public boolean usefulBuildMilitary(){
+        boolean nextNeighborGotMoreFightPoints = player.getNextNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        boolean prevNeighborGotMoreFightPoints = player.getPrevNeighbor().getFightPoints() > this.player.getFightPoints() ;
+        if (nextNeighborGotMoreFightPoints || prevNeighborGotMoreFightPoints) {
+            return true ;
+        }
+        return false ;
     }
 
     @Override

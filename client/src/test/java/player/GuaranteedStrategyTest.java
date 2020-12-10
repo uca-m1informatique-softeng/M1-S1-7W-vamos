@@ -240,7 +240,33 @@ class GuaranteedStrategyTest {
             marketPlaceIndex = -1 ;
             assertEquals(marketPlaceIndex , this.guaranteedStrategy.marketPlaceIndex());
         }
+    }
 
+    @Test
+    void militaryCardInHand(){
+        // No military cards in the player's hand
+        assertEquals(false , this.guaranteedStrategy.militaryCardInHand());
+
+        // We add a Military Card to the player's hand
+        Card card = new Card("arsenal" , 3);
+        this.player.getHand().add(card);
+        assertEquals(true , this.guaranteedStrategy.militaryCardInHand());
+    }
+
+    @Test
+    void militaryCardIndexes(){
+        Card card = new Card("arsenal" , 3) ;
+        this.player.getHand().add(card);
+
+        ArrayList<Integer> militaryCardIndexes = new ArrayList<>() ;
+        if(this.guaranteedStrategy.militaryCardInHand()){
+            for (int i = 0; i < this.player.getHand().size(); i++) {
+                if (this.player.getHand().get(i).getColor() == CardColor.RED){
+                    militaryCardIndexes.add(i);
+                }
+            }
+        }
+        assertEquals(militaryCardIndexes , this.guaranteedStrategy.militaryCardIndexes());
     }
 
     @Test
