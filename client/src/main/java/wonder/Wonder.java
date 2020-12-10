@@ -205,6 +205,8 @@ public class Wonder {
      * @return if the player can build his wonder of not
      */
     public boolean canUpgrade(EnumMap<Resource, Integer> playerResources) {
+        if (this.state >= 2) return false;
+
         if (playerResources.isEmpty()) return false;
 
         if (playerResources.size() < getCurrentUpgradeCost().size()) return false;

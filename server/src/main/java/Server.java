@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static utility.Constante.* ;
 
 public class Server {
@@ -25,10 +28,10 @@ public class Server {
 
             double victoires = recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE) * 100;
             String joueur = recapScore.getStrategy();
-            System.out.println(joueur + " gets an average score of  " + recapScore.getAvgScore());
-            System.out.println(joueur + " has a  " + victoires + "% winrate");
+            System.out.println(joueur + " gets an average score of " + recapScore.getAvgScore());
+            System.out.println(joueur + " has a " + victoires + "% winrate");
             System.out.println(joueur + " gets " + recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
-            System.out.println(joueur + " gets   " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
+            System.out.println(joueur + " gets " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
             System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
             System.out.println(joueur + " gets " + recapScore.getCivilianPoints() / (double) NB_GAMES_STATS_MODE + "civilian point per game");
 
@@ -42,6 +45,8 @@ public class Server {
 
                 StringBuilder sb = new StringBuilder();
                 if(!file) {
+                    sb.append("Date");
+                    sb.append(",");
                     sb.append("Strategie");
                     sb.append(',');
                     sb.append("AvgScore");
@@ -55,6 +60,10 @@ public class Server {
                     sb.append("CivilianP");
                     sb.append('\n');
                 }
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                LocalDateTime now = LocalDateTime.now();
+                sb.append(dtf.format(now));
+                sb.append(',');
                 sb.append(joueur);
                 sb.append(',');
                 sb.append(recapScore.getAvgScore());
