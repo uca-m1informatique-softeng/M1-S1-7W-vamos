@@ -9,6 +9,6 @@ public class AmbitiousStrategy extends Strategy{
 
     @Override
     public String toString() {
-        return null;
+        return "Ambitious AI";
     }
 }
