@@ -75,7 +75,7 @@ public class Game {
 
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
-            game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
+            game.forceStrategy(new AmbitiousStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
             Writer.init(true);
             while (game.state != GameState.EXIT)
                 game.process();
@@ -398,7 +398,7 @@ public class Game {
 
             Writer.write(p1 + " fought " + p2 + " and lost 1 Military Point.");
         } else {
-            Writer.write(p1 + " fought " + p2 + " and is was a draw.");
+            Writer.write(p1 + " fought " + p2 + " and is was a draw.----");
         }
     }
 

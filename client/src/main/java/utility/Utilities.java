@@ -5,6 +5,7 @@ import card.Resource;
 import exceptions.ParserException;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Utilities {
@@ -81,5 +82,20 @@ public class Utilities {
         }
 
         return key;
+    }
+
+    /**
+     * A simple function that computes the average of an int list
+     * @param list The int list for which to compute the average
+     * @return The average of the list
+     */
+    public static int average(List<Integer> list) {
+        int sum = 0;
+
+        for (int n : list) {
+            sum += n;
+        }
+
+        return sum/list.size();
     }
 }
