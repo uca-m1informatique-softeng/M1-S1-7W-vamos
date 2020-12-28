@@ -133,6 +133,24 @@ public class Game {
         this.initPlayersWonders();
     }
 
+    public Game(Game game) throws PlayerNumberException {
+        this.players = game.getPlayers();
+        if (players < MIN_PLAYER || players > MAX_PLAYER)
+            throw new PlayerNumberException("You must launch the game with 3 or 4 players");
+
+        ArrayList<Player> playersArray = new ArrayList<>(game.getPlayersArray()); //Shallow Copy
+        setPlayersArray(playersArray);
+
+        this.initPlayers();
+        this.state = GameState.START;
+        this.deck = new ArrayList<>();
+
+        ArrayList<Wonder> wonders = new ArrayList<>(game.getWonderArrayList()); //Shallow Copy
+        this.setWonderArrayList(wonders);
+
+        this.initPlayersWonders();
+    }
+
     /**
      * Load the cards of the current age in the game engine
      */
@@ -485,6 +503,18 @@ public class Game {
         return this.players;
     }
 
+    public void setPlayers(int players) {
+        this.players = players;
+    }
+
+    public ArrayList<Wonder> getWonderArrayList() {
+        return wonderArrayList;
+    }
+
+    public void setWonderArrayList(ArrayList<Wonder> wonderArrayList) {
+        this.wonderArrayList = wonderArrayList;
+    }
+
     public int getCurrentAge() {
         return currentAge;
     }
@@ -497,11 +527,23 @@ public class Game {
         return playersArray;
     }
 
+    public void setPlayersArray(ArrayList<Player> playersArray) {
+        this.playersArray = playersArray;
+    }
+
     public GameState getState() {
         return state;
     }
 
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
     public ArrayList<Card> getDeck() {
         return deck;
+    }
+
+    public void setDeck(ArrayList<Card> deck) {
+        this.deck = deck;
     }
 }
