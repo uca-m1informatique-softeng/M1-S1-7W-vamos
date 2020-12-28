@@ -1,8 +1,11 @@
 package player;
 
 import core.Game;
+import core.GameState;
 
-public class AmbitiousStrategy extends Strategy{
+import java.io.IOException;
+
+public class AmbitiousStrategy extends Strategy {
 
     @Override
     public Action chooseAction(Player player) {
@@ -14,7 +17,21 @@ public class AmbitiousStrategy extends Strategy{
         return "Ambitious AI";
     }
 
-    private int simul(Action a, Game game){
-        return -1;
+    private int SimulateGame(Player player, Action a) throws IOException {
+        //Game simulGame = new Game(player.getGame());
+        Game simulGame = player.getGame();
+        //First turn
+
+        simulGame.processTurn();
+        //Second part
+        simulGame.forceStrategy(new DumbStrategy(), new DumbStrategy(), new DumbStrategy());
+        while (simulGame.getState() != GameState.EXIT)
+            simulGame.process();
+
+        return player.computeScore();
+    }
+
+    private void simulProcessTurn(Action a) {
+
     }
 }

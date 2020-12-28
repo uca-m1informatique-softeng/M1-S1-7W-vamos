@@ -1,5 +1,6 @@
 package player;
 
+import core.Game;
 import effects.*;
 import card.*;
 import wonder.Wonder;
@@ -43,8 +44,10 @@ public class Player {
 
     protected Card dumpCard;
 
+    protected Game game;
 
-    public Player(String name) {
+
+    public Player(String name, Game g) {
         this.name = name;
         this.fightPoints = 0;
         this.defeatToken = 0;
@@ -72,6 +75,8 @@ public class Player {
         freeCardPerAge.put(1, false);
         freeCardPerAge.put(2, false);
         freeCardPerAge.put(3, false);
+
+        this.game = g;
 
         Writer.write("Player " + name + " joined the game!");
     }
@@ -185,6 +190,8 @@ public class Player {
     public void setFightPoints(int fightPoints) {
         this.fightPoints = fightPoints;
     }
+
+    public Game getGame() { return this.game; }
 
     public void play() {
         this.setDumpCard(null);
