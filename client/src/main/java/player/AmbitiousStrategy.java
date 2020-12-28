@@ -1,5 +1,7 @@
 package player;
 
+import core.Game;
+
 public class AmbitiousStrategy extends Strategy{
 
     @Override
@@ -10,5 +12,9 @@ public class AmbitiousStrategy extends Strategy{
     @Override
     public String toString() {
         return "Ambitious AI";
+    }
+
+    private int simul(Action a, Game game){
+        return -1;
     }
 }
