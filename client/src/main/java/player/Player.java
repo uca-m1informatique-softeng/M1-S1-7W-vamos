@@ -1,5 +1,6 @@
 package player;
 
+import core.Game;
 import effects.*;
 import card.*;
 import wonder.Wonder;
@@ -42,6 +43,8 @@ public class Player {
     protected HashMap<Integer , Boolean> freeCardPerAge ; //{1:true or false ...} true if the effect was used in the age(the key) and false if not
 
     protected Card dumpCard;
+
+    protected Game game;
 
 
     public Player(String name) {
@@ -185,6 +188,12 @@ public class Player {
     public void setFightPoints(int fightPoints) {
         this.fightPoints = fightPoints;
     }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public Game getGame() { return this.game; }
 
     public void play() {
         this.setDumpCard(null);

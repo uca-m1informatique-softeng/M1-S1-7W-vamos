@@ -4,7 +4,12 @@ import utility.Utilities;
 import card.*;
 import java.util.ArrayList;
 
-public class AmbitiousStrategy extends Strategy{
+import core.Game;
+import core.GameState;
+
+import java.io.IOException;
+
+public class AmbitiousStrategy extends Strategy {
 
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
@@ -111,5 +116,23 @@ public class AmbitiousStrategy extends Strategy{
             //this.score = this.simulateGame(this.player, this.action);
             this.finished = true;
         }
+    }
+
+    private int simulateGame(Player player, Action a) throws IOException {
+        //Game simulGame = new Game(player.getGame());
+        Game simulGame = player.getGame();
+        //First turn
+
+        simulGame.processTurn();
+        //Second part
+        simulGame.forceStrategy(new DumbStrategy(), new DumbStrategy(), new DumbStrategy());
+        while (simulGame.getState() != GameState.EXIT)
+            simulGame.process();
+
+        return player.computeScore();
+    }
+
+    private void simulProcessTurn(Action a) {
+
     }
 }

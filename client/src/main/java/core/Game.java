@@ -167,6 +167,10 @@ public class Game {
         this.playersArray.add(new Player("Bot2"));
         this.playersArray.add(new Player("Bot3"));
 
+        for (Player p : this.playersArray) {
+            p.setGame(this);
+        }
+
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;
             if (i > 0) {
@@ -187,7 +191,7 @@ public class Game {
     /**
      * Main function of the game, process based on Game's current state
      */
-    private void process() throws IOException {
+    public void process() throws IOException {
         switch (this.state) {
             case START:
                 Writer.write("The game started with " + this.players + "players on the board");
@@ -257,7 +261,7 @@ public class Game {
     /**
      * Function to process one round during the game
      */
-    private void processTurn() {
+    public void processTurn() {
         for (Player player : this.playersArray) {
             for (Effect e : player.getWonderEffectNotApply()) {
                 if (e instanceof TookDiscardCardEffect) {
@@ -484,7 +488,7 @@ public class Game {
      * Force the attribution of the strategy.
      * @param strat assign all the strategies he can able to do.
      */
-    protected void forceStrategy(Strategy ... strat){
+    public void forceStrategy(Strategy ... strat){
         for(int i = 0; i < playersArray.size(); i++) {
             if (i < strat.length) {
                 Player p = this.playersArray.get(i);
