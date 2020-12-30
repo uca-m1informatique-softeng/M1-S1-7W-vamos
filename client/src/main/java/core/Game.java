@@ -136,8 +136,8 @@ public class Game {
         this.playersArray = new ArrayList<>();
         for (Player p : game.getPlayersArray()) {
             Player playerCopy = new Player(p);
-            this.playersArray.add(playerCopy);
             playerCopy.setGame(this);
+            this.playersArray.add(playerCopy);
         }
 
         this.round = game.getRound();
@@ -148,6 +148,22 @@ public class Game {
         this.deck = new ArrayList<>();
         for (Card c : game.deck) {
             this.deck.add(new Card(c.getName(), this.players));
+        }
+
+        for (int i = 0; i < this.players; i++) {
+            Player prevPlayer, nextPlayer;
+            if (i > 0) {
+                prevPlayer = this.playersArray.get(i - 1);
+            } else {
+                prevPlayer = this.playersArray.get(this.playersArray.size() - 1);
+            }
+            if (i < this.playersArray.size() - 1) {
+                nextPlayer = this.playersArray.get(i + 1);
+            } else {
+                nextPlayer = this.playersArray.get(0);
+            }
+            this.playersArray.get(i).setPrevNeighbor(prevPlayer);
+            this.playersArray.get(i).setNextNeighbor(nextPlayer);
         }
     }
 

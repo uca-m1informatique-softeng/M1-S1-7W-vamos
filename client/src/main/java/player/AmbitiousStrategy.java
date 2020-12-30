@@ -15,15 +15,13 @@ import java.io.IOException;
 
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
-import static utility.Constante.RESET;
-import static utility.Constante.YELLOW_UNDERLINED;
 
 public class AmbitiousStrategy extends Strategy {
 
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 1;
+    private static int NUMBER_OF_SIMULATIONS = 100;
     private Player player;
 
     public AmbitiousStrategy(Player player) {
@@ -35,7 +33,7 @@ public class AmbitiousStrategy extends Strategy {
         Writer.stopWriting();
 
         ArrayList<Action> actions = this.availableActions();
-        ArrayList<Tuple<Action, Integer>> actionScores = new ArrayList<>();
+        ArrayList<Tuple<Action, Float>> actionScores = new ArrayList<>();
 
         for (Action a : actions) {
             ArrayList<Integer> scores = new ArrayList<>();
@@ -48,22 +46,22 @@ public class AmbitiousStrategy extends Strategy {
             }
 
             // Waiting for every thread to finish
-            boolean letsgo = false;
-            do {
-                for (SimulationThread t : threads) {
-                    if (t.isFinished()) {
-                        letsgo = true;
-                    } else {
-                        letsgo = false;
-                        break;
-                    }
-                }
+            boolean letsGo = false;
+            while (!letsGo) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } while (!letsgo);
+                for (SimulationThread t : threads) {
+                    if (t.isFinished()) {
+                        letsGo = true;
+                    } else {
+                        letsGo = false;
+                        break;
+                    }
+                }
+            }
             for (SimulationThread t : threads) {
                 scores.add(t.getScore());
             }
@@ -71,11 +69,12 @@ public class AmbitiousStrategy extends Strategy {
             actionScores.add(new Tuple<>(a, Utilities.average(scores)));
         }
 
-        int actionScore = 0;
+        float actionScore = 0;
         Action chosenAction = actions.get(0);
 
-        for (Tuple<Action, Integer> t : actionScores) {
+        for (Tuple<Action, Float> t : actionScores) {
             if (t.y > actionScore) {
+                actionScore = t.y;
                 chosenAction = t.x;
             }
         }
@@ -110,39 +109,39 @@ public class AmbitiousStrategy extends Strategy {
         int res = -1;
 
         try {
-            Game simulGame = new Game(player.getGame());
-            Player simulPlayer = simulGame.getPlayersArray().get(0);
-            for (Player p : simulGame.getPlayersArray()) {
+            Game simGame = new Game(player.getGame());
+            Player simPlayer = simGame.getPlayersArray().get(0);
+            for (Player p : simGame.getPlayersArray()) {
                 if (p.getName().equals(player.getName())) {
-                    simulPlayer = p;
+                    simPlayer = p;
                 }
             }
 
             //First turn
-            switch (simulGame.getState()) {
+            switch (simGame.getState()) {
                 case START:
-                    simulGame.processNewAge();
-                    simulGame.setState(PLAY);
+                    simGame.processNewAge();
+                    simGame.setState(PLAY);
                     break;
                 case PLAY:
-                    this.simulProcessTurn(simulGame, a);
-                    simulGame.incrRound();
-                    simulGame.processEndAge();
+                    this.simProcessTurn(simGame, a);
+                    simGame.incrRound();
+                    simGame.processEndAge();
                     break;
                 case END:
-                    simulGame.applyAllEndEffect();
-                    simulGame.setState(EXIT);
+                    simGame.applyAllEndEffect();
+                    simGame.setState(EXIT);
                     break;
                 default:
                     break;
             }
 
             //Second part
-            simulPlayer.setStrategy(new DumbStrategy());
-            while (simulGame.getState() != GameState.EXIT)
-                simulGame.process();
+            simPlayer.setStrategy(new DumbStrategy());
+            while (simGame.getState() != GameState.EXIT)
+                simGame.process();
 
-            res = simulPlayer.computeScore();
+            res = simPlayer.computeScore();
 
         } catch (PlayerNumberException e) {
             e.printStackTrace();
@@ -153,7 +152,7 @@ public class AmbitiousStrategy extends Strategy {
         return res;
     }
 
-    private void simulProcessTurn(Game game, Action a) {
+    private void simProcessTurn(Game game, Action a) {
         for (Player player : game.getPlayersArray()) {
             for (Effect e : player.getWonderEffectNotApply()) {
                 if (e instanceof TookDiscardCardEffect) {

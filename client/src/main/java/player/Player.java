@@ -117,9 +117,6 @@ public class Player {
         freeCardPerAge.put(2, player.freeCardPerAge.get(2));
         freeCardPerAge.put(3, player.freeCardPerAge.get(3));
 
-        this.prevNeighbor = player.prevNeighbor;
-        this.nextNeighbor = player.nextNeighbor;
-
         this.strategy = player.strategy;
         this.dumpCard = player.dumpCard;
     }

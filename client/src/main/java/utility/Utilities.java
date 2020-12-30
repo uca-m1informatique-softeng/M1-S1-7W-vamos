@@ -89,8 +89,8 @@ public class Utilities {
      * @param list The int list for which to compute the average
      * @return The average of the list
      */
-    public static int average(List<Integer> list) {
-        int sum = 0;
+    public static float average(List<Integer> list) {
+        float sum = 0;
 
         for (int n : list) {
             sum += n;
