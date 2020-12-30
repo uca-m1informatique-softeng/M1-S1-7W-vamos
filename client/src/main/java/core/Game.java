@@ -75,7 +75,6 @@ public class Game {
 
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
-            game.forceStrategy(new AmbitiousStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
             Writer.init(true);
             while (game.state != GameState.EXIT)
                 game.process();
@@ -94,10 +93,6 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
-                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new MilitaryStrategy(), new MilitaryStrategy());
-                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new ScienceStrategy(), new ScienceStrategy());
-                //game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new ScienceStrategy(), new MilitaryStrategy());
-                game.forceStrategy(new GuaranteedStrategy(game.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
                 while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
@@ -135,20 +130,25 @@ public class Game {
 
     public Game(Game game) throws PlayerNumberException {
         this.players = game.getPlayers();
-        if (players < MIN_PLAYER || players > MAX_PLAYER)
+        if (this.players < MIN_PLAYER || this.players > MAX_PLAYER)
             throw new PlayerNumberException("You must launch the game with 3 or 4 players");
 
-        ArrayList<Player> playersArray = new ArrayList<>(game.getPlayersArray()); //Shallow Copy
-        setPlayersArray(playersArray);
+        this.playersArray = new ArrayList<>();
+        for (Player p : game.getPlayersArray()) {
+            Player playerCopy = new Player(p);
+            this.playersArray.add(playerCopy);
+            playerCopy.setGame(this);
+        }
 
-        this.initPlayers();
+        this.round = game.getRound();
+        this.currentAge = game.getCurrentAge();
+        this.discardCards = game.getDiscardCards();
+
         this.state = GameState.START;
         this.deck = new ArrayList<>();
-
-        ArrayList<Wonder> wonders = new ArrayList<>(game.getWonderArrayList()); //Shallow Copy
-        this.setWonderArrayList(wonders);
-
-        this.initPlayersWonders();
+        for (Card c : game.deck) {
+            this.deck.add(new Card(c.getName(), this.players));
+        }
     }
 
     /**
@@ -163,9 +163,10 @@ public class Game {
      */
     public void initPlayers() {
 
-        this.playersArray.add(new Player("Bot1"));
-        this.playersArray.add(new Player("Bot2"));
-        this.playersArray.add(new Player("Bot3"));
+        this.playersArray.add(new Player("Bot1 (Monte-Carlo)"));
+        this.playersArray.add(new Player("Bot2 (Dumb)"));
+        this.playersArray.add(new Player("Bot3 (Dumb)"));
+        this.forceStrategy(new AmbitiousStrategy(this.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
 
         for (Player p : this.playersArray) {
             p.setGame(this);
@@ -312,7 +313,7 @@ public class Game {
         }
     }
 
-    private void processNewAge() throws IOException {
+    public void processNewAge() throws IOException {
         initDeck();
         initPlayersHand();
         Writer.write("\n" + BLUE_UNDERLINED + "---- CURRENT AGE : " + currentAge + " ----" + RESET + "\n");
@@ -336,7 +337,7 @@ public class Game {
         }
     }
 
-    private void processEndAge() throws IOException {
+    public void processEndAge() throws IOException {
         if (this.round == MAX_ROUNDS) {
             this.checkEffect(PlaySeventhCardEffect.class);
 
@@ -493,7 +494,6 @@ public class Game {
             if (i < strat.length) {
                 Player p = this.playersArray.get(i);
                 p.setStrategy(strat[i]);
-                p.setName(p.toString() + " (" + strat[i].toString() + ")");
             }
         }
     }
@@ -549,5 +549,13 @@ public class Game {
 
     public void setDeck(ArrayList<Card> deck) {
         this.deck = deck;
+    }
+
+    public ArrayList<Card> getDiscardCards() {
+        return this.discardCards;
+    }
+
+    public void incrRound() {
+        this.round++;
     }
 }

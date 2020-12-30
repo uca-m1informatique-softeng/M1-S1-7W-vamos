@@ -67,4 +67,18 @@ public final class Writer {
             e.getStackTrace();
         }
     }
+
+    /**
+     * Stops writing to the game file
+     */
+    public static void stopWriting() {
+        mode = false;
+    }
+
+    /**
+     * Resumes writing to the game file
+     */
+    public static void resumeWriting() {
+        mode = true;
+    }
 }

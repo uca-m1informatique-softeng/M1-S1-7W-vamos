@@ -1,4 +1,7 @@
 package player;
+import effects.Effect;
+import effects.TookDiscardCardEffect;
+import exceptions.PlayerNumberException;
 import utility.Tuple;
 import utility.Utilities;
 import card.*;
@@ -6,15 +9,21 @@ import java.util.ArrayList;
 
 import core.Game;
 import core.GameState;
+import utility.Writer;
 
 import java.io.IOException;
+
+import static core.GameState.EXIT;
+import static core.GameState.PLAY;
+import static utility.Constante.RESET;
+import static utility.Constante.YELLOW_UNDERLINED;
 
 public class AmbitiousStrategy extends Strategy {
 
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 1000;
+    private static int NUMBER_OF_SIMULATIONS = 1;
     private Player player;
 
     public AmbitiousStrategy(Player player) {
@@ -23,6 +32,8 @@ public class AmbitiousStrategy extends Strategy {
 
     @Override
     public Action chooseAction(Player player) {
+        Writer.stopWriting();
+
         ArrayList<Action> actions = this.availableActions();
         ArrayList<Tuple<Action, Integer>> actionScores = new ArrayList<>();
 
@@ -31,13 +42,14 @@ public class AmbitiousStrategy extends Strategy {
 
             ArrayList<SimulationThread> threads = new ArrayList<>();
             for (int i = 0; i < AmbitiousStrategy.NUMBER_OF_SIMULATIONS; i++) {
-                threads.add(new SimulationThread(this.player, a));
-                threads.get(i).start();
+                SimulationThread thread = new SimulationThread(this.player, a);
+                threads.add(thread);
+                thread.start();
             }
 
             // Waiting for every thread to finish
             boolean letsgo = false;
-            while (!letsgo) {
+            do {
                 for (SimulationThread t : threads) {
                     if (t.isFinished()) {
                         letsgo = true;
@@ -46,7 +58,12 @@ public class AmbitiousStrategy extends Strategy {
                         break;
                     }
                 }
-            }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } while (!letsgo);
             for (SimulationThread t : threads) {
                 scores.add(t.getScore());
             }
@@ -62,6 +79,8 @@ public class AmbitiousStrategy extends Strategy {
                 chosenAction = t.x;
             }
         }
+
+        Writer.resumeWriting();
 
         return chosenAction;
     }
@@ -85,6 +104,89 @@ public class AmbitiousStrategy extends Strategy {
         }
 
         return actionList;
+    }
+
+    private int simulateGame(Player player, Action a) {
+        int res = -1;
+
+        try {
+            Game simulGame = new Game(player.getGame());
+            Player simulPlayer = simulGame.getPlayersArray().get(0);
+            for (Player p : simulGame.getPlayersArray()) {
+                if (p.getName().equals(player.getName())) {
+                    simulPlayer = p;
+                }
+            }
+
+            //First turn
+            switch (simulGame.getState()) {
+                case START:
+                    simulGame.processNewAge();
+                    simulGame.setState(PLAY);
+                    break;
+                case PLAY:
+                    this.simulProcessTurn(simulGame, a);
+                    simulGame.incrRound();
+                    simulGame.processEndAge();
+                    break;
+                case END:
+                    simulGame.applyAllEndEffect();
+                    simulGame.setState(EXIT);
+                    break;
+                default:
+                    break;
+            }
+
+            //Second part
+            simulPlayer.setStrategy(new DumbStrategy());
+            while (simulGame.getState() != GameState.EXIT)
+                simulGame.process();
+
+            res = simulPlayer.computeScore();
+
+        } catch (PlayerNumberException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
+    private void simulProcessTurn(Game game, Action a) {
+        for (Player player : game.getPlayersArray()) {
+            for (Effect e : player.getWonderEffectNotApply()) {
+                if (e instanceof TookDiscardCardEffect) {
+                    e.applyEffect(player, null, null, null, game.getDiscardCards());
+                    player.getWonderEffectNotApply().remove(e);
+                    game.getDiscardCards().remove(player.getChosenCard());
+                    break;
+                }
+            }
+
+            if (player.getName().equals(this.player.getName())) {
+                player.chosenCard = a.getCard();
+
+                switch (a.getAction()) {
+                    case Action.BUILD:
+                        player.buildCard();
+                        break;
+                    case Action.WONDER:
+                        player.buildStageWonder();
+                        break;
+                    default:
+                        player.dumpCard();
+                        break;
+                }
+            } else {
+                player.play();
+            }
+
+            if (player.getDumpCard() != null) {
+                game.getDiscardCards().add(player.getDumpCard());
+            }
+        }
+        game.swapHands(game.getCurrentAge());
     }
 
     @Override
@@ -113,27 +215,8 @@ public class AmbitiousStrategy extends Strategy {
 
         @Override
         public void run() {
-            //this.score = this.simulateGame(this.player, this.action);
+            this.score = ((AmbitiousStrategy) this.player.getStrategy()).simulateGame(this.player, this.action);
             this.finished = true;
         }
-    }
-
-    protected int simulateGame(Player player, Action a) throws IOException {
-        //Game simulGame = new Game(player.getGame());
-        Game simulGame = player.getGame();
-        //First turn
-
-        simulGame.processTurn();
-        //Second part
-        simulGame.forceStrategy(new DumbStrategy(), new DumbStrategy(), new DumbStrategy());
-        while (simulGame.getState() != GameState.EXIT)
-            simulGame.process();
-
-        return player.computeScore();
-    }
-
-    protected void simulProcessTurn(Action a) {
-
-
     }
 }

@@ -71,12 +71,57 @@ public class Player {
         this.hand = new ArrayList<>();
         this.wonderEffectNotApply = new ArrayList<>();
 
-        this.freeCardPerAge=new HashMap<>() ;
+        this.freeCardPerAge = new HashMap<>() ;
         freeCardPerAge.put(1, false);
         freeCardPerAge.put(2, false);
         freeCardPerAge.put(3, false);
 
         Writer.write("Player " + name + " joined the game!");
+    }
+
+    public Player(Player player) {
+        this.name = player.name;
+        this.fightPoints = player.fightPoints;
+        this.defeatToken = player.defeatToken;
+
+        this.points = new EnumMap<>(CardPoints.class);
+        for (CardPoints p : CardPoints.values()) {
+            this.points.put(p, player.getPoints().get(p));
+        }
+        this.resources = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            this.resources.put(r, player.getResources().get(r));
+        }
+        this.boughtResources = new EnumMap<>(Resource.class);
+        for (Resource r : Resource.values()) {
+            this.boughtResources.put(r, player.getBoughtResources().get(r));
+        }
+
+        this.builtCards = new ArrayList<>();
+        for (Card c : player.builtCards) {
+            this.builtCards.add(c);
+        }
+        this.hand = new ArrayList<>();
+        for (Card c : player.hand) {
+            this.hand.add(c);
+        }
+
+        this.wonder = player.wonder;
+        this.wonderEffectNotApply = new ArrayList<>();
+        for (Effect e : player.wonderEffectNotApply) {
+            this.wonderEffectNotApply.add(e);
+        }
+
+        this.freeCardPerAge = new HashMap<>() ;
+        freeCardPerAge.put(1, player.freeCardPerAge.get(1));
+        freeCardPerAge.put(2, player.freeCardPerAge.get(2));
+        freeCardPerAge.put(3, player.freeCardPerAge.get(3));
+
+        this.prevNeighbor = player.prevNeighbor;
+        this.nextNeighbor = player.nextNeighbor;
+
+        this.strategy = player.strategy;
+        this.dumpCard = player.dumpCard;
     }
 
 
@@ -254,7 +299,7 @@ public class Player {
         }
 
         // Applies ResourceChoiceEffects from the wonder
-        if (this.wonder.getAppliedEffects() != null) {
+        if (this.wonder.getAppliedEffects().size() != 0) {
             for (Effect effect : this.wonder.getAppliedEffects()) {
                 if (effect instanceof ResourceChoiceEffect) {
                     effect.applyEffect(null, null, null, costAfterEffects, null);
