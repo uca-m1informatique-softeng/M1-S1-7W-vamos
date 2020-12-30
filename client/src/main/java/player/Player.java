@@ -47,7 +47,7 @@ public class Player {
     protected Game game;
 
 
-    public Player(String name, Game g) {
+    public Player(String name) {
         this.name = name;
         this.fightPoints = 0;
         this.defeatToken = 0;
@@ -75,8 +75,6 @@ public class Player {
         freeCardPerAge.put(1, false);
         freeCardPerAge.put(2, false);
         freeCardPerAge.put(3, false);
-
-        this.game = g;
 
         Writer.write("Player " + name + " joined the game!");
     }
@@ -189,6 +187,10 @@ public class Player {
     //Pour les tests
     public void setFightPoints(int fightPoints) {
         this.fightPoints = fightPoints;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Game getGame() { return this.game; }

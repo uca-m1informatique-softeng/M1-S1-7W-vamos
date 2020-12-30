@@ -163,9 +163,13 @@ public class Game {
      */
     public void initPlayers() {
 
-        this.playersArray.add(new Player("Bot1", new Game()));
+        this.playersArray.add(new Player("Bot1"));
         this.playersArray.add(new Player("Bot2"));
         this.playersArray.add(new Player("Bot3"));
+
+        for (Player p : this.playersArray) {
+            p.setGame(this);
+        }
 
         for (int i = 0; i < players; i++) {
             Player prevPlayer, nextPlayer;

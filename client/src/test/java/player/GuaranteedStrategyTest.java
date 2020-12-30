@@ -33,10 +33,10 @@ class GuaranteedStrategyTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        this.player = new Player("bob", null);
+        this.player = new Player("bob");
         this.guaranteedStrategy = new GuaranteedStrategy(player);
-        player.setPrevNeighbor(new Player("jean", null));
-        player.setNextNeighbor(new Player("jacques", null));
+        player.setPrevNeighbor(new Player("jean"));
+        player.setNextNeighbor(new Player("jacques"));
         player.setStrategy(guaranteedStrategy);
         player.getStrategy().rand = this.rand;
         wonder = new Wonder("alexandriaA");
