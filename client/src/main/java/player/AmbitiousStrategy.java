@@ -17,7 +17,7 @@ public class AmbitiousStrategy extends Strategy {
         return "Ambitious AI";
     }
 
-    private int SimulateGame(Player player, Action a) throws IOException {
+    private int simulateGame(Player player, Action a) throws IOException {
         //Game simulGame = new Game(player.getGame());
         Game simulGame = player.getGame();
         //First turn
