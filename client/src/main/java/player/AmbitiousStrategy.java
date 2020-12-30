@@ -71,10 +71,10 @@ public class AmbitiousStrategy extends Strategy {
      * Won't return Actions that the player can't do because of lack of money, resources, etc...
      * @return The available Actions of the player.
      */
-    private ArrayList<Action> availableActions() {
+    protected ArrayList<Action> availableActions() {
         ArrayList<Action> actionList = new ArrayList<>();
 
-        for (Card c : this.player.hand) {
+        for (Card c : this.player.getHand()) {
             if (this.player.isBuildable(c)) {
                 actionList.add(new Action(c, Action.BUILD));
             }
@@ -118,7 +118,7 @@ public class AmbitiousStrategy extends Strategy {
         }
     }
 
-    private int simulateGame(Player player, Action a) throws IOException {
+    protected int simulateGame(Player player, Action a) throws IOException {
         //Game simulGame = new Game(player.getGame());
         Game simulGame = player.getGame();
         //First turn
@@ -132,7 +132,8 @@ public class AmbitiousStrategy extends Strategy {
         return player.computeScore();
     }
 
-    private void simulProcessTurn(Action a) {
+    protected void simulProcessTurn(Action a) {
+
 
     }
 }
