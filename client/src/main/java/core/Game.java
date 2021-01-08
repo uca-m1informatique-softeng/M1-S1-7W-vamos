@@ -76,6 +76,7 @@ public class Game {
         String typePartie = args[1];
 
         if (typePartie.equals(GAME_MODE)) {
+            long startTime = System.currentTimeMillis();
             Game game = new Game(nbPlayers);
             game.mode = GAME_MODE;
             Writer.init(true);
@@ -88,7 +89,12 @@ public class Game {
             } catch (IOException e) {
                 Writer.write("Could not delete file !");
             }
+            long endTime = System.currentTimeMillis();
+            long elapsedTime = endTime - startTime;
+            elapsedTime = (long) (elapsedTime * Math.pow(10,-3));
+            System.out.println("Execution timee : " + elapsedTime + "s");
         } else if (typePartie.equals(STATS_MODE)) {
+            long startTime = System.currentTimeMillis();
             Writer.init(false);
             RecapScore[] recapScores = new RecapScore[nbPlayers];
             for (int i = 0; i < recapScores.length; i++) {
@@ -115,6 +121,10 @@ public class Game {
                 Connexion.CONNEXION.stopListening();
                 System.exit(0);
             });
+            long endTime = System.currentTimeMillis();
+            long elapsedTime = endTime - startTime;
+            elapsedTime = (long) (elapsedTime * Math.pow(10,-3));
+            System.out.println("Execution time : " + elapsedTime + "s");
         } else {
             throw new ModeException("Mode inexistant.");
         }
