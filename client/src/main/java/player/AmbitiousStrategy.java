@@ -13,6 +13,7 @@ import utility.Writer;
 
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
+import static utility.Constante.GAME_MODE;
 
 public class AmbitiousStrategy extends Strategy {
 
@@ -32,7 +33,9 @@ public class AmbitiousStrategy extends Strategy {
 
     @Override
     public Action chooseAction(Player player) {
-        Writer.stopWriting();
+        if (this.player.getGame().mode.equals(GAME_MODE)) {
+            Writer.stopWriting();
+        }
         long t1 = (new Date()).getTime();
 
         ArrayList<Action> actions = this.availableActions();
@@ -79,7 +82,9 @@ public class AmbitiousStrategy extends Strategy {
 
         long t2 = (new Date()).getTime();
         System.out.println("Age " + this.player.getGame().getCurrentAge() + ", Turn " + this.player.getGame().getRound() + " - Monte-Carlo took " + ((float) (t2 - t1))/1000.0 + "s to choose an action.");
-        Writer.resumeWriting();
+        if (this.player.getGame().mode.equals(GAME_MODE)) {
+            Writer.resumeWriting();
+        }
 
         return chosenAction;
     }

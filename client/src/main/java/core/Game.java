@@ -62,6 +62,8 @@ public class Game {
 
     public static Boolean debug = false;
 
+    public String mode;
+
     /**
      * The field that contains the discard pile. It is used during the effect : TookDiscardedCardEffect.
      */
@@ -75,6 +77,7 @@ public class Game {
 
         if (typePartie.equals(GAME_MODE)) {
             Game game = new Game(nbPlayers);
+            game.mode = GAME_MODE;
             Writer.init(true);
             while (game.state != GameState.EXIT)
                 game.process();
@@ -93,6 +96,7 @@ public class Game {
             }
             for (int i = 0; i < NB_GAMES_STATS_MODE; i++) {
                 Game game = new Game(nbPlayers);
+                game.mode = STATS_MODE;
                 while (game.state != GameState.EXIT)
                     game.process();
                 RecapScore[] scoresTmp = game.displayPlayersRanking();
