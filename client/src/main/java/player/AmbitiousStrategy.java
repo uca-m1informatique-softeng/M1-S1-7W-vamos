@@ -21,7 +21,11 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 100;
+    private static int NUMBER_OF_SIMULATIONS = 1000;
+    /**
+     * The number of turns Monte-Carlo will simulate
+     */
+    private static int MAXIMUM_DEPTH = 7;
     private Player player;
 
     public AmbitiousStrategy(Player player) {
@@ -138,10 +142,13 @@ public class AmbitiousStrategy extends Strategy {
 
             //Second part
             simPlayer.setStrategy(new DumbStrategy());
-            while (simGame.getState() != GameState.EXIT)
+            int depth = 1;
+            while (simGame.getState() != GameState.EXIT || depth <= AmbitiousStrategy.MAXIMUM_DEPTH - 1) {
                 simGame.process();
+                depth++;
+            }
 
-            res = simPlayer.computeScore();
+            res = AmbitiousStrategy.heuristic(simPlayer);
 
         } catch (PlayerNumberException e) {
             e.printStackTrace();
@@ -186,6 +193,15 @@ public class AmbitiousStrategy extends Strategy {
             }
         }
         game.swapHands(game.getCurrentAge());
+    }
+
+    /**
+     * Computes an heuristic to be used by Monte-Carlo
+     * @param p The Player whose the heuristic will be computed
+     * @return The current heuristic of the player
+     */
+    private static int heuristic(Player p) {
+        return p.computeScore();
     }
 
     @Override
