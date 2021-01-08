@@ -19,11 +19,11 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 250;
+    private static int NUMBER_OF_SIMULATIONS = 1000;
     /**
      * The number of turns Monte-Carlo will simulate
      */
-    private static int MAXIMUM_DEPTH = 4;
+    private static int MAXIMUM_DEPTH = 7;
     private Player player;
 
     public AmbitiousStrategy(Player player) {
@@ -78,7 +78,7 @@ public class AmbitiousStrategy extends Strategy {
         }
 
         long t2 = (new Date()).getTime();
-        System.out.println("Action took " + ((float) (t2 - t1))/1000.0 + "s to be chosen.");
+        System.out.println("Age " + this.player.getGame().getCurrentAge() + ", Turn " + this.player.getGame().getRound() + " - Monte-Carlo took " + ((float) (t2 - t1))/1000.0 + "s to choose an action.");
         Writer.resumeWriting();
 
         return chosenAction;
