@@ -1,17 +1,15 @@
 package player;
 import effects.Effect;
 import effects.TookDiscardCardEffect;
-import exceptions.PlayerNumberException;
 import utility.Tuple;
 import utility.Utilities;
 import card.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 import core.Game;
 import core.GameState;
 import utility.Writer;
-
-import java.io.IOException;
 
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
@@ -21,7 +19,7 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 1000;
+    private static int NUMBER_OF_SIMULATIONS = 100;
     /**
      * The number of turns Monte-Carlo will simulate
      */
@@ -35,42 +33,38 @@ public class AmbitiousStrategy extends Strategy {
     @Override
     public Action chooseAction(Player player) {
         Writer.stopWriting();
+        long t1 = (new Date()).getTime();
 
         ArrayList<Action> actions = this.availableActions();
         ArrayList<Tuple<Action, Float>> actionScores = new ArrayList<>();
 
+        ArrayList<SimulationThread> threads = new ArrayList<>();
         for (Action a : actions) {
-            ArrayList<Integer> scores = new ArrayList<>();
+            SimulationThread thread = new SimulationThread(this.player, a);
+            threads.add(thread);
+            thread.start();
+        }
 
-            ArrayList<SimulationThread> threads = new ArrayList<>();
-            for (int i = 0; i < AmbitiousStrategy.NUMBER_OF_SIMULATIONS; i++) {
-                SimulationThread thread = new SimulationThread(this.player, a);
-                threads.add(thread);
-                thread.start();
-            }
-
-            // Waiting for every thread to finish
-            boolean letsGo = false;
-            while (!letsGo) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                for (SimulationThread t : threads) {
-                    if (t.isFinished()) {
-                        letsGo = true;
-                    } else {
-                        letsGo = false;
-                        break;
-                    }
-                }
+        // Waiting for every thread to finish
+        boolean letsGo = false;
+        while (!letsGo) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             for (SimulationThread t : threads) {
-                scores.add(t.getScore());
+                if (t.isFinished()) {
+                    letsGo = true;
+                } else {
+                    letsGo = false;
+                    break;
+                }
             }
+        }
 
-            actionScores.add(new Tuple<>(a, Utilities.average(scores)));
+        for (SimulationThread t : threads) {
+            actionScores.add(new Tuple<>(t.action, t.score));
         }
 
         float actionScore = 0;
@@ -83,6 +77,8 @@ public class AmbitiousStrategy extends Strategy {
             }
         }
 
+        long t2 = (new Date()).getTime();
+        System.out.println("Action took " + ((float) (t2 - t1))/1000.0 + "s to be chosen.");
         Writer.resumeWriting();
 
         return chosenAction;
@@ -107,6 +103,22 @@ public class AmbitiousStrategy extends Strategy {
         }
 
         return actionList;
+    }
+
+    /**
+     * Launches AmbitiousStrategy.NUMBER_OF_SIMULATIONS games for a given action and gives an average score
+     * if the player plays this action.
+     * @param a The Action to play with
+     * @return An average score if the player chooses this action.
+     */
+    private float simulateAction(Action a) {
+        ArrayList<Integer> scores = new ArrayList<>();
+
+        for (int i = 0; i < AmbitiousStrategy.NUMBER_OF_SIMULATIONS; i++) {
+            scores.add(this.simulateGame(this.player, a));
+        }
+
+        return Utilities.average(scores);
     }
 
     private int simulateGame(Player player, Action a) {
@@ -150,9 +162,7 @@ public class AmbitiousStrategy extends Strategy {
 
             res = AmbitiousStrategy.heuristic(simPlayer);
 
-        } catch (PlayerNumberException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -210,7 +220,7 @@ public class AmbitiousStrategy extends Strategy {
     }
 
     private class SimulationThread extends Thread {
-        private int score = 0;
+        private float score = 0;
         private Action action;
         private Player player;
         private boolean finished = false;
@@ -220,17 +230,13 @@ public class AmbitiousStrategy extends Strategy {
             this.action = a;
         }
 
-        int getScore() {
-            return this.score;
-        }
-
         boolean isFinished() {
             return this.finished;
         }
 
         @Override
         public void run() {
-            this.score = ((AmbitiousStrategy) this.player.getStrategy()).simulateGame(this.player, this.action);
+            this.score = ((AmbitiousStrategy) this.player.getStrategy()).simulateAction(this.action);
             this.finished = true;
         }
     }
