@@ -450,7 +450,10 @@ public class Player {
      */
     public boolean buildStageWonder() {
         boolean enoughResources = true;
-        if (wonder.isWonderFinished()) return false;
+        if (wonder.isWonderFinished()) {
+            this.dumpCard();
+            return false;
+        }
         EnumMap<Resource, Integer> costAfterEffects = this.wonder.getCurrentUpgradeCost();
 
         for (Card card : this.builtCards) {
