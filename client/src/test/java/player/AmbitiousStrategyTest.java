@@ -74,10 +74,6 @@ class AmbitiousStrategyTest {
     }
 
     @Test
-    void testToString() {
-    }
-
-    @Test
     void simulateGame() {
     }
 

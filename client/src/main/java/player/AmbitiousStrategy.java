@@ -166,7 +166,7 @@ public class AmbitiousStrategy extends Strategy {
                 depth++;
             }
 
-            res = AmbitiousStrategy.heuristic(simPlayer);
+            res = AmbitiousStrategy.heuristic(simPlayer, a);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -216,8 +216,16 @@ public class AmbitiousStrategy extends Strategy {
      * @param p The Player whose the heuristic will be computed
      * @return The current heuristic of the player
      */
-    private static int heuristic(Player p) {
-        return p.computeScore();
+    private static int heuristic(Player p, Action a) {
+        int opti = 0;
+        if (a.getAction() == 3) { return p.computeScore(); }
+        for(Card c : p.getBuiltCards()) {
+            if(c.getColor() == CardColor.BROWN) { opti += 4; }
+            if(c.getColor() == CardColor.RED) { opti += 3; }
+            if(c.getColor() == CardColor.GREY) { opti += 4; }
+            if(c.getName() == "caravansery") { opti += 6; }
+            }
+        return p.computeScore() + opti;
     }
 
     @Override
