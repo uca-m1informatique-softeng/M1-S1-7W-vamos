@@ -104,36 +104,36 @@ public class Heuristic {
             case 1 :
                 if (might > prevMight) {
                     res += 1;
-                } else (might < prevMight) {
+                } else if (might < prevMight) {
                     res -= 1;
                 }
                 if (might > nextMight) {
                     res += 1;
-                } else (might < nextMight) {
+                } else if (might < nextMight) {
                     res -= 1;
                 }
                 break;
             case 2 :
                 if (might > prevMight) {
                     res += 3;
-                } else (might < prevMight) {
+                } else if (might < prevMight) {
                     res -= 3;
                 }
                 if (might > nextMight) {
                     res += 3;
-                } else (might < nextMight) {
+                } else if (might < nextMight) {
                     res -= 3;
                 }
                 break;
             case 3 :
                 if (might > prevMight) {
                     res += 5;
-                } else (might < prevMight) {
+                } else if (might < prevMight) {
                     res -= 5;
                 }
                 if (might > nextMight) {
                     res += 5;
-                } else (might < nextMight) {
+                } else if (might < nextMight) {
                     res -= 5;
                 }
                 break;
