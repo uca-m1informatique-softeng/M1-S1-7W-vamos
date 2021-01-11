@@ -183,7 +183,7 @@ public class Wonder {
     }
 
     public boolean isWonderFinished() {
-        return state >= maxState - 1;
+        return state >= maxState;
     }
 
     /**

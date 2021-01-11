@@ -1,5 +1,6 @@
 package player;
 import effects.Effect;
+import effects.ResourceChoiceEffect;
 import effects.TookDiscardCardEffect;
 import utility.Tuple;
 import utility.Utilities;
@@ -13,6 +14,7 @@ import utility.Writer;
 
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
+import static java.lang.Math.max;
 import static utility.Constante.GAME_MODE;
 
 public class AmbitiousStrategy extends Strategy {
@@ -20,11 +22,11 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 1000;
+    private static int NUMBER_OF_SIMULATIONS = 250;
     /**
      * The number of turns Monte-Carlo will simulate
      */
-    private static int MAXIMUM_DEPTH = 7;
+    private static int MAXIMUM_DEPTH = 4;
     private Player player;
 
     public AmbitiousStrategy(Player player) {
@@ -218,13 +220,23 @@ public class AmbitiousStrategy extends Strategy {
      */
     private static int heuristic(Player p, Action a) {
         int opti = 0;
-        if (a.getAction() == 3) { return p.computeScore(); }
+        if (a.getAction() == Action.DUMP) { return p.computeScore(); }
         for(Card c : p.getBuiltCards()) {
-            if(c.getColor() == CardColor.BROWN) { opti += 4; }
+            if(c.getColor() == CardColor.BROWN) {
+                if (c.getEffect() instanceof ResourceChoiceEffect) {
+                    opti += 4;
+                } else {
+                    opti += 3;
+                }
+            }
             if(c.getColor() == CardColor.RED) { opti += 3; }
             if(c.getColor() == CardColor.GREY) { opti += 4; }
-            if(c.getName() == "caravansery") { opti += 6; }
+            if(c.getName().equals("caravansery")) { opti += 6; }
             }
+        int s = p.computeScore();
+        int ss = p.prevNeighbor.computeScore();
+        int sss = p.nextNeighbor.computeScore();
+        opti += s-ss + s-sss;
         return p.computeScore() + opti;
     }
 
