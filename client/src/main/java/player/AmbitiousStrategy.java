@@ -19,11 +19,11 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static final int NUMBER_OF_SIMULATIONS = 250;
+    private static final int NUMBER_OF_SIMULATIONS = 1000;
     /**
      * The number of turns Monte-Carlo will simulate
      */
-    private static final int MAXIMUM_DEPTH = 4;
+    private static final int MAXIMUM_DEPTH = 7;
 
 
     private final Player player;
@@ -159,7 +159,7 @@ public class AmbitiousStrategy extends Strategy {
             }
 
             //Second part
-            simPlayer.setStrategy(new DumbStrategy());
+            simPlayer.setStrategy(new GuaranteedStrategy(simPlayer));
             int depth = 2;
             while ( simGame.getState() != GameState.EXIT &&
                     depth <= AmbitiousStrategy.MAXIMUM_DEPTH) {
