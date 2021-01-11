@@ -168,7 +168,7 @@ public class AmbitiousStrategy extends Strategy {
                 depth++;
             }
 
-            res = AmbitiousStrategy.heuristic(simPlayer, a);
+            res = simGame.getState() != GameState.EXIT ? Heuristic.heuristic(simPlayer, a) : simPlayer.computeScore();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -211,33 +211,6 @@ public class AmbitiousStrategy extends Strategy {
             }
         }
         game.swapHands(game.getCurrentAge());
-    }
-
-    /**
-     * Computes an heuristic to be used by Monte-Carlo
-     * @param p The Player whose the heuristic will be computed
-     * @return The current heuristic of the player
-     */
-    private static int heuristic(Player p, Action a) {
-        int opti = 0;
-        if (a.getAction() == Action.DUMP) { return p.computeScore(); }
-        for(Card c : p.getBuiltCards()) {
-            if(c.getColor() == CardColor.BROWN) {
-                if (c.getEffect() instanceof ResourceChoiceEffect) {
-                    opti += 4;
-                } else {
-                    opti += 3;
-                }
-            }
-            if(c.getColor() == CardColor.RED) { opti += 3; }
-            if(c.getColor() == CardColor.GREY) { opti += 4; }
-            if(c.getName().equals("caravansery")) { opti += 6; }
-            }
-        int s = p.computeScore();
-        int ss = p.prevNeighbor.computeScore();
-        int sss = p.nextNeighbor.computeScore();
-        opti += s-ss + s-sss;
-        return p.computeScore() + opti;
     }
 
     @Override
