@@ -1,20 +1,17 @@
 package player;
+
 import effects.Effect;
-import effects.ResourceChoiceEffect;
 import effects.TookDiscardCardEffect;
 import utility.Tuple;
 import utility.Utilities;
 import card.*;
 import java.util.ArrayList;
 import java.util.Date;
-
 import core.Game;
 import core.GameState;
 import utility.Writer;
-
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
-import static java.lang.Math.max;
 import static utility.Constante.GAME_MODE;
 
 public class AmbitiousStrategy extends Strategy {
@@ -22,12 +19,14 @@ public class AmbitiousStrategy extends Strategy {
     /**
      * The number of simulations Monte-Carlo will launch for each available Action
      */
-    private static int NUMBER_OF_SIMULATIONS = 250;
+    private static final int NUMBER_OF_SIMULATIONS = 250;
     /**
      * The number of turns Monte-Carlo will simulate
      */
-    private static int MAXIMUM_DEPTH = 4;
-    private Player player;
+    private static final int MAXIMUM_DEPTH = 4;
+
+
+    private final Player player;
 
     public AmbitiousStrategy(Player player) {
         this.player = player;
@@ -222,8 +221,8 @@ public class AmbitiousStrategy extends Strategy {
 
     private class SimulationThread extends Thread {
         private float score = 0;
-        private Action action;
-        private Player player;
+        private final Action action;
+        private final Player player;
         private boolean finished = false;
 
         SimulationThread(Player p, Action a) {

@@ -4,7 +4,6 @@ import card.Card;
 import card.CardColor;
 import card.CardPoints;
 import effects.ResourceChoiceEffect;
-import utility.Utilities;
 
 public class Heuristic {
 
