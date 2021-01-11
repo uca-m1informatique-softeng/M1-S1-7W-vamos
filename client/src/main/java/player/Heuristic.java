@@ -12,31 +12,59 @@ public class Heuristic {
      * @param p The Player whose the heuristic will be computed
      * @return The current heuristic of the player
      */
-    static int heuristic(Player p, Action a) {
-        int opti = 0;
-        if (a.getAction() == Action.DUMP) { return p.computeScore(); }
-        for(Card c : p.getBuiltCards()) {
-            if(c.getColor() == CardColor.BROWN) {
-                if (c.getEffect() instanceof ResourceChoiceEffect) {
-                    opti += 4;
-                } else {
-                    opti += 3;
-                }
-            }
-            if(c.getColor() == CardColor.RED) { opti += 3; }
-            if(c.getColor() == CardColor.GREY) { opti += 4; }
-            if(c.getName().equals("caravansery")) { opti += 6; }
-        }
-        int s = p.computeScore();
-        int ss = p.prevNeighbor.computeScore();
-        int sss = p.nextNeighbor.computeScore();
-        opti += s-ss + s-sss;
-        return p.computeScore() + opti;
+    static int heuristic(Player p) {
+        int res = 0;
+        int prev = 0;
+        int next = 0;
+
+        return Math.min();
     }
 
     /**
-     * Computes an heuristic for the military aspect of the game
-     * @param p The player whose military heuristic wiil be computed
+     * Computes a heuristic concerning the amount of the resources the player has
+     * @param p The player whose military heuristic will be computed
+     * @return An heuristic concerning only the current resources of the player
+     */
+    private int resourcesHeuristic(Player p) {
+        int res = 0;
+
+        for (Card c : p.getBuiltCards()) {
+            if (c.getColor() == CardColor.BROWN) {
+                if (c.getEffect() instanceof ResourceChoiceEffect) {
+                    res += 2;
+                } else {
+                    res += 1;
+                }
+            }
+            if (c.getColor() == CardColor.GREY) { res += 1; }
+
+        }
+
+        return res;
+    }
+
+    /**
+     * Computes a heuristic based on whether the player has certain "good" cards or not
+     * @param p The player whose military heuristic will be computed
+     * @return A heuristic regarding certain cards
+     */
+    private int goodCardsHeuristic(Player p) {
+        int res = 0;
+
+        for (Card c : p.getBuiltCards()) {
+            if (c.getName().equals("caravansery")) res += 2;
+            if (c.getName().equals("forum")) res += 2;
+            if (c.getName().equals("marketplace")) res += 2;
+            if (c.getName().equals("east trading post")) res += 1;
+            if (c.getName().equals("west trading post")) res += 1;
+        }
+
+        return res;
+    }
+
+    /**
+     * Computes a heuristic for the military aspect of the game
+     * @param p The player whose military heuristic will be computed
      * @return An heuristic concerning only the military aspects of the game
      */
     private int militaryHeuristic(Player p) {
@@ -84,14 +112,6 @@ public class Heuristic {
                 }
                 break;
         }
-
-        return res;
-    }
-
-    private int scienceHeuristic(Player p) {
-        int res = 0;
-
-        
 
         return res;
     }

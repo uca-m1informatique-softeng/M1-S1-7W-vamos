@@ -168,7 +168,7 @@ public class AmbitiousStrategy extends Strategy {
                 depth++;
             }
 
-            res = simGame.getState() != GameState.EXIT ? Heuristic.heuristic(simPlayer, a) : simPlayer.computeScore();
+            res = simGame.getState() != GameState.EXIT ? Heuristic.heuristic(simPlayer) : simPlayer.computeScore();
 
         } catch (Exception e) {
             e.printStackTrace();
