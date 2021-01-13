@@ -26,10 +26,10 @@ public class Server {
             System.out.println("Stats received by the Server...");
             recapScore.processAvgScore(NB_GAMES_STATS_MODE);
 
-            double victoires = 100*((double) recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE));
+            int winrate = recapScore.getNbVictory();
             String joueur = recapScore.getStrategy();
             System.out.println(joueur + " gets an average score of " + recapScore.getAvgScore());
-            System.out.println(joueur + " has a " + victoires + "% winrate");
+            System.out.println(joueur + " has a " + winrate + "% winrate");
             System.out.println(joueur + " gets " + recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE + "military points per game");
             System.out.println(joueur + " gets " + recapScore.getSciencePoints() / (double) NB_GAMES_STATS_MODE + " science points per game");
             System.out.println(joueur + " gets " + recapScore.getCoins() / (double) NB_GAMES_STATS_MODE + "coins per game");
@@ -51,8 +51,6 @@ public class Server {
                     sb.append(',');
                     sb.append("AvgScore");
                     sb.append(',');
-                    sb.append("Winrate");
-                    sb.append(',');
                     sb.append("MP");
                     sb.append(',');
                     sb.append("SP");
@@ -69,8 +67,6 @@ public class Server {
                 sb.append(joueur);
                 sb.append(',');
                 sb.append(recapScore.getAvgScore());
-                sb.append(',');
-                sb.append(victoires + '%');
                 sb.append(',');
                 sb.append( recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append(',');

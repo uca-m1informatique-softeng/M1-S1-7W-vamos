@@ -7,11 +7,11 @@ import effects.ResourceChoiceEffect;
 
 public class Heuristic {
 
-    private static final int RESOURCES_PONDERATION = 3;
-    private static final int GOOD_CARDS_PONDERATION = 3;
+    private static final int RESOURCES_PONDERATION = 8;
+    private static final int GOOD_CARDS_PONDERATION = 8;
     private static final int MILITARY_PONDERATION = 8;
-    private static final int SCIENCE_PONDERATION = 6;
-    private static final int CIVIL_PONDERATION = 4;
+    private static final int SCIENCE_PONDERATION = 4;
+    private static final int CIVIL_PONDERATION = 6;
     private static final int COIN_PONDERATION = 1;
 
     /**

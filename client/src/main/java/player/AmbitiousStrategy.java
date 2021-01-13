@@ -12,7 +12,7 @@ import core.GameState;
 import utility.Writer;
 import static core.GameState.EXIT;
 import static core.GameState.PLAY;
-import static utility.Constante.GAME_MODE;
+import static utility.Constante.*;
 
 public class AmbitiousStrategy extends Strategy {
 
@@ -21,9 +21,9 @@ public class AmbitiousStrategy extends Strategy {
      */
     private static final int NUMBER_OF_SIMULATIONS = 1000;
     /**
-     * The number of turns Monte-Carlo will simulate
+     * The number of turns Monte-Carlo will simulate. If -1, depth will be dynamic.
      */
-    private static final int MAXIMUM_DEPTH = 7;
+    private static final int MAXIMUM_DEPTH = -1;
 
 
     private final Player player;
@@ -161,10 +161,37 @@ public class AmbitiousStrategy extends Strategy {
             //Second part
             simPlayer.setStrategy(new GuaranteedStrategy(simPlayer));
             int depth = 2;
-            while ( simGame.getState() != GameState.EXIT &&
-                    depth <= AmbitiousStrategy.MAXIMUM_DEPTH) {
-                simGame.process();
-                depth++;
+            int turn = simGame.getRound() - 1; // - 1 because a turn has already been played
+            int age = simGame.getCurrentAge();
+
+            if (turn == 0) {
+                turn = 6;
+                age = simGame.getCurrentAge() - 1;
+            }
+
+            if (AmbitiousStrategy.MAXIMUM_DEPTH != DYNAMIC_DEPTH) {
+                while ( simGame.getState() != GameState.EXIT &&
+                        depth <= AmbitiousStrategy.MAXIMUM_DEPTH) {
+                    simGame.process();
+                    depth++;
+                }
+            } else {
+                if (age == 1 && turn <= 3) {
+                    while (depth <= 3) {
+                        simGame.process();
+                        depth++;
+                    }
+                } if (age == 1 && turn > 3) {
+                    while (depth <= 7) {
+                        simGame.process();
+                        depth++;
+                    }
+                } else if (age >= 2) {
+                    while (simGame.getState() != GameState.EXIT && depth <= 10) {
+                        simGame.process();
+                        depth++;
+                    }
+                }
             }
 
             res = (simGame.getState() != GameState.EXIT) ?
