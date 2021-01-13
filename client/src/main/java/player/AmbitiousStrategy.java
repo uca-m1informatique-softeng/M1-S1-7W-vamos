@@ -138,6 +138,9 @@ public class AmbitiousStrategy extends Strategy {
                     simPlayer = p;
                 }
             }
+            simGame.forceStrategy(  new GuaranteedStrategy(simGame.getPlayersArray().get(0)),
+                                    new GuaranteedStrategy(simGame.getPlayersArray().get(1)),
+                                    new GuaranteedStrategy(simGame.getPlayersArray().get(2)));
 
             //First turn
             switch (simGame.getState()) {
@@ -159,7 +162,6 @@ public class AmbitiousStrategy extends Strategy {
             }
 
             //Second part
-            simPlayer.setStrategy(new GuaranteedStrategy(simPlayer));
             int depth = 2;
             int turn = simGame.getRound() - 1; // - 1 because a turn has already been played
             int age = simGame.getCurrentAge();
