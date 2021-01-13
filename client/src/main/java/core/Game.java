@@ -194,9 +194,9 @@ public class Game {
     public void initPlayers() {
 
         this.playersArray.add(new Player("Bot1 (Monte-Carlo)"));
-        this.playersArray.add(new Player("Bot2 (Dumb)"));
+        this.playersArray.add(new Player("Bot2 (Guaranteed)"));
         this.playersArray.add(new Player("Bot3 (Dumb)"));
-        this.forceStrategy(new AmbitiousStrategy(this.playersArray.get(0)), new DumbStrategy(), new DumbStrategy());
+        this.forceStrategy(new AmbitiousStrategy(this.playersArray.get(0)), new GuaranteedStrategy(this.playersArray.get(1)), new DumbStrategy());
 
         for (Player p : this.playersArray) {
             p.setGame(this);
