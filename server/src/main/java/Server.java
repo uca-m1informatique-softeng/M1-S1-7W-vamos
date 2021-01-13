@@ -26,7 +26,7 @@ public class Server {
             System.out.println("Stats received by the Server...");
             recapScore.processAvgScore(NB_GAMES_STATS_MODE);
 
-            double victoires = recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE) * 100;
+            double victoires = 100*((double) recapScore.getNbVictory() / (double) (NB_GAMES_STATS_MODE));
             String joueur = recapScore.getStrategy();
             System.out.println(joueur + " gets an average score of " + recapScore.getAvgScore());
             System.out.println(joueur + " has a " + victoires + "% winrate");
@@ -51,6 +51,8 @@ public class Server {
                     sb.append(',');
                     sb.append("AvgScore");
                     sb.append(',');
+                    sb.append("Winrate");
+                    sb.append(',');
                     sb.append("MP");
                     sb.append(',');
                     sb.append("SP");
@@ -67,6 +69,8 @@ public class Server {
                 sb.append(joueur);
                 sb.append(',');
                 sb.append(recapScore.getAvgScore());
+                sb.append(',');
+                sb.append(victoires + '%');
                 sb.append(',');
                 sb.append( recapScore.getMilitaryPoints() / (double) NB_GAMES_STATS_MODE);
                 sb.append(',');
