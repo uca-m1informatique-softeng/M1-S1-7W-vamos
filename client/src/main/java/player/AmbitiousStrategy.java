@@ -161,6 +161,14 @@ public class AmbitiousStrategy extends Strategy {
             //Second part
             simPlayer.setStrategy(new GuaranteedStrategy(simPlayer));
             int depth = 2;
+            int turn = simGame.getRound() - 1; // - 1 because a turn has already been played
+            int age = simGame.getCurrentAge();
+
+            if (turn == 0) {
+                turn = 6;
+                age = simGame.getCurrentAge() - 1;
+            }
+
             if (AmbitiousStrategy.MAXIMUM_DEPTH != DYNAMIC_DEPTH) {
                 while ( simGame.getState() != GameState.EXIT &&
                         depth <= AmbitiousStrategy.MAXIMUM_DEPTH) {
@@ -168,18 +176,18 @@ public class AmbitiousStrategy extends Strategy {
                     depth++;
                 }
             } else {
-                if (simGame.getCurrentAge() == 1 && simGame.getRound() <= 3) {
+                if (age == 1 && turn <= 3) {
                     while (depth <= 3) {
                         simGame.process();
                         depth++;
                     }
-                } if (simGame.getCurrentAge() == 1 && simGame.getRound() > 3) {
-                    while (depth <= 4) {
+                } if (age == 1 && turn > 3) {
+                    while (depth <= 7) {
                         simGame.process();
                         depth++;
                     }
-                } else if (simGame.getCurrentAge() >= 2) {
-                    while (depth <= 6) {
+                } else if (age >= 2) {
+                    while (simGame.getState() != GameState.EXIT && depth <= 10) {
                         simGame.process();
                         depth++;
                     }
